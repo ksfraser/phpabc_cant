@@ -59,6 +59,47 @@ class AbcProcessor {
                 }
             }
         }
+        // Pass 5: reorder voices by channel, drums last
+        $voiceLines = [];
+        $otherLines = [];
+        $drumLines = [];
+        $defaults = [];
+        // Load MIDI defaults
+        try {
+            $pdo = new \PDO('sqlite:' . __DIR__ . '/../../MIDI_DefaultsTable.db');
+            $stmt = $pdo->query('SELECT voice_name, midi_channel FROM abc_midi_defaults');
+            foreach ($stmt as $row) {
+                $defaults[$row['voice_name']] = $row['midi_channel'];
+            }
+        } catch (\Exception $e) {
+            // fallback: hardcoded
+            $defaults = [
+                'Bagpipes' => 0, 'Flute' => 1, 'Tenor' => 2, 'Clarinet' => 3, 'Trombone' => 4, 'Tuba' => 5,
+                'Alto' => 6, 'Trumpet' => 7, 'Guitar' => 8, 'Piano' => 9, 'Drums' => 10, 'BassGuitar' => 11
+            ];
+        }
+        foreach ($output as $line) {
+            if (preg_match('/^V:([^\s]+)/', $line, $m)) {
+                $voice = $m[1];
+                if (stripos($voice, 'drum') !== false) {
+                    $drumLines[] = $line;
+                } else {
+                    $voiceLines[$voice] = $line;
+                }
+            } else {
+                $otherLines[] = $line;
+            }
+        }
+        // Sort voices by channel
+        uasort($voiceLines, function($a, $b) use ($defaults) {
+            preg_match('/^V:([^\s]+)/', $a, $ma);
+            preg_match('/^V:([^\s]+)/', $b, $mb);
+            $ca = $defaults[$ma[1]] ?? 99;
+            $cb = $defaults[$mb[1]] ?? 99;
+            return $ca <=> $cb;
+        });
+        // Rebuild output: other lines, sorted voices, drums last
+        $output = array_merge($otherLines, array_values($voiceLines), $drumLines);
         return [
             'lines' => $output,
             'canntDiff' => $canntDiff

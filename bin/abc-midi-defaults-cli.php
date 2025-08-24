@@ -43,10 +43,23 @@ if (isset($options['list'])) {
     $canntDiff = $result['canntDiff'];
     $newFile = preg_replace('/\.abc$/', '_1.abc', $abcFile);
     file_put_contents($newFile, implode("\n", $output));
+    $files = [$newFile];
     echo "Saved with canntaireachd: $newFile\n";
     if ($canntDiff) {
-        file_put_contents('cannt_diff.txt', implode("\n", $canntDiff));
-        echo "Canntaireachd diff written to cannt_diff.txt\n";
+        $diffFile = 'cannt_diff.txt';
+        file_put_contents($diffFile, implode("\n", $canntDiff));
+        echo "Canntaireachd diff written to $diffFile\n";
+        $files[] = $diffFile;
+    }
+    if ($result['errors'] ?? false) {
+        $errFile = 'abc_errors.txt';
+        file_put_contents($errFile, implode("\n", $result['errors']));
+        echo "Errors written to $errFile\n";
+        $files[] = $errFile;
+    }
+    echo "Output files:\n";
+    foreach ($files as $f) {
+        echo "  $f\n";
     }
 } elseif (isset($options['save'])) {
     $abcFile = $options['save'];

@@ -25,14 +25,22 @@ function abc_midi_defaults_admin() {
         $output = $result['lines'];
         $canntDiff = $result['canntDiff'];
         $newName = preg_replace('/\.abc$/', '_1.abc', $abcName);
-        $upload = function_exists('wp_upload_dir') ? wp_upload_dir() : ['path' => __DIR__];
+        $upload = function_exists('wp_upload_dir') ? wp_upload_dir() : ['path' => __DIR__, 'url' => ''];
         $savePath = $upload['path'] . '/' . $newName;
         file_put_contents($savePath, implode("\n", $output));
-        echo '<div class="updated">Saved with canntaireachd: ' . htmlspecialchars($newName) . '</div>';
+        $links = [];
+        $links[] = '<a href="' . $upload['url'] . '/' . $newName . '" target="_blank">ABC File</a>';
         if ($canntDiff) {
-            file_put_contents($upload['path'] . '/cannt_diff.txt', implode("\n", $canntDiff));
-            echo '<div class="updated">Canntaireachd diff written to cannt_diff.txt</div>';
+            $diffName = 'cannt_diff.txt';
+            file_put_contents($upload['path'] . '/' . $diffName, implode("\n", $canntDiff));
+            $links[] = '<a href="' . $upload['url'] . '/' . $diffName . '" target="_blank">Canntaireachd Diff</a>';
         }
+        if ($result['errors'] ?? false) {
+            $errName = 'abc_errors.txt';
+            file_put_contents($upload['path'] . '/' . $errName, implode("\n", $result['errors']));
+            $links[] = '<a href="' . $upload['url'] . '/' . $errName . '" target="_blank">Error Log</a>';
+        }
+        echo '<div class="updated">' . implode(' | ', $links) . '</div>';
     }
     echo '<form method="post" enctype="multipart/form-data">';
     echo '<input type="file" name="abc_file" />';
