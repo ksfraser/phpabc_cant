@@ -14,9 +14,18 @@ class AbcProcessor {
         $canntDiff = [];
         $output = self::validateCanntaireachd($output, $canntDiff);
         $output = self::reorderVoices($output);
+        // Timing validation pass
+        $timingValidator = new AbcTimingValidator();
+        $timingResult = $timingValidator->validate($output);
+        $output = $timingResult['lines'];
+        $errors = [];
+        if (!empty($timingResult['errors'])) {
+            $errors = array_map(function($e){return 'TIMING: '.$e;}, $timingResult['errors']);
+        }
         return [
             'lines' => $output,
-            'canntDiff' => $canntDiff
+            'canntDiff' => $canntDiff,
+            'errors' => $errors
         ];
     }
 

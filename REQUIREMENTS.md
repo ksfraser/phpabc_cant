@@ -138,3 +138,11 @@ Legend: ✓ = Covered, - = Not applicable
 - Test CLI tool options and output files
 - Test WordPress admin screen (list, add, edit, delete, output links)
 - Test AbcProcessor for multi-pass logic, voice reordering, diff logging, lyrics handling
+
+# Multi-pass ABC processing includes timing validation
+- Timing validation is performed as the last pass using AbcTimingValidator
+- Bars with incorrect timing (except pickup/last) are marked with 'TIMING' and errors are logged
+- Errors are written to abc_errors.txt by CLI
+- AbcTimingValidator is a dedicated class for SRP/SOLID
+- CLI output files: validated ABC, cannt_diff.txt, abc_errors.txt
+- All passes are unit tested
