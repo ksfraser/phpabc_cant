@@ -107,28 +107,34 @@ Legend: ✓ = Covered, - = Not applicable
 - Example defaults:
   - Drums: channel 10
   - Bagpipes: channel 0, program 110
+  - Flute, Tenor, Clarinet, Trombone, Tuba, Alto, Trumpet, Guitar, Piano, BassGuitar (sequential channels)
 
 ## WordPress Admin
 - Admin screen to list/add/edit/delete MIDI defaults
 - Uses the same table
+- Validates and processes ABC files in multiple passes
+- Shows links to output files (ABC, diff, error log)
 
 ## CLI Tool
-- Options: `--midi_channel`, `--midi_program`, `--list`, `--add`, `--edit`, `--delete`
+- Options: `--midi_channel`, `--midi_program`, `--list`, `--add`, `--edit`, `--delete`, `--validate`, `--save`
 - Uses the same table and config_db.php for DSN
+- Lists output files after processing
 
-## AbcValidator
-- Automatically inserts bagpipe voice and notes if missing
-- Adds `%score {Bagpipes}` before bagpipe voice
-- Validates headers, voices, lyrics, and body
-- Checks for required headers (C:, B:, O:, Z:)
-- Suggests corrections for missing/invalid data
+## AbcProcessor (shared)
+- Multi-pass ABC file processing:
+  1. Detect voices
+  2. Copy Melody to Bagpipes if needed
+  3. Handle w:/W: lyrics/canntaireachd
+  4. Validate canntaireachd and log differences
+  5. Reorder voices by channel, drums last
+- Returns processed lines and diff log
 
-## Config
-- Database config in `config_db.php`
+## Output
+- ABC file, cannt_diff.txt, error log
+- CLI lists files, WP shows links
 
 ## Tests
 - Test MIDI defaults table creation and CRUD
-- Test CLI tool options
-- Test WordPress admin screen (list, add, edit, delete)
-- Test AbcValidator for auto-insertion of bagpipe voice and score line
-- Test header validation and suggestions
+- Test CLI tool options and output files
+- Test WordPress admin screen (list, add, edit, delete, output links)
+- Test AbcProcessor for multi-pass logic, voice reordering, diff logging, lyrics handling
