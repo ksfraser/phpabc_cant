@@ -4,17 +4,34 @@ namespace Ksfraser\PhpabcCanntaireachd;
 class AbcProcessor {
     public static function process($abcContent, $dict) {
         $lines = explode("\n", $abcContent);
+        [$hasMelody, $hasBagpipes] = self::detectVoices($lines);
+        $output = self::copyMelodyToBagpipes($lines, $hasMelody, $hasBagpipes);
+        $lyricsWords = [];
+        $output = self::handleLyrics($output, $dict, $lyricsWords);
+        if ($lyricsWords) {
+            $output[] = 'W: ' . implode(' ', $lyricsWords);
+        }
+        $canntDiff = [];
+        $output = self::validateCanntaireachd($output, $canntDiff);
+        $output = self::reorderVoices($output);
+        return [
+            'lines' => $output,
+            'canntDiff' => $canntDiff
+        ];
+    }
+
+    private static function detectVoices($lines) {
         $hasMelody = false;
         $hasBagpipes = false;
-        $output = [];
-        $lyricsWords = [];
-        $canntDiff = [];
-        // Pass 1: detect voices
         foreach ($lines as $line) {
             if (preg_match('/^V:Melody/', $line)) $hasMelody = true;
             if (preg_match('/^V:Bagpipes/', $line)) $hasBagpipes = true;
         }
-        // Pass 2: copy Melody to Bagpipes if needed
+        return [$hasMelody, $hasBagpipes];
+    }
+
+    private static function copyMelodyToBagpipes($lines, $hasMelody, $hasBagpipes) {
+        $output = [];
         if ($hasMelody && !$hasBagpipes) {
             foreach ($lines as $line) {
                 if (preg_match('/^V:Melody/', $line)) {
@@ -28,7 +45,10 @@ class AbcProcessor {
         } else {
             $output = $lines;
         }
-        // Pass 3: handle w:/W: lyrics/canntaireachd
+        return $output;
+    }
+
+    private static function handleLyrics($output, $dict, &$lyricsWords) {
         foreach ($output as $idx => $line) {
             if (preg_match('/^w:(.*)$/', $line, $m)) {
                 $words = preg_split('/\s+/', trim($m[1]));
@@ -45,10 +65,10 @@ class AbcProcessor {
                 }
             }
         }
-        if ($lyricsWords) {
-            $output[] = 'W: ' . implode(' ', $lyricsWords);
-        }
-        // Pass 4: validate canntaireachd and log differences
+        return array_values($output);
+    }
+
+    private static function validateCanntaireachd($output, &$canntDiff) {
         $newCannt = '<add your canntaireachd here>';
         foreach ($output as $idx => $line) {
             if (preg_match('/^%canntaireachd:(.*)$/', $line, $m)) {
@@ -59,7 +79,10 @@ class AbcProcessor {
                 }
             }
         }
-        // Pass 5: reorder voices by channel, drums last
+        return $output;
+    }
+
+    private static function reorderVoices($output) {
         $voiceLines = [];
         $otherLines = [];
         $drumLines = [];
@@ -90,7 +113,6 @@ class AbcProcessor {
                 $otherLines[] = $line;
             }
         }
-        // Sort voices by channel
         uasort($voiceLines, function($a, $b) use ($defaults) {
             preg_match('/^V:([^\s]+)/', $a, $ma);
             preg_match('/^V:([^\s]+)/', $b, $mb);
@@ -98,11 +120,6 @@ class AbcProcessor {
             $cb = $defaults[$mb[1]] ?? 99;
             return $ca <=> $cb;
         });
-        // Rebuild output: other lines, sorted voices, drums last
-        $output = array_merge($otherLines, array_values($voiceLines), $drumLines);
-        return [
-            'lines' => $output,
-            'canntDiff' => $canntDiff
-        ];
+        return array_merge($otherLines, array_values($voiceLines), $drumLines);
     }
 }
