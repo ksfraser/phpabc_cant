@@ -1,0 +1,34 @@
+@startuml
+namespace Ksfraser.PhpabcCanntaireachd {
+    class Dict2php {
+        // ...existing code...
+    }
+
+    class SimplifyAbc {
+        +SimplifyAbc()
+        // ...ABC simplification methods...
+    }
+
+    Dict2php <|-- SimplifyAbc
+
+    class AbcParser
+    class AbcTuneBase
+    class AbcNote
+    class LineByLine
+    class BuildDictionaries
+
+    AbcTuneBase <|-- AbcParser
+    AbcNote <|-- AbcGracenote
+    BaseConverter <|-- LineByLine
+    Dict2php <|-- SimplifyAbc
+    // ...other relationships...
+}
+@enduml
+
+' Message Flow Example
+' User -> SimplifyAbc::simplify($abcString)
+' SimplifyAbc -> Dict2php::parseDict($abcString)
+' SimplifyAbc -> AbcParser::parse($abcString)
+' AbcParser -> AbcTuneBase (for tune structure)
+' AbcParser -> AbcNote (for note objects)
+' SimplifyAbc returns simplified ABC notation to User
