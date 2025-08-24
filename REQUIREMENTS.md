@@ -96,3 +96,39 @@ Legend: ✓ = Covered, - = Not applicable
 # Additional Notes
 - All requirements, test plans, and test matrix must be kept up to date as the codebase evolves.
 - All new features must include corresponding tests and documentation.
+
+---
+
+# ABC Canntaireachd Requirements
+
+## MIDI Defaults Table
+- Table name: `abc_midi_defaults` (used by both WordPress and CLI)
+- Columns: `id`, `voice_name`, `midi_channel`, `midi_program`
+- Example defaults:
+  - Drums: channel 10
+  - Bagpipes: channel 0, program 110
+
+## WordPress Admin
+- Admin screen to list/add/edit/delete MIDI defaults
+- Uses the same table
+
+## CLI Tool
+- Options: `--midi_channel`, `--midi_program`, `--list`, `--add`, `--edit`, `--delete`
+- Uses the same table and config_db.php for DSN
+
+## AbcValidator
+- Automatically inserts bagpipe voice and notes if missing
+- Adds `%score {Bagpipes}` before bagpipe voice
+- Validates headers, voices, lyrics, and body
+- Checks for required headers (C:, B:, O:, Z:)
+- Suggests corrections for missing/invalid data
+
+## Config
+- Database config in `config_db.php`
+
+## Tests
+- Test MIDI defaults table creation and CRUD
+- Test CLI tool options
+- Test WordPress admin screen (list, add, edit, delete)
+- Test AbcValidator for auto-insertion of bagpipe voice and score line
+- Test header validation and suggestions
