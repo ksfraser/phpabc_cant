@@ -146,3 +146,15 @@ Legend: ✓ = Covered, - = Not applicable
 - AbcTimingValidator is a dedicated class for SRP/SOLID
 - CLI output files: validated ABC, cannt_diff.txt, abc_errors.txt
 - All passes are unit tested
+
+# Requirements Update
+- CLI supports multiple ABC files via wildcards for validate/save
+- WP module supports multiple concurrent uploads, stores files in uploads directory, provides download links
+- ABC files may contain multiple songs (tunes), detected by X: header
+- Blank line is auto-inserted before X: header if missing
+- Blank lines within tunes are preserved for hidden voices/data
+- ABC parsing builds AbcTune/AbcLine/AbcBar objects for validation and rendering
+- Validation pipeline uses pass classes for SRP/SOLID
+- Bagpipe style checks: bar count, repeats, volta/2nd endings
+- All output files (ABC, diff, errors) are saved and listed per input file
+- Unit tests cover multi-song parsing, timing validation, style checks

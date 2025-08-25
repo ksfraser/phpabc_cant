@@ -41,4 +41,17 @@ class TestAbcProcessor extends TestCase {
         $this->assertNotEmpty($errors);
         $this->assertStringContainsString('TIMING:', $errors[0]);
     }
+    public function testMultiSongParsingAndValidation() {
+        $dict = ['cannt' => 1];
+        $abc = "X:1\nT:First Tune\nM:4/4\nL:1/4\nV:Bagpipes\n|A B C D|A2 B2|A B|\n\nX:2\nT:Second Tune\nM:2/4\nL:1/8\nV:Bagpipes\n|A B|A2|A|";
+        $parser = new \Ksfraser\PhpabcCanntaireachd\AbcFileParser();
+        $tunes = $parser->parse($abc);
+        $this->assertCount(2, $tunes, 'Should parse two tunes');
+        $this->assertEquals('First Tune', $tunes[0]->getHeaders()['T']);
+        $this->assertEquals('Second Tune', $tunes[1]->getHeaders()['T']);
+        // Style check: 4/4 tune should have 8 bars (will fail, only 3 here)
+        $checker = new \Ksfraser\PhpabcCanntaireachd\AbcSanityChecker();
+        $issues = $checker->checkBagpipeStyle($tunes[0]);
+        $this->assertNotEmpty($issues, 'Should detect style issues in first tune');
+    }
 }
