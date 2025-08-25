@@ -4,32 +4,44 @@ namespace Ksfraser\PhpabcCanntaireachd;
 class AbcProcessor {
     public static function process($abcContent, $dict) {
         $lines = explode("\n", $abcContent);
-        [$hasMelody, $hasBagpipes] = self::detectVoices($lines);
-        $output = self::copyMelodyToBagpipes($lines, $hasMelody, $hasBagpipes);
-        $lyricsWords = [];
-        $output = self::handleLyrics($output, $dict, $lyricsWords);
-        if ($lyricsWords) {
-            $output[] = 'W: ' . implode(' ', $lyricsWords);
-        }
+        $passes = [
+            new AbcVoicePass(),
+            new AbcLyricsPass($dict),
+            new AbcCanntaireachdPass(),
+            new AbcVoiceOrderPass(),
+            new AbcTimingValidator()
+        ];
         $canntDiff = [];
-        $output = self::validateCanntaireachd($output, $canntDiff);
-        $output = self::reorderVoices($output);
-        // Timing validation pass
-        $timingValidator = new AbcTimingValidator();
-        $timingResult = $timingValidator->validate($output);
-        $output = $timingResult['lines'];
         $errors = [];
-        if (!empty($timingResult['errors'])) {
-            $errors = array_map(function($e){return 'TIMING: '.$e;}, $timingResult['errors']);
+        foreach ($passes as $pass) {
+            if ($pass instanceof AbcLyricsPass) {
+                $result = $pass->process($lines);
+                $lines = $result['lines'];
+                if (!empty($result['lyricsWords'])) {
+                    $lines[] = 'W: ' . implode(' ', $result['lyricsWords']);
+                }
+            } elseif ($pass instanceof AbcCanntaireachdPass) {
+                $result = $pass->process($lines);
+                $lines = $result['lines'];
+                $canntDiff = $result['canntDiff'];
+            } elseif ($pass instanceof AbcTimingValidator) {
+                $result = $pass->validate($lines);
+                $lines = $result['lines'];
+                if (!empty($result['errors'])) {
+                    $errors = array_map(function($e){return 'TIMING: '.$e;}, $result['errors']);
+                }
+            } else {
+                $lines = $pass->process($lines);
+            }
         }
         return [
-            'lines' => $output,
+            'lines' => $lines,
             'canntDiff' => $canntDiff,
             'errors' => $errors
         ];
     }
-
-    private static function detectVoices($lines) {
+    // Make internal pass methods public static for use by pass classes
+    public static function detectVoices($lines) {
         $hasMelody = false;
         $hasBagpipes = false;
         foreach ($lines as $line) {
@@ -38,8 +50,7 @@ class AbcProcessor {
         }
         return [$hasMelody, $hasBagpipes];
     }
-
-    private static function copyMelodyToBagpipes($lines, $hasMelody, $hasBagpipes) {
+    public static function copyMelodyToBagpipes($lines, $hasMelody, $hasBagpipes) {
         $output = [];
         if ($hasMelody && !$hasBagpipes) {
             foreach ($lines as $line) {
@@ -56,8 +67,7 @@ class AbcProcessor {
         }
         return $output;
     }
-
-    private static function handleLyrics($output, $dict, &$lyricsWords) {
+    public static function handleLyrics($output, $dict, &$lyricsWords) {
         foreach ($output as $idx => $line) {
             if (preg_match('/^w:(.*)$/', $line, $m)) {
                 $words = preg_split('/\s+/', trim($m[1]));
@@ -76,8 +86,7 @@ class AbcProcessor {
         }
         return array_values($output);
     }
-
-    private static function validateCanntaireachd($output, &$canntDiff) {
+    public static function validateCanntaireachd($output, &$canntDiff) {
         $newCannt = '<add your canntaireachd here>';
         foreach ($output as $idx => $line) {
             if (preg_match('/^%canntaireachd:(.*)$/', $line, $m)) {
@@ -90,8 +99,7 @@ class AbcProcessor {
         }
         return $output;
     }
-
-    private static function reorderVoices($output) {
+    public static function reorderVoices($output) {
         $voiceLines = [];
         $otherLines = [];
         $drumLines = [];
