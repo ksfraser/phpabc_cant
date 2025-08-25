@@ -65,6 +65,33 @@ The package has been updated to be PSR-4 compliant:
 - `AbcToken`, `AbcComment`, `AbcChord` - Parser tokens
 - And more...
 
+## Header Field Architecture
+
+All ABC header fields (A–Z) are represented by dedicated classes in `src/Ksfraser/PhpabcCanntaireachd/Header/`. Each class inherits from a common superclass, ensuring consistent set/get/render methods. Multi-value fields (e.g., C:, B:) use a dedicated subclass for proper handling.
+
+- Single-value: Inherit from `AbcHeaderField`
+- Multi-value: Inherit from `AbcHeaderMultiField`
+- Field label is a static property for DRY rendering
+
+### Header Field Coverage
+
+- All ABC header fields (A–Z) are supported
+- Multi-value fields: C, B
+- Single-value fields: All others
+
+### Parser Configuration
+
+- `AbcFileParser` supports a config variable `singleHeaderPolicy` (`first` or `last`) to control which instance of a single-value header is kept when duplicates are encountered.
+
+## Testing
+
+Unit tests cover:
+- Parsing ABC files with all header fields
+- Multi-value and single-value header handling
+- Configurable singleHeaderPolicy (first/last)
+- Rendering tunes with missing/empty headers
+- PSR-4 compliance and autoloading
+
 ## Development
 
 To regenerate autoloader after adding new classes:

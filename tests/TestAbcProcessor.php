@@ -72,4 +72,33 @@ class TestAbcProcessor extends TestCase {
         $this->assertStringContainsString('V:Drums', implode(' ', $interleaved));
         $this->assertGreaterThan(1, count($interleaved), 'Should have multiple lines for interleaved output');
     }
+    public function testHeaderFieldClasses() {
+        $t = new \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderT('Title');
+        $this->assertEquals('Title', $t->get());
+        $this->assertEquals("T:Title\n", $t->render());
+        $b = new \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderB();
+        $b->add('Book1');
+        $b->add('Book2');
+        $this->assertEquals(['Book1','Book2'], $b->get());
+        $this->assertStringContainsString('B:Book1', $b->render());
+        $this->assertStringContainsString('B:Book2', $b->render());
+    }
+    public function testSingleHeaderPolicyFirstOrLast() {
+        $abc = "X:1\nT:First\nT:Second\nM:4/4\nM:2/4\n";
+        $parserFirst = new \Ksfraser\PhpabcCanntaireachd\AbcFileParser(['singleHeaderPolicy'=>'first']);
+        $parserLast = new \Ksfraser\PhpabcCanntaireachd\AbcFileParser(['singleHeaderPolicy'=>'last']);
+        $tuneFirst = $parserFirst->parse($abc)[0];
+        $tuneLast = $parserLast->parse($abc)[0];
+        $this->assertEquals('First', $tuneFirst->getHeaders()['T']->get());
+        $this->assertEquals('Second', $tuneLast->getHeaders()['T']->get());
+        $this->assertEquals('4/4', $tuneFirst->getHeaders()['M']->get());
+        $this->assertEquals('2/4', $tuneLast->getHeaders()['M']->get());
+    }
+    public function testMissingHeaderRendersEmpty() {
+        $tune = new \Ksfraser\PhpabcCanntaireachd\AbcTune();
+        $out = $tune->render();
+        $this->assertStringContainsString('T:', $out);
+        $this->assertStringContainsString('M:', $out);
+        $this->assertStringContainsString('L:', $out);
+    }
 }

@@ -3,7 +3,20 @@ namespace Ksfraser\PhpabcCanntaireachd;
 /**
  * Parses ABC files into AbcTune objects, handling multiple tunes per file.
  */
+use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderAll;
+
 class AbcFileParser {
+    /**
+     * Config: 'first' or 'last' for single-value header fields
+     */
+    protected $singleHeaderPolicy = 'last';
+
+    public function __construct($config = []) {
+        if (isset($config['singleHeaderPolicy'])) {
+            $this->singleHeaderPolicy = $config['singleHeaderPolicy'];
+        }
+    }
+
     /**
      * Parse ABC file content into an array of AbcTune objects.
      * @param string $abcContent
@@ -24,7 +37,27 @@ class AbcFileParser {
                 $currentTune = new AbcTune();
                 $currentTune->addHeader('X', substr($line, 2));
             } elseif ($currentTune && preg_match('/^([A-Z]):(.*)/', $line, $m)) {
-                $currentTune->addHeader($m[1], trim($m[2]));
+                $key = $m[1];
+                $value = trim($m[2]);
+                // Use header class if available
+                $headerClass = 'Ksfraser\\PhpabcCanntaireachd\\Header\\AbcHeader' . $key;
+                if (class_exists($headerClass)) {
+                    // Multi-value fields
+                    if (in_array($key, ['C', 'B'])) {
+                        $currentTune->addHeader($key, $value);
+                    } else {
+                        // Single-value: first/last policy
+                        $existing = $currentTune->getHeaders();
+                        if ($this->singleHeaderPolicy === 'first' && isset($existing[$key]) && $existing[$key]->get() !== '') {
+                            // Ignore subsequent
+                        } else {
+                            $currentTune->replaceHeader($key, $value);
+                        }
+                    }
+                } else {
+                    // Fallback: treat as string
+                    $currentTune->addHeader($key, $value);
+                }
             } elseif ($currentTune && trim($line) === '') {
                 // Blank line inside tune: add as line (for hidden voices/data)
                 $currentTune->add(new AbcLine());
