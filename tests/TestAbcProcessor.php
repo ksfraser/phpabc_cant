@@ -54,4 +54,22 @@ class TestAbcProcessor extends TestCase {
         $issues = $checker->checkBagpipeStyle($tunes[0]);
         $this->assertNotEmpty($issues, 'Should detect style issues in first tune');
     }
+    public function testVoiceOutputStyles() {
+        $voiceBars = [
+            'Bagpipes' => ['A B C D', 'A2 B2', 'A B', 'B2 A2', 'C D E F', 'G A B C', 'D E F G', 'A B C D'],
+            'Drums' => ['z4', 'z4', 'z4', 'z4', 'z4', 'z4', 'z4', 'z4']
+        ];
+        $config = new \Ksfraser\PhpabcCanntaireachd\AbcProcessorConfig();
+        $config->voiceOutputStyle = 'grouped';
+        $config->barsPerLine = 4;
+        $grouped = \Ksfraser\PhpabcCanntaireachd\AbcProcessor::renderVoices($voiceBars, $config);
+        $this->assertStringContainsString('V:Bagpipes', implode(' ', $grouped));
+        $this->assertStringContainsString('V:Drums', implode(' ', $grouped));
+        $config->voiceOutputStyle = 'interleaved';
+        $config->interleaveBars = 2;
+        $interleaved = \Ksfraser\PhpabcCanntaireachd\AbcProcessor::renderVoices($voiceBars, $config);
+        $this->assertStringContainsString('V:Bagpipes', implode(' ', $interleaved));
+        $this->assertStringContainsString('V:Drums', implode(' ', $interleaved));
+        $this->assertGreaterThan(1, count($interleaved), 'Should have multiple lines for interleaved output');
+    }
 }

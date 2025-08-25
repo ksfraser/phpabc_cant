@@ -11,3 +11,19 @@ M:2/4
 L:1/8
 V:Bagpipes
 |A B|A2|A|
+
+X:3
+T: Melody Voice
+M:2/4
+L:1/8
+V:Melody
+|A B|A2|A|
+
+X:4
+T: Multi Voice
+M:2/4
+L:1/8
+V:Melody
+|A B|A2|A|
+V:Guitar
+|A B|A2|A|

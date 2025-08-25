@@ -139,4 +139,44 @@ class AbcProcessor {
         });
         return array_merge($otherLines, array_values($voiceLines), $drumLines);
     }
+    public static function renderVoices(array $voiceBars, AbcProcessorConfig $config): array {
+        $output = [];
+        if ($config->voiceOutputStyle === 'grouped') {
+            foreach ($voiceBars as $voice => $bars) {
+                $lines = [];
+                for ($i = 0; $i < count($bars); $i += $config->barsPerLine) {
+                    $lineBars = array_slice($bars, $i, $config->barsPerLine);
+                    $line = implode('|', $lineBars);
+                    if ($config->joinBarsWithBackslash) {
+                        $line = implode(' \n', $lineBars);
+                    }
+                    $lines[] = $line;
+                }
+                $output[] = "V:$voice";
+                $output = array_merge($output, $lines);
+            }
+        } else if ($config->voiceOutputStyle === 'interleaved') {
+            $maxBars = max(array_map('count', $voiceBars));
+            for ($i = 0; $i < $maxBars; $i += $config->interleaveBars) {
+                foreach ($voiceBars as $voice => $bars) {
+                    $lineBars = array_slice($bars, $i, $config->interleaveBars);
+                    if (empty($lineBars)) continue;
+                    $line = implode('|', $lineBars);
+                    if ($config->joinBarsWithBackslash) {
+                        $line = implode(' \n', $lineBars);
+                    }
+                    $output[] = "V:$voice";
+                    $output[] = $line;
+                }
+            }
+        }
+        return $output;
+    }
+}
+
+class AbcProcessorConfig {
+    public $voiceOutputStyle = 'grouped'; // 'grouped' or 'interleaved'
+    public $interleaveBars = 1; // X bars per voice before switching (if interleaved)
+    public $barsPerLine = 4; // How many bars per ABC line
+    public $joinBarsWithBackslash = false; // true: use \ to join bars, false: one line per typeset line
 }

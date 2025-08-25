@@ -2,7 +2,10 @@
 // CLI tool for managing MIDI defaults
 $config = require __DIR__ . '/../src/Ksfraser/PhpabcCanntaireachd/config_db.php';
 $pdo = new PDO($config['dsn'], $config['user'], $config['password']);
-$options = getopt('', ['list', 'add:', 'edit:', 'delete:', 'midi_channel:', 'midi_program:', 'validate:', 'save:']);
+$options = getopt('', [
+    'list', 'add:', 'edit:', 'delete:', 'midi_channel:', 'midi_program:', 'validate:', 'save:',
+    'voice_output_style:', 'interleave_bars:', 'bars_per_line:', 'join_bars_with_backslash:'
+]);
 // Support multiple files via wildcard for validate/save
 $abcFiles = [];
 if (isset($options['validate'])) {
@@ -42,6 +45,12 @@ if (isset($options['list'])) {
     $stmt->execute([$voice]);
     echo "Deleted $voice.\n";
 } elseif (!empty($abcFiles)) {
+    $config = new \Ksfraser\PhpabcCanntaireachd\AbcProcessorConfig();
+    if (isset($options['voice_output_style'])) $config->voiceOutputStyle = $options['voice_output_style'];
+    if (isset($options['interleave_bars'])) $config->interleaveBars = (int)$options['interleave_bars'];
+    if (isset($options['bars_per_line'])) $config->barsPerLine = (int)$options['bars_per_line'];
+    if (isset($options['join_bars_with_backslash'])) $config->joinBarsWithBackslash = (bool)$options['join_bars_with_backslash'];
+
     foreach ($abcFiles as $abcFile) {
         $abcContent = file_get_contents($abcFile);
         $dict = include __DIR__ . '/../src/Ksfraser/PhpabcCanntaireachd/abc_dict.php';
