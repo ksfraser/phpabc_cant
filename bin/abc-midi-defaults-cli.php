@@ -1,7 +1,19 @@
 <?php
 // CLI tool for managing MIDI defaults
+$options = getopt('', [
+    'list', 'add:', 'edit:', 'delete:', 'midi_channel:', 'midi_program:', 'validate:', 'save:',
+    'voice_output_style:', 'interleave_bars:', 'bars_per_line:', 'join_bars_with_backslash:',
+    'mysql_user:', 'mysql_pass:', 'mysql_db:', 'mysql_host:', 'mysql_port:'
+]);
 $config = require __DIR__ . '/../src/Ksfraser/PhpabcCanntaireachd/config_db.php';
-$pdo = new PDO($config['dsn'], $config['user'], $config['password']);
+// Override config with CLI options if provided
+if (isset($options['mysql_user'])) $config['mysql_user'] = $options['mysql_user'];
+if (isset($options['mysql_pass'])) $config['mysql_pass'] = $options['mysql_pass'];
+if (isset($options['mysql_db']))   $config['mysql_db']   = $options['mysql_db'];
+if (isset($options['mysql_host'])) $config['mysql_host'] = $options['mysql_host'];
+if (isset($options['mysql_port'])) $config['mysql_port'] = $options['mysql_port'];
+$config['dsn'] = "mysql:host={$config['mysql_host']};port={$config['mysql_port']};dbname={$config['mysql_db']};charset=utf8mb4";
+$pdo = new PDO($config['dsn'], $config['mysql_user'], $config['mysql_pass']);
 $options = getopt('', [
     'list', 'add:', 'edit:', 'delete:', 'midi_channel:', 'midi_program:', 'validate:', 'save:',
     'voice_output_style:', 'interleave_bars:', 'bars_per_line:', 'join_bars_with_backslash:'

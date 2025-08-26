@@ -1,7 +1,10 @@
 <?php
-// Database configuration for MIDI defaults
+// Database configuration for MIDI defaults and fallback
 return [
-    'dsn' => 'mysql:host=localhost;dbname=abc_midi',
-    'user' => 'abcuser',
-    'password' => 'abcpassword',
+    'mysql_user' => 'abcuser',
+    'mysql_pass' => 'abcpassword',
+    'mysql_db'   => 'abc_midi',
+    'mysql_host' => 'localhost',
+    'mysql_port' => 3306,
+    'dsn'        => 'mysql:host=localhost;port=3306;dbname=abc_midi;charset=utf8mb4'
 ];
