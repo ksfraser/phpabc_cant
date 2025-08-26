@@ -1,11 +1,29 @@
 <?php
 // CLI tool for managing MIDI defaults
+// Load secrets if available
+if (class_exists('Symfony\Component\Runtime\Secrets\getSecret')) {
+    $getSecret = \Closure::fromCallable(['Symfony\Component\Runtime\Secrets', 'getSecret']);
+    $env = getenv();
+    $config = [
+        'mysql_user' => $env['MYSQL_USER'] ?? $getSecret('MYSQL_USER') ?? null,
+        'mysql_pass' => $env['MYSQL_PASS'] ?? $getSecret('MYSQL_PASS') ?? null,
+        'mysql_db'   => $env['MYSQL_DB']   ?? $getSecret('MYSQL_DB')   ?? null,
+        'mysql_host' => $env['MYSQL_HOST'] ?? $getSecret('MYSQL_HOST') ?? 'localhost',
+        'mysql_port' => $env['MYSQL_PORT'] ?? $getSecret('MYSQL_PORT') ?? 3306,
+    ];
+    // Fallback to config_db.php if any are missing
+    $fallback = require __DIR__ . '/../src/Ksfraser/PhpabcCanntaireachd/config_db.php';
+    foreach ($fallback as $k => $v) {
+        if (!isset($config[$k]) || $config[$k] === null) $config[$k] = $v;
+    }
+} else {
+    $config = require __DIR__ . '/../src/Ksfraser/PhpabcCanntaireachd/config_db.php';
+}
 $options = getopt('', [
     'list', 'add:', 'edit:', 'delete:', 'midi_channel:', 'midi_program:', 'validate:', 'save:',
     'voice_output_style:', 'interleave_bars:', 'bars_per_line:', 'join_bars_with_backslash:',
     'mysql_user:', 'mysql_pass:', 'mysql_db:', 'mysql_host:', 'mysql_port:'
 ]);
-$config = require __DIR__ . '/../src/Ksfraser/PhpabcCanntaireachd/config_db.php';
 // Override config with CLI options if provided
 if (isset($options['mysql_user'])) $config['mysql_user'] = $options['mysql_user'];
 if (isset($options['mysql_pass'])) $config['mysql_pass'] = $options['mysql_pass'];

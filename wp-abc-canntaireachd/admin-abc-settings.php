@@ -1,5 +1,34 @@
 <?php
 // WordPress admin: ABC Canntaireachd settings page
+// To use encrypted DB credentials, set Symfony secrets (see config_db.php for instructions)
+function abc_canntaireachd_get_db_config() {
+    if (class_exists('Symfony\Component\Runtime\Secrets\getSecret')) {
+        $getSecret = \Closure::fromCallable(['Symfony\Component\Runtime\Secrets', 'getSecret']);
+        $env = getenv();
+        $config = [
+            'mysql_user' => $env['MYSQL_USER'] ?? $getSecret('MYSQL_USER') ?? null,
+            'mysql_pass' => $env['MYSQL_PASS'] ?? $getSecret('MYSQL_PASS') ?? null,
+            'mysql_db'   => $env['MYSQL_DB']   ?? $getSecret('MYSQL_DB')   ?? null,
+            'mysql_host' => $env['MYSQL_HOST'] ?? $getSecret('MYSQL_HOST') ?? 'localhost',
+            'mysql_port' => $env['MYSQL_PORT'] ?? $getSecret('MYSQL_PORT') ?? 3306,
+        ];
+        $fallback = require __DIR__ . '/../src/Ksfraser/PhpabcCanntaireachd/config_db.php';
+        foreach ($fallback as $k => $v) {
+            if (!isset($config[$k]) || $config[$k] === null) $config[$k] = $v;
+        }
+    } else {
+        $config = require __DIR__ . '/../src/Ksfraser/PhpabcCanntaireachd/config_db.php';
+    }
+    // Option overrides
+    $config['mysql_user'] = get_option('abc_mysql_user', $config['mysql_user']);
+    $config['mysql_pass'] = get_option('abc_mysql_pass', $config['mysql_pass']);
+    $config['mysql_db']   = get_option('abc_mysql_db', $config['mysql_db']);
+    $config['mysql_host'] = get_option('abc_mysql_host', $config['mysql_host']);
+    $config['mysql_port'] = get_option('abc_mysql_port', $config['mysql_port']);
+    $config['dsn'] = "mysql:host={$config['mysql_host']};port={$config['mysql_port']};dbname={$config['mysql_db']};charset=utf8mb4";
+    return $config;
+}
+
 add_action('admin_menu', function() {
     add_options_page('ABC Canntaireachd Settings', 'ABC Canntaireachd', 'manage_options', 'abc-canntaireachd-settings', 'abc_canntaireachd_settings_page');
 });
