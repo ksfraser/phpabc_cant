@@ -12,6 +12,10 @@
     {
       "type": "vcs",
       "url": "https://github.com/ksfraser/ksf-file"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/ksfraser/origin"
     }
   ],
   "autoload": {
@@ -20,7 +24,8 @@
     }
   },
   "require": {
-    "ksfraser/ksf-file": "dev-main"
+    "ksfraser/ksf-file": "dev-main",
+    "ksfraser/origin": "dev-main"
   },
   "require-dev": {
     "phpunit/phpunit": "^10.0",

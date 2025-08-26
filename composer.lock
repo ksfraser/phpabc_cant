@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8c8d2f0ab05ea1fc36955cefdce5632b",
+    "content-hash": "68fe02ae97f1546b9298d03b66ea24ea",
     "packages": [
         {
             "name": "ksfraser/ksf-file",
@@ -42,6 +42,64 @@
                 "issues": "https://github.com/ksfraser/ksf-file/issues"
             },
             "time": "2025-08-23T17:44:47+00:00"
+        },
+        {
+            "name": "ksfraser/origin",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ksfraser/origin.git",
+                "reference": "ba219bae208ce5742a79ad07569b0505c40ba967"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ksfraser/origin/zipball/ba219bae208ce5742a79ad07569b0505c40ba967",
+                "reference": "ba219bae208ce5742a79ad07569b0505c40ba967",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^0.12.91",
+                "phpunit/phpunit": "^8.5.14"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ksfraser\\origin\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "ksfraser\\origin\\": "tests/"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "@php vendor/bin/phpunit"
+                ],
+                "phpstan": [
+                    "@php vendor/bin/phpstan analyse"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Kevin Fraser",
+                    "email": "kevin@ksfraser.ca",
+                    "role": "lead",
+                    "homepage": "https://ksfraser.ca"
+                }
+            ],
+            "description": "A set of base classes for my framework.",
+            "homepage": "https://github.com/ksfraser/origin",
+            "keywords": [
+                "ksfraser"
+            ],
+            "support": {
+                "issues": "https://github.com/ksfraser/origin/issues",
+                "security": "https://github.com/ksfraser/origin/security/policy",
+                "source": "https://github.com/ksfraser/origin/tree/main"
+            },
+            "time": "2025-04-24T20:31:07+00:00"
         }
     ],
     "packages-dev": [
@@ -6406,7 +6464,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "ksfraser/ksf-file": 20
+        "ksfraser/ksf-file": 20,
+        "ksfraser/origin": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
