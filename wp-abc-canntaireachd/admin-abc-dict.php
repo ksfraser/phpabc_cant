@@ -1,12 +1,37 @@
+/**
+ * WordPress admin screen for ABC/Canntaireachd/BMW token conversions
+ *
+ * Provides CRUD UI for managing the abc_dict_tokens table, which maps ABC tokens
+ * to canntaireachd and BMW tokens. If a BMW token is added and the ABC token exists,
+ * the BMW token is updated in that row. If a new ABC token is added, all values are inserted.
+ *
+ * @file admin-abc-dict.php
+ * @package Ksfraser\PhpabcCanntaireachd
+ */
 // Ensure WordPress helper functions are available in admin context
 if (!function_exists('esc_html') || !function_exists('esc_attr') || !function_exists('sanitize_text_field') || !function_exists('sanitize_textarea_field')) {
     require_once(ABSPATH . 'wp-includes/formatting.php');
 }
 <?php
-// WordPress admin screen for ABC/Canntaireachd/BMW token conversions
+/**
+ * Registers the ABC Dict Tokens admin menu page.
+ * @return void
+ */
 add_action('admin_menu', function() {
     add_menu_page('ABC Dict Tokens', 'ABC Dict Tokens', 'manage_options', 'abc-dict-tokens', 'abc_dict_tokens_admin');
 });
+
+/**
+ * Renders the ABC/Canntaireachd/BMW Token Conversions admin screen and handles CRUD actions.
+ *
+ * - Add: If ABC token exists, updates BMW token and description. Otherwise, inserts new row.
+ * - Edit: Updates all fields for the selected token.
+ * - Delete: Removes the selected token.
+ * - List: Displays all tokens in a table with edit/delete forms.
+ *
+ * @global wpdb $wpdb WordPress database access object
+ * @return void
+ */
 function abc_dict_tokens_admin() {
     global $wpdb;
     $table = $wpdb->prefix . 'abc_dict_tokens';
@@ -17,13 +42,24 @@ function abc_dict_tokens_admin() {
         $cannt = sanitize_text_field($_POST['cannt_token']);
         $bmw = sanitize_text_field($_POST['bmw_token']);
         $desc = sanitize_textarea_field($_POST['description']);
-        $wpdb->insert($table, [
-            'abc_token' => $abc,
-            'cannt_token' => $cannt,
-            'bmw_token' => $bmw,
-            'description' => $desc
-        ]);
-        echo '<div class="updated"><p>Added token.</p></div>';
+        // Check for existing ABC token
+        $existing = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table WHERE abc_token = %s", $abc));
+        if ($existing) {
+            // Update BMW token and description only
+            $wpdb->update($table, [
+                'bmw_token' => $bmw,
+                'description' => $desc
+            ], ['id' => $existing->id]);
+            echo '<div class="updated"><p>Updated BMW token for existing ABC token.</p></div>';
+        } else {
+            $wpdb->insert($table, [
+                'abc_token' => $abc,
+                'cannt_token' => $cannt,
+                'bmw_token' => $bmw,
+                'description' => $desc
+            ]);
+            echo '<div class="updated"><p>Added token.</p></div>';
+        }
     }
     // Handle delete
     if (isset($_POST['delete_dict_token'])) {

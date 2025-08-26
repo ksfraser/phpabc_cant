@@ -57,6 +57,24 @@ The package has been updated to be PSR-4 compliant:
 - **Old**: `require_once 'class.abc_note.php'`  
 - **New**: `use Ksfraser\PhpabcCanntaireachd\AbcNote;`
 
+
+## Token Dictionary Table and Admin UI
+
+### Token Table
+- Table: `abc_dict_tokens`
+- Columns: `id`, `abc_token`, `cannt_token`, `bmw_token`, `description`
+- Prepopulated from `abc_dict.php` for ABC/canntaireachd/BMW mappings
+- Unified lookup for ABC, canntaireachd, and BMW tokens
+
+### Admin CRUD
+- WordPress admin screen for managing token dictionary
+- Add, edit, delete tokens
+- If a BMW token is added and the ABC token exists, the BMW token is updated in that row
+- If a new ABC token is added, all values are inserted
+
+### Usage in Conversion
+- All ABC/canntaireachd/BMW conversions use the unified token table
+
 ## Available Classes
 
 - `AbcParser` - Parse ABC notation files

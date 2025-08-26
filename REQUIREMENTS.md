@@ -101,24 +101,57 @@ Legend: ✓ = Covered, - = Not applicable
 
 # ABC Canntaireachd Requirements
 
-## MIDI Defaults Table
-- Table name: `abc_midi_defaults` (used by both WordPress and CLI)
-- Columns: `id`, `voice_name`, `midi_channel`, `midi_program`
-- Example defaults:
-  - Drums: channel 10
-  - Bagpipes: channel 0, program 110
-  - Flute, Tenor, Clarinet, Trombone, Tuba, Alto, Trumpet, Guitar, Piano, BassGuitar (sequential channels)
+## Token Dictionary Table
+Table name: `abc_dict_tokens` (used by both WordPress and CLI)
+Columns: `id`, `abc_token`, `cannt_token`, `bmw_token`, `description`
+Prepopulated from `abc_dict.php` for ABC/canntaireachd/BMW mappings
+Logic:
+  - If a BMW token is added and the ABC token already exists, update the BMW token in that row
+  - If a new ABC token is added, insert with all provided values
+  - Retain all ABC/canntaireachd mappings, and ensure BMW tokens are filled where appropriate
 
 ## WordPress Admin
 - Admin screen to list/add/edit/delete MIDI defaults
-- Uses the same table
+- Admin screen to list/add/edit/delete token dictionary entries (ABC/canntaireachd/BMW)
+- On add, checks for existing ABC token and updates BMW token if present
 - Validates and processes ABC files in multiple passes
 - Shows links to output files (ABC, diff, error log)
 
 ## CLI Tool
 - Options: `--midi_channel`, `--midi_program`, `--list`, `--add`, `--edit`, `--delete`, `--validate`, `--save`
-- Uses the same table and config_db.php for DSN
+- Uses both tables and config_db.php for DSN
 - Lists output files after processing
+
+## Test Requirements for Token Management
+- Test that the token table is correctly prepopulated from `abc_dict.php`
+- Test that adding a BMW token updates the correct row if the ABC token exists
+- Test CRUD operations via the admin screen (add, edit, delete)
+- Test conversion logic using the unified token table for ABC/canntaireachd/BMW
+
+### Example Test Cases
+1. **Prepopulation**
+   - Assert that all ABC/canntaireachd/BMW mappings from `abc_dict.php` exist in the table after schema creation.
+2. **BMW Token Update**
+   - Add a BMW token for an existing ABC token via admin UI/CLI, assert only the BMW token and description are updated.
+3. **Add New Token**
+   - Add a new ABC token with canntaireachd and BMW values, assert a new row is created.
+4. **Edit Token**
+   - Edit any field for an existing token via admin UI, assert changes are persisted.
+5. **Delete Token**
+   - Delete a token via admin UI, assert it is removed from the table.
+6. **Conversion Logic**
+   - Use the token table for ABC->canntaireachd and BMW->ABC conversions, assert correct mapping is returned.
+7. **Edge Cases**
+   - Add tokens with special characters, long values, or empty fields, assert proper handling and validation.
+8. **Bulk Operations**
+   - Import multiple tokens at once, assert all are added/updated correctly.
+
+### Test Coverage Targets
+- 100% coverage for CRUD operations on token table (add, edit, delete, update BMW)
+- 100% coverage for conversion logic using token table
+- 100% coverage for admin UI actions (form submission, validation, error handling)
+- 100% coverage for CLI options related to token management
+- 100% coverage for schema prepopulation and migration
 
 ## AbcProcessor (shared)
 - Multi-pass ABC file processing:

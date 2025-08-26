@@ -22,6 +22,24 @@ namespace Ksfraser.PhpabcCanntaireachd {
     BaseConverter <|-- LineByLine
     Dict2php <|-- SimplifyAbc
     // ...other relationships...
+
+    class AbcDictToken {
+        +abc_token: string
+        +cannt_token: string
+        +bmw_token: string
+        +description: string
+    }
+
+    class AdminAbcDictScreen {
+        +addToken()
+        +editToken()
+        +deleteToken()
+        +listTokens()
+    }
+
+    AdminAbcDictScreen --> AbcDictToken : manages
+    AbcParser --> AbcDictToken : uses for conversion
+    Dict2php --> AbcDictToken : uses for conversion
 }
 @enduml
 
