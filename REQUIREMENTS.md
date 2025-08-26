@@ -1,3 +1,27 @@
+# Tune Number Renumbering & Width
+
+## Features
+- CLI and WP support renumbering duplicated X: tune numbers
+- Config option for tune number width (default 5, left-filled with zeros)
+- CLI: `abc-renumber-tunes-cli.php <abcfile> [--width=N]` sets width
+- WP: Option to set width for renumbering in admin UI
+- All renumbered X: numbers are unique and formatted as X: 00001, X: 00002, etc.
+
+## Test Matrix (Renumbering)
+| Feature                | CLI | WP | Config | Error Handling | Test Coverage |
+|------------------------|:---:|:--:|:------:|:--------------:|:-------------:|
+| Renumber Duplicates    | ✓   | ✓  | ✓      | ✓              | ✓             |
+| Tune Number Width      | ✓   | ✓  | ✓      | ✓              | ✓             |
+| Left-filled Zeros      | ✓   | ✓  | ✓      | ✓              | ✓             |
+| Validation Errors      | ✓   | ✓  | ✓      | ✓              | ✓             |
+| Undefined Variable Fix | ✓   | ✓  | -      | ✓              | ✓             |
+
+## Error Handling
+- All validation errors (missing X:, T:, K:) are reported per tune
+- Undefined variable notices (e.g., $params) are fixed and tested
+- CLI and WP output errors to screen/log
+
+---
 # Project Requirements: PHPABC Canntaireachd
 
 - All public APIs must be documented.
