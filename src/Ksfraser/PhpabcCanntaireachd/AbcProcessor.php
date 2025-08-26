@@ -2,7 +2,7 @@
 namespace Ksfraser\PhpabcCanntaireachd;
 
 class AbcProcessor {
-    public static function process($abcContent, $dict) {
+    public static function process($abcContent, $dict, $headerTable = null) {
         $lines = explode("\n", $abcContent);
         $passes = [
             new AbcVoicePass(),
@@ -13,6 +13,25 @@ class AbcProcessor {
         ];
         $canntDiff = [];
         $errors = [];
+
+        // Extract header fields from ABC (e.g., C: composer, B: book)
+        $tuneFields = [];
+        foreach ($lines as $line) {
+            if (preg_match('/^C:\s*(.+)$/', $line, $m)) {
+                $tuneFields['composer'] = trim($m[1]);
+            }
+            if (preg_match('/^B:\s*(.+)$/', $line, $m)) {
+                $tuneFields['book'] = trim($m[1]);
+            }
+        }
+
+        // Match and update header fields
+        $suggestions = [];
+        if ($headerTable) {
+            $matcher = new AbcHeaderFieldMatcher($headerTable);
+            $suggestions = $matcher->processTuneFields($tuneFields);
+        }
+
         foreach ($passes as $pass) {
             if ($pass instanceof AbcLyricsPass) {
                 $result = $pass->process($lines);
@@ -34,6 +53,12 @@ class AbcProcessor {
                 $lines = $pass->process($lines);
             }
         }
+
+        // Add suggestions as comments for review
+        foreach ($suggestions as $s) {
+            $lines[] = "% Suggested: {$s['field']} '{$s['value']}' ~ '{$s['bestMatch']}' (score: {$s['score']})";
+        }
+
         return [
             'lines' => $lines,
             'canntDiff' => $canntDiff,

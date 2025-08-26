@@ -99,6 +99,7 @@ Legend: ✓ = Covered, - = Not applicable
 
 ---
 
+
 # ABC Canntaireachd Requirements
 
 ## Token Dictionary Table
@@ -109,6 +110,41 @@ Logic:
   - If a BMW token is added and the ABC token already exists, update the BMW token in that row
   - If a new ABC token is added, insert with all provided values
   - Retain all ABC/canntaireachd mappings, and ensure BMW tokens are filled where appropriate
+
+## Header Field Table & Matching
+Table name: `abc_header_fields` (used by both WordPress and CLI)
+Columns: `id`, `field_name`, `field_value`
+Stores unique values for header fields (e.g., composer, book)
+Logic:
+  - When processing ABC files, compare tune header fields against stored values
+  - If match score is low, add new value to table
+  - If match score is high but not exact, add a comment to the tune for review
+  - Supports future matching, suggestions, and corrections
+
+## WordPress Admin
+- Admin screen to list/add/edit/delete MIDI defaults
+- Admin screen to list/add/edit/delete token dictionary entries (ABC/canntaireachd/BMW)
+- Admin screen to list/add/edit/delete header field values (composer, book, etc.)
+- On add, checks for existing ABC token and updates BMW token if present
+- Validates and processes ABC files in multiple passes
+- Shows links to output files (ABC, diff, error log)
+
+## CLI Tool
+- Options: `--midi_channel`, `--midi_program`, `--list`, `--add`, `--edit`, `--delete`, `--validate`, `--save`
+- Uses both tables and config_db.php for DSN
+- Lists output files after processing
+- Supports header field CRUD and matching
+
+## Test Requirements for Token & Header Field Management
+- Test that the token table is correctly prepopulated from `abc_dict.php`
+- Test that adding a BMW token updates the correct row if the ABC token exists
+- Test CRUD operations via the admin screen (add, edit, delete)
+- Test conversion logic using the unified token table for ABC/canntaireachd/BMW
+- Test that header field table stores unique values for composer, book, etc.
+- Test that processing a tune with a new header field adds it to the table
+- Test that high-but-not-exact matches add a comment for review
+- Test CRUD operations for header fields via admin and CLI
+- Test matching and suggestion logic for header fields
 
 ## WordPress Admin
 - Admin screen to list/add/edit/delete MIDI defaults
