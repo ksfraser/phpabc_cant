@@ -5,6 +5,7 @@ class AbcProcessor {
     public static function process($abcContent, $dict, $headerTable = null) {
         $lines = explode("\n", $abcContent);
         $passes = [
+            new AbcTuneNumberValidatorPass(),
             new AbcVoicePass(),
             new AbcLyricsPass($dict),
             new AbcCanntaireachdPass(),
@@ -33,7 +34,15 @@ class AbcProcessor {
         }
 
         foreach ($passes as $pass) {
-            if ($pass instanceof AbcLyricsPass) {
+            if ($pass instanceof AbcTuneNumberValidatorPass) {
+                $result = $pass->validate($lines);
+                $lines = $result['lines'];
+                if (!empty($result['errors'])) {
+                    foreach ($result['errors'] as $err) {
+                        $errors[] = 'TUNE NUMBER: ' . $err;
+                    }
+                }
+            } elseif ($pass instanceof AbcLyricsPass) {
                 $result = $pass->process($lines);
                 $lines = $result['lines'];
                 if (!empty($result['lyricsWords'])) {

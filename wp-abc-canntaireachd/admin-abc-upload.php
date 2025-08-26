@@ -38,13 +38,53 @@ function abc_upload_page() {
             $processed[] = $errFile;
         }
     }
-    // List files for download
+    // List files for download and add renumber button
     echo '<h2>ABC Files</h2><form method="post" enctype="multipart/form-data">';
     echo '<input type="file" name="abc_files[]" multiple><input type="submit" value="Upload">';
-    echo '</form><ul>';
+    echo '</form>';
+    // Renumber form
+    echo '<form method="post"><input type="hidden" name="renumber" value="1">';
+    echo '<select name="renumber_file">';
+    foreach (glob($target_dir . '*.abc') as $file) {
+        echo '<option value="' . htmlspecialchars($file) . '">' . htmlspecialchars(basename($file)) . '</option>';
+    }
+    echo '</select> <input type="submit" value="Renumber Duplicated Tune Numbers"></form>';
+    echo '<form method="post"><input type="hidden" name="reorder" value="1">';
+    echo '<select name="reorder_file">';
+    foreach (glob($target_dir . '*.abc') as $file) {
+        echo '<option value="' . htmlspecialchars($file) . '">' . htmlspecialchars(basename($file)) . '</option>';
+    }
+    echo '</select> <input type="submit" value="Reorder Tunes by X Number"></form>';
+    echo '<ul>';
     foreach (glob($target_dir . '*') as $file) {
         $url = $upload_dir['baseurl'] . '/abc_canntaireachd/' . basename($file);
-        echo '<li><a href="' . esc_url($url) . '" download>' . esc_html(basename($file)) . '</a></li>';
+        echo '<li><a href="' . $url . '" download>' . htmlspecialchars(basename($file)) . '</a></li>';
     }
     echo '</ul>';
+    // Handle renumber request
+    if (!empty($_POST['renumber']) && !empty($_POST['renumber_file'])) {
+        $file = $_POST['renumber_file'];
+        $cmd = 'php ' . escapeshellarg(__DIR__ . '/../bin/abc-renumber-tunes-cli.php') . ' ' . escapeshellarg($file);
+        $output = shell_exec($cmd);
+        echo '<div class="updated"><pre>' . htmlspecialchars($output) . '</pre></div>';
+        // Show link to renumbered file
+        $renumFile = $file . '.renumbered';
+        if (file_exists($renumFile)) {
+            $url = $upload_dir['baseurl'] . '/abc_canntaireachd/' . basename($renumFile);
+            echo '<div class="updated"><a href="' . $url . '" download>Download Renumbered File</a></div>';
+        }
+    }
+    // Handle reorder request
+    if (!empty($_POST['reorder']) && !empty($_POST['reorder_file'])) {
+        $file = $_POST['reorder_file'];
+        $cmd = 'php ' . escapeshellarg(__DIR__ . '/../bin/abc-reorder-tunes-cli.php') . ' ' . escapeshellarg($file);
+        $output = shell_exec($cmd);
+        echo '<div class="updated"><pre>' . htmlspecialchars($output) . '</pre></div>';
+        // Show link to reordered file
+        $reorderFile = $file . '.reordered';
+        if (file_exists($reorderFile)) {
+            $url = $upload_dir['baseurl'] . '/abc_canntaireachd/' . basename($reorderFile);
+            echo '<div class="updated"><a href="' . $url . '" download>Download Reordered File</a></div>';
+        }
+    }
 }

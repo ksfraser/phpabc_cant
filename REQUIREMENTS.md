@@ -1,37 +1,5 @@
 # Project Requirements: PHPABC Canntaireachd
 
-## Overview
-This project provides a PSR-4 compliant PHP library for working with ABC notation and canntaireachd, including utilities for parsing, simplifying, and converting musical notation. The codebase is designed for correctness, completeness, and maintainability.
-
-## Functional Requirements
-
-### 1. PSR-4 Compliance
-- All classes must use proper namespaces and directory structure.
-- Composer autoloading must work for all classes.
-
-### 2. ABC Notation Support
-- Parse ABC notation files and strings.
-- Represent musical elements: notes, barlines, beats, voices, keys, embellishments, gracenotes, etc.
-- Provide utilities for simplifying and converting ABC notation.
-- Support dictionary-based conversions (Dict2php).
-
-### 3. Canntaireachd Support
-- Support conversion between ABC notation and canntaireachd (bagpipe vocal notation).
-- Provide extensible base classes for future musical features.
-
-### 4. File Handling
-- Integrate with `ksf-file` package for robust file operations.
-
-### 5. Testing & Documentation
-- All classes must have PHPDoc blocks for IDE and documentation support.
-- All classes must have unit tests verifying instantiation and basic behavior.
-- Test coverage must be tracked and reported.
-- Requirements, test plan, and test matrix must be documented in the repository.
-
-## Non-Functional Requirements
-- Code must be readable, maintainable, and follow modern PHP best practices.
-- All dependencies must be managed via Composer.
-- The codebase must be compatible with PHP 8.0+.
 - All public APIs must be documented.
 - The project must include a UML diagram of class relationships and message flow.
 

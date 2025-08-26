@@ -90,6 +90,10 @@ class AbcValidator
                     if (preg_match('/drum/i', $voiceName)) {
                         $drumVoiceLines[] = $n;
                     }
+                    // Check for transpose in voice params
+                    if (preg_match('/transpose=/', $params)) {
+                        $voiceHasTranspose = true;
+                    }
                 }
                 // Check for required headers
                     if ($firstVoiceIdx === null) $firstVoiceIdx = $n;
