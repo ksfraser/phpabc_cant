@@ -32,6 +32,29 @@ if (isset($options['mysql_host'])) $config['mysql_host'] = $options['mysql_host'
 if (isset($options['mysql_port'])) $config['mysql_port'] = $options['mysql_port'];
 $config['dsn'] = "mysql:host={$config['mysql_host']};port={$config['mysql_port']};dbname={$config['mysql_db']};charset=utf8mb4";
 $pdo = new PDO($config['dsn'], $config['mysql_user'], $config['mysql_pass']);
+// Check if table exists, create/populate if missing
+$table = 'abc_midi_defaults';
+$tableExists = false;
+try {
+    $stmt = $pdo->query("SHOW TABLES LIKE '$table'");
+    $tableExists = $stmt->fetchColumn() !== false;
+} catch (Exception $e) {
+    $tableExists = false;
+}
+if (!$tableExists) {
+    $schemaFile = __DIR__ . '/abc_midi_defaults_schema.sql';
+    if (file_exists($schemaFile)) {
+        $sql = file_get_contents($schemaFile);
+        foreach (explode(';', $sql) as $query) {
+            $query = trim($query);
+            if ($query) $pdo->exec($query);
+        }
+        echo "Created and populated $table from schema.\n";
+    } else {
+        echo "Schema file $schemaFile not found.\n";
+        exit(1);
+    }
+}
 $options = getopt('', [
     'list', 'add:', 'edit:', 'delete:', 'midi_channel:', 'midi_program:', 'validate:', 'save:',
     'voice_output_style:', 'interleave_bars:', 'bars_per_line:', 'join_bars_with_backslash:'
