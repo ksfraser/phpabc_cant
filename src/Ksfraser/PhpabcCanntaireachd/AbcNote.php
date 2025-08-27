@@ -1,89 +1,60 @@
 <?php
-
 namespace Ksfraser\PhpabcCanntaireachd;
 
 use ksfraser\origin\Origin;
 
-/**//**************************************************************
- * I have built an array of items from the DOCs from bmw to try
- * and convert into ABC.  This should save a bunch of typesetting tim.
- *
- * * ***************************************************************/
+trait NoteParserTrait {
+	/**
+	 * Parse an ABC note string into components.
+	 * @param string $noteStr
+	 * @return array [pitch, octave, sharpflat, length, decorator]
+	 */
+	public static function parseNote($noteStr) {
+		// Example regex for ABC note parsing
+		if (preg_match("/^([_=^]?)([a-gA-GzZ])([,']*)(\\d*\/?\\d*)(.*)$/", $noteStr, $m)) {
+			return [
+				'pitch' => $m[2],
+				'octave' => $m[3],
+				'sharpflat' => $m[1],
+				'length' => $m[4],
+				'decorator' => $m[5]
+			];
+		}
+		return [
+			'pitch' => '',
+			'octave' => '',
+			'sharpflat' => '',
+			'length' => '',
+			'decorator' => ''
+		];
+	}
+}
 
-/**//*********************************************************
-* This class creates the voice line describing the voice for the header
-*
-* This class assumes that the creating code has alread parsed a string
-* into the Pitch, octave, sharp/flat/...
-*
-*	From the documentation (https://abc.sourceforge.net/standard/abc2midi.txt)
-*		A note consists of a pitch specifier followed by a length. Available pitch
-*		specifiers are :
-*		
-*		C, D, E, F, G, A, B, C D E F G A B c d e f g a b c' d' e' f' g' a' b'
-*		
-*		This covers 4 octaves. abc2midi allows lower octaves to be reached by
-*		adding extra , characters and higher octaves to be reached by adding
-*		extra ' characters. However, this is not standard abc and may not be
-*		supported by other abc utilities.
-*		
-*		You can raise or lower the pitch specifier a semitone by preceding it with
-*		^ or _ respectively. The key signature and preceding sharps, flats and
-*		barlines modify the default pitch in the same way as on a stave. Preceding 
-*		a note with = generates natural pitch and ^^ and __ can be used for double 
-*		sharp and double flat respectively.
-*		
-*		The length is in general specified by a fraction following the pitch
-*		specifier. However, the notation is made more concise by allowing much
-*		of the fraction to be omitted.
-*		
-*		C  - selects a note of 1 unit note length.
-*		C2 - selects a note of 2 unit note lengths.
-*		C/2 - selects a note of 1/2 unit note length.
-*		C3/4 - selects a note of 3/4 unit note length.
-*		
-*		C/ is allowed as an abbreviation of C/2.
-*		C// is allowed as an abbreviation of C/4. However, this is not standard
-*		notation and is not allowed by all abc programs.
-*		
-*		No space is allowed within a note, but space may be used to separate
-*		notes in the tune.
-*		
-*		Rests are written by using 'z' as the pitch specifier.
-*
-*************************************************************/
 class AbcNote extends Origin
 {
-	protected $pitch;	//a-gA-G
-	protected $octave;	//, or '
-	protected $sharpflat;	// =^_	null/natural/sharp/flat
-	protected $length;	//!<string	(int)(/)(int)
-	protected $decorator;	//!<string .MHTR!trill!	stacatto Legato Fermato Trill Roll
+	use NoteParserTrait;
+
+	protected $pitch;    //a-gA-G
+	protected $octave;    //, or '
+	protected $sharpflat;    // =^_    null/natural/sharp/flat
+	protected $length;    //!<string    (int)(/)(int)
+	protected $decorator;    //!<string .MHTR!trill!    stacatto Legato Fermato Trill Roll
 	protected $name;
 	protected $cannt;
-	protected $callback;	//Function to process this voice
+	protected $callback;    //Function to process this voice
 
-	/***********************************************************//**
-	* Construct a NOTE
-	*
-	* This class assumes that the creating code has alread parsed a string
-	* into the Pitch, octave, sharp/flat/...
-	***************************************************************/
-	function __construct( $pitch, $octave = '', $sharpflat='', $length=1, $decorator="", $callback = null )
+	public function __construct($noteStr, $callback = null)
 	{
 		parent::__construct();
-		$this->set( "pitch", $pitch );
-		$this->set( "octave", $octave );
-		$this->set( "sharpflat", $sharpflat );
-		$this->set( "length", $length );
-		$this->set( "decorator", $decorator );
+		$parsed = self::parseNote($noteStr);
+		$this->set("pitch", $parsed['pitch']);
+		$this->set("octave", $parsed['octave']);
+		$this->set("sharpflat", $parsed['sharpflat']);
+		$this->set("length", $parsed['length']);
+		$this->set("decorator", $parsed['decorator']);
 		$this->callback = $callback;
 	}
-	
-	function set( $var, $value, $enforce = false )
-	{
-		switch( $var )
-		{
+}
 			case "pitch":
 				$ok = $this->validate_pitch( $value );
 				if( $ok )

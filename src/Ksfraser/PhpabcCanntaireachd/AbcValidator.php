@@ -10,6 +10,8 @@ namespace Ksfraser\PhpabcCanntaireachd;
 
 class AbcValidator
 {
+    use ErrorFormatterTrait;
+    use VoiceParserTrait;
     /**
      * Validate ABC file content according to ABC notation specs.
      * @param string $abcContent
@@ -42,6 +44,7 @@ class AbcValidator
             foreach ($lines as $n => $line) {
                 $line = trim($line);
                 if ($line === '') continue;
+                $params = '';
                 if (preg_match('/^X:\s*(\d+)/', $line, $xm)) {
                     $tuneX = $xm[1];
                     $hasX = true;
@@ -59,15 +62,15 @@ class AbcValidator
                     }
                 }
                 // Voice checks
-                if (preg_match('/^V:([^
-\s]+)(.*)$/', $line, $matches)) {
-                    $voiceName = $matches[1];
-                    $params = $matches[2];
+                $voiceInfo = self::parseVoiceLine($line);
+                if ($voiceInfo['voiceName'] !== null) {
+                    $voiceName = $voiceInfo['voiceName'];
+                    $params = $voiceInfo['params'];
                     $hasName = preg_match('/name="[^"]+"/', $params);
                     $bodyStartIdx = $n;
                     $hasSname = preg_match('/sname="[^"]+"/', $params);
                     if (!$hasName || !$hasSname) {
-                        $errors[] = "Tune " . ($i+1) . ", line " . ($n+1) . ": Voice '$voiceName' missing name or sname. Suggest: name=\"$voiceName\" sname=\"$voiceName\"";
+                        $errors[] = self::formatError($i, $tuneX, $n+1, "Voice '$voiceName' missing name or sname. Suggest: name=\"$voiceName\" sname=\"$voiceName\"");
                     }
                     $voices[] = $voiceName;
                     // Detect melody voice (first non-drum voice)
@@ -88,9 +91,9 @@ class AbcValidator
                     }
                 }
                 // Check for required headers
-                    if ($firstVoiceIdx === null) $firstVoiceIdx = $n;
+                if ($firstVoiceIdx === null) $firstVoiceIdx = $n;
                 if (preg_match('/^[A-Z]:/', $line) && !preg_match('/^(X:|K:|T:|M:|L:|Q:|C:|w:|W:|V:|P:|R:|S:|O:|B:|D:|F:|G:|I:|m:|U:|Z:)/', $line)) {
-                    $errors[] = "Tune " . ($i+1) . ", line " . ($n+1) . ": Unknown header: $line";
+                    $errors[] = self::formatError($i, $tuneX, $n+1, "Unknown header: $line");
                 }
                 if ($melodyVoiceName && $melodyVoiceLine !== null && $n > $melodyVoiceLine && !preg_match('/^[A-Z]:/', $line)) {
                     $melodyNotes[] = $line;
@@ -99,18 +102,18 @@ class AbcValidator
                 if ($bodyStarted && !preg_match('/^[A-Z]:/', $line)) {
                     // Validate notes, barlines, lyrics, etc.
                     if (!preg_match('/^[\|\[\]a-gA-GzZ0-9\s,:!\'\"\/\^_\.\-]+$/', $line)) {
-                        $errors[] = "Tune " . ($i+1) . ", line " . ($n+1) . ": Invalid body line: $line";
+                        $errors[] = self::formatError($i, $tuneX, $n+1, "Invalid body line: $line");
                     }
             // Check for missing C: and B: headers
             if (!$hasC) {
-                $errors[] = "Tune " . ($i+1) . " (X:" . ($tuneX !== null ? $tuneX : '?') . ") missing C: header (composer). Suggest: add C:<composer>.";
+                $errors[] = self::formatError($i, $tuneX, null, "missing C: header (composer). Suggest: add C:<composer>.");
             }
             if (!$hasB) {
-                $errors[] = "Tune " . ($i+1) . " (X:" . ($tuneX !== null ? $tuneX : '?') . ") missing B: header (book). Suggest: add B:<book>.";
+                $errors[] = self::formatError($i, $tuneX, null, "missing B: header (book). Suggest: add B:<book>.");
             }
             // Check for missing O: and Z: headers, suggest sourcing from DB or override
             if (!$hasO) {
-                $errors[] = "Tune " . ($i+1) . " (X:" . ($tuneX !== null ? $tuneX : '?') . ") missing O: header (origin). Suggest: source from database or override via CLI/WordPress input.";
+                $errors[] = self::formatError($i, $tuneX, null, "missing O: header (origin). Suggest: source from database or override via CLI/WordPress input.");
             // If melody voice exists and no bagpipe voice, insert bagpipe voice and notes at top of body
             if ($melodyVoiceName && !$hasBagpipeVoice && count($melodyNotes) > 0 && $bodyStartIdx !== null) {
                 $bagpipeVoiceLine = 'V:Bagpipes name="Bagpipes" sname="Bagpipes"';
@@ -122,10 +125,10 @@ class AbcValidator
             // ...existing code...
             }
             if (!$hasZ) {
-                $errors[] = "Tune " . ($i+1) . " (X:" . ($tuneX !== null ? $tuneX : '?') . ") missing Z: header (transcriber/notes). Suggest: source from database or override via CLI/WordPress input.";
+                $errors[] = self::formatError($i, $tuneX, null, "missing Z: header (transcriber/notes). Suggest: source from database or override via CLI/WordPress input.");
             // If melody voice exists and no bagpipe voice, suggest copying melody to bagpipe
             if ($melodyVoiceName && !$hasBagpipeVoice && count($melodyNotes) > 0) {
-                $errors[] = "Tune " . ($i+1) . ": Melody voice '$melodyVoiceName' found but no bagpipe voice. Suggest: copy melody voice and its notes to a new bagpipe voice.";
+                $errors[] = self::formatError($i, $tuneX, null, "Melody voice '$melodyVoiceName' found but no bagpipe voice. Suggest: copy melody voice and its notes to a new bagpipe voice.");
             }
             }
                 }
@@ -141,14 +144,14 @@ class AbcValidator
                 }
             }
             // Required header checks
-            if (!$hasX) $errors[] = "Tune " . ($i+1) . " missing X: header (reference number)";
-            if (!$hasX) $errors[] = "Tune " . ($i+1) . " (X:?) missing X: header (reference number)";
-            if (!$hasT) $errors[] = "Tune " . ($i+1) . " (X:" . ($tuneX !== null ? $tuneX : '?') . ") missing T: header (title)";
+            if (!$hasX) $errors[] = self::formatError($i, $tuneX, null, "missing X: header (reference number)");
+            if (!$hasX) $errors[] = self::formatError($i, null, null, "missing X: header (reference number)");
+            if (!$hasT) $errors[] = self::formatError($i, $tuneX, null, "missing T: header (title)");
             if (!$hasK) {
                 if ($isBagpipe) {
-                    $errors[] = "Tune " . ($i+1) . " (X:" . ($tuneX !== null ? $tuneX : '?') . ") missing K: header (key signature). For bagpipe tunes, add K:HP after headers.";
+                    $errors[] = self::formatError($i, $tuneX, null, "missing K: header (key signature). For bagpipe tunes, add K:HP after headers.");
                 } else {
-                    $errors[] = "Tune " . ($i+1) . " (X:" . ($tuneX !== null ? $tuneX : '?') . ") missing K: header (key signature)";
+                    $errors[] = self::formatError($i, $tuneX, null, "missing K: header (key signature)");
                 }
             }
             // Header order check (X: should be first)
@@ -158,11 +161,11 @@ class AbcValidator
                 $errors[] = "Tune " . ($i+1) . ": No voices have transpose. Suggest: add transpose=2 to all voices.";
                 $errors[] = "Tune " . ($i+1) . ": Suggest adding secondary title T:Bagpipe Key Relative after the main title.";
             }
-                $errors[] = "Tune " . ($i+1) . " header X: should be first";
+                $errors[] = self::formatError($i, $tuneX, null, "header X: should be first");
             }
             // Drum voice check
             foreach ($drumVoiceLines as $drumLine) {
-                $errors[] = "Tune " . ($i+1) . ", line " . ($drumLine+1) . ": Drum voice detected. Add [K:C] after this voice declaration.";
+                $errors[] = self::formatError($i, $tuneX, $drumLine+1, "Drum voice detected. Add [K:C] after this voice declaration.");
             }
         }
         return $errors;

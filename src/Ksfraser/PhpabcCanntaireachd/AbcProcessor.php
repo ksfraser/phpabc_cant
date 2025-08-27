@@ -1,7 +1,10 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd;
 
+use Ksfraser\PhpabcCanntaireachd\HeaderExtractorTrait;
+
 class AbcProcessor {
+    use HeaderExtractorTrait;
     public static function process($abcContent, $dict, $headerTable = null) {
         $lines = explode("\n", $abcContent);
         $passes = [
@@ -16,15 +19,16 @@ class AbcProcessor {
         $errors = [];
 
         // Extract header fields from ABC (e.g., C: composer, B: book)
-        $tuneFields = [];
-        foreach ($lines as $line) {
-            if (preg_match('/^C:\s*(.+)$/', $line, $m)) {
-                $tuneFields['composer'] = trim($m[1]);
-            }
-            if (preg_match('/^B:\s*(.+)$/', $line, $m)) {
-                $tuneFields['book'] = trim($m[1]);
-            }
-        }
+        $headerFields = self::extractHeaders($lines, ['C','B','K','T','M','L','Q']);
+        $tuneFields = [
+            'composer' => isset($headerFields['C']) ? $headerFields['C'] : null,
+            'book' => isset($headerFields['B']) ? $headerFields['B'] : null,
+            'key' => isset($headerFields['K']) ? $headerFields['K'] : null,
+            'title' => isset($headerFields['T']) ? $headerFields['T'] : null,
+            'meter' => isset($headerFields['M']) ? $headerFields['M'] : null,
+            'notelength' => isset($headerFields['L']) ? $headerFields['L'] : null,
+            'tempo' => isset($headerFields['Q']) ? $headerFields['Q'] : null
+        ];
 
         // Match and update header fields
         $suggestions = [];
