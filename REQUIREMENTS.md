@@ -1,6 +1,8 @@
 # Tune Number Renumbering & Width
 
+
 ## Features
+- All CLI commands support `--output=filename` and use a common output writer class (`CliOutputWriter`) for file output
 - CLI and WP support renumbering duplicated X: tune numbers
 - Config option for tune number width (default 5, left-filled with zeros)
 - CLI: `abc-renumber-tunes-cli.php <abcfile> [--width=N]` sets width
@@ -29,6 +31,7 @@
 
 ---
 
+
 # Test Plan
 
 ## 1. Unit Testing
@@ -37,6 +40,8 @@
   - Instantiation
   - Basic method behavior (where applicable)
 - Edge cases and error handling must be tested for core logic classes (e.g., AbcParser, Dict2php).
+- All CLI output is tested via `CliOutputWriterTest`.
+- Voice order pass is tested via `AbcVoiceOrderPassTest`.
 
 ## 2. Integration Testing
 - Test that Composer autoloading works for all classes.
@@ -54,6 +59,7 @@
 ---
 
 # Test Matrix
+
 
 | Class                | Instantiation | Core Methods | Error Handling | Integration | PHPDoc | UML |
 |----------------------|:-------------:|:------------:|:--------------:|:-----------:|:------:|:---:|
@@ -74,6 +80,8 @@
 | Dict2php             |      ✓        |      ✓       |      ✓         |     ✓       |   ✓    | ✓   |
 | LineByLine           |      ✓        |      -       |      -         |     ✓       |   ✓    | ✓   |
 | SimplifyAbc          |      ✓        |      ✓       |      ✓         |     ✓       |   ✓    | ✓   |
+| AbcVoiceOrderPass    |      ✓        |      ✓       |      ✓         |     ✓       |   ✓    | ✓   |
+| CliOutputWriter      |      ✓        |      ✓       |      ✓         |     ✓       |   ✓    | ✓   |
 
 Legend: ✓ = Covered, - = Not applicable
 

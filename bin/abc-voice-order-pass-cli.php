@@ -1,16 +1,28 @@
 #!/usr/bin/env php
 <?php
 // Pass 4: Voice order reordering
+
 require_once __DIR__ . '/../vendor/autoload.php';
 use Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass;
 use Ksfraser\PhpabcCanntaireachd\AbcFileParser;
+use Ksfraser\PhpabcCanntaireachd\CliOutputWriter;
 
-if ($argc < 3) {
-    echo "Usage: php bin/abc-voice-order-pass-cli.php <abcfile> <tune_number>\n";
+// Support --output option
+$outputFile = null;
+foreach ($argv as $i => $arg) {
+    if ($i === 0) continue;
+    if (preg_match('/^--output=(.+)$/', $arg, $m)) {
+        $outputFile = $m[1];
+    } elseif (!isset($file)) {
+        $file = $arg;
+    } elseif (!isset($xnum)) {
+        $xnum = $arg;
+    }
+}
+if (!isset($file) || !isset($xnum)) {
+    echo "Usage: php bin/abc-voice-order-pass-cli.php <abcfile> <tune_number> [--output=out.txt]\n";
     exit(1);
 }
-$file = $argv[1];
-$xnum = $argv[2];
 if (!file_exists($file)) {
     echo "File not found: $file\n";
     exit(1);
@@ -38,6 +50,11 @@ foreach ($tune->getLines() as $lineObj) {
 }
 $pass = new AbcVoiceOrderPass();
 $result = $pass->process($lines);
-foreach ($result as $line) {
-    echo $line . "\n";
+
+$output = implode("\n", $result) . "\n";
+if ($outputFile) {
+    CliOutputWriter::write($output, $outputFile);
+    echo "Voice order output written to $outputFile\n";
+} else {
+    echo $output;
 }

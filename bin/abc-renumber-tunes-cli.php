@@ -1,8 +1,10 @@
 #!/usr/bin/env php
 <?php
 // CLI: Renumber duplicated X: tune numbers
+
 require_once __DIR__ . '/../vendor/autoload.php';
 use Ksfraser\PhpabcCanntaireachd\AbcFileParser;
+use Ksfraser\PhpabcCanntaireachd\CliOutputWriter;
 
 // Usage: php bin/abc-renumber-tunes-cli.php <abcfile> [--width=N]
 $width = 5;
@@ -63,5 +65,6 @@ foreach ($tunes as $tune) {
     }
     $output .= "\n";
 }
-file_put_contents($file . '.renumbered', $output);
+
+CliOutputWriter::write($output, $file . '.renumbered');
 echo "Renumbered file written to $file.renumbered\n";

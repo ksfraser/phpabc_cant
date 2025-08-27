@@ -1,16 +1,28 @@
 #!/usr/bin/env php
 <?php
 // Pass 5: Timing validation
+
 require_once __DIR__ . '/../vendor/autoload.php';
 use Ksfraser\PhpabcCanntaireachd\AbcTimingValidator;
 use Ksfraser\PhpabcCanntaireachd\AbcFileParser;
+use Ksfraser\PhpabcCanntaireachd\CliOutputWriter;
 
-if ($argc < 3) {
-    echo "Usage: php bin/abc-timing-validator-pass-cli.php <abcfile> <tune_number>\n";
+// Support --output option
+$outputFile = null;
+foreach ($argv as $i => $arg) {
+    if ($i === 0) continue;
+    if (preg_match('/^--output=(.+)$/', $arg, $m)) {
+        $outputFile = $m[1];
+    } elseif (!isset($file)) {
+        $file = $arg;
+    } elseif (!isset($xnum)) {
+        $xnum = $arg;
+    }
+}
+if (!isset($file) || !isset($xnum)) {
+    echo "Usage: php bin/abc-timing-validator-pass-cli.php <abcfile> <tune_number> [--output=out.txt]\n";
     exit(1);
 }
-$file = $argv[1];
-$xnum = $argv[2];
 if (!file_exists($file)) {
     echo "File not found: $file\n";
     exit(1);
@@ -38,11 +50,16 @@ foreach ($tune->getLines() as $lineObj) {
 }
 $pass = new AbcTimingValidator();
 $result = $pass->validate($lines);
-foreach ($result['lines'] as $line) {
-    echo $line . "\n";
-}
+
+$output = implode("\n", $result['lines']) . "\n";
 if (!empty($result['errors'])) {
     foreach ($result['errors'] as $err) {
-        echo "% TIMING ERROR: $err\n";
+        $output .= "% TIMING ERROR: $err\n";
     }
+}
+if ($outputFile) {
+    CliOutputWriter::write($output, $outputFile);
+    echo "Timing validation output written to $outputFile\n";
+} else {
+    echo $output;
 }

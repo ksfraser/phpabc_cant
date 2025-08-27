@@ -1,8 +1,10 @@
 #!/usr/bin/env php
 <?php
 // CLI: Reorder tunes in ABC file by X: header ascending
+
 require_once __DIR__ . '/../vendor/autoload.php';
 use Ksfraser\PhpabcCanntaireachd\AbcFileParser;
+use Ksfraser\PhpabcCanntaireachd\CliOutputWriter;
 
 if ($argc < 2) {
     echo "Usage: php bin/abc-reorder-tunes-cli.php <abcfile>\n";
@@ -43,5 +45,6 @@ foreach ($tunes as $tune) {
     }
     $output .= "\n";
 }
-file_put_contents($file . '.reordered', $output);
+
+CliOutputWriter::write($output, $file . '.reordered');
 echo "Reordered file written to $file.reordered\n";
