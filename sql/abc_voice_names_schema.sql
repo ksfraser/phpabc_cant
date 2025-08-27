@@ -9,9 +9,6 @@ CREATE TABLE IF NOT EXISTS abc_voice_names (
 INSERT IGNORE INTO abc_voice_names (voice_name, name, sname) VALUES
     ('Drums', 'Drums', 'Drums'),
     ('Bagpipes', 'Bagpipes', 'Bagpipes'),
-    ('Tenor', 'Tenor', 'Tenor'),
-    ('Bass', 'Bass', 'Bass'),
-    ('Snare', 'Snare', 'Snare'),
     ('Flute', 'Flute', 'Flute'),
     ('TenorSax', 'Tenor Sax', 'Tenor Sax'),
     ('Clarinet', 'Clarinet', 'Clarinet'),
@@ -21,4 +18,7 @@ INSERT IGNORE INTO abc_voice_names (voice_name, name, sname) VALUES
     ('Trumpet', 'Trumpet', 'Trumpet'),
     ('Guitar', 'Guitar', 'Guitar'),
     ('Piano', 'Piano', 'Piano'),
-    ('BassGuitar', 'Bass Guitar', 'Bass Guitar');
+    ('BassGuitar', 'Bass Guitar', 'Bass Guitar'),
+    ('Tenor', 'Tenor', 'Tenor'),
+    ('Bass', 'Bass', 'Bass'),
+    ('Snare', 'Snare', 'Snare');
