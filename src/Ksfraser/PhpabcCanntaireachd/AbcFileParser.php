@@ -74,6 +74,26 @@ class AbcFileParser {
             }
         }
         if ($currentTune) $tunes[] = $currentTune;
+        // Load header field defaults
+        $defaultsFile = __DIR__ . '/../../sql/abc_header_field_defaults_schema.sql';
+        $headerDefaults = [];
+        if (file_exists($defaultsFile)) {
+            $schema = file_get_contents($defaultsFile);
+            if (preg_match_all("/'([A-Z])',\s*'([^']+)'/", $schema, $matches, PREG_SET_ORDER)) {
+                foreach ($matches as $m) {
+                    $headerDefaults[$m[1]] = $m[2];
+                }
+            }
+        }
+        // Fill missing header fields with defaults
+        foreach ($tunes as $tune) {
+            $headers = $tune->getHeaders();
+            foreach ($headerDefaults as $key => $value) {
+                if (isset($headers[$key]) && method_exists($headers[$key], 'get') && $headers[$key]->get() === '') {
+                    $tune->replaceHeader($key, $value);
+                }
+            }
+        }
         // Remove nulls
         return array_filter($tunes);
     }
