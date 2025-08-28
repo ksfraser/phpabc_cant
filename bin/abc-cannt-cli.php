@@ -68,14 +68,18 @@ if ($convert) {
 // Write processed ABC result to output file if requested
 
 if ($outputFile) {
+    // Write processed ABC to output file
     CliOutputWriter::write($result, $outputFile);
+    // Write log/status to errorfile (not output file)
     if ($errorFile) {
         CliOutputWriter::write($outputMsg, $errorFile);
     } else {
         echo $outputMsg;
     }
 } else {
+    // Write processed ABC to stdout
     echo $result;
+    // Write log/status to errorfile or stdout
     if ($errorFile) {
         CliOutputWriter::write($outputMsg, $errorFile);
     } else {
