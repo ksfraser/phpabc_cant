@@ -57,8 +57,12 @@ if ($convert) {
 // Example: Compare canntaireachd lines if present
 // $outputMsg .= "[Example] Would compare existing canntaireachd lines and report differences.\n";
 
+
+// Write processed ABC result to output file if requested
 if ($outputFile) {
-    CliOutputWriter::write($outputMsg, $outputFile);
+    CliOutputWriter::write($result, $outputFile);
+    echo $outputMsg;
 } else {
+    echo $result;
     echo $outputMsg;
 }
