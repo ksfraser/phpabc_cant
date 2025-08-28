@@ -8,11 +8,15 @@ use Ksfraser\PhpabcCanntaireachd\AbcFileParser;
 use Ksfraser\PhpabcCanntaireachd\CliOutputWriter;
 
 // Support --output option
+// Support --output and --errorfile options
 $outputFile = null;
+$errorFile = null;
 foreach ($argv as $i => $arg) {
     if ($i === 0) continue;
     if (preg_match('/^--output=(.+)$/', $arg, $m)) {
         $outputFile = $m[1];
+    } elseif (preg_match('/^--errorfile=(.+)$/', $arg, $m)) {
+        $errorFile = $m[1];
     } elseif (!isset($file)) {
         $file = $arg;
     } elseif (!isset($xnum)) {
@@ -20,32 +24,23 @@ foreach ($argv as $i => $arg) {
     }
 }
 if (!isset($file) || !isset($xnum)) {
-    echo "Usage: php bin/abc-voice-order-pass-cli.php <abcfile> <tune_number> [--output=out.txt]\n";
+    $msg = "Usage: php bin/abc-voice-order-pass-cli.php <abcfile> <tune_number> [--output=out.txt] [--errorfile=err.txt]\n";
+    if ($errorFile) {
+        CliOutputWriter::write($msg, $errorFile);
+    } else {
+        echo $msg;
+    }
     exit(1);
 }
 if (!file_exists($file)) {
-    $bagpipes = [];
-    $melody = [];
-    $harmony = [];
-    $snare = [];
-    $tenor = [];
-    $bass = [];
-    $other = [];
-    // Dynamically extract voice order from voice order defaults table
-    $voiceOrder = [];
-    $orderFile = __DIR__ . '/../sql/abc_voice_order_defaults_schema.sql';
-    if (file_exists($orderFile)) {
-        $orderSchema = file_get_contents($orderFile);
-        if (preg_match_all("/'(.+?)',\s*(\d+)/", $orderSchema, $matches, PREG_SET_ORDER)) {
-            foreach ($matches as $m) {
-                $voice = $m[1];
-                $order = (int)$m[2];
-                $voiceOrder[$voice] = $order;
-            }
-        }
+    $msg = "File not found: $file\n";
+    if ($errorFile) {
+        CliOutputWriter::write($msg, $errorFile);
+    } else {
+        echo $msg;
     }
-    // Exclude percussion and pipes for 'other' sorting
-    $exclude = ['Bagpipes', 'Melody', 'Harmony', 'Drums', 'Snare', 'Tenor', 'Bass'];
+    exit(1);
+}
 
 // Custom voice order logic
 function reorderVoices($lines, $voiceOrder, $exclude) {
@@ -95,9 +90,17 @@ function reorderVoices($lines, $voiceOrder, $exclude) {
 $result = reorderVoices($lines, $voiceOrder, $exclude);
 
 $output = implode("\n", $result) . "\n";
+$logMsg = "Voice order output written to " . ($outputFile ?: "stdout") . "\n";
 if ($outputFile) {
     CliOutputWriter::write($output, $outputFile);
-    echo "Voice order output written to $outputFile\n";
+    if ($errorFile) {
+        CliOutputWriter::write($logMsg, $errorFile);
+    } else {
+        echo $logMsg;
+    }
 } else {
     echo $output;
+    if ($errorFile) {
+        CliOutputWriter::write($logMsg, $errorFile);
+    }
 }

@@ -6,13 +6,32 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Ksfraser\PhpabcCanntaireachd\AbcFileParser;
 use Ksfraser\PhpabcCanntaireachd\CliOutputWriter;
 
-if ($argc < 2) {
-    echo "Usage: php bin/abc-reorder-tunes-cli.php <abcfile>\n";
+// Usage: php bin/abc-reorder-tunes-cli.php <abcfile> [--errorfile=err.txt]
+$file = null;
+$errorFile = null;
+foreach ($argv as $arg) {
+    if (preg_match('/^--errorfile=(.+)$/', $arg, $m)) {
+        $errorFile = $m[1];
+    } elseif ($arg !== $argv[0]) {
+        $file = $arg;
+    }
+}
+if (!$file) {
+    $msg = "Usage: php bin/abc-reorder-tunes-cli.php <abcfile> [--errorfile=err.txt]\n";
+    if ($errorFile) {
+        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+    } else {
+        echo $msg;
+    }
     exit(1);
 }
-$file = $argv[1];
 if (!file_exists($file)) {
-    echo "File not found: $file\n";
+    $msg = "File not found: $file\n";
+    if ($errorFile) {
+        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+    } else {
+        echo $msg;
+    }
     exit(1);
 }
 $abcContent = file_get_contents($file);
@@ -47,4 +66,9 @@ foreach ($tunes as $tune) {
 }
 
 CliOutputWriter::write($output, $file . '.reordered');
-echo "Reordered file written to $file.reordered\n";
+$logMsg = "Reordered file written to $file.reordered\n";
+if ($errorFile) {
+    \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($logMsg, $errorFile);
+} else {
+    echo $logMsg;
+}

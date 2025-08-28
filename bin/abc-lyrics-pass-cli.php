@@ -8,12 +8,15 @@ use Ksfraser\PhpabcCanntaireachd\AbcFileParser;
 use Ksfraser\PhpabcCanntaireachd\TokenDictionary;
 use Ksfraser\PhpabcCanntaireachd\CliOutputWriter;
 
-// Support --output option
+// Support --output and --errorfile options
 $outputFile = null;
+$errorFile = null;
 foreach ($argv as $i => $arg) {
     if ($i === 0) continue;
     if (preg_match('/^--output=(.+)$/', $arg, $m)) {
         $outputFile = $m[1];
+    } elseif (preg_match('/^--errorfile=(.+)$/', $arg, $m)) {
+        $errorFile = $m[1];
     } elseif (!isset($file)) {
         $file = $arg;
     } elseif (!isset($xnum)) {
@@ -21,11 +24,21 @@ foreach ($argv as $i => $arg) {
     }
 }
 if (!isset($file) || !isset($xnum)) {
-    echo "Usage: php bin/abc-lyrics-pass-cli.php <abcfile> <tune_number> [--output=out.txt]\n";
+    $msg = "Usage: php bin/abc-lyrics-pass-cli.php <abcfile> <tune_number> [--output=out.txt] [--errorfile=err.txt]\n";
+    if ($errorFile) {
+        CliOutputWriter::write($msg, $errorFile);
+    } else {
+        echo $msg;
+    }
     exit(1);
 }
 if (!file_exists($file)) {
-    echo "File not found: $file\n";
+    $msg = "File not found: $file\n";
+    if ($errorFile) {
+        CliOutputWriter::write($msg, $errorFile);
+    } else {
+        echo $msg;
+    }
     exit(1);
 }
 $abcContent = file_get_contents($file);
@@ -40,7 +53,12 @@ foreach ($tunes as $t) {
     }
 }
 if (!$tune) {
-    echo "Tune X:$xnum not found in $file\n";
+    $msg = "Tune X:$xnum not found in $file\n";
+    if ($errorFile) {
+        CliOutputWriter::write($msg, $errorFile);
+    } else {
+        echo $msg;
+    }
     exit(1);
 }
 $lines = [];
@@ -57,9 +75,17 @@ $output = implode("\n", $result['lines']) . "\n";
 if (!empty($result['lyricsWords'])) {
     $output .= "W: " . implode(' ', $result['lyricsWords']) . "\n";
 }
+$logMsg = "Lyrics output written to " . ($outputFile ?: "stdout") . "\n";
 if ($outputFile) {
     CliOutputWriter::write($output, $outputFile);
-    echo "Lyrics output written to $outputFile\n";
+    if ($errorFile) {
+        CliOutputWriter::write($logMsg, $errorFile);
+    } else {
+        echo $logMsg;
+    }
 } else {
     echo $output;
+    if ($errorFile) {
+        CliOutputWriter::write($logMsg, $errorFile);
+    }
 }

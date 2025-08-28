@@ -5,13 +5,32 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass;
 use Ksfraser\PhpabcCanntaireachd\AbcFileParser;
 
-if ($argc < 2) {
-    echo "Usage: php bin/abc-tune-number-validator-cli.php <abcfile>\n";
+// Usage: php bin/abc-tune-number-validator-cli.php <abcfile> [--errorfile=err.txt]
+$file = null;
+$errorFile = null;
+foreach ($argv as $arg) {
+    if (preg_match('/^--errorfile=(.+)$/', $arg, $m)) {
+        $errorFile = $m[1];
+    } elseif ($arg !== $argv[0]) {
+        $file = $arg;
+    }
+}
+if (!$file) {
+    $msg = "Usage: php bin/abc-tune-number-validator-cli.php <abcfile> [--errorfile=err.txt]\n";
+    if ($errorFile) {
+        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+    } else {
+        echo $msg;
+    }
     exit(1);
 }
-$file = $argv[1];
 if (!file_exists($file)) {
-    echo "File not found: $file\n";
+    $msg = "File not found: $file\n";
+    if ($errorFile) {
+        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+    } else {
+        echo $msg;
+    }
     exit(1);
 }
 $abcContent = file_get_contents($file);
@@ -28,9 +47,20 @@ foreach ($tunes as $tune) {
 $pass = new AbcTuneNumberValidatorPass();
 $result = $pass->validate($lines);
 if (!empty($result['errors'])) {
+    $msg = "";
     foreach ($result['errors'] as $err) {
-        echo "% ERROR: $err\n";
+        $msg .= "% ERROR: $err\n";
+    }
+    if ($errorFile) {
+        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+    } else {
+        echo $msg;
     }
 } else {
-    echo "All X: tune numbers are unique.\n";
+    $msg = "All X: tune numbers are unique.\n";
+    if ($errorFile) {
+        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+    } else {
+        echo $msg;
+    }
 }

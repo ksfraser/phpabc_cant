@@ -6,22 +6,35 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Ksfraser\PhpabcCanntaireachd\AbcFileParser;
 use Ksfraser\PhpabcCanntaireachd\CliOutputWriter;
 
-// Usage: php bin/abc-renumber-tunes-cli.php <abcfile> [--width=N]
+// Usage: php bin/abc-renumber-tunes-cli.php <abcfile> [--width=N] [--errorfile=err.txt]
 $width = 5;
 $file = null;
+$errorFile = null;
 foreach ($argv as $arg) {
     if (preg_match('/^--width=(\d+)$/', $arg, $m)) {
         $width = (int)$m[1];
+    } elseif (preg_match('/^--errorfile=(.+)$/', $arg, $m)) {
+        $errorFile = $m[1];
     } elseif ($arg !== $argv[0]) {
         $file = $arg;
     }
 }
 if (!$file) {
-    echo "Usage: php bin/abc-renumber-tunes-cli.php <abcfile> [--width=N]\n";
+    $msg = "Usage: php bin/abc-renumber-tunes-cli.php <abcfile> [--width=N] [--errorfile=err.txt]\n";
+    if ($errorFile) {
+        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+    } else {
+        echo $msg;
+    }
     exit(1);
 }
 if (!file_exists($file)) {
-    echo "File not found: $file\n";
+    $msg = "File not found: $file\n";
+    if ($errorFile) {
+        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+    } else {
+        echo $msg;
+    }
     exit(1);
 }
 $abcContent = file_get_contents($file);
@@ -67,4 +80,9 @@ foreach ($tunes as $tune) {
 }
 
 CliOutputWriter::write($output, $file . '.renumbered');
-echo "Renumbered file written to $file.renumbered\n";
+$logMsg = "Renumbered file written to $file.renumbered\n";
+if ($errorFile) {
+    \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($logMsg, $errorFile);
+} else {
+    echo $logMsg;
+}

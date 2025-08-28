@@ -59,6 +59,14 @@ $options = getopt('', [
     'list', 'add:', 'edit:', 'delete:', 'midi_channel:', 'midi_program:', 'validate:', 'save:',
     'voice_output_style:', 'interleave_bars:', 'bars_per_line:', 'join_bars_with_backslash:'
 ]);
+// Support --errorfile option
+$errorFile = null;
+foreach ($argv as $i => $arg) {
+    if ($i === 0) continue;
+    if (preg_match('/^--errorfile=(.+)$/', $arg, $m)) {
+        $errorFile = $m[1];
+    }
+}
 // Support multiple files via wildcard for validate/save
 $abcFiles = [];
 if (isset($options['validate'])) {
@@ -69,8 +77,14 @@ if (isset($options['validate'])) {
 $table = 'abc_midi_defaults';
 if (isset($options['list'])) {
     $stmt = $pdo->query("SELECT * FROM $table");
+    $msg = "";
     foreach ($stmt as $row) {
-        echo "{$row['voice_name']}: Channel {$row['midi_channel']}, Program {$row['midi_program']}\n";
+        $msg .= "{$row['voice_name']}: Channel {$row['midi_channel']}, Program {$row['midi_program']}\n";
+    }
+    if ($errorFile) {
+        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+    } else {
+        echo $msg;
     }
 } elseif (isset($options['add'])) {
     $voice = $options['add'];
@@ -78,7 +92,12 @@ if (isset($options['list'])) {
     $program = $options['midi_program'] ?? 0;
     $stmt = $pdo->prepare("INSERT INTO $table (voice_name, midi_channel, midi_program) VALUES (?, ?, ?)");
     $stmt->execute([$voice, $channel, $program]);
-    echo "Added $voice.\n";
+    $msg = "Added $voice.\n";
+    if ($errorFile) {
+        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+    } else {
+        echo $msg;
+    }
 } elseif (isset($options['edit'])) {
     $voice = $options['edit'];
     $channel = $options['midi_channel'] ?? null;
@@ -91,12 +110,22 @@ if (isset($options['list'])) {
         $stmt = $pdo->prepare("UPDATE $table SET midi_program=? WHERE voice_name=?");
         $stmt->execute([$program, $voice]);
     }
-    echo "Edited $voice.\n";
+    $msg = "Edited $voice.\n";
+    if ($errorFile) {
+        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+    } else {
+        echo $msg;
+    }
 } elseif (isset($options['delete'])) {
     $voice = $options['delete'];
     $stmt = $pdo->prepare("DELETE FROM $table WHERE voice_name=?");
     $stmt->execute([$voice]);
-    echo "Deleted $voice.\n";
+    $msg = "Deleted $voice.\n";
+    if ($errorFile) {
+        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+    } else {
+        echo $msg;
+    }
 } elseif (!empty($abcFiles)) {
     $config = new \Ksfraser\PhpabcCanntaireachd\AbcProcessorConfig();
     if (isset($options['voice_output_style'])) $config->voiceOutputStyle = $options['voice_output_style'];
@@ -113,25 +142,35 @@ if (isset($options['list'])) {
         $newFile = preg_replace('/\.abc$/', '_1.abc', $abcFile);
         file_put_contents($newFile, implode("\n", $output));
         $files = [$newFile];
-        echo "Saved with canntaireachd: $newFile\n";
+        $msg = "Saved with canntaireachd: $newFile\n";
         if ($canntDiff) {
             $diffFile = 'cannt_diff.txt';
             file_put_contents($diffFile, implode("\n", $canntDiff));
-            echo "Canntaireachd diff written to $diffFile\n";
+            $msg .= "Canntaireachd diff written to $diffFile\n";
             $files[] = $diffFile;
         }
         if ($result['errors'] ?? false) {
             $errFile = 'abc_errors.txt';
             file_put_contents($errFile, implode("\n", $result['errors']));
-            echo "Errors written to $errFile\n";
+            $msg .= "Errors written to $errFile\n";
             $files[] = $errFile;
         }
-        echo "Output files for $abcFile:\n";
+        $msg .= "Output files for $abcFile:\n";
         foreach ($files as $f) {
-            echo "  $f\n";
+            $msg .= "  $f\n";
+        }
+        if ($errorFile) {
+            \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+        } else {
+            echo $msg;
         }
     }
     exit;
 } else {
-    echo "Usage:\n  --list\n  --add=<voice> --midi_channel=<ch> --midi_program=<prog>\n  --edit=<voice> [--midi_channel=<ch>] [--midi_program=<prog>]\n  --delete=<voice>\n  --validate=<file.abc>\n  --save=<file.abc>\n";
+    $msg = "Usage:\n  --list\n  --add=<voice> --midi_channel=<ch> --midi_program=<prog>\n  --edit=<voice> [--midi_channel=<ch>] [--midi_program=<prog>]\n  --delete=<voice>\n  --validate=<file.abc>\n  --save=<file.abc>\n  [--errorfile=err.txt]\n";
+    if ($errorFile) {
+        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+    } else {
+        echo $msg;
+    }
 }

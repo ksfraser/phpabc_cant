@@ -18,14 +18,21 @@ use Ksfraser\PhpabcCanntaireachd\AbcParser;
 use Ksfraser\PhpabcCanntaireachd\AbcValidator;
 
 
-$options = getopt('f:c:o:', ['file:', 'convert', 'output:']);
+
+$options = getopt('f:c:o:e:', ['file:', 'convert', 'output:', 'errorfile:']);
 $file = $options['f'] ?? $options['file'] ?? null;
 $convert = isset($options['c']) || isset($options['convert']);
 $outputFile = $options['o'] ?? $options['output'] ?? null;
+$errorFile = $options['e'] ?? $options['errorfile'] ?? null;
 
 
 if (!$file || !file_exists($file)) {
-    fwrite(STDERR, "ABC file not found.\n");
+    $msg = "ABC file not found.\n";
+    if ($errorFile) {
+        CliOutputWriter::write($msg, $errorFile);
+    } else {
+        fwrite(STDERR, $msg);
+    }
     exit(1);
 }
 
@@ -39,8 +46,8 @@ if ($errors) {
     foreach ($errors as $err) {
         $errorMsg .= "  - $err\n";
     }
-    if ($outputFile) {
-        CliOutputWriter::write($errorMsg, $outputFile);
+    if ($errorFile) {
+        CliOutputWriter::write($errorMsg, $errorFile);
     } else {
         echo $errorMsg;
     }
@@ -59,10 +66,19 @@ if ($convert) {
 
 
 // Write processed ABC result to output file if requested
+
 if ($outputFile) {
     CliOutputWriter::write($result, $outputFile);
-    echo $outputMsg;
+    if ($errorFile) {
+        CliOutputWriter::write($outputMsg, $errorFile);
+    } else {
+        echo $outputMsg;
+    }
 } else {
     echo $result;
-    echo $outputMsg;
+    if ($errorFile) {
+        CliOutputWriter::write($outputMsg, $errorFile);
+    } else {
+        echo $outputMsg;
+    }
 }

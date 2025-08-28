@@ -10,46 +10,73 @@ use Ksfraser\PhpabcCanntaireachd\AbcHeaderFieldTable;
 
 $headerTable = new AbcHeaderFieldTable();
 
-$options = getopt('', ['add', 'list', 'edit', 'delete', 'field:', 'value:', 'old:', 'new:']);
+$options = getopt('', ['add', 'list', 'edit', 'delete', 'field:', 'value:', 'old:', 'new:', 'errorfile:']);
+$errorFile = $options['errorfile'] ?? null;
 
 if (isset($options['add'])) {
     if (isset($options['field'], $options['value'])) {
         $headerTable->addFieldValue($options['field'], $options['value']);
-        echo "Added {$options['field']}: {$options['value']}\n";
+        $msg = "Added {$options['field']}: {$options['value']}\n";
     } else {
-        echo "--add requires --field and --value\n";
+        $msg = "--add requires --field and --value\n";
+    }
+    if ($errorFile) {
+        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+    } else {
+        echo $msg;
     }
 } elseif (isset($options['edit'])) {
     if (isset($options['field'], $options['old'], $options['new'])) {
         if ($headerTable->editFieldValue($options['field'], $options['old'], $options['new'])) {
-            echo "Updated {$options['field']}: {$options['old']} to {$options['new']}\n";
+            $msg = "Updated {$options['field']}: {$options['old']} to {$options['new']}\n";
         } else {
-            echo "Value not found for edit\n";
+            $msg = "Value not found for edit\n";
         }
     } else {
-        echo "--edit requires --field, --old, and --new\n";
+        $msg = "--edit requires --field, --old, and --new\n";
+    }
+    if ($errorFile) {
+        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+    } else {
+        echo $msg;
     }
 } elseif (isset($options['delete'])) {
     if (isset($options['field'], $options['value'])) {
         if ($headerTable->deleteFieldValue($options['field'], $options['value'])) {
-            echo "Deleted {$options['field']}: {$options['value']}\n";
+            $msg = "Deleted {$options['field']}: {$options['value']}\n";
         } else {
-            echo "Value not found for delete\n";
+            $msg = "Value not found for delete\n";
         }
     } else {
-        echo "--delete requires --field and --value\n";
+        $msg = "--delete requires --field and --value\n";
+    }
+    if ($errorFile) {
+        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+    } else {
+        echo $msg;
     }
 } elseif (isset($options['list'])) {
+    $msg = "";
     foreach ($headerTable->getAllFields() as $field => $values) {
-        echo "$field:\n";
+        $msg .= "$field:\n";
         foreach ($values as $val) {
-            echo "  - $val\n";
+            $msg .= "  - $val\n";
         }
     }
+    if ($errorFile) {
+        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+    } else {
+        echo $msg;
+    }
 } else {
-    echo "Usage:\n";
-    echo "  --add --field <name> --value <value>\n";
-    echo "  --edit --field <name> --old <oldvalue> --new <newvalue>\n";
-    echo "  --delete --field <name> --value <value>\n";
-    echo "  --list\n";
+    $msg = "Usage:\n";
+    $msg .= "  --add --field <name> --value <value>\n";
+    $msg .= "  --edit --field <name> --old <oldvalue> --new <newvalue>\n";
+    $msg .= "  --delete --field <name> --value <value>\n";
+    $msg .= "  --list\n";
+    if ($errorFile) {
+        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+    } else {
+        echo $msg;
+    }
 }
