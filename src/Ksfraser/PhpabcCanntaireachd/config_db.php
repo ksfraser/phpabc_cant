@@ -17,10 +17,10 @@
 //
 // If not using secrets, fallback to these values:
 return [
-    'mysql_user' => 'abcuser',
-    'mysql_pass' => 'abcpassword',
-    'mysql_db'   => 'abc_midi',
-    'mysql_host' => 'localhost',
+    'mysql_user' => 'abcmidi',
+    'mysql_pass' => 'abcmidi',
+    'mysql_db'   => 'abcmidi',
+    'mysql_host' => 'mysql.ksfraser.com',
     'mysql_port' => 3306,
-    'dsn'        => 'mysql:host=localhost;port=3306;dbname=abc_midi;charset=utf8mb4'
+    'dsn'        => 'mysql:host=mysql.ksfraser.com;port=3306;dbname=abcmidi;charset=utf8mb4'
 ];
