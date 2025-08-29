@@ -12,5 +12,6 @@ INSERT IGNORE INTO abc_header_field_defaults (field_name, field_value) VALUES
     ('L', '1/8'),
     ('M', '2/4'),
     ('R', 'March'),
+    ('B', 'Scots Guard I'),
     ('O', 'Kevin Fraser'),
     ('Z', 'Kevin Fraser');
