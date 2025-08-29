@@ -16,79 +16,79 @@ class AbcTuneBase extends Origin
 	use HeaderExtractorTrait;
 
 	/** @var array<string,string> */
-	protected array $headers_anglo_arr;
+	protected $headers_anglo_arr;
 	/** @var int|null */
-	protected ?int $index = null;
+	protected $index = null;
 	/** @var string|null */
-	protected ?string $key = null;
+	protected $key = null;
 	/** @var string|null */
-	protected ?string $notelength = null;
+	protected $notelength = null;
 	/** @var string|null */
-	protected ?string $meter = null;
+	protected $meter = null;
 	/** @var string|null */
-	protected ?string $tempo = null;
+	protected $tempo = null;
 	/** @var array */
-	protected array $title_arr = [];
+	protected $title_arr = array();
 	/** @var string|null */
-	protected ?string $composer = null;
+	protected $composer = null;
 	/** @var array */
-	protected array $history_arr = [];
+	protected $history_arr = array();
 	/** @var array */
-	protected array $books_arr = [];
+	protected $books_arr = array();
 	/** @var array */
-	protected array $voice_arr = [];
+	protected $voice_arr = array();
 	/** @var string|null */
-	protected ?string $discography = null;
+	protected $discography = null;
 	/** @var string|null */
-	protected ?string $file_url = null;
+	protected $file_url = null;
 	/** @var string|null */
-	protected ?string $group = null;
+	protected $group = null;
 	/** @var array */
-	protected array $instruction_arr = [];
+	protected $instruction_arr = array();
 	/** @var array */
-	protected array $macro_arr = [];
+	protected $macro_arr = array();
 	/** @var string|null */
-	protected ?string $notes = null;
+	protected $notes = null;
 	/** @var string|null */
-	protected ?string $origin = null;
+	protected $origin = null;
 	/** @var string|null */
-	protected ?string $parts = null;
+	protected $parts = null;
 	/** @var string|null */
-	protected ?string $rythm = null;
+	protected $rythm = null;
 	/** @var string|null */
-	protected ?string $source = null;
+	protected $source = null;
 	/** @var array */
-	protected array $userdef_arr = [];
+	protected $userdef_arr = array();
 	/** @var string|null */
-	protected ?string $transcription = null;
+	protected $transcription = null;
 	/** @var array */
-	protected array $words_arr = [];
+	protected $words_arr = array();
 	/** @var array */
-	protected array $body_voice_arr = [];
+	protected $body_voice_arr = array();
 	/** @var array */
-	protected array $voice_name_arr = [];
+	protected $voice_name_arr = array();
 	/** @var int */
-	protected int $voicecount = 0;
+	protected $voicecount = 0;
 	/** @var array */
-	protected array $words_bottom_arr = [];
+	protected $words_bottom_arr = array();
 	/** @var string|null */
-	protected ?string $complete_tune = null;
+	protected $complete_tune = null;
 	/** @var array */
-	protected array $body_arr = [];
+	protected $body_arr = array();
 	/** @var string|null */
-	protected ?string $body = null;
+	protected $body = null;
 	/** @var int */
-	protected int $line_count = 0;
+	protected $line_count = 0;
 	/** @var array */
-	protected array $header_symbols_arr = [];
+	protected $header_symbols_arr = array();
 	/** @var array */
-	protected array $voices_obj_arr = [];
+	protected $voices_obj_arr = array();
 	/** @var string|null */
-	protected ?string $current_voice = null;
+	protected $current_voice = null;
 	/** @var int */
-	protected int $current_barnum = 1;
+	protected $current_barnum = 1;
 	/** @var int */
-	protected int $current_linenum = 1;
+	protected $current_linenum = 1;
 
 	public function __construct()
 	{

@@ -13,6 +13,13 @@ class AbcFileParser {
 
     public function __construct($config = []) {
         if (isset($config['singleHeaderPolicy'])) {
+            swithch( $config['singleHeaderPolicy'] ) {
+                case 'first':
+                case 'last':
+                    break;
+                default:
+                    throw new \InvalidArgumentException("Invalid singleHeaderPolicy: " . $config['singleHeaderPolicy']);
+            }
             $this->singleHeaderPolicy = $config['singleHeaderPolicy'];
         }
     }

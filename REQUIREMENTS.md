@@ -35,6 +35,7 @@
 
 ---
 # Project Requirements: PHPABC Canntaireachd
+- Must be compatible with PHP 7.3 and later (no typed properties, no PHP 7.4+ syntax).
 
 - All public APIs must be documented.
 - The project must include a UML diagram of class relationships and message flow.
@@ -73,6 +74,7 @@
 ---
 
 # Test Matrix
+| PHP 7.3 Compatibility | ✓        | ✓       | ✓         | ✓       |   ✓    | ✓   |
 | AbcTune            | ✓        | ✓       | ✓         | ✓       |   ✓    | ✓   |
 | AbcLine            | ✓        | ✓       | ✓         | ✓       |   ✓    | ✓   |
 
