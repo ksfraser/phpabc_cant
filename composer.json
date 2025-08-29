@@ -15,12 +15,17 @@
     },
     {
       "type": "vcs",
+      "url": "https://github.com/ksfraser/ksf-database"
+    },
+    {
+      "type": "vcs",
       "url": "https://github.com/ksfraser/origin"
     }
   ],
   "autoload": {
     "psr-4": {
-      "Ksfraser\\PhpabcCanntaireachd\\": "src/Ksfraser/PhpabcCanntaireachd/"
+      "Ksfraser\\PhpabcCanntaireachd\\": "src/Ksfraser/PhpabcCanntaireachd/",
+      "Ksfraser\\Database\\": "src/Ksfraser/Database/"
     }
   },
   "require": {

@@ -14,7 +14,7 @@ if (!$schemaFiles) {
 
 // Load DB config
 
-$config = require __DIR__ . '/../src/Ksfraser/PhpabcCanntaireachd/config_db.php';
+$config = require __DIR__ . '/../config/db_config.php';
 $pdo = new PDO($config['dsn'], $config['mysql_user'], $config['mysql_pass']);
 
 foreach ($schemaFiles as $file) {

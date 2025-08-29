@@ -1,3 +1,4 @@
+; NOTE: The database is the master source for header defaults. This file is a fallback only.
 K: HP
 Q: 1/4=90
 L: 1/8

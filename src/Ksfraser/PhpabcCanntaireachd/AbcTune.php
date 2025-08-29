@@ -67,7 +67,7 @@ class AbcTune extends AbcItem {
     ];
 
     public function __construct() {
-        // Try to load header defaults from config file or db
+        // Load text file defaults first
         $defaults = array();
         $configFile = __DIR__ . '/../../config/header_defaults.txt';
         if (file_exists($configFile)) {
@@ -77,17 +77,26 @@ class AbcTune extends AbcItem {
                     $defaults[$m[1]] = $m[2];
                 }
             }
-        } else {
-            // Fallback to hardcoded defaults
-            $defaults = array(
-                'K' => 'HP',
-                'Q' => '1/4=90',
-                'L' => '1/8',
-                'M' => '2/4',
-                'R' => 'March',
-                'O' => 'Scots Guards I',
-                'Z' => '',
-            );
+        }
+        // Merge DB values, overwriting text file values
+        $dsn = 'mysql:host=localhost;dbname=phpabc';
+        $dbuser = 'phpabc';
+        $dbpass = 'phpabc';
+        $dbConfigFile = __DIR__ . '/../../config/db_config.php';
+        if (file_exists($dbConfigFile)) {
+            $dbConfig = include($dbConfigFile);
+            if (isset($dbConfig['dsn'])) $dsn = $dbConfig['dsn'];
+            if (isset($dbConfig['username'])) $dbuser = $dbConfig['username'];
+            if (isset($dbConfig['password'])) $dbpass = $dbConfig['password'];
+        }
+        try {
+            $pdo = new \PDO($dsn, $dbuser, $dbpass);
+            $stmt = $pdo->query('SELECT field_name, field_value FROM abc_header_fields');
+            while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+                $defaults[$row['field_name']] = $row['field_value'];
+            }
+        } catch (\Exception $e) {
+            // DB not available, use text file only
         }
         foreach (self::$headerOrder as $key => $class) {
             if (isset($defaults[$key])) {

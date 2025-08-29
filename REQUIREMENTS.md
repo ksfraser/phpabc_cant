@@ -35,10 +35,21 @@
 
 ---
 # Project Requirements: PHPABC Canntaireachd
-- Must be compatible with PHP 7.3 and later (no typed properties, no PHP 7.4+ syntax).
 
+- Must be compatible with PHP 7.3 and later (no typed properties, no PHP 7.4+ syntax).
 - All public APIs must be documented.
 - The project must include a UML diagram of class relationships and message flow.
+
+## Database Management
+- All database access must use the central `Ksfraser\Database\DbManager` class.
+- DbManager loads config from `config/db_config.php` and/or Symfony secrets, provides a singleton PDO connection, and helper methods for queries.
+- CLI and WP code must not access `db_config.php` directly; use DbManager for all DB actions.
+
+## Test Requirements for Database
+- Test that `DbManager::getConfig()` loads config correctly from file and secrets.
+- Test that `DbManager::getPdo()` returns a working PDO connection.
+- Test all helper methods (`fetchAll`, `fetchOne`, `fetchValue`, `execute`) for correct query execution and error handling.
+- Test that CLI and WP modules use DbManager for DB access.
 
 ---
 
@@ -150,6 +161,8 @@ Logic:
 ## CLI Tool
 - Options: `--midi_channel`, `--midi_program`, `--list`, `--add`, `--edit`, `--delete`, `--validate`, `--save`
 - Uses both tables and config_db.php for DSN
+Uses both tables and config/db_config.php for DSN
+Uses both tables and config/db_config.php for DSN
 - Lists output files after processing
 - Supports header field CRUD and matching
 

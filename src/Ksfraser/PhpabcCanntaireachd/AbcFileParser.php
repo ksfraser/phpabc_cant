@@ -13,7 +13,7 @@ class AbcFileParser {
 
     public function __construct($config = []) {
         if (isset($config['singleHeaderPolicy'])) {
-            swithch( $config['singleHeaderPolicy'] ) {
+            switch ($config['singleHeaderPolicy']) {
                 case 'first':
                 case 'last':
                     break;

@@ -11,13 +11,13 @@ if (class_exists('Symfony\Component\Runtime\Secrets\getSecret')) {
         'mysql_host' => $env['MYSQL_HOST'] ?? $getSecret('MYSQL_HOST') ?? 'localhost',
         'mysql_port' => $env['MYSQL_PORT'] ?? $getSecret('MYSQL_PORT') ?? 3306,
     ];
-    // Fallback to config_db.php if any are missing
-    $fallback = require __DIR__ . '/../src/Ksfraser/PhpabcCanntaireachd/config_db.php';
+    // Fallback to config/db_config.php if any are missing
+    $fallback = require __DIR__ . '/../config/db_config.php';
     foreach ($fallback as $k => $v) {
         if (!isset($config[$k]) || $config[$k] === null) $config[$k] = $v;
     }
 } else {
-    $config = require __DIR__ . '/../src/Ksfraser/PhpabcCanntaireachd/config_db.php';
+    $config = require __DIR__ . '/../config/db_config.php';
 }
 $options = getopt('', [
     'list', 'add:', 'edit:', 'delete:', 'midi_channel:', 'midi_program:', 'validate:', 'save:',
