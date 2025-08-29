@@ -67,32 +67,33 @@ class AbcTune extends AbcItem {
     ];
 
     public function __construct() {
-        // Initialize all mandatory headers as empty
+        // Try to load header defaults from config file or db
+        $defaults = array();
+        $configFile = __DIR__ . '/../../config/header_defaults.txt';
+        if (file_exists($configFile)) {
+            $lines = file($configFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+            foreach ($lines as $line) {
+                if (preg_match('/^([A-Z]):\s*(.+)$/', $line, $m)) {
+                    $defaults[$m[1]] = $m[2];
+                }
+            }
+        } else {
+            // Fallback to hardcoded defaults
+            $defaults = array(
+                'K' => 'HP',
+                'Q' => '1/4=90',
+                'L' => '1/8',
+                'M' => '2/4',
+                'R' => 'March',
+                'O' => 'Scots Guards I',
+                'Z' => '',
+            );
+        }
         foreach (self::$headerOrder as $key => $class) {
-            switch ($key) {
-                case 'K':
-                    $this->headers[$key] = new $class('HP');
-                    break;
-                case 'Q':
-                    $this->headers[$key] = new $class('1/4=90');
-                    break;
-                case 'L':
-                    $this->headers[$key] = new $class('1/8');
-                    break;
-                case 'M':
-                    $this->headers[$key] = new $class('2/4');
-                    break;
-                case 'R':
-                    $this->headers[$key] = new $class('March');
-                    break;
-                case 'O':
-                    $this->headers[$key] = new $class('Scots Guards I');
-                    break;
-                case 'Z':
-                    $this->headers[$key] = new $class('');
-                    break;
-                default:
-                    $this->headers[$key] = new $class();
+            if (isset($defaults[$key])) {
+                $this->headers[$key] = new $class($defaults[$key]);
+            } else {
+                $this->headers[$key] = new $class();
             }
         }
     }
