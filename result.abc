@@ -1,0 +1,66 @@
+X:1
+T:First Tune
+
+
+K:HP
+Q:1/4=90
+L:1/4
+M:4/4
+R:March
+O:Scots Guards I
+Z:
+V:Bagpipes name="Bagpipes" sname="Bagpipes"
+V:Bagpipes name="Bagpipes" sname="Bagpipes"
+
+|A B C D|A2 B2|A B
+
+X:2
+T:Second Tune
+
+
+K:HP
+Q:1/4=90
+L:1/8
+M:2/4
+R:March
+O:Scots Guards I
+Z:
+V:Bagpipes name="Bagpipes" sname="Bagpipes"
+V:Bagpipes name="Bagpipes" sname="Bagpipes"
+
+|A B|A2|A
+
+X:3
+T:Melody Voice
+
+
+K:HP
+Q:1/4=90
+L:1/8
+M:2/4
+R:March
+O:Scots Guards I
+Z:
+V:Melody name="Melody" sname="Melody"
+V:Melody name="Melody" sname="Melody"
+
+|A B|A2|A
+
+X:4
+T:Multi Voice
+
+
+K:HP
+Q:1/4=90
+L:1/8
+M:2/4
+R:March
+O:Scots Guards I
+Z:
+V:Melody name="Melody" sname="Melody"
+V:Guitar name="Guitar" sname="Guitar"
+V:Melody name="Melody" sname="Melody"
+
+|A B|A2|AV:Guitar name="Guitar" sname="Guitar"
+
+|A B|A2|A

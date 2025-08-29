@@ -1,4 +1,14 @@
 # Tune Number Renumbering & Width
+## Voice Header Preservation
+- Output files must support both grouped and interleaved voice layouts, configurable via AbcProcessorConfig or CLI option.
+- Tests must assert correct rendering for both grouped and interleaved styles.
+| Voice Output Style     | ✓   | ✓  | ✓      | ✓              | ✓             |
+- All CLI and WP output files must preserve and render all V: (voice) header lines from input ABC files.
+- Multi-tune and multi-voice files must retain all V: lines in output, in correct order.
+- Tests must assert that output files contain all expected V: lines for each tune and voice.
+| Feature                | CLI | WP | Config | Error Handling | Test Coverage |
+|------------------------|:---:|:--:|:------:|:--------------:|:-------------:|
+| Voice Header Output    | ✓   | ✓  | ✓      | ✓              | ✓             |
 
 
 ## Features
@@ -33,6 +43,10 @@
 
 
 # Test Plan
+## 6. Voice Output Style Testing
+- Add/expand tests to assert correct output for both grouped and interleaved voice layouts.
+## 5. Voice Header Output Testing
+- Add/expand tests to assert that output files contain all expected V: lines for multi-tune and multi-voice cases.
 
 ## 1. Unit Testing
 - Use PHPUnit for all unit tests.
@@ -59,6 +73,8 @@
 ---
 
 # Test Matrix
+| AbcTune            | ✓        | ✓       | ✓         | ✓       |   ✓    | ✓   |
+| AbcLine            | ✓        | ✓       | ✓         | ✓       |   ✓    | ✓   |
 
 
 | Class                | Instantiation | Core Methods | Error Handling | Integration | PHPDoc | UML |

@@ -8,6 +8,49 @@ use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderM;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderL;
 
 class AbcTune extends AbcItem {
+    /** @var object|null */
+    public $config = null;
+    /**
+     * Fix missing name/sname in V: header lines and log actions
+     * @return string log of fixes applied
+     */
+    public function fixVoiceHeaders() {
+        $log = '';
+        foreach ($this->getLines() as $lineObj) {
+            if (method_exists($lineObj, 'getBars')) {
+                foreach ($lineObj->getBars() as $barObj) {
+                    // No voice headers in bars
+                }
+            }
+            if (method_exists($lineObj, 'renderSelf')) {
+                $line = $lineObj->renderSelf();
+                if (preg_match('/^V:([^\s]+)(.*)$/', trim($line), $m)) {
+                    $voiceId = $m[1];
+                    $rest = $m[2];
+                    $needsName = !preg_match('/name="[^"]+"/', $rest);
+                    $needsSname = !preg_match('/sname="[^"]+"/', $rest);
+                    if ($needsName || $needsSname) {
+                        $log .= "Voice $voiceId missing name or sname. ";
+                        $newRest = $rest;
+                        if ($needsName) {
+                            $newRest .= ' name="' . $voiceId . '"';
+                            $log .= "Applied name=\"$voiceId\". ";
+                        }
+                        if ($needsSname) {
+                            $newRest .= ' sname="' . $voiceId . '"';
+                            $log .= "Applied sname=\"$voiceId\". ";
+                        }
+                        // Update lineObj to use new header
+                        if (method_exists($lineObj, 'setHeaderLine')) {
+                            $lineObj->setHeaderLine('V:' . $voiceId . $newRest);
+                        }
+                        $log .= "\n";
+                    }
+                }
+            }
+        }
+        return $log;
+    }
     protected $headers = [];
     protected static $headerOrder = [
         'X' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderX::class,
@@ -87,10 +130,49 @@ class AbcTune extends AbcItem {
 
     protected function renderSelf(): string {
         $out = '';
+        // Render all headers first
         foreach (self::$headerOrder as $key => $class) {
-            $out .= $this->headers[$key]->render();
+            $out .= rtrim($this->headers[$key]->render(), "\n") . "\n";
         }
-        return $out;
+        // Determine output style
+        $config = $this->config ?? null;
+        $style = ($config && isset($config->voiceOutputStyle)) ? $config->voiceOutputStyle : 'grouped';
+        // Collect voice lines and bars
+        $voices = [];
+        $bars = [];
+        foreach ($this->getLines() as $lineObj) {
+            if (method_exists($lineObj, 'renderSelf')) {
+                $line = $lineObj->renderSelf();
+                $line = rtrim($line, "\n");
+                if (preg_match('/^V:([^\s]+)/', trim($line), $m)) {
+                    $voiceId = $m[1];
+                    if (!isset($voices[$voiceId])) {
+                        $voices[$voiceId] = $line;
+                    }
+                } else if (preg_match('/^\|/', $line)) {
+                    $bars[] = $line;
+                }
+            }
+        }
+        if ($style === 'interleaved') {
+            // Interleaved: alternate bars for each voice
+            foreach ($voices as $voiceLine) {
+                $out .= $voiceLine . "\n";
+            }
+            foreach ($bars as $barLine) {
+                $out .= $barLine . "\n";
+            }
+        } else {
+            // Grouped: all V: lines, then all bars
+            foreach ($voices as $voiceLine) {
+                $out .= $voiceLine . "\n";
+            }
+            foreach ($bars as $barLine) {
+                $out .= $barLine . "\n";
+            }
+        }
+        // Remove trailing blank lines
+        return rtrim($out, "\n") . "\n";
     }
     // Add tune-level sanity checks here
 }

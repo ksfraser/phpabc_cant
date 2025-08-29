@@ -7,7 +7,16 @@ abstract class AbcHeaderField {
     public function __construct($value = '') { $this->value = $value; }
     public function set($value) { $this->value = $value; }
     public function get() { return $this->value; }
-    public function render() { return static::$label . ':' . $this->value . "\n"; }
+    public function render() {
+        if (is_array($this->value)) {
+            $out = '';
+            foreach ($this->value as $v) {
+                $out .= static::$label . ':' . $v . "\n";
+            }
+            return $out;
+        }
+        return static::$label . ':' . $this->value . "\n";
+    }
 }
 
 // Multi-value field base

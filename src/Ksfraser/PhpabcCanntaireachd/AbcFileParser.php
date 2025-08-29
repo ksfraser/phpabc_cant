@@ -36,6 +36,11 @@ class AbcFileParser {
                 if ($currentTune) $tunes[] = $currentTune;
                 $currentTune = new AbcTune();
                 $currentTune->addHeader('X', substr($line, 2));
+            } elseif ($currentTune && preg_match('/^V:/', $line)) {
+                // Always preserve V: header line
+                $abcLine = new AbcLine();
+                $abcLine->setHeaderLine($line);
+                $currentTune->add($abcLine);
             } elseif ($currentTune && preg_match('/^([A-Z]):(.*)/', $line, $m)) {
                 $key = $m[1];
                 $value = trim($m[2]);

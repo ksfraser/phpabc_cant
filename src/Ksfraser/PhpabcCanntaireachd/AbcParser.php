@@ -186,6 +186,29 @@ class AbcParser extends AbcTuneBase
 		return FALSE;
 	}
 	
-	// ... rest of the methods will need to be copied and updated
-	// For brevity, I'm showing the structure - you'll need the complete implementation
+	/**
+	 * Process ABC content and return as string
+	 * @param string|null $abcContent
+	 * @return string
+	 */
+	public function process($abcContent = null) {
+		$parser = new \Ksfraser\PhpabcCanntaireachd\AbcFileParser();
+		$tunes = $parser->parse($abcContent);
+		$output = '';
+		foreach ($tunes as $tuneIdx => $tune) {
+			$headers = $tune->getHeaders();
+			// Check/fix missing K header
+			if (isset($headers['K']) && ($headers['K']->get() === '' || $headers['K']->get() === null)) {
+				$tune->replaceHeader('K', 'HP');
+			}
+			// Fix voice headers (do not log)
+			if (method_exists($tune, 'fixVoiceHeaders')) {
+				$tune->fixVoiceHeaders();
+			}
+			$output .= $tune->render();
+			$output .= "\n";
+		}
+		// Only return processed ABC, not logs
+		return $output;
+	}
 }

@@ -49,10 +49,16 @@ class TestAbcProcessor extends TestCase {
         $this->assertCount(2, $tunes, 'Should parse two tunes');
         $this->assertEquals('First Tune', $tunes[0]->getHeaders()['T']);
         $this->assertEquals('Second Tune', $tunes[1]->getHeaders()['T']);
+        // Assert V: lines are present in output for both tunes
+        foreach ($tunes as $tune) {
+            $out = $tune->render();
+            $this->assertStringContainsString('V:Bagpipes', $out, 'V:Bagpipes header missing in output');
+        }
         // Style check: 4/4 tune should have 8 bars (will fail, only 3 here)
         $checker = new \Ksfraser\PhpabcCanntaireachd\AbcSanityChecker();
         $issues = $checker->checkBagpipeStyle($tunes[0]);
         $this->assertNotEmpty($issues, 'Should detect style issues in first tune');
+
     }
     public function testVoiceOutputStyles() {
         $voiceBars = [
@@ -100,5 +106,23 @@ class TestAbcProcessor extends TestCase {
         $this->assertStringContainsString('T:', $out);
         $this->assertStringContainsString('M:', $out);
         $this->assertStringContainsString('L:', $out);
+    }
+    public function testMultiVoiceOutput() {
+        $abc = "X:1\nT:Multi Voice\nM:2/4\nL:1/8\nV:Melody\n|A B|A2|A|\nV:Guitar\n|A B|A2|A|";
+        $parser = new \Ksfraser\PhpabcCanntaireachd\AbcFileParser();
+        $tunes = $parser->parse($abc);
+        $this->assertCount(1, $tunes, 'Should parse one tune');
+        // Test grouped output
+        $tunes[0]->config = (object)['voiceOutputStyle'=>'grouped'];
+        $grouped = $tunes[0]->render();
+        $this->assertStringContainsString('V:Melody', $grouped, 'V:Melody header missing in grouped output');
+        $this->assertStringContainsString('V:Guitar', $grouped, 'V:Guitar header missing in grouped output');
+        $this->assertStringContainsString('|A B|A2|A|', $grouped, 'Bar lines missing in grouped output');
+        // Test interleaved output
+        $tunes[0]->config = (object)['voiceOutputStyle'=>'interleaved'];
+        $interleaved = $tunes[0]->render();
+        $this->assertStringContainsString('V:Melody', $interleaved, 'V:Melody header missing in interleaved output');
+        $this->assertStringContainsString('V:Guitar', $interleaved, 'V:Guitar header missing in interleaved output');
+        $this->assertStringContainsString('|A B|A2|A|', $interleaved, 'Bar lines missing in interleaved output');
     }
 }

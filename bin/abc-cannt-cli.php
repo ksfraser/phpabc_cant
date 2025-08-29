@@ -41,18 +41,6 @@ $abcContent = file_get_contents($file);
 $validator = new AbcValidator();
 $errors = $validator->validate($abcContent);
 
-if ($errors) {
-    $errorMsg = "Validation errors found in '$file':\n";
-    foreach ($errors as $err) {
-        $errorMsg .= "  - $err\n";
-    }
-    if ($errorFile) {
-        CliOutputWriter::write($errorMsg, $errorFile);
-    } else {
-        echo $errorMsg;
-    }
-    exit(2);
-}
 
 $parser = new AbcParser();
 $result = $parser->process($abcContent);
@@ -64,20 +52,31 @@ if ($convert) {
 // Example: Compare canntaireachd lines if present
 // $outputMsg .= "[Example] Would compare existing canntaireachd lines and report differences.\n";
 
+// Always log validation errors if present
+if ($errors) {
+    $errorMsg = "Validation errors found in '$file':\n";
+    foreach ($errors as $err) {
+        $errorMsg .= "  - $err\n";
+    }
+    if ($errorFile) {
+        CliOutputWriter::write($errorMsg, $errorFile);
+    } else {
+        echo $errorMsg;
+    }
+}
 
 // Write processed ABC result to output file if requested
-
 if ($outputFile) {
-    // Write processed ABC to output file
+    // Write processed ABC to output file ONLY
     CliOutputWriter::write($result, $outputFile);
-    // Write log/status to errorfile (not output file)
+    // Write log/status to errorfile ONLY
     if ($errorFile) {
         CliOutputWriter::write($outputMsg, $errorFile);
     } else {
         echo $outputMsg;
     }
 } else {
-    // Write processed ABC to stdout
+    // Write processed ABC to stdout ONLY
     echo $result;
     // Write log/status to errorfile or stdout
     if ($errorFile) {

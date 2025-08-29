@@ -84,6 +84,8 @@ The package has been updated to be PSR-4 compliant:
 - And more...
 
 ## Header Field Architecture
+- All ABC header fields (A–Z) are represented by dedicated classes in `src/Ksfraser/PhpabcCanntaireachd/Header/`. Each class inherits from a common superclass, ensuring consistent set/get/render methods. Multi-value fields (e.g., C:, B:) use a dedicated subclass for proper handling.
++ All ABC header fields (A–Z) and all V: (voice) header lines are preserved and rendered in output files. Multi-tune and multi-voice files retain all V: lines in output, in correct order. Each header field is represented by a dedicated class in `src/Ksfraser/PhpabcCanntaireachd/Header/`, inheriting from a common superclass for consistent set/get/render methods. Multi-value fields (e.g., C:, B:) use a dedicated subclass for proper handling.
 
 All ABC header fields (A–Z) are represented by dedicated classes in `src/Ksfraser/PhpabcCanntaireachd/Header/`. Each class inherits from a common superclass, ensuring consistent set/get/render methods. Multi-value fields (e.g., C:, B:) use a dedicated subclass for proper handling.
 
@@ -102,6 +104,19 @@ All ABC header fields (A–Z) are represented by dedicated classes in `src/Ksfra
 - `AbcFileParser` supports a config variable `singleHeaderPolicy` (`first` or `last`) to control which instance of a single-value header is kept when duplicates are encountered.
 
 ## Testing
+- Unit tests cover:
+- Parsing ABC files with all header fields
+- Multi-value and single-value header handling
+- Configurable singleHeaderPolicy (first/last)
+- Rendering tunes with missing/empty headers
+- PSR-4 compliance and autoloading
++ Unit tests cover:
++ - Parsing ABC files with all header fields and all V: (voice) header lines
++ - Multi-value and single-value header handling
++ - Configurable singleHeaderPolicy (first/last)
++ - Rendering tunes with missing/empty headers
++ - Rendering all V: lines for multi-tune and multi-voice files
++ - PSR-4 compliance and autoloading
 
 Unit tests cover:
 - Parsing ABC files with all header fields
