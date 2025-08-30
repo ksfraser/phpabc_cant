@@ -8,8 +8,103 @@ use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderM;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderL;
 
 class AbcTune extends AbcItem {
-    /** @var object|null */
-    public $config = null;
+    /**
+     * Config option: number of bars per interleave block
+     * @var int
+     */
+    protected $interleaveWidth = 1;
+
+    /**
+     * Set config option for interleave width
+     */
+    public function setInterleaveWidth($width = 1)
+    {
+        $this->interleaveWidth = max(1, (int)$width);
+    }
+    /**
+     * Config option: render solfege (do-re-mi) for non-bagpipe voices
+     * @var bool
+     */
+    protected $renderSolfege = false;
+
+    /**
+     * Set config option for rendering solfege
+     */
+    public function setRenderSolfege($render = true)
+    {
+        $this->renderSolfege = $render;
+    }
+
+    /**
+     * Parse body lines, track current voice, lyrics, and canntaireachd
+     */
+    public function parseBodyLines(array $lines)
+    {
+        $currentVoice = null;
+        $currentBar = 0;
+        foreach ($lines as $line) {
+            $trimmed = trim($line);
+            // Voice change: V:xx or [V:xx]
+            if (preg_match('/^(?:\[)?V:([^\s\]]+)(?:\])?/', $trimmed, $m)) {
+                $currentVoice = $m[1];
+                if (!isset($this->voiceBars[$currentVoice])) {
+                    $this->voiceBars[$currentVoice] = [];
+                }
+                continue;
+            }
+            // Bar line
+            if (preg_match('/^\|/', $trimmed)) {
+                $currentBar++;
+                $barObj = new AbcBar($currentBar, $trimmed);
+                $this->voiceBars[$currentVoice][$currentBar] = $barObj;
+                continue;
+            }
+            // Lyrics (w:)
+            if (preg_match('/^w:(.*)$/i', $trimmed, $m)) {
+                $lyrics = $m[1];
+                if ($this->forceBarLinesInLyrics) {
+                    $lyricBars = preg_split('/\|/', $lyrics);
+                    foreach ($lyricBars as $i => $lyricBar) {
+                        $barNum = $currentBar + $i;
+                        if (!isset($this->voiceBars[$currentVoice][$barNum])) {
+                            $this->voiceBars[$currentVoice][$barNum] = new AbcBar($barNum);
+                        }
+                        $this->voiceBars[$currentVoice][$barNum]->setLyrics(trim($lyricBar));
+                    }
+                    $currentBar += count($lyricBars) - 1;
+                } else {
+                    if (!isset($this->voiceBars[$currentVoice][$currentBar])) {
+                        $this->voiceBars[$currentVoice][$currentBar] = new AbcBar($currentBar);
+                    }
+                    $this->voiceBars[$currentVoice][$currentBar]->setLyrics($lyrics);
+                }
+                continue;
+            }
+            // Canntaireachd (W:)
+            if (preg_match('/^W:(.*)$/i', $trimmed, $m)) {
+                $cannt = $m[1];
+                if (!isset($this->voiceBars[$currentVoice][$currentBar])) {
+                    $this->voiceBars[$currentVoice][$currentBar] = new AbcBar($currentBar);
+                }
+                $this->voiceBars[$currentVoice][$currentBar]->setCanntaireachd($cannt);
+                continue;
+            }
+            // Solfege (S:)
+            if (preg_match('/^S:(.*)$/i', $trimmed, $m)) {
+                $solfege = $m[1];
+                if (!isset($this->voiceBars[$currentVoice][$currentBar])) {
+                    $this->voiceBars[$currentVoice][$currentBar] = new AbcBar($currentBar);
+                }
+                $this->voiceBars[$currentVoice][$currentBar]->setSolfege($solfege);
+                continue;
+            }
+            // Notes/body
+            if (!isset($this->voiceBars[$currentVoice][$currentBar])) {
+                $this->voiceBars[$currentVoice][$currentBar] = new AbcBar($currentBar);
+            }
+            $this->voiceBars[$currentVoice][$currentBar]->addNote($trimmed);
+        }
+    }
     /**
      * Fix missing name/sname in V: header lines and log actions
      * @return string log of fixes applied
@@ -66,6 +161,8 @@ class AbcTune extends AbcItem {
         'Z' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderZ::class,
     ];
 
+    protected $voices = [];
+
     public function __construct() {
         // Load text file defaults first
         $defaults = array();
@@ -102,10 +199,10 @@ class AbcTune extends AbcItem {
             if (isset($defaults[$key])) {
                 $this->headers[$key] = new $class($defaults[$key]);
             } else {
-                $this->headers[$key] = new $class();
-            }
-        }
-    }
+    /**
+     * Per-voice array of AbcBar objects
+     */
+    protected $voiceBars = [];
 
     /**
      * Add or update a header field
@@ -132,57 +229,43 @@ class AbcTune extends AbcItem {
 
     public function getHeaders() {
         return $this->headers;
-    }
-
-    public function getLines() {
-        return $this->subitems;
-    }
-
-    protected function renderSelf(): string {
-        $out = '';
-        // Render all headers first
-        foreach (self::$headerOrder as $key => $class) {
-            $out .= rtrim($this->headers[$key]->render(), "\n") . "\n";
-        }
-        // Determine output style
-        $config = $this->config ?? null;
-        $style = ($config && isset($config->voiceOutputStyle)) ? $config->voiceOutputStyle : 'grouped';
-        // Collect voice lines and bars
-        $voices = [];
-        $bars = [];
+        
+    // ...existing code...
+    public function fixVoiceHeaders() {
+        $log = '';
         foreach ($this->getLines() as $lineObj) {
+            if (method_exists($lineObj, 'getBars')) {
+                foreach ($lineObj->getBars() as $barObj) {
+                    // No voice headers in bars
+                }
+            }
             if (method_exists($lineObj, 'renderSelf')) {
                 $line = $lineObj->renderSelf();
-                $line = rtrim($line, "\n");
-                if (preg_match('/^V:([^\s]+)/', trim($line), $m)) {
+                if (preg_match('/^V:([^\s]+)(.*)$/', trim($line), $m)) {
                     $voiceId = $m[1];
-                    if (!isset($voices[$voiceId])) {
-                        $voices[$voiceId] = $line;
+                    $rest = $m[2];
+                    $needsName = !preg_match('/name="[^"]+"/', $rest);
+                    $needsSname = !preg_match('/sname="[^"]+"/', $rest);
+                    if ($needsName || $needsSname) {
+                        $log .= "Voice $voiceId missing name or sname. ";
+                        $newRest = $rest;
+                        if ($needsName) {
+                            $newRest .= ' name="' . $voiceId . '"';
+                            $log .= "Applied name=\"$voiceId\". ";
+                        }
+                        if ($needsSname) {
+                            $newRest .= ' sname="' . $voiceId . '"';
+                            $log .= "Applied sname=\"$voiceId\". ";
+                        }
+                        // Update lineObj to use new header
+                        if (method_exists($lineObj, 'setHeaderLine')) {
+                            $lineObj->setHeaderLine('V:' . $voiceId . $newRest);
+                        }
+                        $log .= "\n";
                     }
-                } else if (preg_match('/^\|/', $line)) {
-                    $bars[] = $line;
                 }
             }
         }
-        if ($style === 'interleaved') {
-            // Interleaved: alternate bars for each voice
-            foreach ($voices as $voiceLine) {
-                $out .= $voiceLine . "\n";
-            }
-            foreach ($bars as $barLine) {
-                $out .= $barLine . "\n";
-            }
-        } else {
-            // Grouped: all V: lines, then all bars
-            foreach ($voices as $voiceLine) {
-                $out .= $voiceLine . "\n";
-            }
-            foreach ($bars as $barLine) {
-                $out .= $barLine . "\n";
-            }
-        }
-        // Remove trailing blank lines
-        return rtrim($out, "\n") . "\n";
+        return $log;
     }
-    // Add tune-level sanity checks here
-}
+            }
