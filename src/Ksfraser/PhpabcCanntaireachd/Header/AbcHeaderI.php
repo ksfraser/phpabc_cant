@@ -5,6 +5,6 @@ namespace Ksfraser\PhpabcCanntaireachd\Header;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderMultiField;
 
 
-class AbcHeaderC extends AbcHeaderMultiField {
+class AbcHeaderI extends AbcHeaderMultiField {
     public static $label = 'I';
 }
