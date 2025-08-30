@@ -7,6 +7,7 @@ use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderB;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderM;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderL;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcFixVoiceHeader;
+use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderGeneric;
 
 class AbcTune extends AbcItem {
     /**
@@ -148,54 +149,6 @@ class AbcTune extends AbcItem {
                 }
             }
             if (method_exists($lineObj, 'renderSelf')) {
-                /*
-                // Use public render() so we always get a string
-                $line = $lineObj->render();
-                if (preg_match('/^V:([^\s]+)(.*)$/', trim($line), $m)) {
-                    $voiceId = $m[1];
-                    $rest = $m[2];
-                    // Detect any existing name/sname values
-                        $existingName = null;
-                        $existingSname = null;
-                        if (preg_match('/name="([^"]+)"/', $rest, $mm)) {
-                            $existingName = $mm[1];
-                        }
-                        else
-                        {
-                            $needsName = true;
-                        }   
-                        if (preg_match('/sname="([^"]+)"/', $rest, $mm2)) {
-                            $existingSname = $mm2[1];
-                        }
-                        else
-                        {
-                            $needsSname = true;
-                        }
-                    if ($needsName || $needsSname) {
-                        $log .= "Voice $voiceId missing name or sname. ";
-                        $newRest = $rest;
-                        // If name is missing, prefer to use sname if present, otherwise fall back to voiceId
-                        if ($needsName) {
-                            $useName = $existingSname ?? $voiceId;
-                            $newRest .= ' name="' . $useName . '"';
-                            $log .= "Applied name=\"$useName\". ";
-                        }
-
-                        // If sname is missing, prefer to use name if present, otherwise fall back to voiceId
-                        if ($needsSname) {
-                            $useSname = $existingName ?? $voiceId;
-                            $newRest .= ' sname="' . $useSname . '"';
-                            $log .= "Applied sname=\"$useSname\". ";
-                        }
-
-                        // Update lineObj to use new header
-                        if (method_exists($lineObj, 'setHeaderLine')) {
-                            $lineObj->setHeaderLine('V:' . $voiceId . $newRest);
-                        }
-                        $log .= "\n";
-                    }
-                }
-                    */
                 $log .= AbcFixVoiceHeader::fixHeader($lineObj);
             }
         }
@@ -215,9 +168,13 @@ class AbcTune extends AbcItem {
             }
         } else {
             // Fallback: store as simple header-like object
-            $h = new \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderX('');
-            $h->set($value);
-            $this->headers[$key] = $h;
+            $obj = new AbcHeaderGeneric( $value );
+            if (isset($this->headers[$key]) && method_exists($this->headers[$key], 'add')) {
+                $this->headers[$key]->add($value);
+            } else {
+                $obj->setLabel( $key );
+                $this->headers[$key] = $obj;
+            }
         }
     }
 
@@ -226,8 +183,9 @@ class AbcTune extends AbcItem {
         if (class_exists($class)) {
             $this->headers[$key] = new $class($value);
         } else {
-            $h = new \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderX('');
+            $h = new \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderGeneric('');
             $h->set($value);
+            $h->setLabel( $key );
             $this->headers[$key] = $h;
         }
     }
