@@ -1,5 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Header;
-class AbcHeaderO extends AbcHeaderField {
+
+use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderMultiField;
+class AbcHeaderO extends AbcHeaderMultiField {
     public static $label = 'O';
 }

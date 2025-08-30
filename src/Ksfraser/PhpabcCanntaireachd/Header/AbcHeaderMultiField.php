@@ -1,5 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Header;
+
+use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderField; 
 /**
  * Multi-value ABC header field (e.g., C: composer, B: book)
  */

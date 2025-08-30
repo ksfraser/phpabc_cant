@@ -7,29 +7,30 @@ use Ksfraser\PhpabcCanntaireachd\AbcLyricsPass;
 use Ksfraser\PhpabcCanntaireachd\AbcFileParser;
 use Ksfraser\PhpabcCanntaireachd\TokenDictionary;
 use Ksfraser\PhpabcCanntaireachd\CliOutputWriter;
+use Ksfraser\PhpabcCanntaireachd\CliOptions;
+use Ksfraser\PhpabcCanntaireachd\Parse\AbcFileToTunes;
 
 // Support --output and --errorfile options
 $outputFile = null;
 $errorFile = null;
-foreach ($argv as $i => $arg) {
-    if ($i === 0) continue;
-    if (preg_match('/^--output=(.+)$/', $arg, $m)) {
-        $outputFile = $m[1];
-    } elseif (preg_match('/^--errorfile=(.+)$/', $arg, $m)) {
-        $errorFile = $m[1];
-    } elseif (!isset($file)) {
-        $file = $arg;
-    } elseif (!isset($xnum)) {
-        $xnum = $arg;
-    }
-}
+$cli = CLIOptions::fromArgv($argv);
+if( isset( $cli->file ) )
+    $file = $cli->file;
+if( isset( $cli->xnum ) )
+    $xnum = $cli->xnum;
+if( isset( $cli->outputFile ) )
+    $outputFile = $cli->outputFile;
+if( isset( $cli->errorFile ) )
+    $errorFile = $cli->errorFile;
+
+
 if (!isset($file) || !isset($xnum)) {
-    $msg = "Usage: php bin/abc-lyrics-pass-cli.php <abcfile> <tune_number> [--output=out.txt] [--errorfile=err.txt]\n";
+    $msg = "Usage: php bin/abc-lyrics-pass-cli.php --file=<abcfile> --xnum=<tune_number> [--output=out.txt] [--errorfile=err.txt]\n";
     if ($errorFile) {
         CliOutputWriter::write($msg, $errorFile);
     } else {
-        echo $msg;
     }
+    echo $msg;
     exit(1);
 }
 if (!file_exists($file)) {
@@ -37,13 +38,16 @@ if (!file_exists($file)) {
     if ($errorFile) {
         CliOutputWriter::write($msg, $errorFile);
     } else {
-        echo $msg;
     }
+    echo $msg;
     exit(1);
 }
-$abcContent = file_get_contents($file);
+
+/*$abcContent = file_get_contents($file);
 $parser = new AbcFileParser();
 $tunes = $parser->parse($abcContent);
+*/
+$tunes = AbcFileToTunes::parse($file);
 $tune = null;
 foreach ($tunes as $t) {
     $headers = $t->getHeaders();

@@ -1,0 +1,65 @@
+<?php
+namespace Ksfraser\PhpabcCanntaireachd\Header;
+
+//Fix a voice header to have NAME and SNAME fields
+
+class AbcFixVoiceHeader
+{
+        static fixHeader( $lineObj )
+        {
+                if (method_exists($lineObj, 'renderSelf')) 
+                {
+                        // Use public render() so we always get a string
+                        $line = $lineObj->render();
+
+                        if (preg_match('/^V:([^\s]+)(.*)$/', trim($line), $m))
+                        {
+                                $voiceId = $m[1];
+                                $rest = $m[2];
+                                // Detect any existing name/sname values
+                                $existingName = null;
+                                $existingSname = null;
+                                if (preg_match('/name="([^"]+)"/', $rest, $mm)) {
+                                        $existingName = $mm[1];
+                                }
+                                else
+                                {
+                                        $needsName = true;
+                                        $log .= "Voice $voiceId missing name. ";
+                                }
+                                if (preg_match('/sname="([^"]+)"/', $rest, $mm2)) {
+                                        $existingSname = $mm2[1];
+                                }
+                                else
+                                {
+                                        $needsSname = true;
+                                        $log .= "Voice $voiceId missing sname. ";
+                                }
+                                $newRest = $rest;
+                                // If name is missing, prefer to use sname if present, otherwise fall back to voiceId
+                                if ($needsName) {
+                                        $useName = $existingSname ?? $voiceId;
+                                        $newRest .= ' name="' . $useName . '"';
+                                        $log .= "Applied name=\"$useName\". ";
+                                }
+                                // If sname is missing, prefer to use name if present, otherwise fall back to voiceId
+                                if ($needsSname) {
+                                        $useSname = $existingName ?? $voiceId;
+                                        $newRest .= ' sname="' . $useSname . '"';
+                                        $log .= "Applied sname=\"$useSname\". ";
+                                }
+                                // Update lineObj to use new header
+                                if (method_exists($lineObj, 'setHeaderLine')) {
+                                        $lineObj->setHeaderLine('V:' . $voiceId . $newRest);
+                                }
+                                else
+                                {
+                                        $log .= "Couldn't update Voice\n";
+                                }
+                                $log .= "\n";
+            
+                        }
+                }
+                return $log;
+        }
+}
