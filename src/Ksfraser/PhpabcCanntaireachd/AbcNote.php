@@ -16,7 +16,7 @@ trait NoteParserTrait {
 	 * @return array [pitch, octave, sharpflat, length, decorator]
 	 */
 	public static function parseNote($noteStr) {
-		if (preg_match("/^([_=^]?)([a-gA-GzZ])([,']*)(\\d*\/?\\d*)(.*)$/", $noteStr, $m)) {
+		if (preg_match("/^([_=^]?)([a-gA-GzZ])([,']*)([0-9]+\/?[0-9]*|\/{1,}|)(.*)$/", $noteStr, $m)) {
 			return [
 				'pitch' => $m[2],
 				'octave' => $m[3],
@@ -180,7 +180,7 @@ class AbcNote extends Origin
 	function validate_length($value)
 	{
 		// Check for three or more slashes
-		if (preg_match('/^\/\/{2,}$/', $value)) {
+		if (preg_match('/^\/{3,}$/', $value)) {
 			throw new AbcNoteLengthException($value);
 		}
 		switch ($value) {

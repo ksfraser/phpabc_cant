@@ -10,8 +10,9 @@ class TokenDictionaryTest extends TestCase
     public function testPrepopulationFromAbcDict()
     {
         $dict = [
-            'A' => ['cannt_token' => 'C', 'bmw_token' => 'B', 'description' => 'desc'],
-            'B' => ['cannt_token' => 'CC', 'bmw_token' => 'BB', 'description' => 'desc2'],
+            'A' => ['cannt_token' => 'en', 'bmw_token' => 'A', 'description' => 'Low A'],
+            'B' => ['cannt_token' => 'o', 'bmw_token' => 'B', 'description' => 'B'],
+            '{g}G' => ['cannt_token' => 'hem', 'bmw_token' => 'gG', 'description' => 'G gracenote on G'],
         ];
         $td = new TokenDictionary();
         $td->prepopulate($dict);
@@ -21,6 +22,34 @@ class TokenDictionaryTest extends TestCase
             $this->assertEquals($row['bmw_token'], $token['bmw_token']);
             $this->assertEquals($row['description'], $token['description']);
         }
+    }
+
+    public function testBmwTokensPresentForBasicNotesAndGracenotes()
+    {
+        $dict = [
+            'G' => ['cannt_token' => 'em', 'bmw_token' => 'G', 'description' => 'Low G'],
+            'A' => ['cannt_token' => 'en', 'bmw_token' => 'A', 'description' => 'Low A'],
+            '{g}G' => ['cannt_token' => 'hem', 'bmw_token' => 'gG', 'description' => 'G gracenote on G'],
+            '{d}A' => ['cannt_token' => 'dan', 'bmw_token' => 'dA', 'description' => 'D gracenote on A'],
+        ];
+        $td = new TokenDictionary();
+        $td->prepopulate($dict);
+        foreach ($dict as $abc => $row) {
+            $token = $td->getToken($abc);
+            $this->assertNotEmpty($token['bmw_token'], "BMW token missing for $abc");
+        }
+    }
+
+    public function testAbcBmwCanntConversionLogic()
+    {
+        $td = new TokenDictionary();
+        $td->addOrUpdateToken('G', 'em', 'G', 'Low G');
+        $td->addOrUpdateToken('A', 'en', 'A', 'Low A');
+        $td->addOrUpdateToken('{g}G', 'hem', 'gG', 'G gracenote on G');
+        $this->assertEquals('em', $td->convertAbcToCannt('G'));
+        $this->assertEquals('G', $td->convertCanntToBmw('em'));
+        $this->assertEquals('gG', $td->convertAbcToBmw('{g}G'));
+        $this->assertEquals('{g}G', $td->convertBmwToAbc('gG'));
     }
 
     public function testAddBmwTokenUpdatesExistingRow()

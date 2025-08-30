@@ -9,6 +9,7 @@
 - Decorator classes must exist for all valid ABC decorators.
 - The parser must throw a custom error for invalid note lengths (three or more slashes).
 - The parser must log a warning if multiple invalid note lengths are found in a bar.
+- The token dictionary must include BMW tokens for all basic notes and gracenotes, and populate them during prepopulation and conversion.
 
 ## Non-Functional Requirements
 - All classes must be PSR-4 compliant.
@@ -22,3 +23,6 @@
 - Verify decorator classes render correct symbols.
 - Verify custom error is thrown for three or more slashes in note length.
 - Verify warning is logged if multiple invalid note lengths are found in a bar.
+- Verify that BMW tokens are present for all basic notes and gracenotes in the token dictionary.
+- Verify that BMW tokens are correctly populated during prepopulation and conversion.
+- Verify conversion logic for ABC <-> BMW <-> canntaireachd for all dictionary entries.

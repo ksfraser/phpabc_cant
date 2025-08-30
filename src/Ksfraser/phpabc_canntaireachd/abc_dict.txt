@@ -1,0 +1,135 @@
+
+# ABC Dictionary Master List
+# Format: key|canntaireachd|bmw|description|other_fields...
+# key: ABC token string (embellishments, notes, etc.)
+# canntaireachd: canntaireachd equivalent
+# bmw: BMW equivalent (optional)
+# description: human-readable description (optional)
+# other_fields: reserved for future enhancements
+#
+# This file is auto-generated from the union of the database schema and the legacy abc_dict.php array.
+#
+G|em|G|Low G|
+A|en|A|Low A|
+B|o|B|B|
+c|o|C|C|
+d|a|D|D|
+e|e|E|E|
+f|ve|F|F|
+g|di|g|High G|
+a|I|a|High A|
+{g}G|hem|gG|G gracenote on G|
+{g}A|hen|gA|G gracenote on A|
+{g}B|ho|gB|G gracenote on B|
+{g}c|ho|gc|G gracenote on C|
+{g}d|ha|gd|G gracenote on D|
+{g}e|he|ge|G gracenote on E|
+{g}f|che|gf|G gracenote on F|
+{d}G|dam|dG|D gracenote on G|
+{d}A|dan|dA|D gracenote on A|
+{d}B|to|dB|D gracenote on B|
+{d}c|do|dc|D gracenote on C|
+{e}G|um|eG|E gracenote on G|
+{e}A|un|eA|E gracenote on A|
+{e}B|eo|eB|E gracenote on B|
+{e}c|eo|ec|E gracenote on C|
+{e}d|ea|ed|E gracenote on D|
+{a}G|him|aG|A gracenote on G|
+{a}A|hin|aA|A gracenote on A|
+{a}B|ho|aB|A gracenote on B|
+{a}c|ho|ac|A gracenote on C|
+{a}d|ha|ad|A gracenote on D|
+{a}e|he|ae|A gracenote on E|
+{a}f|che|af|A gracenote on F|
+{a}g|chi|ag|A gracenote on G|
+{G}A|den||Strike on A|
+{AG}A|den||Strike on A|
+{G}B|do||Strike on B|
+{BG}B|do||Strike on B|
+{G}c|do||Strike on C|
+{cG}c|do||Strike on C|
+{G}d|emda||Strike on D|
+{dG}d|emda||Strike on D|
+{c}d|oda||Strike on D|
+{dc}d|adoa||Strike on D|
+{A}e|ende||Strike on E|
+{eA}e|ende||Strike on E|
+{e}f|eve||Strike on F|
+{fe}f|eve||Strike on F|
+{f}g|vedi||Strike on G|
+{gf}g|chedi||Strike on G|
+{g}a|li||Strike on a|
+{ag}a|dili||Strike on a|
+{GAG}A|rarin||Birl|
+{AGAG}A|enrarin||Birl|
+{gAGAG}A|henrarin||Birl|
+{aAGAG}A|hinrarin||Birl|
+{GBG}A|roro||Double Echo|
+{GcG}c|roro||Double Echo|
+{GdG}d|rara||Double Echo|
+{cdc}d|rara||Double Echo|
+{AeA}e|rede||Double Echo|
+{efe}f|rere||Double Echo|
+{fgf}g|riri||Double Echo|
+{gag}a|riri||Double Echo|
+{BGBG}|hodo||Double Echo|
+{gBGBG}B|horodo||Double Echo|
+{gBGBG}|horodo||Double Echo|
+{aBGBG}B|horodo||Double Echo|
+{aBGBG}|horodo||Double Echo|
+{cGcG}|rodo||Double Echo|
+{gcGcG}c|horodo||Double Echo|
+{gcGcG}|horodo||Double Echo|
+{acGcG}c|horodo||Double Echo|
+{acGcG}|horodo||Double Echo|
+{dGdG}|remdem||Double Echo|
+{gdGdG}d|hemdemde||Double Echo|
+{gdGdG}|hemdemde||Double Echo|
+{adGdG}d|hemdemde||Double Echo|
+{adGdG}|hemdemde||Double Echo|
+{dcdc}|roda||Double Echo|
+{gdcdc}d|haroda||Double Echo|
+{gdcdc}|haroda||Double Echo|
+{adcdc}d|haroda||Double Echo|
+{adcdc}|haroda||Double Echo|
+{eAeA}|renden||Double Echo|
+{geAeA}e|hendende||Double Echo|
+{geAeA}|hendende||Double Echo|
+{aeAeA}e|hendende||Double Echo|
+{aeAeA}|hendende||Double Echo|
+{fefe}|veve||Double Echo|
+{gfefe}f|cheveve||Double Echo|
+{gfefe}|cheveve||Double Echo|
+{afefe}f|cheveve||Double Echo|
+{afefe}|cheveve||Double Echo|
+{gfgf}g|chididi||Double Echo|
+{gfgf}|chidi||Double Echo|
+{agfgf}g|chididi||Double Echo|
+{agfgf}|chididi||Double Echo|
+{agag}|dili||Double Echo|
+{efeA}|rere|hpele|BMW token|
+{fgfe}|||hpelf|BMW token|
+{AGGAG}|||st3la|BMW token|
+{GBGBG}|hodo|st3b|BMW token|
+{GcGcG}|rodo|st3c|BMW token|
+{GdGdG}|remdem|st3d|BMW token|
+{GcGcG}|rodo|lst3d|BMW token|
+{AeAeA}|renden|st3e|BMW token|
+{efefe}|veve|st3f|BMW token|
+{fgfgf}|||st3hg|BMW token|
+{gagag}|||st3ha|BMW token|
+{gAGAGAG}|||gst3la|BMW token|
+{gBGBGBG}|||gst3b|BMW token|
+{gcGcGcG}|||gst3c|BMW token|
+{gdGdGdG}|||gst3d|BMW token|
+{gdcdcdc}|||lgst3d|BMW token|
+{geAeAeA}|||gst3e|BMW token|
+{gfefefe}|||gst3f|BMW token|
+{aAGAGAG}|||tst3la|BMW token|
+{aBGBGBG}|||tst3b|BMW token|
+{acGcGcG}|||tst3c|BMW token|
+{adGdGdG}|||tst3d|BMW token|
+{adcdcdc}|||ltst3d|BMW token|
+{aeAeAeA}|||tst3e|BMW token|
+{afefefe}|||tst3f|BMW token|
+{agfgfgf}|||tst3hg|BMW token|
