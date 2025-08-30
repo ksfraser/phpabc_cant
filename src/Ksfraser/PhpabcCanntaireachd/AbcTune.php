@@ -9,6 +9,27 @@ use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderL;
 
 class AbcTune extends AbcItem {
     /**
+     * Render this tune as an ABC string (stub implementation)
+     */
+    public function renderSelf(): string {
+        $out = '';
+        // Render headers in defined order
+        foreach (self::$headerOrder as $key => $class) {
+            if (isset($this->headers[$key])) {
+                $out .= $this->headers[$key]->render();
+            }
+        }
+        // Render any other headers not in headerOrder
+        foreach ($this->headers as $k => $h) {
+            if (!isset(self::$headerOrder[$k]) && method_exists($h, 'render')) {
+                $out .= $h->render();
+            }
+        }
+        // Ensure header/body separator
+        $out .= "\n";
+        return $out;
+    }
+    /**
      * Config option: number of bars per interleave block
      * @var int
      */
@@ -78,11 +99,7 @@ class AbcTune extends AbcItem {
      */
     public function parseBodyLines(array $lines)
     {
-        $context = [
-            'currentVoice' => null,
-            'currentBar' => 0,
-            'voiceBars' => &$this->voiceBars,
-        ];
+        $context = new \Ksfraser\PhpabcCanntaireachd\ParseContext($this->voiceBars);
         $barLines = \Ksfraser\PhpabcCanntaireachd\Render\BarLineRenderer::getSupportedBarLines();
         $handlers = [
             new \Ksfraser\PhpabcCanntaireachd\BodyLineHandler\BarLineHandler($barLines),
@@ -95,11 +112,12 @@ class AbcTune extends AbcItem {
             $trimmed = trim($line);
             // Voice change: V:xx or [V:xx]
             if (preg_match('/^(?:\[)?V:([^\s\]]+)(?:\])?/', $trimmed, $m)) {
-                $context['currentVoice'] = $m[1];
-                if (!isset($this->voiceBars[$context['currentVoice']])) {
-                    $this->voiceBars[$context['currentVoice']] = [];
-                }
+                $context->getOrCreateVoice($m[1]);
                 continue;
+            }
+            // If we have not seen a voice yet, create a default melody voice when content appears
+            if ($context->currentVoice === null && $trimmed !== '' && !preg_match('/^[A-Z]:/i', $trimmed)) {
+                $context->getOrCreateVoice('M');
             }
             foreach ($handlers as $handler) {
                 if ($handler->matches($line)) {
@@ -151,44 +169,65 @@ class AbcTune extends AbcItem {
         }
         return $log;
     }
-    public function __construct() {
-        // Load text file defaults first
-        $defaults = array();
-        $configFile = __DIR__ . '/../../config/header_defaults.txt';
-        if (file_exists($configFile)) {
-            $lines = file($configFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-            foreach ($lines as $line) {
-                if (preg_match('/^([A-Z]):\s*(.+)$/', $line, $m)) {
-                    $defaults[$m[1]] = $m[2];
-                }
-            }
-        }
-        // Merge DB values, overwriting text file values
-        $dsn = 'mysql:host=localhost;dbname=phpabc';
-        $dbuser = 'phpabc';
-        $dbpass = 'phpabc';
-        $dbConfigFile = __DIR__ . '/../../config/db_config.php';
-        if (file_exists($dbConfigFile)) {
-            $dbConfig = include($dbConfigFile);
-            if (isset($dbConfig['dsn'])) $dsn = $dbConfig['dsn'];
-            if (isset($dbConfig['username'])) $dbuser = $dbConfig['username'];
-            if (isset($dbConfig['password'])) $dbpass = $dbConfig['password'];
-        }
-        try {
-            $pdo = new \PDO($dsn, $dbuser, $dbpass);
-            $stmt = $pdo->query('SELECT field_name, field_value FROM abc_header_fields');
-            while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-                $defaults[$row['field_name']] = $row['field_value'];
-            }
-        } catch (\Exception $e) {
-            // DB not available, use text file only
-        }
-        foreach (self::$headerOrder as $key => $class) {
-            if (isset($defaults[$key])) {
-                $this->headers[$key] = new $class($defaults[$key]);
+
+    // Header management
+    public function addHeader(string $key, $value) {
+        $class = '\\Ksfraser\\PhpabcCanntaireachd\\Header\\AbcHeader' . $key;
+        if (class_exists($class)) {
+            // Multi-value headers (B,C) extend AbcHeaderMultiField
+            $obj = new $class($value);
+            if (isset($this->headers[$key]) && method_exists($this->headers[$key], 'add')) {
+                $this->headers[$key]->add($value);
             } else {
-                $this->headers[$key] = new $class();
+                $this->headers[$key] = $obj;
             }
+        } else {
+            // Fallback: store as simple header-like object
+            $h = new \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderX('');
+            $h->set($value);
+            $this->headers[$key] = $h;
+        }
+    }
+
+    public function replaceHeader(string $key, $value) {
+        $class = '\\Ksfraser\\PhpabcCanntaireachd\\Header\\AbcHeader' . $key;
+        if (class_exists($class)) {
+            $this->headers[$key] = new $class($value);
+        } else {
+            $h = new \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderX('');
+            $h->set($value);
+            $this->headers[$key] = $h;
+        }
+    }
+
+    public function getHeaders(): array {
+        return $this->headers;
+    }
+
+    // Return lines/subitems (for fixVoiceHeaders and other operations)
+    public function getLines(): array {
+        return $this->subitems ?? [];
+    }
+
+    public function __construct() {
+        // Load defaults from centralized HeaderDefaults (SQL schema + config overlay)
+        $defaults = \Ksfraser\PhpabcCanntaireachd\HeaderDefaults::getDefaults();
+        foreach (self::$headerOrder as $key => $class) {
+            $value = $defaults[$key] ?? '';
+            $this->headers[$key] = new $class($value);
+        }
+    }
+
+    public function getVoiceBars(): array {
+        return $this->voiceBars;
+    }
+
+    public function copyVoice(string $from, string $to): void {
+        if (!isset($this->voiceBars[$from])) return;
+        $this->voiceBars[$to] = [];
+        foreach ($this->voiceBars[$from] as $barNum => $barObj) {
+            // Shallow clone bar object
+            $this->voiceBars[$to][$barNum] = clone $barObj;
         }
     }
 }

@@ -32,10 +32,14 @@ class AbcHeaderFieldDefaultsTest extends TestCase {
 
         $this->assertArrayHasKey('O', $headers);
         $this->assertNotNull($headers['O']);
-        $this->assertEquals('Scots Guards I', $headers['O']->get());
+        $this->assertEquals('Kevin Fraser', $headers['O']->get());
+
+        $this->assertArrayHasKey('B', $headers);
+        $this->assertNotNull($headers['B']);
+        $this->assertEquals('Scots Guards I', $headers['B']->get());
 
         $this->assertArrayHasKey('Z', $headers);
         $this->assertNotNull($headers['Z']);
-        $this->assertEquals('', $headers['Z']->get());
+        $this->assertEquals('Kevin Fraser', $headers['Z']->get());
     }
 }

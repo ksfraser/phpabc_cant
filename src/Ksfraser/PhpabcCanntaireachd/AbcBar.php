@@ -4,7 +4,7 @@ namespace Ksfraser\PhpabcCanntaireachd;
 /**
  * Represents a bar in ABC notation, with notes, lyrics, and canntaireachd.
  */
-class AbcBar
+class AbcBar extends AbcItem
 {
     /** @var int Bar number */
     public $number;
@@ -18,11 +18,19 @@ class AbcBar
     public $canntaireachd = null;
     /** @var string|null Do-re-mi for this bar (other voices) */
     public $solfege = null;
+    /** @var string|null Raw content string when created from parser without parsing notes */
+    protected $contentText = null;
 
-    public function __construct($number, $barLine = '|')
+    public function __construct($numberOrText, $barLine = '|')
     {
-        $this->number = $number;
-        $this->barLineRenderer = $this->createBarLineRenderer($barLine);
+        if (is_int($numberOrText) || is_numeric($numberOrText)) {
+            $this->number = (int)$numberOrText;
+            $this->barLineRenderer = $this->createBarLineRenderer($barLine);
+        } else {
+            // Created from parser with raw bar text
+            $this->contentText = (string)$numberOrText;
+            $this->barLineRenderer = $this->createBarLineRenderer($barLine);
+        }
     }
 
     protected function createBarLineRenderer($barLine)
@@ -107,5 +115,16 @@ class AbcBar
             $out[] = $note->renderSolfege();
         }
         return implode(' ', $out);
+    }
+
+    // Render the bar content for inclusion in a line (without surrounding '|')
+    protected function renderSelf(): string
+    {
+        if ($this->contentText !== null) {
+            return $this->contentText;
+        }
+        // If notes parsed, render notes
+        $notes = $this->renderNotes();
+        return $notes;
     }
 }

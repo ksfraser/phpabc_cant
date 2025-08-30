@@ -1,12 +1,3 @@
-    /**
-     * Get all supported barline strings for ABC spec.
-     * @return array
-     */
-    public static function getSupportedBarLines() {
-        return [
-            '|', '||', '|:', ':|', '[:', ':]'
-        ];
-    }
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Render;
 
@@ -54,59 +45,5 @@ class BarLineRenderer {
         }
         $cached = array_keys($supported);
         return $cached;
-    }
-}
-
-/**
- * Renders a simple bar line '|'.
- */
-class SimpleBarLineRenderer extends BarLineRenderer {
-    public function __construct() {
-        parent::__construct('|');
-    }
-}
-
-/**
- * Renders a double bar line '||'.
- */
-class DoubleBarLineRenderer extends BarLineRenderer {
-    public function __construct() {
-        parent::__construct('||');
-    }
-}
-
-/**
- * Renders a start repeat bar line '|:'.
- */
-class StartRepeatBarLineRenderer extends BarLineRenderer {
-    public function __construct() {
-        parent::__construct('|:');
-    }
-}
-
-/**
- * Renders an end repeat bar line ':|'.
- */
-class EndRepeatBarLineRenderer extends BarLineRenderer {
-    public function __construct() {
-        parent::__construct(':|');
-    }
-}
-
-/**
- * Renders a start bar line '[:'.
- */
-class StartBarLineRenderer extends BarLineRenderer {
-    public function __construct() {
-        parent::__construct('[:');
-    }
-}
-
-/**
- * Renders an end bar line ':]'.
- */
-class EndBarLineRenderer extends BarLineRenderer {
-    public function __construct() {
-        parent::__construct(':]');
     }
 }

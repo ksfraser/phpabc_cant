@@ -88,6 +88,55 @@ class TokenDictionary
     }
 
     /**
+     * Convert canntaireachd token to BMW token
+     */
+    public function convertCanntToBmw($cannt)
+    {
+        foreach ($this->tokens as $row) {
+            if (($row['cannt_token'] ?? null) === $cannt) {
+                return $row['bmw_token'] ?? null;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Convert multiple ABC tokens to canntaireachd
+     */
+    public function convertMultipleAbcToCannt(array $abcs)
+    {
+        $results = [];
+        foreach ($abcs as $abc) {
+            $results[$abc] = $this->convertAbcToCannt($abc);
+        }
+        return $results;
+    }
+
+    /**
+     * Convert multiple BMW tokens to ABC
+     */
+    public function convertMultipleBmwToAbc(array $bmws)
+    {
+        $results = [];
+        foreach ($bmws as $bmw) {
+            $results[$bmw] = $this->convertBmwToAbc($bmw);
+        }
+        return $results;
+    }
+
+    /**
+     * Convert multiple canntaireachd tokens to BMW tokens
+     */
+    public function convertMultipleCanntToBmw(array $cannts)
+    {
+        $results = [];
+        foreach ($cannts as $cannt) {
+            $results[$cannt] = $this->convertCanntToBmw($cannt);
+        }
+        return $results;
+    }
+
+    /**
      * Bulk import tokens
      */
     public function bulkImport(array $rows)
@@ -103,5 +152,13 @@ class TokenDictionary
     public function getAllTokens()
     {
         return $this->tokens;
+    }
+
+    /**
+     * Convert ABC to BMW
+     */
+    public function convertAbcToBmw($abc)
+    {
+        return $this->tokens[$abc]['bmw_token'] ?? null;
     }
 }
