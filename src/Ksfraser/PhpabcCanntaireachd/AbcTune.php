@@ -73,81 +73,43 @@ class AbcTune extends AbcItem {
     }
 
     /**
-     * Parse body lines, track current voice, lyrics, and canntaireachd
+     * Parse body lines using handler classes for each line type (SOLID/DRY)
+     * Handler classes should be placed in src/Ksfraser/PhpabcCanntaireachd/BodyLineHandler/
      */
     public function parseBodyLines(array $lines)
     {
-        $currentVoice = null;
-        $currentBar = 0;
-        // Dynamically build barline regex from supported choices
+        $context = [
+            'currentVoice' => null,
+            'currentBar' => 0,
+            'voiceBars' => &$this->voiceBars,
+        ];
         $barLines = \Ksfraser\PhpabcCanntaireachd\Render\BarLineRenderer::getSupportedBarLines();
-        // Sort by length descending to match longest first
-        usort($barLines, function($a, $b) { return strlen($b) - strlen($a); });
-        $barLinePattern = '/^(' . implode('|', array_map('preg_quote', $barLines)) . ')/';
-
+        $handlers = [
+            new \Ksfraser\PhpabcCanntaireachd\BodyLineHandler\BarLineHandler($barLines),
+            new \Ksfraser\PhpabcCanntaireachd\BodyLineHandler\LyricsHandler($this->forceBarLinesInLyrics ?? false),
+            new \Ksfraser\PhpabcCanntaireachd\BodyLineHandler\CanntaireachdHandler(),
+            new \Ksfraser\PhpabcCanntaireachd\BodyLineHandler\SolfegeHandler(),
+            new \Ksfraser\PhpabcCanntaireachd\BodyLineHandler\NoteHandler(),
+        ];
         foreach ($lines as $line) {
             $trimmed = trim($line);
             // Voice change: V:xx or [V:xx]
             if (preg_match('/^(?:\[)?V:([^\s\]]+)(?:\])?/', $trimmed, $m)) {
-                $currentVoice = $m[1];
-                if (!isset($this->voiceBars[$currentVoice])) {
-                    $this->voiceBars[$currentVoice] = [];
+                $context['currentVoice'] = $m[1];
+                if (!isset($this->voiceBars[$context['currentVoice']])) {
+                    $this->voiceBars[$context['currentVoice']] = [];
                 }
                 continue;
             }
-            // Bar line (match any supported barline)
-            if (preg_match($barLinePattern, $trimmed, $bm)) {
-                $currentBar++;
-                $barObj = new AbcBar($currentBar, $bm[1]);
-                $this->voiceBars[$currentVoice][$currentBar] = $barObj;
-                continue;
-            }
-            // Lyrics (w:)
-            if (preg_match('/^w:(.*)$/i', $trimmed, $m)) {
-                $lyrics = $m[1];
-                if ($this->forceBarLinesInLyrics) {
-                    $lyricBars = preg_split('/\|/', $lyrics);
-                    foreach ($lyricBars as $i => $lyricBar) {
-                        $barNum = $currentBar + $i;
-                        if (!isset($this->voiceBars[$currentVoice][$barNum])) {
-                            $this->voiceBars[$currentVoice][$barNum] = new AbcBar($barNum);
-                        }
-                        $this->voiceBars[$currentVoice][$barNum]->setLyrics(trim($lyricBar));
-                    }
-                    $currentBar += count($lyricBars) - 1;
-                } else {
-                    if (!isset($this->voiceBars[$currentVoice][$currentBar])) {
-                        $this->voiceBars[$currentVoice][$currentBar] = new AbcBar($currentBar);
-                    }
-                    $this->voiceBars[$currentVoice][$currentBar]->setLyrics($lyrics);
+            foreach ($handlers as $handler) {
+                if ($handler->matches($line)) {
+                    $handler->handle($context, $line);
+                    break;
                 }
-                continue;
             }
-            // Canntaireachd (W:)
-            if (preg_match('/^W:(.*)$/i', $trimmed, $m)) {
-                $cannt = $m[1];
-                if (!isset($this->voiceBars[$currentVoice][$currentBar])) {
-                    $this->voiceBars[$currentVoice][$currentBar] = new AbcBar($currentBar);
-                }
-                $this->voiceBars[$currentVoice][$currentBar]->setCanntaireachd($cannt);
-                continue;
-            }
-            // Solfege (S:)
-            if (preg_match('/^S:(.*)$/i', $trimmed, $m)) {
-                $solfege = $m[1];
-                if (!isset($this->voiceBars[$currentVoice][$currentBar])) {
-                    $this->voiceBars[$currentVoice][$currentBar] = new AbcBar($currentBar);
-                }
-                $this->voiceBars[$currentVoice][$currentBar]->setSolfege($solfege);
-                continue;
-            }
-            // Notes/body
-            if (!isset($this->voiceBars[$currentVoice][$currentBar])) {
-                $this->voiceBars[$currentVoice][$currentBar] = new AbcBar($currentBar);
-            }
-            $this->voiceBars[$currentVoice][$currentBar]->addNote($trimmed);
         }
     }
+
     /**
      * Fix missing name/sname in V: header lines and log actions
      * @return string log of fixes applied
@@ -189,23 +151,6 @@ class AbcTune extends AbcItem {
         }
         return $log;
     }
-    protected $headers = [];
-    protected static $headerOrder = [
-        'X' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderX::class,
-        'T' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderT::class,
-        'C' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderC::class,
-        'B' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderB::class,
-        'K' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderK::class,
-        'Q' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderQ::class,
-        'L' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderL::class,
-        'M' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderM::class,
-        'R' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderR::class,
-        'O' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderO::class,
-        'Z' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderZ::class,
-    ];
-
-    protected $voices = [];
-
     public function __construct() {
         // Load text file defaults first
         $defaults = array();
@@ -245,4 +190,5 @@ class AbcTune extends AbcItem {
                 $this->headers[$key] = new $class();
             }
         }
-            }
+    }
+}
