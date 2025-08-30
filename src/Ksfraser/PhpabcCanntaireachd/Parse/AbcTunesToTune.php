@@ -3,7 +3,12 @@ namespace Ksfraser\PhpabcCanntaireachd\Parse;
 
 class AbcTunesToTune
 {
-    static public function parse( array $tunes, string $xnum ): ?object
+    /**
+     * Return a specific Tune Numbered by X:
+     * @param array|null$tunes
+     * @param string $xnum
+     */
+    static public function locate( array $tunes, string $xnum ): ?object
     {
         foreach ($tunes as $t) {
             $headers = $t->getHeaders();

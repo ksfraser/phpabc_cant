@@ -82,6 +82,11 @@ class AbcTune extends AbcItem {
         'R' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderR::class,
         'O' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderO::class,
         'Z' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderZ::class,
+        'S' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderS::class,
+        'A' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderA::class,
+        'N' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderN::class,
+        'H' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderH::class,
+        'U' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderU::class,
         'K' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderK::class,
     ];
 

@@ -5,6 +5,7 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 use Ksfraser\PhpabcCanntaireachd\AbcLyricsPass;
 use Ksfraser\PhpabcCanntaireachd\AbcFileParser;
+use Ksfraser\PhpabcCanntaireachd\Parse\AbcTunesToTune;
 use Ksfraser\PhpabcCanntaireachd\TokenDictionary;
 use Ksfraser\PhpabcCanntaireachd\CliOutputWriter;
 use Ksfraser\PhpabcCanntaireachd\CliOptions;
@@ -48,6 +49,7 @@ $parser = new AbcFileParser();
 $tunes = $parser->parse($abcContent);
 */
 $tunes = AbcFileToTunes::parse($file);
+/*
 $tune = null;
 foreach ($tunes as $t) {
     $headers = $t->getHeaders();
@@ -56,13 +58,15 @@ foreach ($tunes as $t) {
         break;
     }
 }
+    */
+$tune = AbcTunesToTune::locate($tunes, $xnum);
 if (!$tune) {
     $msg = "Tune X:$xnum not found in $file\n";
     if ($errorFile) {
         CliOutputWriter::write($msg, $errorFile);
     } else {
-        echo $msg;
     }
+    echo $msg;
     exit(1);
 }
 $lines = [];

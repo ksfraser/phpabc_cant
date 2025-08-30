@@ -4,7 +4,6 @@ Q: 1/4=90
 L: 1/8
 M: 2/4
 R: March
-B: Scots Guard I
 O: Kevin Fraser
 Z: Kevin Fraser
 B: TBD
