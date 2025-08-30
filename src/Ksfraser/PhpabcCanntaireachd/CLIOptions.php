@@ -7,21 +7,21 @@ namespace Ksfraser\PhpabcCanntaireachd;
  * Recognizes both short/long getopt-style options and simple --key=value argv styles.
  */
 class CLIOptions {
-    public string|null $file = null;         // input abc file path
-    public bool $convert = false;            // --convert or -c
-    public string|null $outputFile = null;   // --output or -o
-    public string|null $errorFile = null;    // --errorfile or -e
-    public string|null $xnum = null;         // tune number (positional)
+    public  $file = null;         // input abc file path
+    public  $convert = false;            // --convert or -c
+    public  $outputFile = null;   // --output or -o
+    public  $errorFile = null;    // --errorfile or -e
+    public  $xnum = null;         // tune number (positional)
 
     // Additional hooks seen in some scripts
-    public array $voiceOrder = [];
-    public array $exclude = [];
+    public  $voiceOrder = [];
+    public  $exclude = [];
 
     // Raw parsed arrays
-    public array $opts = [];
-    public array $argv = [];
+    public  $opts = [];
+    public  $argv = [];
 
-    public function __construct(array $argv = null)
+    public function __construct( $argv = null)
     {
         $this->argv = $argv ?? ($_SERVER['argv'] ?? []);
         $this->parse();
@@ -94,7 +94,7 @@ class CLIOptions {
     }
 
     // Convenience factory
-    public static function fromArgv(array $argv = null): self
+    public static function fromArgv( $argv = null): self
     {
         return new self($argv);
     }
