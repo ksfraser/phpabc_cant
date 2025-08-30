@@ -2,7 +2,6 @@
 namespace Ksfraser\PhpabcCanntaireachd\Header;
 
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderMultiField;
-
-class AbcHeaderT extends AbcHeaderField {
-    public static $label = 'T';
+class AbcHeaderMidi extends AbcHeaderMultiField {
+    public static $label = '%%MIDI';
 }
