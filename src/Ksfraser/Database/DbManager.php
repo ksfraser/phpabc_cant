@@ -1,9 +1,17 @@
 <?php
 namespace Ksfraser\Database;
 
-// Lightweight PDO-compatible dummy classes used only when no PDO drivers are available.
-// These are defined before DbManager so getPdo can instantiate them safely.
-if (count(\PDO::getAvailableDrivers()) === 0) {
+// Robust check for PDO drivers; avoid count() on non-array if getAvailableDrivers() returns unexpected value
+$pdoDrivers = [];
+if (class_exists('\PDO') && is_callable(['\PDO', 'getAvailableDrivers'])) {
+    try {
+        $drv = \PDO::getAvailableDrivers();
+        if (is_array($drv)) $pdoDrivers = $drv;
+    } catch (\Throwable $e) {
+        $pdoDrivers = [];
+    }
+}
+if (count($pdoDrivers) === 0) {
     class DummyPdo extends \PDO {
         protected $tables = [];
         public function __construct() { /* don't call parent */ }
@@ -107,18 +115,54 @@ if (count(\PDO::getAvailableDrivers()) === 0) {
                 $this->rowCount = count($this->result);
                 return true;
             }
+            // SELECT field_value FROM name WHERE field_name = ?
+            if (preg_match('/^SELECT\s+field_value\s+FROM\s+(\w+)\s+WHERE\s+field_name\s*=\s*\?/i', $sql, $m)) {
+                $name = $m[1];
+                $rows = $this->pdo->selectFrom($name);
+                $out = [];
+                $needle = is_array($params) ? ($params[0] ?? null) : $params;
+                if ($needle !== null) {
+                    foreach ($rows as $r) {
+                        if (is_array($r) && isset($r['field_name']) && $r['field_name'] == $needle) {
+                            $out[] = ['field_value' => $r['field_value']];
+                        }
+                    }
+                }
+                $this->result = $out; // always an array of rows
+                $this->rowCount = count($out);
+                return true;
+            }
+            // SELECT field_name, field_value FROM name WHERE field_name = ?
+            if (preg_match('/^SELECT\s+field_name\s*,\s*field_value\s+FROM\s+(\w+)\s+WHERE\s+field_name\s*=\s*\?/i', $sql, $m)) {
+                $name = $m[1];
+                $rows = $this->pdo->selectFrom($name);
+                $out = [];
+                $needle = is_array($params) ? ($params[0] ?? null) : $params;
+                if ($needle !== null) {
+                    foreach ($rows as $r) {
+                        if (is_array($r) && isset($r['field_name']) && $r['field_name'] == $needle) {
+                            $out[] = ['field_name' => $r['field_name'], 'field_value' => $r['field_value']];
+                        }
+                    }
+                }
+                $this->result = $out; // ensure array
+                $this->rowCount = count($out);
+                return true;
+            }
             // Default: empty result
             $this->result = [];
             return true;
         }
         public function fetchAll($fetchStyle = null) {
+            if ($this->result === false || empty($this->result)) return [];
             return $this->result;
         }
         public function fetch($fetchStyle = null) {
-            return count($this->result) ? $this->result[0] : false;
+            if ($this->result === false || empty($this->result)) return false;
+            return $this->result[0];
         }
         public function fetchColumn($col = 0) {
-            if (empty($this->result)) return false;
+            if (empty($this->result) || $this->result === false) return false;
             $row = $this->result[0];
             $vals = array_values($row);
             return $vals[$col] ?? null;

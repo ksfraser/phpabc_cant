@@ -36,7 +36,7 @@ class AbcHeaderFieldDefaultsTest extends TestCase {
 
         $this->assertArrayHasKey('B', $headers);
         $this->assertNotNull($headers['B']);
-        $this->assertEquals('Scots Guards I', $headers['B']->get());
+        $this->assertEquals('Scots Guard I', $headers['B']->get());
 
         $this->assertArrayHasKey('Z', $headers);
         $this->assertNotNull($headers['Z']);

@@ -19,6 +19,12 @@ class AbcTune extends AbcItem {
                 $out .= $this->headers[$key]->render();
             }
         }
+        // Render voice headers (V: lines)
+        foreach ($this->voices as $voiceId => $meta) {
+            $name = $meta['name'] ?? $voiceId;
+            $sname = $meta['sname'] ?? $name;
+            $out .= "V:$voiceId name=\"$name\" sname=\"$sname\"\n";
+        }
         // Render any other headers not in headerOrder
         foreach ($this->headers as $k => $h) {
             if (!isset(self::$headerOrder[$k]) && method_exists($h, 'render')) {
@@ -141,7 +147,8 @@ class AbcTune extends AbcItem {
                 }
             }
             if (method_exists($lineObj, 'renderSelf')) {
-                $line = $lineObj->renderSelf();
+                // Use public render() so we always get a string
+                $line = $lineObj->render();
                 if (preg_match('/^V:([^\s]+)(.*)$/', trim($line), $m)) {
                     $voiceId = $m[1];
                     $rest = $m[2];
@@ -229,5 +236,25 @@ class AbcTune extends AbcItem {
             // Shallow clone bar object
             $this->voiceBars[$to][$barNum] = clone $barObj;
         }
+    }
+
+    public function ensureVoiceInsertedFirst(string $voiceId, array $bars): void {
+        // Remove any existing instance to avoid duplicates
+        if (isset($this->voiceBars[$voiceId])) {
+            unset($this->voiceBars[$voiceId]);
+        }
+        // Prepend this voice so it becomes the first in output ordering
+        $this->voiceBars = array_merge([$voiceId => $bars], $this->voiceBars);
+    }
+
+    public function addVoiceHeader(string $voiceId, ?string $name = null, ?string $sname = null): void {
+        $this->voices[$voiceId] = [
+            'name' => $name ?? $voiceId,
+            'sname' => $sname ?? ($name ?? $voiceId)
+        ];
+    }
+
+    public function getVoicesMeta(): array {
+        return $this->voices;
     }
 }

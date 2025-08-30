@@ -14,9 +14,9 @@ class BarLineHandler implements AbcBodyLineHandlerInterface {
     public function handle(&$context, $line) {
         $trimmed = trim($line);
         if (preg_match($this->barLinePattern, $trimmed, $bm)) {
-            $context['currentBar']++;
-            $barObj = new AbcBar($context['currentBar'], $bm[1]);
-            $context['voiceBars'][$context['currentVoice']][$context['currentBar']] = $barObj;
+            $context->currentBar++;
+            $barObj = new AbcBar($context->currentBar, $bm[1]);
+            $context->voiceBars[$context->currentVoice][$context->currentBar] = $barObj;
         }
     }
 }

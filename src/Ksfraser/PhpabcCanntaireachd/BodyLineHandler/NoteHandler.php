@@ -11,9 +11,15 @@ class NoteHandler implements AbcBodyLineHandlerInterface {
     }
     public function handle(&$context, $line) {
         $trimmed = trim($line);
-        if (!isset($context['voiceBars'][$context['currentVoice']][$context['currentBar']])) {
-            $context['voiceBars'][$context['currentVoice']][$context['currentBar']] = new AbcBar($context['currentBar']);
+        $voice = $context->currentVoice ?? null;
+        if ($voice === null) {
+            $context->getOrCreateVoice('M');
+            $voice = $context->currentVoice;
         }
-        $context['voiceBars'][$context['currentVoice']][$context['currentBar']]->addNote($trimmed);
+        $barNum = $context->currentBar;
+        if (!isset($context->voiceBars[$voice][$barNum])) {
+            $context->voiceBars[$voice][$barNum] = new AbcBar($barNum);
+        }
+        $context->voiceBars[$voice][$barNum]->addNote($trimmed);
     }
 }

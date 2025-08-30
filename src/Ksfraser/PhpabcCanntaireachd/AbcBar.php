@@ -30,6 +30,26 @@ class AbcBar extends AbcItem
             // Created from parser with raw bar text
             $this->contentText = (string)$numberOrText;
             $this->barLineRenderer = $this->createBarLineRenderer($barLine);
+            // Parse notes immediately from the raw content so downstream code can use notes
+            $this->parseContentNotes($this->contentText);
+        }
+    }
+
+    /**
+     * Parse a raw bar content string into notes and add them to this bar.
+     */
+    protected function parseContentNotes(string $text): void
+    {
+        // Strip leading/trailing barline characters and repeat markers
+        $clean = trim($text);
+        $clean = preg_replace('/^[|:\s]+|[|:\s]+$/', '', $clean);
+        if ($clean === '') return;
+        // Split on whitespace to tokens (simple heuristic)
+        $tokens = preg_split('/\s+/', $clean);
+        foreach ($tokens as $tok) {
+            $tok = trim($tok);
+            if ($tok === '') continue;
+            $this->addNote($tok);
         }
     }
 
@@ -99,11 +119,23 @@ class AbcBar extends AbcItem
         return implode(' ', $out);
     }
 
+    public function getCanntaireachd() {
+        if ($this->canntaireachd !== null) return $this->canntaireachd;
+        $out = $this->renderCanntaireachd();
+        return trim($out);
+    }
+
     public function renderCanntaireachd()
     {
+        // If bar-level cannt available return it first
+        if ($this->canntaireachd !== null) return $this->canntaireachd;
         $out = [];
         foreach ($this->notes as $note) {
-            $out[] = $note->renderCanntaireachd();
+            if (method_exists($note, 'renderCanntaireachd')) {
+                $out[] = $note->renderCanntaireachd();
+            } else {
+                $out[] = '';
+            }
         }
         return implode(' ', $out);
     }

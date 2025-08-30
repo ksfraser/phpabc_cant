@@ -4,11 +4,13 @@ namespace Ksfraser\PhpabcCanntaireachd;
 class HeaderDefaults {
     public static function getDefaults(): array {
         $defaults = [];
+        $loadedFromDb = false;
         // First, try to load from database table abc_header_field_defaults if possible
         try {
             if (class_exists('Ksfraser\\Database\\DbManager')) {
                 $rows = \Ksfraser\Database\DbManager::fetchAll('SELECT field_name, field_value FROM abc_header_field_defaults');
                 if (is_array($rows) && count($rows) > 0) {
+                    $loadedFromDb = true;
                     foreach ($rows as $r) {
                         if (isset($r['field_name'])) {
                             $defaults[$r['field_name']] = $r['field_value'] ?? '';
@@ -34,7 +36,8 @@ class HeaderDefaults {
         }
 
         // Overlay config file defaults (project config/header_defaults.txt)
-        // Do not overwrite values already loaded from DB or SQL seed; only set missing keys.
+        // If values were loaded from the DB, treat DB as authoritative — do not overwrite.
+        // If values came only from the SQL seed (or nothing), allow the config file to override the seeded values.
         $configFile = __DIR__ . '/../../../config/header_defaults.txt';
         if (file_exists($configFile)) {
             $lines = file($configFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
@@ -42,8 +45,16 @@ class HeaderDefaults {
                 $line = trim($line);
                 if ($line === '' || strpos($line, ';') === 0) continue;
                 if (preg_match('/^([A-Z]):\s*(.*)$/', $line, $m)) {
-                    if (!isset($defaults[$m[1]]) || $defaults[$m[1]] === '') {
-                        $defaults[$m[1]] = $m[2];
+                    $key = $m[1];
+                    $val = $m[2];
+                    if ($loadedFromDb) {
+                        // do not overwrite DB-provided values; only set missing ones
+                        if (!isset($defaults[$key]) || $defaults[$key] === '') {
+                            $defaults[$key] = $val;
+                        }
+                    } else {
+                        // no DB values present; config should override seed values
+                        $defaults[$key] = $val;
                     }
                 }
             }
