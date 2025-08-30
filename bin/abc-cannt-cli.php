@@ -13,17 +13,18 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 use Ksfraser\PhpabcCanntaireachd\CliOutputWriter;
+use Ksfraser\PhpabcCanntaireachd\CLIOptions;
 
 use Ksfraser\PhpabcCanntaireachd\AbcParser;
 use Ksfraser\PhpabcCanntaireachd\AbcValidator;
 
 
 
-$options = getopt('f:c:o:e:', ['file:', 'convert', 'output:', 'errorfile:']);
-$file = $options['f'] ?? $options['file'] ?? null;
-$convert = isset($options['c']) || isset($options['convert']);
-$outputFile = $options['o'] ?? $options['output'] ?? null;
-$errorFile = $options['e'] ?? $options['errorfile'] ?? null;
+$cli = CLIOptions::fromArgv($argv);
+$file = $cli->file;
+$convert = $cli->convert;
+$outputFile = $cli->outputFile;
+$errorFile = $cli->errorFile;
 
 
 if (!$file || !file_exists($file)) {

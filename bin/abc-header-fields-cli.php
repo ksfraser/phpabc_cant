@@ -7,11 +7,16 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 use Ksfraser\PhpabcCanntaireachd\AbcHeaderFieldTable;
+use Ksfraser\PhpabcCanntaireachd\CLIOptions;
 
 $headerTable = new AbcHeaderFieldTable();
 
-$options = getopt('', ['add', 'list', 'edit', 'delete', 'field:', 'value:', 'old:', 'new:', 'errorfile:']);
-$errorFile = $options['errorfile'] ?? null;
+// Centralized CLI options (provides --errorfile among others)
+$cli = CLIOptions::fromArgv($argv);
+$errorFile = $cli->errorFile;
+
+// Script-specific flags (header management commands)
+$options = getopt('', ['add', 'list', 'edit', 'delete', 'field:', 'value:', 'old:', 'new:']);
 
 if (isset($options['add'])) {
     if (isset($options['field'], $options['value'])) {

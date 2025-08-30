@@ -152,19 +152,40 @@ class AbcTune extends AbcItem {
                 if (preg_match('/^V:([^\s]+)(.*)$/', trim($line), $m)) {
                     $voiceId = $m[1];
                     $rest = $m[2];
-                    $needsName = !preg_match('/name="[^"]+"/', $rest);
-                    $needsSname = !preg_match('/sname="[^"]+"/', $rest);
+                    // Detect any existing name/sname values
+                        $existingName = null;
+                        $existingSname = null;
+                        if (preg_match('/name="([^"]+)"/', $rest, $mm)) {
+                            $existingName = $mm[1];
+                        }
+                        else
+                        {
+                            $needsName = true;
+                        }   
+                        if (preg_match('/sname="([^"]+)"/', $rest, $mm2)) {
+                            $existingSname = $mm2[1];
+                        }
+                        else
+                        {
+                            $needsSname = true;
+                        }
                     if ($needsName || $needsSname) {
                         $log .= "Voice $voiceId missing name or sname. ";
                         $newRest = $rest;
+                        // If name is missing, prefer to use sname if present, otherwise fall back to voiceId
                         if ($needsName) {
-                            $newRest .= ' name="' . $voiceId . '"';
-                            $log .= "Applied name=\"$voiceId\". ";
+                            $useName = $existingSname ?? $voiceId;
+                            $newRest .= ' name="' . $useName . '"';
+                            $log .= "Applied name=\"$useName\". ";
                         }
+
+                        // If sname is missing, prefer to use name if present, otherwise fall back to voiceId
                         if ($needsSname) {
-                            $newRest .= ' sname="' . $voiceId . '"';
-                            $log .= "Applied sname=\"$voiceId\". ";
+                            $useSname = $existingName ?? $voiceId;
+                            $newRest .= ' sname="' . $useSname . '"';
+                            $log .= "Applied sname=\"$useSname\". ";
                         }
+
                         // Update lineObj to use new header
                         if (method_exists($lineObj, 'setHeaderLine')) {
                             $lineObj->setHeaderLine('V:' . $voiceId . $newRest);
