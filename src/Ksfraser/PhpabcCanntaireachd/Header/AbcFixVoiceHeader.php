@@ -5,7 +5,7 @@ namespace Ksfraser\PhpabcCanntaireachd\Header;
 
 class AbcFixVoiceHeader
 {
-        static fixHeader( $lineObj )
+        static public function fixHeader( $lineObj )
         {
                 if (method_exists($lineObj, 'renderSelf')) 
                 {
