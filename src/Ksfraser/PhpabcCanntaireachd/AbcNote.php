@@ -1,6 +1,12 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd;
 
+class AbcNoteLengthException extends \Exception {
+	public function __construct($length, $noteStr = '') {
+		parent::__construct("Invalid ABC note length: '$length' in note '$noteStr'. Three or more slashes are not ABC spec compliant.");
+	}
+}
+
 use ksfraser\origin\Origin;
 
 trait NoteParserTrait {
@@ -39,8 +45,45 @@ class AbcNote extends Origin
 	protected $length;    //!<string    (int)(/)(int)
 	protected $decorator;    //!<string .MHTR!trill!    stacatto Legato Fermato Trill Roll
 	protected $name;
-	protected $cannt;
+	protected $lyrics;
+	protected $canntaireachd;
+	protected $solfege;
+	protected $bmwToken;
 	protected $callback;    //Function to process this voice
+	public function setBmwToken($bmw) {
+		$this->bmwToken = $bmw;
+	}
+	public function getBmwToken() {
+		return $this->bmwToken;
+	}
+	public function setLyrics($lyrics) {
+		$this->lyrics = $lyrics;
+	}
+	public function getLyrics() {
+		return $this->lyrics;
+	}
+	public function setCanntaireachd($cannt) {
+		$this->canntaireachd = $cannt;
+	}
+	public function getCanntaireachd() {
+		return $this->canntaireachd;
+	}
+	public function setSolfege($solfege) {
+		$this->solfege = $solfege;
+	}
+	public function getSolfege() {
+		return $this->solfege;
+	}
+
+	public function renderLyrics() {
+		return $this->lyrics ?? '';
+	}
+	public function renderCanntaireachd() {
+		return $this->canntaireachd ?? '';
+	}
+	public function renderSolfege() {
+		return $this->solfege ?? '';
+	}
 
 	public function __construct($noteStr, $callback = null)
 	{
@@ -136,6 +179,10 @@ class AbcNote extends Origin
 	 */
 	function validate_length($value)
 	{
+		// Check for three or more slashes
+		if (preg_match('/^\/\/{2,}$/', $value)) {
+			throw new AbcNoteLengthException($value);
+		}
 		switch ($value) {
 			case "1": case "2": case "3": case "4": case "5": case "6": case "7": case "8":
 			case "9": case "10": case "11": case "12": case "13": case "14": case "15": case "16":

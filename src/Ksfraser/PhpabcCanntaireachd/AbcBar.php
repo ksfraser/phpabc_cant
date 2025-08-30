@@ -10,7 +10,7 @@ class AbcBar
     public $number;
     /** @var BarLineRenderer Bar line renderer instance */
     public $barLineRenderer;
-    /** @var array Notes in this bar */
+    /** @var AbcNote[] Notes in this bar */
     public $notes = [];
     /** @var string|null Lyrics for this bar */
     public $lyrics = null;
@@ -44,8 +44,12 @@ class AbcBar
         }
     }
 
-    public function addNote($note)
+    public function addNote($noteStr, $lyrics = null, $canntaireachd = null, $solfege = null)
     {
+        $note = new AbcNote($noteStr);
+        if ($lyrics !== null) $note->setLyrics($lyrics);
+        if ($canntaireachd !== null) $note->setCanntaireachd($canntaireachd);
+        if ($solfege !== null) $note->setSolfege($solfege);
         $this->notes[] = $note;
     }
 
@@ -71,25 +75,37 @@ class AbcBar
 
     public function renderNotes()
     {
-        $renderer = new \Ksfraser\PhpabcCanntaireachd\Render\NotesRenderer();
-        return $renderer->render($this->notes);
+        $out = [];
+        foreach ($this->notes as $note) {
+            $out[] = $note->get_body_out();
+        }
+        return implode(' ', $out);
     }
 
     public function renderLyrics()
     {
-        $renderer = new \Ksfraser\PhpabcCanntaireachd\Render\LyricsRenderer();
-        return $renderer->render($this->lyrics);
+        $out = [];
+        foreach ($this->notes as $note) {
+            $out[] = $note->renderLyrics();
+        }
+        return implode(' ', $out);
     }
 
     public function renderCanntaireachd()
     {
-        $renderer = new \Ksfraser\PhpabcCanntaireachd\Render\CanntaireachdRenderer();
-        return $renderer->render($this->canntaireachd);
+        $out = [];
+        foreach ($this->notes as $note) {
+            $out[] = $note->renderCanntaireachd();
+        }
+        return implode(' ', $out);
     }
 
     public function renderSolfege()
     {
-        $renderer = new \Ksfraser\PhpabcCanntaireachd\Render\SolfegeRenderer();
-        return $renderer->render($this->solfege);
+        $out = [];
+        foreach ($this->notes as $note) {
+            $out[] = $note->renderSolfege();
+        }
+        return implode(' ', $out);
     }
 }

@@ -15,17 +15,54 @@ class AbcTune extends AbcItem {
     protected $interleaveWidth = 1;
 
     /**
+     * Config option: render solfege (do-re-mi) for non-bagpipe voices
+     * @var bool
+     */
+    protected $renderSolfege = false;
+
+    /**
+     * Per-voice array of AbcBar objects
+     * @var array
+     */
+    protected $voiceBars = [];
+
+    /**
+     * Array of header objects
+     * @var array
+     */
+    protected $headers = [];
+
+    /**
+     * Array of voice objects
+     * @var array
+     */
+    protected $voices = [];
+
+    /**
+     * Header order mapping
+     * @var array
+     */
+    protected static $headerOrder = [
+        'X' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderX::class,
+        'T' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderT::class,
+        'C' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderC::class,
+        'B' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderB::class,
+        'Q' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderQ::class,
+        'L' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderL::class,
+        'M' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderM::class,
+        'R' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderR::class,
+        'O' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderO::class,
+        'Z' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderZ::class,
+        'K' => \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderK::class,
+    ];
+
+    /**
      * Set config option for interleave width
      */
     public function setInterleaveWidth($width = 1)
     {
         $this->interleaveWidth = max(1, (int)$width);
     }
-    /**
-     * Config option: render solfege (do-re-mi) for non-bagpipe voices
-     * @var bool
-     */
-    protected $renderSolfege = false;
 
     /**
      * Set config option for rendering solfege
@@ -42,6 +79,12 @@ class AbcTune extends AbcItem {
     {
         $currentVoice = null;
         $currentBar = 0;
+        // Dynamically build barline regex from supported choices
+        $barLines = \Ksfraser\PhpabcCanntaireachd\Render\BarLineRenderer::getSupportedBarLines();
+        // Sort by length descending to match longest first
+        usort($barLines, function($a, $b) { return strlen($b) - strlen($a); });
+        $barLinePattern = '/^(' . implode('|', array_map('preg_quote', $barLines)) . ')/';
+
         foreach ($lines as $line) {
             $trimmed = trim($line);
             // Voice change: V:xx or [V:xx]
@@ -52,10 +95,10 @@ class AbcTune extends AbcItem {
                 }
                 continue;
             }
-            // Bar line
-            if (preg_match('/^\|/', $trimmed)) {
+            // Bar line (match any supported barline)
+            if (preg_match($barLinePattern, $trimmed, $bm)) {
                 $currentBar++;
-                $barObj = new AbcBar($currentBar, $trimmed);
+                $barObj = new AbcBar($currentBar, $bm[1]);
                 $this->voiceBars[$currentVoice][$currentBar] = $barObj;
                 continue;
             }
@@ -199,73 +242,7 @@ class AbcTune extends AbcItem {
             if (isset($defaults[$key])) {
                 $this->headers[$key] = new $class($defaults[$key]);
             } else {
-    /**
-     * Per-voice array of AbcBar objects
-     */
-    protected $voiceBars = [];
-
-    /**
-     * Add or update a header field
-     */
-    public function addHeader($key, $value) {
-        if (!isset(self::$headerOrder[$key])) return;
-        $headerObj = $this->headers[$key];
-        // Multi-value fields
-        if (in_array($key, ['C', 'B'])) {
-            $headerObj->add($value);
-        } else {
-            $headerObj->set($value);
-        }
-    }
-
-    /**
-     * Replace a header field
-     */
-    public function replaceHeader($key, $value) {
-        if (!isset(self::$headerOrder[$key])) return;
-        $headerObj = $this->headers[$key];
-        $headerObj->set($value);
-    }
-
-    public function getHeaders() {
-        return $this->headers;
-        
-    // ...existing code...
-    public function fixVoiceHeaders() {
-        $log = '';
-        foreach ($this->getLines() as $lineObj) {
-            if (method_exists($lineObj, 'getBars')) {
-                foreach ($lineObj->getBars() as $barObj) {
-                    // No voice headers in bars
-                }
-            }
-            if (method_exists($lineObj, 'renderSelf')) {
-                $line = $lineObj->renderSelf();
-                if (preg_match('/^V:([^\s]+)(.*)$/', trim($line), $m)) {
-                    $voiceId = $m[1];
-                    $rest = $m[2];
-                    $needsName = !preg_match('/name="[^"]+"/', $rest);
-                    $needsSname = !preg_match('/sname="[^"]+"/', $rest);
-                    if ($needsName || $needsSname) {
-                        $log .= "Voice $voiceId missing name or sname. ";
-                        $newRest = $rest;
-                        if ($needsName) {
-                            $newRest .= ' name="' . $voiceId . '"';
-                            $log .= "Applied name=\"$voiceId\". ";
-                        }
-                        if ($needsSname) {
-                            $newRest .= ' sname="' . $voiceId . '"';
-                            $log .= "Applied sname=\"$voiceId\". ";
-                        }
-                        // Update lineObj to use new header
-                        if (method_exists($lineObj, 'setHeaderLine')) {
-                            $lineObj->setHeaderLine('V:' . $voiceId . $newRest);
-                        }
-                        $log .= "\n";
-                    }
-                }
+                $this->headers[$key] = new $class();
             }
         }
-        return $log;
-    }
             }
