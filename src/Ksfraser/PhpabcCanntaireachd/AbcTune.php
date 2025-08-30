@@ -6,6 +6,7 @@ use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderC;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderB;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderM;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderL;
+use Ksfraser\PhpabcCanntaireachd\Header\AbcFixVoiceHeader;
 
 class AbcTune extends AbcItem {
     /**
@@ -147,6 +148,7 @@ class AbcTune extends AbcItem {
                 }
             }
             if (method_exists($lineObj, 'renderSelf')) {
+                /*
                 // Use public render() so we always get a string
                 $line = $lineObj->render();
                 if (preg_match('/^V:([^\s]+)(.*)$/', trim($line), $m)) {
@@ -193,6 +195,8 @@ class AbcTune extends AbcItem {
                         $log .= "\n";
                     }
                 }
+                    */
+                $log .= AbcFixVoiceHeader::fixHeader($lineObj);
             }
         }
         return $log;
