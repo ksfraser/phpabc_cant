@@ -205,12 +205,7 @@ class AbcTune extends AbcItem {
     }
 
     public function __construct() {
-        // Load defaults from centralized HeaderDefaults (SQL schema + config overlay)
-        $defaults = \Ksfraser\PhpabcCanntaireachd\HeaderDefaults::getDefaults();
-        foreach (self::$headerOrder as $key => $class) {
-            $value = $defaults[$key] ?? '';
-            $this->headers[$key] = new $class($value);
-        }
+        // Don't set defaults here, they will be set later if missing
     }
 
     public function getVoiceBars(): array {

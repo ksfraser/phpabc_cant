@@ -18,13 +18,22 @@ class AbcLine extends AbcItem {
         if (!empty($this->bars)) {
             $barStrs = [];
             foreach ($this->bars as $barObj) {
+                $barContent = '';
                 if (method_exists($barObj, 'renderSelf')) {
-                    $barStrs[] = trim($barObj->renderSelf());
+                    $barContent = trim($barObj->renderSelf());
                 } else {
-                    $barStrs[] = trim((string)$barObj);
+                    $barContent = trim((string)$barObj);
+                }
+                // Don't add | for comments or instructions
+                if (preg_match('/^%%/', $barContent) || preg_match('/^%/', $barContent)) {
+                    $out .= $barContent . "\n";
+                } else {
+                    $barStrs[] = $barContent;
                 }
             }
-            $out .= '|' . implode('|', $barStrs) . "|\n";
+            if (!empty($barStrs)) {
+                $out .= '|' . implode('|', $barStrs) . "|\n";
+            }
         }
         // Only add a blank line if this is a true blank (no header, no bars)
         if (!$this->headerLine && empty($this->bars)) {
