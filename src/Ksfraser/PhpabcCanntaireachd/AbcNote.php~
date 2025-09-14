@@ -7,7 +7,7 @@ class AbcNoteLengthException extends \Exception {
 	}
 }
 
-use Ksfraser\origin\Origin;
+use ksfraser\origin\Origin;
 
 trait NoteParserTrait {
 	/**

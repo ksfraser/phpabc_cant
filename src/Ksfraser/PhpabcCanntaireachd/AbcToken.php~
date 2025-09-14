@@ -1,6 +1,6 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd;
-use Ksfraser\origin\Origin;
+use ksfraser\origin\Origin;
 class AbcToken extends Origin
 {
     protected $token;

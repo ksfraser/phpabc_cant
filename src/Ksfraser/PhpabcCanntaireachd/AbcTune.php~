@@ -34,8 +34,7 @@ class AbcTune extends AbcItem {
             }
         }
         // Ensure header/body separator
-	//	This was adding a blank line between headers and body!!
-	//$out .= "\n";
+        $out .= "\n";
         return $out;
     }
     /**

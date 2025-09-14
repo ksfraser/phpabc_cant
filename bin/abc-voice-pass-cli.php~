@@ -28,5 +28,5 @@ if (!$file || !file_exists($file)) {
 $abcContent = file_get_contents($file);
 $parser = new AbcFileParser();
 $tunes = $parser->parse($abcContent);
-//var_dump( $parser );
+var_dump( $parser );
 var_dump( $tunes );

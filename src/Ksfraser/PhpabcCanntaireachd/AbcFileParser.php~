@@ -16,11 +16,11 @@ class AbcFileParser {
             switch ($config['singleHeaderPolicy']) {
                 case 'first':
                 case 'last':
-            		$this->singleHeaderPolicy = $config['singleHeaderPolicy'];
                     break;
                 default:
                     throw new \InvalidArgumentException("Invalid singleHeaderPolicy: " . $config['singleHeaderPolicy']);
             }
+            $this->singleHeaderPolicy = $config['singleHeaderPolicy'];
         }
     }
 
