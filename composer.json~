@@ -25,7 +25,7 @@
   "autoload": {
     "psr-4": {
       "Ksfraser\\PhpabcCanntaireachd\\": "src/Ksfraser/PhpabcCanntaireachd/",
-      "Ksfraser\\Database\\": "src/Ksfraser/Database/",
+      "Ksfraser\\Database\\": "src/Ksfraser/Database/"
       "Ksfraser\\origin\\": "src/Ksfraser/origin/"
     }
   },

@@ -2,7 +2,6 @@
 
 namespace Ksfraser\PhpabcCanntaireachd;
 
-use ksfraser\origin\Origin;
 use Ksfraser\PhpabcCanntaireachd\AbcToken;
 use Ksfraser\PhpabcCanntaireachd\AbcComment;
 use Ksfraser\PhpabcCanntaireachd\AbcWrapped;

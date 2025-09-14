@@ -1,7 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd;
 
-use Ksfraser\origin\Origin;
+use ksfraser\origin\Origin;
 use Ksfraser\PhpabcCanntaireachd\HeaderExtractorTrait;
 
 /**
