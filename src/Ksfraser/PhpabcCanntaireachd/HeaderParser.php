@@ -12,7 +12,7 @@ class HeaderParser implements AbcLineParser {
     }
 
     public function canParse(string $line): bool {
-        return preg_match('/^([A-Z]):(.*)/', trim($line));
+        return preg_match('/^([A-Z]):(.*)/', trim($line)) && !preg_match('/^X:/', trim($line));
     }
 
     public function parse(string $line, AbcTune $tune): bool {
@@ -44,5 +44,10 @@ class HeaderParser implements AbcLineParser {
         }
 
         return true;
+    }
+    
+    public function validate(string $line): bool {
+        // Header lines are valid if they match the expected format
+        return preg_match('/^([A-Z]):(.*)/', trim($line)) && !preg_match('/^X:/', trim($line));
     }
 }

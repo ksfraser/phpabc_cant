@@ -98,10 +98,25 @@ class AbcValidator
                 if ($melodyVoiceName && $melodyVoiceLine !== null && $n > $melodyVoiceLine && !preg_match('/^[A-Z]:/', $line)) {
                     $melodyNotes[] = $line;
                 }
-                // Body validation
+                // Body validation - use parsers for validation
                 if ($bodyStarted && !preg_match('/^[A-Z]:/', $line)) {
-                    // Validate notes, barlines, lyrics, etc.
-                    if (!preg_match('/^[\|\[\]a-gA-GzZ0-9\s,:!\'\"\/\^_\.\-]+$/', $line)) {
+                    // Try each parser to validate the line
+                    $valid = false;
+                    $parsers = [
+                        new \Ksfraser\PhpabcCanntaireachd\FormattingParser(),
+                        new \Ksfraser\PhpabcCanntaireachd\MidiParser(),
+                        new \Ksfraser\PhpabcCanntaireachd\CommentParser(),
+                        new \Ksfraser\PhpabcCanntaireachd\BodyParser()
+                    ];
+                    
+                    foreach ($parsers as $parser) {
+                        if ($parser->canParse($line)) {
+                            $valid = $parser->validate($line);
+                            break;
+                        }
+                    }
+                    
+                    if (!$valid) {
                         $errors[] = self::formatError($i, $tuneX, $n+1, "Invalid body line: $line");
                     }
             // Check for missing C: and B: headers

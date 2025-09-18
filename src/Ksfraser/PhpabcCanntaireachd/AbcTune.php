@@ -238,7 +238,67 @@ class AbcTune extends AbcItem {
         ];
     }
 
-    public function getVoicesMeta(): array {
-        return $this->voices;
+    /**
+     * Replace generic voice names with MIDI instrument names
+     */
+    public function updateVoiceNamesFromMidi() {
+        $midiPrograms = [];
+        
+        // Collect MIDI program information from lines
+        foreach ($this->getLines() as $lineObj) {
+            if (method_exists($lineObj, 'renderSelf')) {
+                $line = $lineObj->renderSelf();
+                if (preg_match('/^%%MIDI\s+program\s+(\d+)/i', $line, $matches)) {
+                    $program = (int)$matches[1];
+                    $midiPrograms[] = $program;
+                }
+            }
+        }
+        
+        // Update voice headers for generic voices
+        $voiceIndex = 0;
+        foreach ($this->getLines() as $lineObj) {
+            if (method_exists($lineObj, 'renderSelf')) {
+                $line = $lineObj->renderSelf();
+                if (preg_match('/^V:([^\s]+)(.*)$/', $line, $matches)) {
+                    $voiceId = $matches[1];
+                    $rest = $matches[2];
+                    
+                    // Check if this is a generic voice (numbered or simple name)
+                    if (preg_match('/^\d+$/', $voiceId) || 
+                        in_array(strtolower($voiceId), ['voice', 'instrument', 'track'])) {
+                        
+                        // Use MIDI program if available
+                        if (isset($midiPrograms[$voiceIndex])) {
+                            $program = $midiPrograms[$voiceIndex];
+                            $instrument = MidiInstrumentMapper::getInstrument($program);
+                            if ($instrument) {
+                                $newName = $instrument['short'];
+                                $newSname = $instrument['short'];
+                                
+                                // Replace or add name/sname
+                                if (preg_match('/name="[^"]*"/', $rest)) {
+                                    $rest = preg_replace('/name="[^"]*"/', 'name="' . $newName . '"', $rest);
+                                } else {
+                                    $rest .= ' name="' . $newName . '"';
+                                }
+                                
+                                if (preg_match('/sname="[^"]*"/', $rest)) {
+                                    $rest = preg_replace('/sname="[^"]*"/', 'sname="' . $newSname . '"', $rest);
+                                } else {
+                                    $rest .= ' sname="' . $newSname . '"';
+                                }
+                                
+                                // Update the line
+                                if (method_exists($lineObj, 'setHeaderLine')) {
+                                    $lineObj->setHeaderLine('V:' . $voiceId . $rest);
+                                }
+                            }
+                        }
+                        $voiceIndex++;
+                    }
+                }
+            }
+        }
     }
 }

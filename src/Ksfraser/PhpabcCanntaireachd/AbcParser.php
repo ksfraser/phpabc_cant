@@ -101,10 +101,11 @@ class AbcParser extends AbcTuneBase
     /**
      * Process ABC content and return as string
      * @param string|null $abcContent
+     * @param array $config Configuration options
      * @return string
      */
-    public function process($abcContent = null) {
-        $parser = new \Ksfraser\PhpabcCanntaireachd\AbcFileParser();
+    public function process($abcContent = null, $config = []) {
+        $parser = new \Ksfraser\PhpabcCanntaireachd\AbcFileParser($config);
         $tunes = $parser->parse($abcContent);
         $output = '';
         foreach ($tunes as $tuneIdx => $tune) {
@@ -116,6 +117,11 @@ class AbcParser extends AbcTuneBase
             // Fix voice headers (do not log)
             if (method_exists($tune, 'fixVoiceHeaders')) {
                 $tune->fixVoiceHeaders();
+            }
+            // Update voice names from MIDI programs (check config)
+            if (method_exists($tune, 'updateVoiceNamesFromMidi') && 
+                isset($config['updateVoiceNamesFromMidi']) && $config['updateVoiceNamesFromMidi']) {
+                $tune->updateVoiceNamesFromMidi();
             }
             $output .= $tune->render();
             $output .= "\n";

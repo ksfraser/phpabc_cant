@@ -19,4 +19,11 @@ interface AbcLineParser {
      * @return bool True if parsing was successful
      */
     public function parse(string $line, AbcTune $tune): bool;
+    
+    /**
+     * Validate that the line is valid for this parser type
+     * @param string $line
+     * @return bool True if the line is valid
+     */
+    public function validate(string $line): bool;
 }

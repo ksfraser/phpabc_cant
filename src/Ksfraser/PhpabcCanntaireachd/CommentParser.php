@@ -17,4 +17,9 @@ class CommentParser implements AbcLineParser {
         $tune->add(new AbcCommentLine($line));
         return true;
     }
+
+    public function validate(string $line): bool {
+        // Comment lines are always valid if they match our pattern
+        return $this->canParse($line);
+    }
 }

@@ -4,11 +4,12 @@
  * CLI launcher for ABC Canntaireachd tools
  *
  * Usage:
- *   php bin/abc-cannt-cli.php --file=path/to/file.abc [--convert]
+ *   php bin/abc-cannt-cli.php --file=path/to/file.abc [--convert] [--update-voice-names-from-midi]
  *
  * Options:
  *   --file, -f      Path to ABC file to process
  *   --convert, -c   Add canntaireachd lines to melody/bagpipe voices
+ *   --update-voice-names-from-midi, -u   Update voice names based on MIDI instrument assignments
  */
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -25,6 +26,7 @@ $file = $cli->file;
 $convert = $cli->convert;
 $outputFile = $cli->outputFile;
 $errorFile = $cli->errorFile;
+$updateVoiceNamesFromMidi = $cli->updateVoiceNamesFromMidi;
 
 
 if (!$file || !file_exists($file)) {
@@ -44,7 +46,10 @@ $errors = $validator->validate($abcContent);
 
 
 $parser = new AbcParser();
-$result = $parser->process($abcContent);
+$config = [
+    'updateVoiceNamesFromMidi' => $updateVoiceNamesFromMidi
+];
+$result = $parser->process($abcContent, $config);
 
 $outputMsg = "File '$file' processed and validated.\n";
 if ($convert) {

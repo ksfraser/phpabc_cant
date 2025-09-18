@@ -10,6 +10,11 @@ class AbcFileParser {
      * Config: 'first' or 'last' for single-value header fields
      */
     protected $singleHeaderPolicy = 'last';
+    
+    /**
+     * Config: whether to update voice names from MIDI program information
+     */
+    protected $updateVoiceNamesFromMidi = false;
 
     public function __construct($config = []) {
         if (isset($config['singleHeaderPolicy'])) {
@@ -22,6 +27,10 @@ class AbcFileParser {
                     throw new \InvalidArgumentException("Invalid singleHeaderPolicy: " . $config['singleHeaderPolicy']);
             }
         }
+        
+        if (isset($config['updateVoiceNamesFromMidi'])) {
+            $this->updateVoiceNamesFromMidi = (bool)$config['updateVoiceNamesFromMidi'];
+        }
     }
 
     /**
@@ -33,57 +42,63 @@ class AbcFileParser {
         $lines = preg_split('/\r?\n/', $abcContent);
         $tunes = [];
         $currentTune = null;
+        
+        // Initialize parsers in order of specificity
+        $parsers = [
+            new HeaderParser($this->singleHeaderPolicy),
+            new FormattingParser(),
+            new MidiParser(),
+            new CommentParser(),
+            new BodyParser()
+        ];
+        
         foreach ($lines as $idx => $line) {
+            // Special handling for X: lines that start new tunes
             if (preg_match('/^X:/', $line)) {
                 // Ensure blank line before X: header
                 if ($idx > 0 && trim($lines[$idx-1]) !== '') {
-                    $tunes[] = $currentTune;
+                    if ($currentTune) $tunes[] = $currentTune;
                     $currentTune = null;
                 }
                 if ($currentTune) $tunes[] = $currentTune;
                 $currentTune = new AbcTune();
                 $currentTune->addHeader('X', substr($line, 2));
-            } elseif ($currentTune && preg_match('/^V:/', $line)) {
+                continue; // Skip further processing of this line
+            }
+            
+            if (!$currentTune) {
+                continue;
+            }
+            
+            // Skip blank lines
+            if (trim($line) === '') {
+                continue;
+            }
+            
+            // Special handling for V: lines (preserve original behavior)
+            if ($currentTune && preg_match('/^V:/', $line)) {
                 // Always preserve V: header line
                 $abcLine = new AbcLine();
                 $abcLine->setHeaderLine($line);
                 $currentTune->add($abcLine);
-            } elseif ($currentTune && preg_match('/^([A-Z]):(.*)/', $line, $m)) {
-                $key = $m[1];
-                $value = trim($m[2]);
-                // Use header class if available
-                $headerClass = 'Ksfraser\\PhpabcCanntaireachd\\Header\\AbcHeader' . $key;
-                if (class_exists($headerClass)) {
-                    // Multi-value fields
-                    if (in_array($key, ['C', 'B'])) {
-                        $currentTune->addHeader($key, $value);
-                    } else {
-                        // Single-value: first/last policy
-                        $existing = $currentTune->getHeaders();
-                        if ($this->singleHeaderPolicy === 'first' && isset($existing[$key]) && $existing[$key]->get() !== '') {
-                            // Ignore subsequent
-                        } else {
-                            $currentTune->replaceHeader($key, $value);
-                        }
+                continue; // Skip further parser processing
+            }
+            
+            // Try each parser in order
+            $parsed = false;
+            $valid = true;
+            foreach ($parsers as $parser) {
+                if ($parser->canParse($line)) {
+                    $parsed = $parser->parse($line, $currentTune);
+                    $valid = $parser->validate($line);
+                    if ($parsed) {
+                        break;
                     }
-                } else {
-                    // Fallback: treat as string
-                    $currentTune->addHeader($key, $value);
                 }
-            } elseif ($currentTune && trim($line) === '') {
-                // Skip blank lines inside tune to avoid extra blank lines in output
-                continue;
-            } elseif ($currentTune && preg_match('/^%%(landscape|portrait|continueall|breakall|newpage|leftmargin|rightmargin|topmargin|bottommargin|pagewidth|pageheight|scale|staffwidth)/i', trim($line))) {
-                // %% formatting directive
-                $currentTune->add(new AbcFormattingLine($line));
-            } elseif ($currentTune && preg_match('/^%%/', trim($line))) {
-                // %% instruction line (MIDI, etc.)
-                $currentTune->add(new AbcMidiLine($line));
-            } elseif ($currentTune && preg_match('/^%/', trim($line))) {
-                // % comment line
-                $currentTune->add(new AbcCommentLine($line));
-            } elseif ($currentTune) {
-                // Parse bars for each line
+            }
+            
+            // If parsing failed or line is invalid, add as body line (fallback)
+            if (!$parsed) {
                 $abcLine = new AbcLine();
                 foreach (preg_split('/\|/', $line) as $barText) {
                     $barText = trim($barText);
@@ -92,8 +107,17 @@ class AbcFileParser {
                     }
                 }
                 $currentTune->add($abcLine);
+                // For fallback body lines, validate using BodyParser
+                $bodyParser = new BodyParser();
+                $valid = $bodyParser->validate($line);
+            }
+            
+            // Store validation result for later use
+            if (!$valid) {
+                // Could store validation errors here for reporting
             }
         }
+        
         if ($currentTune) $tunes[] = $currentTune;
         // Centralized header defaults loader
         $headerDefaults = \Ksfraser\PhpabcCanntaireachd\HeaderDefaults::getDefaults();

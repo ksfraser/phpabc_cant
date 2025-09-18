@@ -19,6 +19,7 @@ class CLIOptions {
     public $joinBarsWithBackslash = false; // --join_bars_with_backslash or -j
     public $voiceOutputStyle = null; // --voice_output_style or -V
     public $width = null; // --width or -w  for renumbering X
+    public $updateVoiceNamesFromMidi = false; // --update-voice-names-from-midi or -u
 
     // Additional hooks seen in some scripts
     public  $voiceOrder = [];
@@ -37,8 +38,8 @@ class CLIOptions {
     protected function parse(): void
     {
         // Attempt to use getopt first (handles short and long forms)
-        $short = 'f:c:o:e:x:v:s:i:b:j:V:w:';
-        $long = ['file:', 'convert', 'output:', 'errorfile:', 'xnum:', 'validate:', 'save:', 'interleave_bars:', 'bars_per_line:', 'join_bars_with_backslash:', 'voice_ouptut_style:', 'width'];
+        $short = 'f:c:o:e:x:v:s:i:b:j:V:w:u:';
+        $long = ['file:', 'convert', 'output:', 'errorfile:', 'xnum:', 'validate:', 'save:', 'interleave_bars:', 'bars_per_line:', 'join_bars_with_backslash:', 'voice_ouptut_style:', 'width:', 'update-voice-names-from-midi:'];
         $parsed = @getopt($short, $long);
         $this->opts = is_array($parsed) ? $parsed : [];
 
@@ -64,6 +65,8 @@ class CLIOptions {
         if (isset($this->opts['join_bars_with_backslash'])) $this->joinBarsWithBackslash = $this->opts['join_bars_with_backslash'];
         if (isset($this->opts['V'])) $this->joinBarsWithBackslash = $this->opts['V'];
         if (isset($this->opts['voice_output_style'])) $this->joinBarsWithBackslash = $this->opts['voice_output_style'];
+        if (isset($this->opts['u'])) $this->updateVoiceNamesFromMidi = (bool)$this->opts['u'];
+        if (isset($this->opts['update-voice-names-from-midi'])) $this->updateVoiceNamesFromMidi = (bool)$this->opts['update-voice-names-from-midi'];
 
 
         // If getopt returned values, determine leftover positional args using argv
@@ -132,6 +135,7 @@ class CLIOptions {
             'errorFile' => $this->errorFile,
             'voiceOrder' => $this->voiceOrder,
             'exclude' => $this->exclude,
+            'updateVoiceNamesFromMidi' => $this->updateVoiceNamesFromMidi,
         ];
     }
 }

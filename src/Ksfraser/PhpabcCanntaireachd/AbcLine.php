@@ -41,5 +41,8 @@ class AbcLine extends AbcItem {
         }
         return $out;
     }
+    public function hasContent(): bool {
+        return !empty($this->headerLine) || !empty($this->bars);
+    }
     // Add line-level sanity checks here
 }
