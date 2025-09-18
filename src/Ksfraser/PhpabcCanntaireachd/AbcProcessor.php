@@ -11,7 +11,7 @@ class AbcProcessor {
             new AbcTuneNumberValidatorPass(),
             new AbcVoicePass(),
             new AbcLyricsPass($dict),
-            new AbcCanntaireachdPass(),
+            new AbcCanntaireachdPass($dict),
             new AbcVoiceOrderPass(),
             new AbcTimingValidator()
         ];
@@ -89,20 +89,49 @@ class AbcProcessor {
         return [$hasMelody, $hasBagpipes];
     }
     public static function copyMelodyToBagpipes($lines, $hasMelody, $hasBagpipes) {
-        $output = [];
-        if ($hasMelody && !$hasBagpipes) {
-            foreach ($lines as $line) {
-                if (preg_match('/^V:Melody/', $line)) {
-                    $output[] = 'V:Bagpipes name="Bagpipes" sname="Bagpipes"';
-                } elseif (preg_match('/^w:(.*)$/', $line, $m)) {
-                    // Copy w: lines to Bagpipes
-                } elseif (!preg_match('/^V:/', $line)) {
-                    $output[] = $line;
-                }
-            }
-        } else {
-            $output = $lines;
+        if (!$hasMelody || $hasBagpipes) {
+            return $lines;
         }
+
+        $output = [];
+        $headers = [];
+        $voices = [];
+        $currentVoice = null;
+        $inHeaders = true;
+
+        // Parse the input into headers and voices
+        foreach ($lines as $line) {
+            if (preg_match('/^V:/', $line)) {
+                $inHeaders = false;
+                $currentVoice = $line;
+                $voices[$currentVoice] = [];
+            } elseif ($inHeaders) {
+                $headers[] = $line;
+            } elseif ($currentVoice) {
+                $voices[$currentVoice][] = $line;
+            }
+        }
+
+        // Reconstruct output
+        $output = $headers;
+
+        foreach ($voices as $voiceHeader => $content) {
+            if (preg_match('/^V:Melody/', $voiceHeader)) {
+                // Output melody voice
+                $output[] = $voiceHeader;
+                $output = array_merge($output, $content);
+
+                // Output bagpipe voice with copied content
+                $output[] = 'V:Bagpipes name="Bagpipes" sname="Bagpipes"';
+                $output[] = '%canntaireachd: <add your canntaireachd here>';
+                $output = array_merge($output, $content);
+            } else {
+                // Output other voices as-is
+                $output[] = $voiceHeader;
+                $output = array_merge($output, $content);
+            }
+        }
+
         return $output;
     }
     public static function handleLyrics($output, $dict, &$lyricsWords) {
@@ -138,44 +167,67 @@ class AbcProcessor {
         return $output;
     }
     public static function reorderVoices($output) {
-        $voiceLines = [];
-        $otherLines = [];
-        $drumLines = [];
-        $defaults = [];
-        // Load MIDI defaults
-        try {
-            $pdo = new \PDO('sqlite:' . __DIR__ . '/../../MIDI_DefaultsTable.db');
-            $stmt = $pdo->query('SELECT voice_name, midi_channel FROM abc_midi_defaults');
-            foreach ($stmt as $row) {
-                $defaults[$row['voice_name']] = $row['midi_channel'];
-            }
-        } catch (\Exception $e) {
-            // fallback: hardcoded
-            $defaults = [
-                'Bagpipes' => 0, 'Flute' => 1, 'Tenor' => 2, 'Clarinet' => 3, 'Trombone' => 4, 'Tuba' => 5,
-                'Alto' => 6, 'Trumpet' => 7, 'Guitar' => 8, 'Piano' => 9, 'Drums' => 10, 'BassGuitar' => 11
-            ];
-        }
+        $headers = [];
+        $voiceBlocks = [];
+        $currentVoice = null;
+        $currentBlock = [];
+
+        // Parse into headers and voice blocks
         foreach ($output as $line) {
-            if (preg_match('/^V:([^\s]+)/', $line, $m)) {
-                $voice = $m[1];
-                if (stripos($voice, 'drum') !== false) {
-                    $drumLines[] = $line;
-                } else {
-                    $voiceLines[$voice] = $line;
+            if (preg_match('/^V:/', $line)) {
+                // Save previous voice block
+                if ($currentVoice) {
+                    $voiceBlocks[$currentVoice] = $currentBlock;
                 }
+                $currentVoice = $line;
+                $currentBlock = [$line];
+            } elseif ($currentVoice) {
+                $currentBlock[] = $line;
             } else {
-                $otherLines[] = $line;
+                $headers[] = $line;
             }
         }
-        uasort($voiceLines, function($a, $b) use ($defaults) {
-            preg_match('/^V:([^\s]+)/', $a, $ma);
-            preg_match('/^V:([^\s]+)/', $b, $mb);
+
+        // Save the last voice block
+        if ($currentVoice) {
+            $voiceBlocks[$currentVoice] = $currentBlock;
+        }
+
+        // Sort voice blocks
+        $defaults = [
+            'Bagpipes' => 0, 'Flute' => 1, 'Tenor' => 2, 'Clarinet' => 3, 'Trombone' => 4, 'Tuba' => 5,
+            'Alto' => 6, 'Trumpet' => 7, 'Guitar' => 8, 'Piano' => 9, 'Drums' => 10, 'BassGuitar' => 11
+        ];
+
+        uasort($voiceBlocks, function($a, $b) use ($defaults) {
+            preg_match('/^V:([^\s]+)/', $a[0], $ma);
+            preg_match('/^V:([^\s]+)/', $b[0], $mb);
             $ca = $defaults[$ma[1]] ?? 99;
             $cb = $defaults[$mb[1]] ?? 99;
             return $ca <=> $cb;
         });
-        return array_merge($otherLines, array_values($voiceLines), $drumLines);
+
+        // Separate drum voices
+        $drumBlocks = [];
+        $otherBlocks = [];
+        foreach ($voiceBlocks as $voice => $block) {
+            if (stripos($voice, 'drum') !== false) {
+                $drumBlocks[$voice] = $block;
+            } else {
+                $otherBlocks[$voice] = $block;
+            }
+        }
+
+        // Reconstruct output
+        $result = $headers;
+        foreach ($otherBlocks as $block) {
+            $result = array_merge($result, $block);
+        }
+        foreach ($drumBlocks as $block) {
+            $result = array_merge($result, $block);
+        }
+
+        return $result;
     }
     public static function renderVoices(array $voiceBars, AbcProcessorConfig $config): array {
         $output = [];

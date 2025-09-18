@@ -29,9 +29,35 @@ class AbcProcessorConfigTest extends TestCase {
         $this->assertEquals(8, $config->barsPerLine);
     }
 
-    public function testSetJoinBarsWithBackslash() {
+    public function testSetTuneNumberWidth() {
         $config = new AbcProcessorConfig();
-        $config->joinBarsWithBackslash = true;
-        $this->assertTrue($config->joinBarsWithBackslash);
+        $config->tuneNumberWidth = 3;
+        $this->assertEquals(3, $config->tuneNumberWidth);
     }
-}
+
+    public function testCompleteConfiguration() {
+        $config = new AbcProcessorConfig();
+        $config->voiceOutputStyle = 'interleaved';
+        $config->interleaveBars = 2;
+        $config->barsPerLine = 6;
+        $config->joinBarsWithBackslash = true;
+        $config->tuneNumberWidth = 4;
+
+        $this->assertEquals('interleaved', $config->voiceOutputStyle);
+        $this->assertEquals(2, $config->interleaveBars);
+        $this->assertEquals(6, $config->barsPerLine);
+        $this->assertTrue($config->joinBarsWithBackslash);
+        $this->assertEquals(4, $config->tuneNumberWidth);
+    }
+
+    public function testConfigurationIndependence() {
+        $config1 = new AbcProcessorConfig();
+        $config2 = new AbcProcessorConfig();
+
+        $config1->voiceOutputStyle = 'interleaved';
+        $config1->tuneNumberWidth = 3;
+
+        // config2 should retain defaults
+        $this->assertEquals('grouped', $config2->voiceOutputStyle);
+        $this->assertEquals(5, $config2->tuneNumberWidth);
+    }

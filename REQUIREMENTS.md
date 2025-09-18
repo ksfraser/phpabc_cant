@@ -111,6 +111,11 @@
 | SimplifyAbc          |      ✓        |      ✓       |      ✓         |     ✓       |   ✓    | ✓   |
 | AbcVoiceOrderPass    |      ✓        |      ✓       |      ✓         |     ✓       |   ✓    | ✓   |
 | CliOutputWriter      |      ✓        |      ✓       |      ✓         |     ✓       |   ✓    | ✓   |
+| AbcCanntaireachdPass |      ✓        |      ✓       |      ✓         |     ✓       |   ✓    | ✓   |
+| ParseContext         |      ✓        |      ✓       |      ✓         |     ✓       |   ✓    | ✓   |
+| AbcProcessorConfig   |      ✓        |      ✓       |      -         |     ✓       |   ✓    | ✓   |
+| CanntGenerator       |      ✓        |      ✓       |      ✓         |     ✓       |   ✓    | ✓   |
+| TokenDictionary      |      ✓        |      ✓       |      ✓         |     ✓       |   ✓    | ✓   |
 
 Legend: ✓ = Covered, - = Not applicable
 
@@ -246,6 +251,80 @@ Uses both tables and config/db_config.php for DSN
 - AbcTimingValidator is a dedicated class for SRP/SOLID
 - CLI output files: validated ABC, cannt_diff.txt, abc_errors.txt
 - All passes are unit tested
+
+# Automatic Canntaireachd Generation Requirements
+
+## Feature Overview
+- Automatic generation of canntaireachd text from ABC notation for bagpipe tunes
+- Detects bagpipe tunes based on key signatures (typically D major, A major, etc.)
+- Automatically adds "Bagpipes" voice if missing from multi-voice tunes
+- Copies melody notes from primary voice to Bagpipes voice
+- Converts ABC note tokens to canntaireachd text using token dictionary
+- Adds generated canntaireachd as w: (lyrics) lines in the Bagpipes voice
+
+## Processing Logic
+- **Tune Detection**: Identifies bagpipe tunes by examining K: (key) headers for common bagpipe keys
+- **Voice Management**: 
+  - If single voice tune, processes the melody voice
+  - If multi-voice tune without "Bagpipes" voice, creates new Bagpipes voice
+  - Copies melody content from primary voice to Bagpipes voice
+- **Token Conversion**: Uses `abc_dict.php` token dictionary to convert ABC notes to canntaireachd syllables
+- **Output Integration**: Inserts canntaireachd text as w: lines aligned with note timing
+
+## Implementation Classes
+- `AbcCanntaireachdPass`: Dedicated pass class for canntaireachd generation logic
+- `TokenDictionary`: Handles ABC to canntaireachd token mapping lookups
+- Integration with `AbcProcessor` multi-pass pipeline
+
+## Configuration Options
+- Enable/disable automatic canntaireachd generation via `AbcProcessorConfig`
+- Configurable bagpipe key detection patterns
+- Option to preserve existing w: lines or replace with generated canntaireachd
+
+## Error Handling
+- Logs warnings for tunes where canntaireachd generation fails
+- Continues processing other tunes in multi-tune files
+- Validates token dictionary availability before processing
+
+## Test Requirements
+- **Unit Tests**:
+  - Test bagpipe tune detection for various key signatures
+  - Test voice creation and melody copying logic
+  - Test token conversion accuracy using sample ABC/canntaireachd pairs
+  - Test w: line insertion and alignment
+  - Test error handling for missing tokens or invalid ABC
+
+- **Integration Tests**:
+  - End-to-end processing of complete ABC files
+  - Verification of generated canntaireachd against expected outputs
+  - Multi-voice tune processing with Bagpipes voice creation
+  - Diff logging for canntaireachd changes
+
+- **Edge Cases**:
+  - Single voice vs multi-voice tunes
+  - Tunes with existing Bagpipes voices
+  - Non-bagpipe tunes (should not generate canntaireachd)
+  - ABC files with complex rhythms and embellishments
+  - Token dictionary gaps or missing mappings
+
+## Test Matrix (Canntaireachd Generation)
+| Feature                     | CLI | WP | Config | Error Handling | Test Coverage |
+|-----------------------------|:---:|:--:|:------:|:--------------:|:-------------:|
+| Bagpipe Tune Detection      | ✓   | ✓  | ✓      | ✓              | ✓             |
+| Voice Creation & Copying    | ✓   | ✓  | ✓      | ✓              | ✓             |
+| Token Conversion            | ✓   | ✓  | ✓      | ✓              | ✓             |
+| w: Line Integration         | ✓   | ✓  | ✓      | ✓              | ✓             |
+| Multi-tune Processing       | ✓   | ✓  | ✓      | ✓              | ✓             |
+| Diff Logging                | ✓   | ✓  | ✓      | ✓              | ✓             |
+
+## Example Test Cases
+1. **Basic Generation**: Process simple bagpipe tune, verify canntaireachd w: lines added
+2. **Voice Creation**: Multi-voice tune without Bagpipes, verify new voice created and populated
+3. **Melody Copying**: Verify melody notes correctly copied to Bagpipes voice
+4. **Token Accuracy**: Compare generated canntaireachd against known correct translations
+5. **Non-Bagpipe Skip**: Process non-bagpipe tune, verify no canntaireachd added
+6. **Existing Preservation**: Tune with existing w: lines, verify proper handling based on config
+7. **Error Recovery**: Tune with unmappable tokens, verify processing continues with warnings
 
 # Requirements Update
 - CLI supports multiple ABC files via wildcards for validate/save

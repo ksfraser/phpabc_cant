@@ -7,3 +7,27 @@ ERRORS: []
 ERRORS: []
 ERRORS: []
 ERRORS: []
+ERRORS: []
+ERRORS: []
+ERRORS: []
+ERRORS: []
+ERRORS: []
+%canntaireachd: <add your canntaireachd here>
+|A B C D TIMING| TIMING
+W: hello world hello world
+|A B C D TIMING| TIMING
+ERRORS: ["Bar 1: Expected 4 beats, found 16","Bar 2: Expected 4 beats, found 0","Bar 3: Expected 4 beats, found 16","Bar 4: Expected 4 beats, found 0"]
+%canntaireachd: <add your canntaireachd here>
+ERRORS: []
+%canntaireachd: <add your canntaireachd here>
+|A B C D TIMING| TIMING
+W: hello world hello world
+|A B C D TIMING| TIMING
+ERRORS: ["Bar 1: Expected 4 beats, found 16","Bar 2: Expected 4 beats, found 0","Bar 3: Expected 4 beats, found 16","Bar 4: Expected 4 beats, found 0"]
+%canntaireachd: <add your canntaireachd here>
+w: [|] en o [C] [D] TIMING
+|A B C D TIMING| TIMING
+w: [W:] [h] [ello] [worl] a [h] [ello] [worl] a
+W: hello world hello world
+|A B C D TIMING| TIMING
+ERRORS: ["Bar 1: Expected 4 beats, found 12","Bar 2: Expected 4 beats, found 16","Bar 3: Expected 4 beats, found 0","Bar 4: Expected 4 beats, found 16","Bar 5: Expected 4 beats, found 0"]
