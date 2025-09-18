@@ -83,53 +83,113 @@ class AbcProcessor {
         $hasMelody = false;
         $hasBagpipes = false;
         foreach ($lines as $line) {
-            if (preg_match('/^V:Melody/', $line)) $hasMelody = true;
-            if (preg_match('/^V:Bagpipes/', $line)) $hasBagpipes = true;
+            // Check for various melody voice patterns
+            if (preg_match('/^V:Melody/', $line) || preg_match('/^V:M\s/', $line) || preg_match('/name="Melody"/', $line)) {
+                $hasMelody = true;
+            }
+            // Check for bagpipe voice patterns
+            if (preg_match('/^V:Bagpipes/', $line) || preg_match('/^V:B\s/', $line) || preg_match('/name="Bagpipes"/', $line)) {
+                $hasBagpipes = true;
+            }
         }
         return [$hasMelody, $hasBagpipes];
     }
     public static function copyMelodyToBagpipes($lines, $hasMelody, $hasBagpipes) {
-        if (!$hasMelody || $hasBagpipes) {
-            return $lines;
-        }
-
+        // Split the file into individual tunes and process each one
+        $tunes = self::splitTunes($lines);
+        
         $output = [];
-        $headers = [];
-        $voices = [];
-        $currentVoice = null;
-        $inHeaders = true;
-
-        // Parse the input into headers and voices
+        foreach ($tunes as $tuneLines) {
+            // Process each tune separately
+            [$tuneHasMelody, $tuneHasBagpipes] = self::detectVoices($tuneLines);
+            
+            if ($tuneHasMelody && !$tuneHasBagpipes) {
+                $tuneLines = self::copyMelodyToBagpipesInTune($tuneLines);
+            }
+            
+            $output = array_merge($output, $tuneLines);
+        }
+        
+        return $output;
+    }
+    
+    private static function splitTunes($lines) {
+        $tunes = [];
+        $currentTune = [];
+        
         foreach ($lines as $line) {
-            if (preg_match('/^V:/', $line)) {
-                $inHeaders = false;
-                $currentVoice = $line;
-                $voices[$currentVoice] = [];
-            } elseif ($inHeaders) {
-                $headers[] = $line;
-            } elseif ($currentVoice) {
-                $voices[$currentVoice][] = $line;
+            if (preg_match('/^X:/', $line)) {
+                // Start of new tune
+                if (!empty($currentTune)) {
+                    $tunes[] = $currentTune;
+                }
+                $currentTune = [$line];
+            } else {
+                $currentTune[] = $line;
             }
         }
+        
+        // Don't forget the last tune
+        if (!empty($currentTune)) {
+            $tunes[] = $currentTune;
+        }
+        
+        return $tunes;
+    }
+    
+    private static function copyMelodyToBagpipesInTune($lines) {
+        $output = [];
+        $currentVoice = null;
+        $voiceContent = [];
+        $melodyContents = []; // Store melody voice content for bagpipe creation
 
-        // Reconstruct output
-        $output = $headers;
-
-        foreach ($voices as $voiceHeader => $content) {
-            if (preg_match('/^V:Melody/', $voiceHeader)) {
-                // Output melody voice
-                $output[] = $voiceHeader;
-                $output = array_merge($output, $content);
-
-                // Output bagpipe voice with copied content
-                $output[] = 'V:Bagpipes name="Bagpipes" sname="Bagpipes"';
-                $output[] = '%canntaireachd: <add your canntaireachd here>';
-                $output = array_merge($output, $content);
+        foreach ($lines as $line) {
+            $trimmed = trim($line);
+            
+            // Check if this is a voice header
+            if (preg_match('/^V:/', $line)) {
+                // Save previous voice if any
+                if ($currentVoice) {
+                    $output = array_merge($output, $voiceContent);
+                }
+                
+                $currentVoice = $line;
+                $voiceContent = [$line];
+                
+                // Check if this is a melody voice
+                $isMelody = preg_match('/^V:Melody/', $line) || 
+                           preg_match('/^V:M\s/', $line) || 
+                           preg_match('/name="Melody"/', $line);
+                
+                if ($isMelody) {
+                    // Start collecting content for this melody voice
+                    $melodyContents[] = [];
+                }
+            } elseif ($currentVoice) {
+                // This line belongs to the current voice
+                $voiceContent[] = $line;
+                
+                // If this is a melody voice, collect content for copying
+                if (!empty($melodyContents)) {
+                    $lastIndex = count($melodyContents) - 1;
+                    $melodyContents[$lastIndex][] = $line;
+                }
             } else {
-                // Output other voices as-is
-                $output[] = $voiceHeader;
-                $output = array_merge($output, $content);
+                // This is a header or other content before first voice
+                $output[] = $line;
             }
+        }
+        
+        // Handle the last voice
+        if ($currentVoice) {
+            $output = array_merge($output, $voiceContent);
+        }
+        
+        // Add bagpipe voices for each melody voice found
+        foreach ($melodyContents as $content) {
+            $output[] = 'V:Bagpipes name="Bagpipes" sname="Bagpipes"';
+            $output[] = '%canntaireachd: <add your canntaireachd here>';
+            $output = array_merge($output, $content);
         }
 
         return $output;
