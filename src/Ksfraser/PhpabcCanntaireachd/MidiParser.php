@@ -21,6 +21,15 @@ class MidiParser implements AbcLineParser {
             new MidiGraceDividerParser(),
             new MidiGchordParser(),
             new MidiBeatStringParser(),
+            new MidiChannelParser(),
+            new MidiTransposeParser(),
+            new MidiMiddleCParser(),
+            new MidiAccompanimentProgramParser(),
+            new MidiAccompanimentVolumeParser(),
+            new MidiGchordControlParser(),
+            new MidiBeatParser(),
+            new MidiRatioParser(),
+            new MidiBarlinesParser(),
         ];
 
         foreach ($midiParsers as $parser) {
@@ -46,6 +55,15 @@ class MidiParser implements AbcLineParser {
             new MidiGraceDividerParser(),
             new MidiGchordParser(),
             new MidiBeatStringParser(),
+            new MidiChannelParser(),
+            new MidiTransposeParser(),
+            new MidiMiddleCParser(),
+            new MidiAccompanimentProgramParser(),
+            new MidiAccompanimentVolumeParser(),
+            new MidiGchordControlParser(),
+            new MidiBeatParser(),
+            new MidiRatioParser(),
+            new MidiBarlinesParser(),
         ];
 
         foreach ($midiParsers as $parser) {

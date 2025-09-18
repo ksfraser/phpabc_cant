@@ -1,0 +1,22 @@
+X:1
+T:Test MIDI Directives
+M:4/4
+L:1/8
+K:C
+%%MIDI channel 2
+%%MIDI program 25
+%%MIDI transpose -2
+%%MIDI rtranspose 3
+%%MIDI c 60
+%%MIDI chordprog 20
+%%MIDI bassprog 33
+%%MIDI chordvol 80
+%%MIDI bassvol 70
+%%MIDI gchordon
+%%MIDI beat 100 80 60 4
+%%MIDI ratio 3 1
+%%MIDI nobarlines
+CDEF GABc|
+%%MIDI gchordoff
+%%MIDI barlines
+cBAG FEDC|]
