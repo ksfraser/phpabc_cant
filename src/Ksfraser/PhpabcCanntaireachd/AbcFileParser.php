@@ -71,8 +71,13 @@ class AbcFileParser {
                     $currentTune->addHeader($key, $value);
                 }
             } elseif ($currentTune && trim($line) === '') {
-                // Blank line inside tune: add as line (for hidden voices/data)
-                $currentTune->add(new AbcLine());
+                // Skip blank lines inside tune to avoid extra blank lines in output
+                continue;
+            } elseif ($currentTune && preg_match('/^%%/', trim($line))) {
+                // %% instruction line
+                $abcLine = new AbcLine();
+                $abcLine->setHeaderLine($line);
+                $currentTune->add($abcLine);
             } elseif ($currentTune) {
                 // Parse bars for each line
                 $abcLine = new AbcLine();

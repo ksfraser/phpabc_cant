@@ -4,29 +4,38 @@ M:4/4
 L:1/4
 V:Bagpipes
 |A B C D|A2 B2|A B|
+% Missing K Header
+% Voice Bagpipe missing name and sname
 
 X:2
 T:Second Tune
 M:2/4
 L:1/8
+K:HP
 V:Bagpipes
 |A B|A2|A|
+% Voice Bagpipe missing name and sname
+
 
 X:3
 T: Melody Voice
 M:2/4
 L:1/8
-V:Melody
+V:Melody name=Melody
+% Voice Melody missing sname
+K:c
 |A B|A2|A|
 
 X:4
 T: Multi Voice
 M:2/4
 L:1/8
-V:Melody
+V:Melody sname=Melody
 |A B|A2|A|
-V:Guitar
+V:Guitar name=Guit
 |A B|A2|A|
+%Voice melody missing name
+%Voice Guitar missing sname
 
 X:744060
 T:Suo Gan
