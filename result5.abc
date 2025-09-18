@@ -8,13 +8,9 @@ w: [|] en o en en TIMING
 % Voice Bagpipe missing name and sname
 
 
-w: [X:]
 X:3
-w: [T:] [M] [elo] [dy] [Voi] o e 
 T: Melody Voice
-w: [M:]
 M:2/4
-w: [L:]
 L:1/8
 V:Guitar name="Guit"
 |A B TIMING|A2 TIMING|A| TIMING

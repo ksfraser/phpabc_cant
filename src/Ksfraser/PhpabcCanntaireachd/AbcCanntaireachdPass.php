@@ -14,7 +14,7 @@ class AbcCanntaireachdPass {
     }
     
     private function generateCanntaireachdLyrics($lines) {
-        $canntGenerator = new CanntGenerator();
+        $canntGenerator = new CanntGenerator($this->dict);
         $output = [];
         $inBagpipeVoice = false;
         $hasLyrics = false;
@@ -38,6 +38,9 @@ class AbcCanntaireachdPass {
                     $output[] = $line;
                 } elseif (trim($line) === '') {
                     // Empty line
+                    $output[] = $line;
+                } elseif (preg_match('/^[A-Z]:/', $line)) {
+                    // Header line (X:, T:, M:, L:, K:, etc.) - skip for canntaireachd generation
                     $output[] = $line;
                 } elseif (!$hasLyrics && !preg_match('/TIMING/', $line)) {
                     // This is a music line without lyrics, generate canntaireachd

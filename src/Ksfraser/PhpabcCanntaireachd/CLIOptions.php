@@ -2,7 +2,11 @@
 namespace Ksfraser\PhpabcCanntaireachd;
 
 /**
- * Simple CLI options parser used by the bin/*.php scripts.
+ * Simple CLI options parser used by th                if (preg_match('/^--errorfile=(.+)$/', $arg, $m)) {
+                    $this->errorFile = $m[1];
+                } elseif (preg_match('/^--canntdiff=(.+)$/', $arg, $m)) {
+                    $this->canntDiffFile = $m[1];
+                } elseif (preg_match('/^--exclude=(.+)$/', $arg, $m)) {in/*.php scripts.
  *
  * Recognizes both short/long getopt-style options and simple --key=value argv styles.
  */
@@ -11,6 +15,7 @@ class CLIOptions {
     public  $convert = false;            // --convert or -c
     public  $outputFile = null;   // --output or -o
     public  $errorFile = null;    // --errorfile or -e
+    public  $canntDiffFile = null; // --canntdiff or -d
     public  $xnum = null;         // tune number (positional) -x or --xnum
     public $validate = false;  // --validate or -v
     public $save = false;      // --save or -s
@@ -38,8 +43,8 @@ class CLIOptions {
     protected function parse(): void
     {
         // Attempt to use getopt first (handles short and long forms)
-        $short = 'f:c:o:e:x:v:s:i:b:j:V:w:u:';
-        $long = ['file:', 'convert', 'output:', 'errorfile:', 'xnum:', 'validate:', 'save:', 'interleave_bars:', 'bars_per_line:', 'join_bars_with_backslash:', 'voice_ouptut_style:', 'width:', 'update_voice_names_from_midi'];
+        $short = 'f:c:o:e:d:x:v:s:i:b:j:V:w:u:';
+        $long = ['file:', 'convert', 'output:', 'errorfile:', 'canntdiff:', 'xnum:', 'validate:', 'save:', 'interleave_bars:', 'bars_per_line:', 'join_bars_with_backslash:', 'voice_ouptut_style:', 'width:', 'update_voice_names_from_midi'];
         $parsed = @getopt($short, $long);
         $this->opts = is_array($parsed) ? $parsed : [];
 
@@ -51,6 +56,8 @@ class CLIOptions {
         if (isset($this->opts['output'])) $this->outputFile = $this->opts['output'];
         if (isset($this->opts['e'])) $this->errorFile = $this->opts['e'];
         if (isset($this->opts['errorfile'])) $this->errorFile = $this->opts['errorfile'];
+        if (isset($this->opts['d'])) $this->canntDiffFile = $this->opts['d'];
+        if (isset($this->opts['canntdiff'])) $this->canntDiffFile = $this->opts['canntdiff'];
         if (isset($this->opts['x'])) $this->xnum = $this->opts['x'];
         if (isset($this->opts['xnum'])) $this->xnum = $this->opts['xnum'];
         if (isset($this->opts['v'])) $this->validate = $this->opts['v'];
@@ -134,6 +141,7 @@ class CLIOptions {
             'convert' => $this->convert,
             'outputFile' => $this->outputFile,
             'errorFile' => $this->errorFile,
+            'canntDiffFile' => $this->canntDiffFile,
             'voiceOrder' => $this->voiceOrder,
             'exclude' => $this->exclude,
             'updateVoiceNamesFromMidi' => $this->updateVoiceNamesFromMidi,

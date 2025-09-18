@@ -31,3 +31,311 @@ w: [W:] [h] [ello] [worl] a [h] [ello] [worl] a
 W: hello world hello world
 |A B C D TIMING| TIMING
 ERRORS: ["Bar 1: Expected 4 beats, found 12","Bar 2: Expected 4 beats, found 16","Bar 3: Expected 4 beats, found 0","Bar 4: Expected 4 beats, found 16","Bar 5: Expected 4 beats, found 0"]
+w: [|] en o en en TIMING
+|A B TIMING|A2 TIMING|A| TIMING
+% Voice Bagpipe missing name and sname
+w: [T:] [M] [elo] [dy] [Voi] o e 
+T: Melody Voice
+|A B TIMING|A2 TIMING|A| TIMING
+%Voice melody missing name
+%Voice Guitar missing sname
+T:Suo Gan
+C: TBC
+B: 
+O:Kevin Fraser
+Z:Kevin Fraser
+R:March
+U: V = !accent!
+% Voice Melody missing sname
+K:c
+|A B TIMING|A2 TIMING|A| TIMING
+T: Multi Voice
+|A B TIMING|A2 TIMING|A| TIMING
+I:MIDI=program 110
+%%MIDI gracedivider 4
+%%MIDI gchord
+%%MIDI beatstring 
+%%score {M }
+%%MIDI program 109 #bagpipes
+%%MIDI vol 100
+%%landscape
+% %score M
+% %scale 0.6
+[V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING| TIMING
+[V:M]{g}c3d {g}ec3 | {g}f3d {g}ec3 TIMING| {g}c3d {g}ec3 TIMING| {ag}a2f2 {gef}e4 TIMING| TIMING
+[V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING|] TIMING
+ERRORS: ["Bar 1: Expected 4 beats, found 12","Bar 2: Expected 4 beats, found 8","Bar 3: Expected 4 beats, found 8","Bar 5: Expected 4 beats, found 0","Bar 6: Expected 4 beats, found 8","Bar 7: Expected 4 beats, found 8","Bar 9: Expected 4 beats, found 0","Bar 10: Expected 4 beats, found 8","Bar 11: Expected 4 beats, found 8","Bar 13: Expected 4 beats, found 0","Bar 14: Expected 4 beats, found 8","Bar 15: Expected 4 beats, found 8","Bar 17: Expected 4 beats, found 0","Bar 18: Expected 4 beats, found 44","Bar 19: Expected 4 beats, found 40","Bar 20: Expected 4 beats, found 40","Bar 21: Expected 4 beats, found 0","Bar 22: Expected 4 beats, found 40","Bar 23: Expected 4 beats, found 40","Bar 24: Expected 4 beats, found 52","Bar 25: Expected 4 beats, found 0","Bar 26: Expected 4 beats, found 44","Bar 27: Expected 4 beats, found 40","Bar 28: Expected 4 beats, found 40","Bar 29: Expected 4 beats, found 0"]
+w: [|] en o en en TIMING
+|A B TIMING|A2 TIMING|A| TIMING
+% Voice Bagpipe missing name and sname
+w: [T:] [M] [elo] [dy] [Voi] o e 
+T: Melody Voice
+|A B TIMING|A2 TIMING|A| TIMING
+%Voice melody missing name
+%Voice Guitar missing sname
+T:Suo Gan
+C: TBC
+B: 
+O:Kevin Fraser
+Z:Kevin Fraser
+R:March
+U: V = !accent!
+% Voice Melody missing sname
+K:c
+|A B TIMING|A2 TIMING|A| TIMING
+T: Multi Voice
+|A B TIMING|A2 TIMING|A| TIMING
+I:MIDI=program 110
+%%MIDI gracedivider 4
+%%MIDI gchord
+%%MIDI beatstring 
+%%score {M }
+%%MIDI program 109 #bagpipes
+%%MIDI vol 100
+%%landscape
+% %score M
+% %scale 0.6
+[V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING| TIMING
+[V:M]{g}c3d {g}ec3 | {g}f3d {g}ec3 TIMING| {g}c3d {g}ec3 TIMING| {ag}a2f2 {gef}e4 TIMING| TIMING
+[V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING|] TIMING
+ERRORS: ["Bar 1: Expected 4 beats, found 12","Bar 2: Expected 4 beats, found 8","Bar 3: Expected 4 beats, found 8","Bar 5: Expected 4 beats, found 0","Bar 6: Expected 4 beats, found 8","Bar 7: Expected 4 beats, found 8","Bar 9: Expected 4 beats, found 0","Bar 10: Expected 4 beats, found 8","Bar 11: Expected 4 beats, found 8","Bar 13: Expected 4 beats, found 0","Bar 14: Expected 4 beats, found 8","Bar 15: Expected 4 beats, found 8","Bar 17: Expected 4 beats, found 0","Bar 18: Expected 4 beats, found 44","Bar 19: Expected 4 beats, found 40","Bar 20: Expected 4 beats, found 40","Bar 21: Expected 4 beats, found 0","Bar 22: Expected 4 beats, found 40","Bar 23: Expected 4 beats, found 40","Bar 24: Expected 4 beats, found 52","Bar 25: Expected 4 beats, found 0","Bar 26: Expected 4 beats, found 44","Bar 27: Expected 4 beats, found 40","Bar 28: Expected 4 beats, found 40","Bar 29: Expected 4 beats, found 0"]
+w: [|] en o en en TIMING
+|A B TIMING|A2 TIMING|A| TIMING
+% Voice Bagpipe missing name and sname
+w: [T:] [M] [elo] [dy] [Voi] o e 
+T: Melody Voice
+|A B TIMING|A2 TIMING|A| TIMING
+%Voice melody missing name
+%Voice Guitar missing sname
+T:Suo Gan
+C: TBC
+B: 
+O:Kevin Fraser
+Z:Kevin Fraser
+R:March
+U: V = !accent!
+% Voice Melody missing sname
+K:c
+|A B TIMING|A2 TIMING|A| TIMING
+T: Multi Voice
+|A B TIMING|A2 TIMING|A| TIMING
+I:MIDI=program 110
+%%MIDI gracedivider 4
+%%MIDI gchord
+%%MIDI beatstring 
+%%score {M }
+%%MIDI program 109 #bagpipes
+%%MIDI vol 100
+%%landscape
+% %score M
+% %scale 0.6
+[V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING| TIMING
+[V:M]{g}c3d {g}ec3 | {g}f3d {g}ec3 TIMING| {g}c3d {g}ec3 TIMING| {ag}a2f2 {gef}e4 TIMING| TIMING
+[V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING|] TIMING
+ERRORS: ["Bar 1: Expected 4 beats, found 12","Bar 2: Expected 4 beats, found 8","Bar 3: Expected 4 beats, found 8","Bar 5: Expected 4 beats, found 0","Bar 6: Expected 4 beats, found 8","Bar 7: Expected 4 beats, found 8","Bar 9: Expected 4 beats, found 0","Bar 10: Expected 4 beats, found 8","Bar 11: Expected 4 beats, found 8","Bar 13: Expected 4 beats, found 0","Bar 14: Expected 4 beats, found 8","Bar 15: Expected 4 beats, found 8","Bar 17: Expected 4 beats, found 0","Bar 18: Expected 4 beats, found 44","Bar 19: Expected 4 beats, found 40","Bar 20: Expected 4 beats, found 40","Bar 21: Expected 4 beats, found 0","Bar 22: Expected 4 beats, found 40","Bar 23: Expected 4 beats, found 40","Bar 24: Expected 4 beats, found 52","Bar 25: Expected 4 beats, found 0","Bar 26: Expected 4 beats, found 44","Bar 27: Expected 4 beats, found 40","Bar 28: Expected 4 beats, found 40","Bar 29: Expected 4 beats, found 0"]
+w: [|] en o en en TIMING
+|A B TIMING|A2 TIMING|A| TIMING
+% Voice Bagpipe missing name and sname
+w: [T:] [M] [elo] [dy] [Voi] o e 
+T: Melody Voice
+|A B TIMING|A2 TIMING|A| TIMING
+%Voice melody missing name
+%Voice Guitar missing sname
+T:Suo Gan
+C: TBC
+B: 
+O:Kevin Fraser
+Z:Kevin Fraser
+R:March
+U: V = !accent!
+% Voice Melody missing sname
+K:c
+|A B TIMING|A2 TIMING|A| TIMING
+T: Multi Voice
+|A B TIMING|A2 TIMING|A| TIMING
+I:MIDI=program 110
+%%MIDI gracedivider 4
+%%MIDI gchord
+%%MIDI beatstring 
+%%score {M }
+%%MIDI program 109 #bagpipes
+%%MIDI vol 100
+%%landscape
+% %score M
+% %scale 0.6
+[V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING| TIMING
+[V:M]{g}c3d {g}ec3 | {g}f3d {g}ec3 TIMING| {g}c3d {g}ec3 TIMING| {ag}a2f2 {gef}e4 TIMING| TIMING
+[V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING|] TIMING
+ERRORS: ["Bar 1: Expected 4 beats, found 12","Bar 2: Expected 4 beats, found 8","Bar 3: Expected 4 beats, found 8","Bar 5: Expected 4 beats, found 0","Bar 6: Expected 4 beats, found 8","Bar 7: Expected 4 beats, found 8","Bar 9: Expected 4 beats, found 0","Bar 10: Expected 4 beats, found 8","Bar 11: Expected 4 beats, found 8","Bar 13: Expected 4 beats, found 0","Bar 14: Expected 4 beats, found 8","Bar 15: Expected 4 beats, found 8","Bar 17: Expected 4 beats, found 0","Bar 18: Expected 4 beats, found 44","Bar 19: Expected 4 beats, found 40","Bar 20: Expected 4 beats, found 40","Bar 21: Expected 4 beats, found 0","Bar 22: Expected 4 beats, found 40","Bar 23: Expected 4 beats, found 40","Bar 24: Expected 4 beats, found 52","Bar 25: Expected 4 beats, found 0","Bar 26: Expected 4 beats, found 44","Bar 27: Expected 4 beats, found 40","Bar 28: Expected 4 beats, found 40","Bar 29: Expected 4 beats, found 0"]
+w: [|] en o en en TIMING
+|A B TIMING|A2 TIMING|A| TIMING
+% Voice Bagpipe missing name and sname
+w: [T:] [M] [elo] [dy] [Voi] o e 
+T: Melody Voice
+|A B TIMING|A2 TIMING|A| TIMING
+%Voice melody missing name
+%Voice Guitar missing sname
+T:Suo Gan
+C: TBC
+B: 
+O:Kevin Fraser
+Z:Kevin Fraser
+R:March
+U: V = !accent!
+% Voice Melody missing sname
+K:c
+|A B TIMING|A2 TIMING|A| TIMING
+T: Multi Voice
+|A B TIMING|A2 TIMING|A| TIMING
+I:MIDI=program 110
+%%MIDI gracedivider 4
+%%MIDI gchord
+%%MIDI beatstring 
+%%score {M }
+%%MIDI program 109 #bagpipes
+%%MIDI vol 100
+%%landscape
+% %score M
+% %scale 0.6
+[V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING| TIMING
+[V:M]{g}c3d {g}ec3 | {g}f3d {g}ec3 TIMING| {g}c3d {g}ec3 TIMING| {ag}a2f2 {gef}e4 TIMING| TIMING
+[V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING|] TIMING
+ERRORS: ["Bar 1: Expected 4 beats, found 12","Bar 2: Expected 4 beats, found 8","Bar 3: Expected 4 beats, found 8","Bar 5: Expected 4 beats, found 0","Bar 6: Expected 4 beats, found 8","Bar 7: Expected 4 beats, found 8","Bar 9: Expected 4 beats, found 0","Bar 10: Expected 4 beats, found 8","Bar 11: Expected 4 beats, found 8","Bar 13: Expected 4 beats, found 0","Bar 14: Expected 4 beats, found 8","Bar 15: Expected 4 beats, found 8","Bar 17: Expected 4 beats, found 0","Bar 18: Expected 4 beats, found 44","Bar 19: Expected 4 beats, found 40","Bar 20: Expected 4 beats, found 40","Bar 21: Expected 4 beats, found 0","Bar 22: Expected 4 beats, found 40","Bar 23: Expected 4 beats, found 40","Bar 24: Expected 4 beats, found 52","Bar 25: Expected 4 beats, found 0","Bar 26: Expected 4 beats, found 44","Bar 27: Expected 4 beats, found 40","Bar 28: Expected 4 beats, found 40","Bar 29: Expected 4 beats, found 0"]
+w: [|] en o en en TIMING
+|A B TIMING|A2 TIMING|A| TIMING
+% Voice Bagpipe missing name and sname
+w: [T:] [M] [elo] [dy] [Voi] o e 
+T: Melody Voice
+|A B TIMING|A2 TIMING|A| TIMING
+%Voice melody missing name
+%Voice Guitar missing sname
+T:Suo Gan
+C: TBC
+B: 
+O:Kevin Fraser
+Z:Kevin Fraser
+R:March
+U: V = !accent!
+% Voice Melody missing sname
+K:c
+|A B TIMING|A2 TIMING|A| TIMING
+T: Multi Voice
+|A B TIMING|A2 TIMING|A| TIMING
+I:MIDI=program 110
+%%MIDI gracedivider 4
+%%MIDI gchord
+%%MIDI beatstring 
+%%score {M }
+%%MIDI program 109 #bagpipes
+%%MIDI vol 100
+%%landscape
+% %score M
+% %scale 0.6
+[V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING| TIMING
+[V:M]{g}c3d {g}ec3 | {g}f3d {g}ec3 TIMING| {g}c3d {g}ec3 TIMING| {ag}a2f2 {gef}e4 TIMING| TIMING
+[V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING|] TIMING
+ERRORS: ["Bar 1: Expected 4 beats, found 12","Bar 2: Expected 4 beats, found 8","Bar 3: Expected 4 beats, found 8","Bar 5: Expected 4 beats, found 0","Bar 6: Expected 4 beats, found 8","Bar 7: Expected 4 beats, found 8","Bar 9: Expected 4 beats, found 0","Bar 10: Expected 4 beats, found 8","Bar 11: Expected 4 beats, found 8","Bar 13: Expected 4 beats, found 0","Bar 14: Expected 4 beats, found 8","Bar 15: Expected 4 beats, found 8","Bar 17: Expected 4 beats, found 0","Bar 18: Expected 4 beats, found 44","Bar 19: Expected 4 beats, found 40","Bar 20: Expected 4 beats, found 40","Bar 21: Expected 4 beats, found 0","Bar 22: Expected 4 beats, found 40","Bar 23: Expected 4 beats, found 40","Bar 24: Expected 4 beats, found 52","Bar 25: Expected 4 beats, found 0","Bar 26: Expected 4 beats, found 44","Bar 27: Expected 4 beats, found 40","Bar 28: Expected 4 beats, found 40","Bar 29: Expected 4 beats, found 0"]
+w: [|] en o en en TIMING
+|A B TIMING|A2 TIMING|A| TIMING
+% Voice Bagpipe missing name and sname
+T: Melody Voice
+|A B TIMING|A2 TIMING|A| TIMING
+%Voice melody missing name
+%Voice Guitar missing sname
+T:Suo Gan
+C: TBC
+B: 
+O:Kevin Fraser
+Z:Kevin Fraser
+R:March
+U: V = !accent!
+% Voice Melody missing sname
+K:c
+|A B TIMING|A2 TIMING|A| TIMING
+T: Multi Voice
+|A B TIMING|A2 TIMING|A| TIMING
+I:MIDI=program 110
+%%MIDI gracedivider 4
+%%MIDI gchord
+%%MIDI beatstring 
+%%score {M }
+%%MIDI program 109 #bagpipes
+%%MIDI vol 100
+%%landscape
+% %score M
+% %scale 0.6
+[V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING| TIMING
+[V:M]{g}c3d {g}ec3 | {g}f3d {g}ec3 TIMING| {g}c3d {g}ec3 TIMING| {ag}a2f2 {gef}e4 TIMING| TIMING
+[V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING|] TIMING
+ERRORS: ["Bar 1: Expected 4 beats, found 12","Bar 2: Expected 4 beats, found 8","Bar 3: Expected 4 beats, found 8","Bar 5: Expected 4 beats, found 0","Bar 6: Expected 4 beats, found 8","Bar 7: Expected 4 beats, found 8","Bar 9: Expected 4 beats, found 0","Bar 10: Expected 4 beats, found 8","Bar 11: Expected 4 beats, found 8","Bar 13: Expected 4 beats, found 0","Bar 14: Expected 4 beats, found 8","Bar 15: Expected 4 beats, found 8","Bar 17: Expected 4 beats, found 0","Bar 18: Expected 4 beats, found 44","Bar 19: Expected 4 beats, found 40","Bar 20: Expected 4 beats, found 40","Bar 21: Expected 4 beats, found 0","Bar 22: Expected 4 beats, found 40","Bar 23: Expected 4 beats, found 40","Bar 24: Expected 4 beats, found 52","Bar 25: Expected 4 beats, found 0","Bar 26: Expected 4 beats, found 44","Bar 27: Expected 4 beats, found 40","Bar 28: Expected 4 beats, found 40","Bar 29: Expected 4 beats, found 0"]
+w: | dar dod dar dar TIMING
+|A B TIMING|A2 TIMING|A| TIMING
+% Voice Bagpipe missing name and sname
+T: Melody Voice
+|A B TIMING|A2 TIMING|A| TIMING
+%Voice melody missing name
+%Voice Guitar missing sname
+T:Suo Gan
+C: TBC
+B: 
+O:Kevin Fraser
+Z:Kevin Fraser
+R:March
+U: V = !accent!
+% Voice Melody missing sname
+K:c
+|A B TIMING|A2 TIMING|A| TIMING
+T: Multi Voice
+|A B TIMING|A2 TIMING|A| TIMING
+I:MIDI=program 110
+%%MIDI gracedivider 4
+%%MIDI gchord
+%%MIDI beatstring 
+%%score {M }
+%%MIDI program 109 #bagpipes
+%%MIDI vol 100
+%%landscape
+% %score M
+% %scale 0.6
+[V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING| TIMING
+[V:M]{g}c3d {g}ec3 | {g}f3d {g}ec3 TIMING| {g}c3d {g}ec3 TIMING| {ag}a2f2 {gef}e4 TIMING| TIMING
+[V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING|] TIMING
+ERRORS: ["Bar 1: Expected 4 beats, found 32","Bar 2: Expected 4 beats, found 8","Bar 3: Expected 4 beats, found 8","Bar 5: Expected 4 beats, found 0","Bar 6: Expected 4 beats, found 8","Bar 7: Expected 4 beats, found 8","Bar 9: Expected 4 beats, found 0","Bar 10: Expected 4 beats, found 8","Bar 11: Expected 4 beats, found 8","Bar 13: Expected 4 beats, found 0","Bar 14: Expected 4 beats, found 8","Bar 15: Expected 4 beats, found 8","Bar 17: Expected 4 beats, found 0","Bar 18: Expected 4 beats, found 44","Bar 19: Expected 4 beats, found 40","Bar 20: Expected 4 beats, found 40","Bar 21: Expected 4 beats, found 0","Bar 22: Expected 4 beats, found 40","Bar 23: Expected 4 beats, found 40","Bar 24: Expected 4 beats, found 52","Bar 25: Expected 4 beats, found 0","Bar 26: Expected 4 beats, found 44","Bar 27: Expected 4 beats, found 40","Bar 28: Expected 4 beats, found 40","Bar 29: Expected 4 beats, found 0"]
+%canntaireachd: <add your canntaireachd here>
+w: dar dod hid dar dar dod dar dod
+A B C D|A2 B2 TIMING|A B TIMING| TIMING
+A B C D|A2 B2 TIMING|A B TIMING| TIMING
+ERRORS: ["Bar 1: Expected 4 beats, found 16","Bar 2: Expected 4 beats, found 8","Bar 3: Expected 4 beats, found 0","Bar 4: Expected 4 beats, found 16","Bar 5: Expected 4 beats, found 8","Bar 6: Expected 4 beats, found 0"]
+w: | dar dod dar dar TIMING
+|A B TIMING|A2 TIMING|A| TIMING
+% Voice Bagpipe missing name and sname
+T: Melody Voice
+|A B TIMING|A2 TIMING|A| TIMING
+%Voice melody missing name
+%Voice Guitar missing sname
+T:Suo Gan
+C: TBC
+B: 
+O:Kevin Fraser
+Z:Kevin Fraser
+R:March
+U: V = !accent!
+% Voice Melody missing sname
+K:c
+|A B TIMING|A2 TIMING|A| TIMING
+T: Multi Voice
+|A B TIMING|A2 TIMING|A| TIMING
+I:MIDI=program 110
+%%MIDI gracedivider 4
+%%MIDI gchord
+%%MIDI beatstring 
+%%score {M }
+%%MIDI program 109 #bagpipes
+%%MIDI vol 100
+%%landscape
+% %score M
+% %scale 0.6
+[V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING| TIMING
+[V:M]{g}c3d {g}ec3 | {g}f3d {g}ec3 TIMING| {g}c3d {g}ec3 TIMING| {ag}a2f2 {gef}e4 TIMING| TIMING
+[V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING|] TIMING
+ERRORS: ["Bar 1: Expected 4 beats, found 32","Bar 2: Expected 4 beats, found 8","Bar 3: Expected 4 beats, found 8","Bar 5: Expected 4 beats, found 0","Bar 6: Expected 4 beats, found 8","Bar 7: Expected 4 beats, found 8","Bar 9: Expected 4 beats, found 0","Bar 10: Expected 4 beats, found 8","Bar 11: Expected 4 beats, found 8","Bar 13: Expected 4 beats, found 0","Bar 14: Expected 4 beats, found 8","Bar 15: Expected 4 beats, found 8","Bar 17: Expected 4 beats, found 0","Bar 18: Expected 4 beats, found 44","Bar 19: Expected 4 beats, found 40","Bar 20: Expected 4 beats, found 40","Bar 21: Expected 4 beats, found 0","Bar 22: Expected 4 beats, found 40","Bar 23: Expected 4 beats, found 40","Bar 24: Expected 4 beats, found 52","Bar 25: Expected 4 beats, found 0","Bar 26: Expected 4 beats, found 44","Bar 27: Expected 4 beats, found 40","Bar 28: Expected 4 beats, found 40","Bar 29: Expected 4 beats, found 0"]
