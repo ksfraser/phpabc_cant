@@ -10,6 +10,15 @@ class AbcLine extends AbcItem {
     public function getBars() {
         return $this->bars;
     }
+
+    // Override add() to handle AbcBar objects specially
+    public function add(AbcItem $item) {
+        if ($item instanceof \Ksfraser\PhpabcCanntaireachd\AbcBar) {
+            $this->bars[] = $item;
+        } else {
+            parent::add($item);
+        }
+    }
     protected function renderSelf(): string {
         $out = '';
         if ($this->headerLine) {
