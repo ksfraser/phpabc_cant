@@ -73,11 +73,15 @@ class AbcFileParser {
             } elseif ($currentTune && trim($line) === '') {
                 // Skip blank lines inside tune to avoid extra blank lines in output
                 continue;
+            } elseif ($currentTune && preg_match('/^%%(landscape|portrait|continueall|breakall|newpage|leftmargin|rightmargin|topmargin|bottommargin|pagewidth|pageheight|scale|staffwidth)/i', trim($line))) {
+                // %% formatting directive
+                $currentTune->add(new AbcFormattingLine($line));
             } elseif ($currentTune && preg_match('/^%%/', trim($line))) {
-                // %% instruction line
-                $abcLine = new AbcLine();
-                $abcLine->setHeaderLine($line);
-                $currentTune->add($abcLine);
+                // %% instruction line (MIDI, etc.)
+                $currentTune->add(new AbcMidiLine($line));
+            } elseif ($currentTune && preg_match('/^%/', trim($line))) {
+                // % comment line
+                $currentTune->add(new AbcCommentLine($line));
             } elseif ($currentTune) {
                 // Parse bars for each line
                 $abcLine = new AbcLine();

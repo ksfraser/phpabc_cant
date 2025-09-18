@@ -32,7 +32,7 @@ M:2/4
 L:1/8
 V:Melody sname=Melody
 |A B|A2|A|
-V:Guitar name=Guit
+V:Guitar name="Guit"
 |A B|A2|A|
 %Voice melody missing name
 %Voice Guitar missing sname
