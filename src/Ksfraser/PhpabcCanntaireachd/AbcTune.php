@@ -242,61 +242,89 @@ class AbcTune extends AbcItem {
      * Replace generic voice names with MIDI instrument names
      */
     public function updateVoiceNamesFromMidi() {
-        $midiPrograms = [];
-        
-        // Collect MIDI program information from lines
-        foreach ($this->getLines() as $lineObj) {
-            if (method_exists($lineObj, 'renderSelf')) {
-                $line = $lineObj->renderSelf();
-                if (preg_match('/^%%MIDI\s+program\s+(\d+)/i', $line, $matches)) {
-                    $program = (int)$matches[1];
-                    $midiPrograms[] = $program;
-                }
-            }
-        }
-        
-        // Update voice headers for generic voices
-        $voiceIndex = 0;
-        foreach ($this->getLines() as $lineObj) {
+        $lines = $this->getLines();
+        $voiceUpdates = [];
+
+        // First pass: collect voice headers and their positions
+        $voicePositions = [];
+        foreach ($lines as $index => $lineObj) {
             if (method_exists($lineObj, 'renderSelf')) {
                 $line = $lineObj->renderSelf();
                 if (preg_match('/^V:([^\s]+)(.*)$/', $line, $matches)) {
                     $voiceId = $matches[1];
-                    $rest = $matches[2];
-                    
-                    // Check if this is a generic voice (numbered or simple name)
-                    if (preg_match('/^\d+$/', $voiceId) || 
-                        in_array(strtolower($voiceId), ['voice', 'instrument', 'track'])) {
-                        
-                        // Use MIDI program if available
-                        if (isset($midiPrograms[$voiceIndex])) {
-                            $program = $midiPrograms[$voiceIndex];
-                            $instrument = MidiInstrumentMapper::getInstrument($program);
-                            if ($instrument) {
-                                $newName = $instrument['short'];
-                                $newSname = $instrument['short'];
-                                
-                                // Replace or add name/sname
-                                if (preg_match('/name="[^"]*"/', $rest)) {
-                                    $rest = preg_replace('/name="[^"]*"/', 'name="' . $newName . '"', $rest);
-                                } else {
-                                    $rest .= ' name="' . $newName . '"';
-                                }
-                                
-                                if (preg_match('/sname="[^"]*"/', $rest)) {
-                                    $rest = preg_replace('/sname="[^"]*"/', 'sname="' . $newSname . '"', $rest);
-                                } else {
-                                    $rest .= ' sname="' . $newSname . '"';
-                                }
-                                
-                                // Update the line
-                                if (method_exists($lineObj, 'setHeaderLine')) {
-                                    $lineObj->setHeaderLine('V:' . $voiceId . $rest);
-                                }
-                            }
-                        }
-                        $voiceIndex++;
+                    $voicePositions[] = [
+                        'index' => $index,
+                        'voiceId' => $voiceId,
+                        'rest' => $matches[2],
+                        'lineObj' => $lineObj
+                    ];
+                }
+            }
+        }
+
+        // Second pass: find MIDI programs that follow each voice
+        foreach ($voicePositions as $voiceIndex => $voice) {
+            $midiProgram = null;
+            $startIndex = $voice['index'] + 1;
+
+            // Look for MIDI program in the next few lines after this voice
+            for ($i = $startIndex; $i < count($lines) && $i < $startIndex + 10; $i++) {
+                $lineObj = $lines[$i];
+                if (method_exists($lineObj, 'renderSelf')) {
+                    $line = $lineObj->renderSelf();
+                    if (preg_match('/^%%MIDI\s+program\s+(\d+)/i', $line, $matches)) {
+                        $midiProgram = (int)$matches[1];
+                        break;
                     }
+                    // Stop looking if we hit another voice header
+                    if (preg_match('/^V:/', $line)) {
+                        break;
+                    }
+                }
+            }
+
+            // If we found a MIDI program for this voice, prepare the update
+            if ($midiProgram !== null) {
+                $instrument = MidiInstrumentMapper::getInstrument($midiProgram);
+                if ($instrument) {
+                    $voiceUpdates[] = [
+                        'voice' => $voice,
+                        'instrument' => $instrument
+                    ];
+                }
+            }
+        }
+
+        // Third pass: apply the updates
+        foreach ($voiceUpdates as $update) {
+            $voice = $update['voice'];
+            $instrument = $update['instrument'];
+            $voiceId = $voice['voiceId'];
+            $rest = $voice['rest'];
+
+            // Check if this is a generic voice (numbered or simple name)
+            if (preg_match('/^\d+$/', $voiceId) ||
+                in_array(strtolower($voiceId), ['voice', 'instrument', 'track'])) {
+
+                $newName = $instrument['short'];
+                $newSname = $instrument['short'];
+
+                // Replace or add name/sname
+                if (preg_match('/name="[^"]*"/', $rest)) {
+                    $rest = preg_replace('/name="[^"]*"/', 'name="' . $newName . '"', $rest);
+                } else {
+                    $rest .= ' name="' . $newName . '"';
+                }
+
+                if (preg_match('/sname="[^"]*"/', $rest)) {
+                    $rest = preg_replace('/sname="[^"]*"/', 'sname="' . $newSname . '"', $rest);
+                } else {
+                    $rest .= ' sname="' . $newSname . '"';
+                }
+
+                // Update the line
+                if (method_exists($voice['lineObj'], 'setHeaderLine')) {
+                    $voice['lineObj']->setHeaderLine('V:' . $voiceId . $rest);
                 }
             }
         }

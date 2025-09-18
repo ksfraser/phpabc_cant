@@ -39,7 +39,7 @@ class CLIOptions {
     {
         // Attempt to use getopt first (handles short and long forms)
         $short = 'f:c:o:e:x:v:s:i:b:j:V:w:u:';
-        $long = ['file:', 'convert', 'output:', 'errorfile:', 'xnum:', 'validate:', 'save:', 'interleave_bars:', 'bars_per_line:', 'join_bars_with_backslash:', 'voice_ouptut_style:', 'width:', 'update-voice-names-from-midi:'];
+        $long = ['file:', 'convert', 'output:', 'errorfile:', 'xnum:', 'validate:', 'save:', 'interleave_bars:', 'bars_per_line:', 'join_bars_with_backslash:', 'voice_ouptut_style:', 'width:', 'update_voice_names_from_midi'];
         $parsed = @getopt($short, $long);
         $this->opts = is_array($parsed) ? $parsed : [];
 
@@ -65,8 +65,7 @@ class CLIOptions {
         if (isset($this->opts['join_bars_with_backslash'])) $this->joinBarsWithBackslash = $this->opts['join_bars_with_backslash'];
         if (isset($this->opts['V'])) $this->joinBarsWithBackslash = $this->opts['V'];
         if (isset($this->opts['voice_output_style'])) $this->joinBarsWithBackslash = $this->opts['voice_output_style'];
-        if (isset($this->opts['u'])) $this->updateVoiceNamesFromMidi = (bool)$this->opts['u'];
-        if (isset($this->opts['update-voice-names-from-midi'])) $this->updateVoiceNamesFromMidi = (bool)$this->opts['update-voice-names-from-midi'];
+        if (isset($this->opts['u']) || isset($this->opts['update_voice_names_from_midi'])) $this->updateVoiceNamesFromMidi = true;
 
 
         // If getopt returned values, determine leftover positional args using argv
@@ -100,6 +99,8 @@ class CLIOptions {
                     $decoded = json_decode($raw, true);
                     if (is_array($decoded)) $this->voiceOrder = $decoded;
                     else $this->voiceOrder = array_map('trim', explode(',', $raw));
+                } elseif (preg_match('/^--update[_-]voice[_-]names[_-]from[_-]midi(?:=(.+))?$/', $arg, $m)) {
+                    $this->updateVoiceNamesFromMidi = true;
                 } elseif (!isset($this->file)) {
                     $this->file = $arg;
                 } elseif (!isset($this->xnum)) {
