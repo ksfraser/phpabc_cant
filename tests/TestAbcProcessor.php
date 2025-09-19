@@ -25,8 +25,8 @@ class TestAbcProcessor extends TestCase {
     }
     public function testTimingValidationMarksBarsAndLogsErrors() {
         $dict = ['cannt' => 1];
-        // Bar 3 is intentionally short (should be 4 beats, only 1 note)
-        $abc = "M:4/4\nL:1/4\nV:Bagpipes\n|A B C D|\n|A2 B2|\n|A|";
+        // Test that bars with too many beats are marked, but incomplete bars are not
+        $abc = "M:4/4\nL:1/4\nV:Bagpipes\n|A B C D|\n|A2 B2|\n|A|\n|A B C D E F G H|";
         $result = AbcProcessor::process($abc, $dict);
         $lines = $result['lines'];
         $errors = $result['errors'];
@@ -37,9 +37,18 @@ class TestAbcProcessor extends TestCase {
                 break;
             }
         }
-        $this->assertTrue($timingFound, 'TIMING marker not found in output lines');
+        $this->assertTrue($timingFound, 'TIMING marker not found in output lines for bar with too many beats');
         $this->assertNotEmpty($errors);
         $this->assertStringContainsString('TIMING:', $errors[0]);
+        // Ensure incomplete bars (|A| with 1 beat) are NOT marked
+        $incompleteBarMarked = false;
+        foreach ($lines as $line) {
+            if (strpos($line, '|A| TIMING') !== false) {
+                $incompleteBarMarked = true;
+                break;
+            }
+        }
+        $this->assertFalse($incompleteBarMarked, 'Incomplete bar should not be marked with TIMING');
     }
     public function testMultiSongParsingAndValidation() {
         $dict = ['cannt' => 1];

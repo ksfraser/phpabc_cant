@@ -122,9 +122,11 @@ class AbcProcessor {
     private static function splitTunes($lines) {
         $tunes = [];
         $currentTune = [];
+        $hasStartedTunes = false;
         
         foreach ($lines as $line) {
             $trimmed = trim($line);
+            
             if (preg_match('/^X:/', $line)) {
                 // Start of new tune
                 if (!empty($currentTune)) {
@@ -135,9 +137,18 @@ class AbcProcessor {
                     $tunes[] = $currentTune;
                 }
                 $currentTune = [$line];
-            } elseif (!empty($currentTune) || $trimmed !== '') {
-                // Add line to current tune, or start new tune if this is content before first X:
+                $hasStartedTunes = true;
+            } elseif ($hasStartedTunes && !empty($currentTune)) {
+                // Add line to current tune if we've started processing tunes
                 $currentTune[] = $line;
+            } elseif (!$hasStartedTunes && $trimmed !== '') {
+                // Content before first tune - start a tune with this content
+                $currentTune = [$line];
+                $hasStartedTunes = true;
+            } elseif ($hasStartedTunes && empty($currentTune) && $trimmed !== '') {
+                // Content after tunes - this shouldn't happen with proper ABC format
+                // but handle it by creating a new "pseudo-tune"
+                $currentTune = [$line];
             }
         }
         
@@ -158,6 +169,7 @@ class AbcProcessor {
         $currentVoice = null;
         $voiceContent = [];
         $melodyContents = []; // Store melody voice content for bagpipe creation
+        $isCurrentVoiceMelody = false;
 
         foreach ($lines as $line) {
             $trimmed = trim($line);
@@ -173,24 +185,24 @@ class AbcProcessor {
                 $voiceContent = [$line];
                 
                 // Check if this is a melody voice
-                $isMelody = preg_match('/^V:Melody/', $line) || 
-                           preg_match('/^V:M\s/', $line) || 
-                           preg_match('/name="Melody"/', $line);
+                $isCurrentVoiceMelody = preg_match('/^V:Melody/', $line) || 
+                                       preg_match('/^V:M\s/', $line) || 
+                                       preg_match('/name="Melody"/', $line);
                 
-                if ($isMelody) {
+                if ($isCurrentVoiceMelody) {
                     // Start collecting content for this melody voice
                     $melodyContents[] = [];
                 }
-            } elseif ($currentVoice) {
+            } elseif ($currentVoice && self::isVoiceContent($line)) {
                 // This line belongs to the current voice
                 $voiceContent[] = $line;
                 
                 // If this is a melody voice, collect content for copying
-                if (!empty($melodyContents)) {
+                if ($isCurrentVoiceMelody && !empty($melodyContents)) {
                     $lastIndex = count($melodyContents) - 1;
                     $melodyContents[$lastIndex][] = $line;
                 }
-            } else {
+            } elseif (!$currentVoice) {
                 // This is a header or other content before first voice
                 $output[] = $line;
             }
@@ -209,6 +221,54 @@ class AbcProcessor {
         }
 
         return $output;
+    }
+
+    /**
+     * Check if a line should be considered voice content
+     *
+     * @param string $line
+     * @return bool
+     */
+    private static function isVoiceContent(string $line): bool {
+        $trimmed = trim($line);
+
+        // Empty lines are voice content (separators)
+        if ($trimmed === '') {
+            return true;
+        }
+
+        // Comments are voice content
+        if (preg_match('/^%/', $line)) {
+            return true;
+        }
+
+        // Lyrics are voice content
+        if (preg_match('/^w:/', $line)) {
+            return true;
+        }
+
+        // Music notation is voice content (contains notes, rests, bar lines, etc.)
+        if (preg_match('/[A-Ga-gz]|\\||\\[|\\]|\\(|\\)|!|"/', $line)) {
+            return true;
+        }
+
+        // Voice-specific directives are voice content
+        if (preg_match('/^\\[[A-Za-z]/', $line)) {
+            return true;
+        }
+
+        // Grace notes and ornaments are voice content
+        if (preg_match('/[~{}]/', $line)) {
+            return true;
+        }
+
+        // Header fields that can appear within voices (like K:, M:, L:) are voice content
+        if (preg_match('/^[A-Z]:/', $line)) {
+            return true;
+        }
+
+        // Everything else (tune headers, MIDI directives, etc.) is not voice content
+        return false;
     }
     public static function handleLyrics($output, $dict, &$lyricsWords) {
         foreach ($output as $idx => $line) {
