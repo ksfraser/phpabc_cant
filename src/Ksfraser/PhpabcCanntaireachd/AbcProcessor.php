@@ -99,7 +99,7 @@ class AbcProcessor {
         $tunes = self::splitTunes($lines);
         
         $output = [];
-        foreach ($tunes as $tuneLines) {
+        foreach ($tunes as $index => $tuneLines) {
             // Process each tune separately
             [$tuneHasMelody, $tuneHasBagpipes] = self::detectVoices($tuneLines);
             
@@ -108,6 +108,12 @@ class AbcProcessor {
             }
             
             $output = array_merge($output, $tuneLines);
+            
+            // Add 2 blank lines between tunes (except after the last tune)
+            if ($index < count($tunes) - 1) {
+                $blankRenderer = new BlankLineRenderer(2);
+                $output = array_merge($output, $blankRenderer->render());
+            }
         }
         
         return $output;
@@ -118,19 +124,29 @@ class AbcProcessor {
         $currentTune = [];
         
         foreach ($lines as $line) {
+            $trimmed = trim($line);
             if (preg_match('/^X:/', $line)) {
                 // Start of new tune
                 if (!empty($currentTune)) {
+                    // Remove trailing blank lines from previous tune
+                    while (!empty($currentTune) && trim(end($currentTune)) === '') {
+                        array_pop($currentTune);
+                    }
                     $tunes[] = $currentTune;
                 }
                 $currentTune = [$line];
-            } else {
+            } elseif (!empty($currentTune) || $trimmed !== '') {
+                // Add line to current tune, or start new tune if this is content before first X:
                 $currentTune[] = $line;
             }
         }
         
         // Don't forget the last tune
         if (!empty($currentTune)) {
+            // Remove trailing blank lines
+            while (!empty($currentTune) && trim(end($currentTune)) === '') {
+                array_pop($currentTune);
+            }
             $tunes[] = $currentTune;
         }
         
