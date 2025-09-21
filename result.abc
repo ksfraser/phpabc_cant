@@ -3,23 +3,20 @@ T:First Tune
 M:4/4
 L:1/4
 V:Bagpipes
-w: [|] en o en en TIMING
-|A B TIMING|A2 TIMING|A| TIMING
+w: | dar dod dar dar TIMING
+|A B|A2|A|
 % Voice Bagpipe missing name and sname
 
 
-w: [X:]
 X:3
-w: [T:] [M] [elo] [dy] [Voi] o e 
 T: Melody Voice
-w: [M:]
 M:2/4
-w: [L:]
 L:1/8
-V:Guitar name="Guit"
-|A B TIMING|A2 TIMING|A| TIMING
-%Voice melody missing name
-%Voice Guitar missing sname
+V:Bagpipes name="Bagpipes" sname="Bagpipes"
+%canntaireachd: <add your canntaireachd here>
+w: | dar dod dar dar TIMING
+|A B|A2|A|
+
 
 X:744060
 T:Suo Gan
@@ -36,17 +33,16 @@ R:March
 U: R = ///
 U: r = //
 U: V = !accent!
+V:Guitar name="Guit"
+|A B|A2|A|
+%Voice melody missing name
+%Voice Guitar missing sname
 V:Melody name=Melody
 % Voice Melody missing sname
 K:c
-|A B TIMING|A2 TIMING|A| TIMING
-
-X:4
-T: Multi Voice
-M:2/4
-L:1/8
+|A B|A2|A|
 V:Melody sname=Melody
-|A B TIMING|A2 TIMING|A| TIMING
+|A B|A2|A|
 V:M gstem=up stem=down name="Melody" sname="Melody"
 V:H gstem=up stem=down name="Harmony" sname="Harmony"
 V:C gstem=up stem=down name="C-Harmony"
@@ -68,7 +64,6 @@ I:MIDI=program 110
 %%landscape
 % %score M
 % %scale 0.6
-[V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING| TIMING
-[V:M]{g}c3d {g}ec3 | {g}f3d {g}ec3 TIMING| {g}c3d {g}ec3 TIMING| {ag}a2f2 {gef}e4 TIMING| TIMING
-[V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING|] TIMING
-
+[V:M]{g}A3B {g}ce3 TIMING| {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING|
+[V:M]{g}c3d {g}ec3 TIMING| {g}f3d {g}ec3 TIMING| {g}c3d {g}ec3 TIMING| {ag}a2f2 {gef}e4 TIMING|
+[V:M]{g}A3B {g}ce3 TIMING| {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING|]

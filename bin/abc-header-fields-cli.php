@@ -1,87 +1,143 @@
 <?php
-// CLI tool for managing ABC header fields (composer, book, etc.)
-// Usage: php bin/abc-header-fields-cli.php --add --field composer --value "John Smith"
-//        php bin/abc-header-fields-cli.php --list
-//        php bin/abc-header-fields-cli.php --edit --field composer --old "John Smith" --new "Jane Doe"
-//        php bin/abc-header-fields-cli.php --delete --field composer --value "Jane Doe"
+/**
+ * ABC Header Fields CLI Tool
+ *
+ * Manages ABC header field values (composer, book, etc.) in a database.
+ * Allows adding, editing, deleting, and listing header field values.
+ *
+ * Usage:
+ *   php abc-header-fields-cli.php <command> [options]
+ *
+ * Commands:
+ *   --add        Add a new header field value
+ *   --edit       Edit an existing header field value
+ *   --delete     Delete a header field value
+ *   --list       List all header field values
+ *
+ * Options:
+ *   --field <name>        Header field name (composer, book, etc.)
+ *   --value <value>       Field value to add or delete
+ *   --old <value>         Old value to replace (for --edit)
+ *   --new <value>         New value to set (for --edit)
+ *   -e, --errorfile <file> Output file for messages (default: stdout)
+ *   -h, --help            Show this help message
+ *
+ * Examples:
+ *   php abc-header-fields-cli.php --add --field composer --value "John Smith"
+ *   php abc-header-fields-cli.php --edit --field composer --old "John Smith" --new "Jane Doe"
+ *   php abc-header-fields-cli.php --delete --field composer --value "Jane Doe"
+ *   php abc-header-fields-cli.php --list
+ *   php abc-header-fields-cli.php --list --errorfile=fields.txt
+ */
 
 require_once __DIR__ . '/../vendor/autoload.php';
 use Ksfraser\PhpabcCanntaireachd\AbcHeaderFieldTable;
 use Ksfraser\PhpabcCanntaireachd\CLIOptions;
 
+// Parse command line arguments
+$cli = CLIOptions::fromArgv($argv);
+
+// Show help if requested or no valid command
+if (isset($cli->opts['h']) || isset($cli->opts['help']) ||
+    (!isset($cli->opts['add']) && !isset($cli->opts['list']) &&
+     !isset($cli->opts['edit']) && !isset($cli->opts['delete']))) {
+    showUsage();
+    exit(0);
+}
+
 $headerTable = new AbcHeaderFieldTable();
 
-// Centralized CLI options (provides --errorfile among others)
-$cli = CLIOptions::fromArgv($argv);
+// Get error file from CLIOptions
 $errorFile = $cli->errorFile;
 
-// Script-specific flags (header management commands)
-$options = getopt('', ['add', 'list', 'edit', 'delete', 'field:', 'value:', 'old:', 'new:']);
-
-if (isset($options['add'])) {
-    if (isset($options['field'], $options['value'])) {
-        $headerTable->addFieldValue($options['field'], $options['value']);
-        $msg = "Added {$options['field']}: {$options['value']}\n";
+if (isset($cli->opts['add'])) {
+    if (isset($cli->opts['field'], $cli->opts['value'])) {
+        $headerTable->addFieldValue($cli->opts['field'], $cli->opts['value']);
+        $msg = "✓ Added {$cli->opts['field']}: {$cli->opts['value']}\n";
     } else {
-        $msg = "--add requires --field and --value\n";
+        $msg = "✗ --add requires --field and --value\n";
+        showUsage();
+        exit(1);
     }
-    if ($errorFile) {
-        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
-    } else {
-        echo $msg;
-    }
-} elseif (isset($options['edit'])) {
-    if (isset($options['field'], $options['old'], $options['new'])) {
-        if ($headerTable->editFieldValue($options['field'], $options['old'], $options['new'])) {
-            $msg = "Updated {$options['field']}: {$options['old']} to {$options['new']}\n";
+} elseif (isset($cli->opts['edit'])) {
+    if (isset($cli->opts['field'], $cli->opts['old'], $cli->opts['new'])) {
+        if ($headerTable->editFieldValue($cli->opts['field'], $cli->opts['old'], $cli->opts['new'])) {
+            $msg = "✓ Updated {$cli->opts['field']}: '{$cli->opts['old']}' → '{$cli->opts['new']}'\n";
         } else {
-            $msg = "Value not found for edit\n";
+            $msg = "✗ Value '{$cli->opts['old']}' not found for field '{$cli->opts['field']}'\n";
         }
     } else {
-        $msg = "--edit requires --field, --old, and --new\n";
+        $msg = "✗ --edit requires --field, --old, and --new\n";
+        showUsage();
+        exit(1);
     }
-    if ($errorFile) {
-        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
-    } else {
-        echo $msg;
-    }
-} elseif (isset($options['delete'])) {
-    if (isset($options['field'], $options['value'])) {
-        if ($headerTable->deleteFieldValue($options['field'], $options['value'])) {
-            $msg = "Deleted {$options['field']}: {$options['value']}\n";
+} elseif (isset($cli->opts['delete'])) {
+    if (isset($cli->opts['field'], $cli->opts['value'])) {
+        if ($headerTable->deleteFieldValue($cli->opts['field'], $cli->opts['value'])) {
+            $msg = "✓ Deleted {$cli->opts['field']}: {$cli->opts['value']}\n";
         } else {
-            $msg = "Value not found for delete\n";
+            $msg = "✗ Value '{$cli->opts['value']}' not found for field '{$cli->opts['field']}'\n";
         }
     } else {
-        $msg = "--delete requires --field and --value\n";
+        $msg = "✗ --delete requires --field and --value\n";
+        showUsage();
+        exit(1);
     }
-    if ($errorFile) {
-        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+} elseif (isset($cli->opts['list'])) {
+    $allFields = $headerTable->getAllFields();
+    if (empty($allFields)) {
+        $msg = "No header field values found.\n";
     } else {
-        echo $msg;
-    }
-} elseif (isset($options['list'])) {
-    $msg = "";
-    foreach ($headerTable->getAllFields() as $field => $values) {
-        $msg .= "$field:\n";
-        foreach ($values as $val) {
-            $msg .= "  - $val\n";
+        $msg = "Header Field Values:\n";
+        foreach ($allFields as $field => $values) {
+            $msg .= "\n$field:\n";
+            foreach ($values as $value) {
+                $msg .= "  • $value\n";
+            }
         }
-    }
-    if ($errorFile) {
-        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
-    } else {
-        echo $msg;
     }
 } else {
-    $msg = "Usage:\n";
-    $msg .= "  --add --field <name> --value <value>\n";
-    $msg .= "  --edit --field <name> --old <oldvalue> --new <newvalue>\n";
-    $msg .= "  --delete --field <name> --value <value>\n";
-    $msg .= "  --list\n";
-    if ($errorFile) {
-        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
-    } else {
-        echo $msg;
-    }
+    $msg = "✗ No valid command specified\n";
+    showUsage();
+    exit(1);
+}
+
+if ($errorFile) {
+    \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+} else {
+    echo $msg;
+}
+
+function showUsage() {
+    global $argv;
+    $script = basename($argv[0]);
+    echo "ABC Header Fields CLI Tool
+
+Manages ABC header field values (composer, book, etc.) in a database.
+Allows adding, editing, deleting, and listing header field values.
+
+Usage:
+  php $script <command> [options]
+
+Commands:
+  --add        Add a new header field value
+  --edit       Edit an existing header field value
+  --delete     Delete a header field value
+  --list       List all header field values
+
+Options:
+  --field <name>        Header field name (composer, book, etc.)
+  --value <value>       Field value to add or delete
+  --old <value>         Old value to replace (for --edit)
+  --new <value>         New value to set (for --edit)
+  -e, --errorfile <file> Output file for messages (default: stdout)
+  -h, --help            Show this help message
+
+Examples:
+  php $script --add --field composer --value \"John Smith\"
+  php $script --edit --field composer --old \"John Smith\" --new \"Jane Doe\"
+  php $script --delete --field composer --value \"Jane Doe\"
+  php $script --list
+  php $script --list --errorfile=fields.txt
+";
 }

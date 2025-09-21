@@ -43,8 +43,8 @@ class CLIOptions {
     protected function parse(): void
     {
         // Attempt to use getopt first (handles short and long forms)
-        $short = 'f:c:o:e:d:x:v:s:i:b:j:V:w:u:';
-        $long = ['file:', 'convert', 'output:', 'errorfile:', 'canntdiff:', 'xnum:', 'validate:', 'save:', 'interleave_bars:', 'bars_per_line:', 'join_bars_with_backslash:', 'voice_ouptut_style:', 'width:', 'update_voice_names_from_midi'];
+        $short = 'f:c:o:e:d:x:v:s:i:b:j:V:w:u:h';
+        $long = ['file:', 'convert', 'output:', 'errorfile:', 'canntdiff:', 'xnum:', 'validate:', 'save:', 'interleave_bars:', 'bars_per_line:', 'join_bars_with_backslash:', 'voice_ouptut_style:', 'width:', 'update_voice_names_from_midi', 'help'];
         $parsed = @getopt($short, $long);
         $this->opts = is_array($parsed) ? $parsed : [];
 

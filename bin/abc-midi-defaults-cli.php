@@ -1,6 +1,58 @@
+#!/usr/bin/env php
 <?php
-// CLI tool for managing MIDI defaults
-// Load secrets if available
+/**
+ * ABC MIDI Defaults CLI Tool
+ *
+ * Manages MIDI channel and program defaults for ABC voices in the database.
+ * Supports listing, adding, editing, and deleting voice MIDI settings.
+ *
+ * Usage:
+ *   php abc-midi-defaults-cli.php <command> [options]
+ *
+ * Commands:
+ *   --list                    List all voice MIDI defaults
+ *   --add <voice>             Add a new voice MIDI default
+ *   --edit <voice>            Edit an existing voice MIDI default
+ *   --delete <voice>          Delete a voice MIDI default
+ *   --validate <file.abc>     Validate ABC file with MIDI defaults
+ *   --save <file.abc>         Process and save ABC file with MIDI defaults
+ *
+ * Options:
+ *   --midi_channel <N>        MIDI channel number (0-15)
+ *   --midi_program <N>        MIDI program number (0-127)
+ *   --voice_output_style <s>  Voice output style for processing
+ *   --interleave_bars <N>     Bars to interleave
+ *   --bars_per_line <N>       Bars per line in output
+ *   --join_bars_with_backslash Join bars with backslash
+ *   --mysql_user <user>       MySQL username
+ *   --mysql_pass <pass>       MySQL password
+ *   --mysql_db <db>           MySQL database name
+ *   --mysql_host <host>       MySQL host (default: localhost)
+ *   --mysql_port <port>       MySQL port (default: 3306)
+ *   -e, --errorfile <file>    Output file for messages and errors
+ *   -h, --help                Show this help message
+ *
+ * Examples:
+ *   php abc-midi-defaults-cli.php --list
+ *   php abc-midi-defaults-cli.php --add Bagpipe --midi_channel 1 --midi_program 109
+ *   php abc-midi-defaults-cli.php --edit Melody --midi_program 25
+ *   php abc-midi-defaults-cli.php --delete Drums
+ *   php abc-midi-defaults-cli.php --validate tune.abc
+ *   php abc-midi-defaults-cli.php --save tune.abc --errorfile=process.log
+ */
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+// Parse command line arguments
+$cli = \Ksfraser\PhpabcCanntaireachd\CLIOptions::fromArgv($argv);
+
+// Show help if requested
+if (isset($cli->opts['h']) || isset($cli->opts['help'])) {
+    showUsage();
+    exit(0);
+}
+
+// Load database configuration
 if (class_exists('Symfony\Component\Runtime\Secrets\getSecret')) {
     $getSecret = \Closure::fromCallable(['Symfony\Component\Runtime\Secrets', 'getSecret']);
     $env = getenv();
@@ -19,19 +71,31 @@ if (class_exists('Symfony\Component\Runtime\Secrets\getSecret')) {
 } else {
     $config = require __DIR__ . '/../config/db_config.php';
 }
-$options = getopt('', [
-    'list', 'add:', 'edit:', 'delete:', 'midi_channel:', 'midi_program:', 'validate:', 'save:',
-    'voice_output_style:', 'interleave_bars:', 'bars_per_line:', 'join_bars_with_backslash:',
-    'mysql_user:', 'mysql_pass:', 'mysql_db:', 'mysql_host:', 'mysql_port:'
-]);
+
 // Override config with CLI options if provided
-if (isset($options['mysql_user'])) $config['mysql_user'] = $options['mysql_user'];
-if (isset($options['mysql_pass'])) $config['mysql_pass'] = $options['mysql_pass'];
-if (isset($options['mysql_db']))   $config['mysql_db']   = $options['mysql_db'];
-if (isset($options['mysql_host'])) $config['mysql_host'] = $options['mysql_host'];
-if (isset($options['mysql_port'])) $config['mysql_port'] = $options['mysql_port'];
+if (isset($cli->opts['mysql_user'])) $config['mysql_user'] = $cli->opts['mysql_user'];
+if (isset($cli->opts['mysql_pass'])) $config['mysql_pass'] = $cli->opts['mysql_pass'];
+if (isset($cli->opts['mysql_db']))   $config['mysql_db']   = $cli->opts['mysql_db'];
+if (isset($cli->opts['mysql_host'])) $config['mysql_host'] = $cli->opts['mysql_host'];
+if (isset($cli->opts['mysql_port'])) $config['mysql_port'] = $cli->opts['mysql_port'];
+
 $config['dsn'] = "mysql:host={$config['mysql_host']};port={$config['mysql_port']};dbname={$config['mysql_db']};charset=utf8mb4";
-$pdo = new PDO($config['dsn'], $config['mysql_user'], $config['mysql_pass']);
+
+try {
+    $pdo = new PDO($config['dsn'], $config['mysql_user'], $config['mysql_pass']);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (Exception $e) {
+    $msg = "Error: Database connection failed: " . $e->getMessage() . "\n";
+    if ($cli->errorFile) {
+        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $cli->errorFile);
+    } else {
+        fwrite(STDERR, $msg);
+    }
+    exit(1);
+}
+
+$errorFile = $cli->errorFile;
+
 // Check if table exists, create/populate if missing
 $table = 'abc_midi_defaults';
 $tableExists = false;
@@ -41,136 +105,221 @@ try {
 } catch (Exception $e) {
     $tableExists = false;
 }
+
 if (!$tableExists) {
-    $schemaFile = __DIR__ . '/abc_midi_defaults_schema.sql';
+    $schemaFile = __DIR__ . '/../sql/abc_midi_defaults_schema.sql';
     if (file_exists($schemaFile)) {
         $sql = file_get_contents($schemaFile);
         foreach (explode(';', $sql) as $query) {
             $query = trim($query);
             if ($query) $pdo->exec($query);
         }
-        echo "Created and populated $table from schema.\n";
+        $msg = "Created and populated $table from schema.\n";
+        if ($errorFile) {
+            \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+        } else {
+            echo $msg;
+        }
     } else {
-        echo "Schema file $schemaFile not found.\n";
+        $msg = "Error: Schema file $schemaFile not found.\n";
+        if ($errorFile) {
+            \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+        } else {
+            fwrite(STDERR, $msg);
+        }
         exit(1);
     }
 }
-$options = getopt('', [
-    'list', 'add:', 'edit:', 'delete:', 'midi_channel:', 'midi_program:', 'validate:', 'save:',
-    'voice_output_style:', 'interleave_bars:', 'bars_per_line:', 'join_bars_with_backslash:'
-]);
-// Support --errorfile option
-$errorFile = null;
-foreach ($argv as $i => $arg) {
-    if ($i === 0) continue;
-    if (preg_match('/^--errorfile=(.+)$/', $arg, $m)) {
-        $errorFile = $m[1];
-    }
-}
+
 // Support multiple files via wildcard for validate/save
 $abcFiles = [];
-if (isset($options['validate'])) {
-    $abcFiles = glob($options['validate']);
-} elseif (isset($options['save'])) {
-    $abcFiles = glob($options['save']);
+if (isset($cli->opts['validate'])) {
+    $abcFiles = glob($cli->opts['validate']);
+} elseif (isset($cli->opts['save'])) {
+    $abcFiles = glob($cli->opts['save']);
 }
-$table = 'abc_midi_defaults';
-if (isset($options['list'])) {
-    $stmt = $pdo->query("SELECT * FROM $table");
-    $msg = "";
-    foreach ($stmt as $row) {
-        $msg .= "{$row['voice_name']}: Channel {$row['midi_channel']}, Program {$row['midi_program']}\n";
+
+if (isset($cli->opts['list'])) {
+    $stmt = $pdo->query("SELECT * FROM $table ORDER BY voice_name");
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $msg = "MIDI Defaults:\n";
+    foreach ($rows as $row) {
+        $msg .= "  {$row['voice_name']}: Channel {$row['midi_channel']}, Program {$row['midi_program']}\n";
     }
+    $msg .= "✓ Listed " . count($rows) . " voice MIDI default(s)\n";
+
     if ($errorFile) {
         \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
     } else {
         echo $msg;
     }
-} elseif (isset($options['add'])) {
-    $voice = $options['add'];
-    $channel = $options['midi_channel'] ?? 0;
-    $program = $options['midi_program'] ?? 0;
+
+} elseif (isset($cli->opts['add'])) {
+    $voice = $cli->opts['add'];
+    $channel = $cli->opts['midi_channel'] ?? 0;
+    $program = $cli->opts['midi_program'] ?? 0;
+
     $stmt = $pdo->prepare("INSERT INTO $table (voice_name, midi_channel, midi_program) VALUES (?, ?, ?)");
     $stmt->execute([$voice, $channel, $program]);
-    $msg = "Added $voice.\n";
+
+    $msg = "MIDI defaults added for voice '$voice'\n";
+    $msg .= "✓ Channel: $channel, Program: $program\n";
+
     if ($errorFile) {
         \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
     } else {
         echo $msg;
     }
-} elseif (isset($options['edit'])) {
-    $voice = $options['edit'];
-    $channel = $options['midi_channel'] ?? null;
-    $program = $options['midi_program'] ?? null;
+
+} elseif (isset($cli->opts['edit'])) {
+    $voice = $cli->opts['edit'];
+    $channel = $cli->opts['midi_channel'] ?? null;
+    $program = $cli->opts['midi_program'] ?? null;
+
+    $updates = [];
     if ($channel !== null) {
         $stmt = $pdo->prepare("UPDATE $table SET midi_channel=? WHERE voice_name=?");
         $stmt->execute([$channel, $voice]);
+        $updates[] = "channel=$channel";
     }
     if ($program !== null) {
         $stmt = $pdo->prepare("UPDATE $table SET midi_program=? WHERE voice_name=?");
         $stmt->execute([$program, $voice]);
+        $updates[] = "program=$program";
     }
-    $msg = "Edited $voice.\n";
-    if ($errorFile) {
-        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
-    } else {
-        echo $msg;
-    }
-} elseif (isset($options['delete'])) {
-    $voice = $options['delete'];
-    $stmt = $pdo->prepare("DELETE FROM $table WHERE voice_name=?");
-    $stmt->execute([$voice]);
-    $msg = "Deleted $voice.\n";
-    if ($errorFile) {
-        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
-    } else {
-        echo $msg;
-    }
-} elseif (!empty($abcFiles)) {
-    $config = new \Ksfraser\PhpabcCanntaireachd\AbcProcessorConfig();
-    if (isset($options['voice_output_style'])) $config->voiceOutputStyle = $options['voice_output_style'];
-    if (isset($options['interleave_bars'])) $config->interleaveBars = (int)$options['interleave_bars'];
-    if (isset($options['bars_per_line'])) $config->barsPerLine = (int)$options['bars_per_line'];
-    if (isset($options['join_bars_with_backslash'])) $config->joinBarsWithBackslash = (bool)$options['join_bars_with_backslash'];
 
+    $msg = "MIDI defaults updated for voice '$voice'\n";
+    $msg .= "✓ Updated: " . implode(', ', $updates) . "\n";
+
+    if ($errorFile) {
+        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+    } else {
+        echo $msg;
+    }
+
+} elseif (isset($cli->opts['delete'])) {
+    $voice = $cli->opts['delete'];
+    $stmt = $pdo->prepare("DELETE FROM $table WHERE voice_name=?");
+    $result = $stmt->execute([$voice]);
+
+    $msg = "MIDI defaults deleted for voice '$voice'\n";
+    $msg .= "✓ Deleted " . $stmt->rowCount() . " record(s)\n";
+
+    if ($errorFile) {
+        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+    } else {
+        echo $msg;
+    }
+
+} elseif (!empty($abcFiles)) {
+    $configObj = new \Ksfraser\PhpabcCanntaireachd\AbcProcessorConfig();
+    if (isset($cli->opts['voice_output_style'])) $configObj->voiceOutputStyle = $cli->opts['voice_output_style'];
+    if (isset($cli->opts['interleave_bars'])) $configObj->interleaveBars = (int)$cli->opts['interleave_bars'];
+    if (isset($cli->opts['bars_per_line'])) $configObj->barsPerLine = (int)$cli->opts['bars_per_line'];
+    if (isset($cli->opts['join_bars_with_backslash'])) $configObj->joinBarsWithBackslash = true;
+
+    $processedCount = 0;
     foreach ($abcFiles as $abcFile) {
+        if (!file_exists($abcFile)) {
+            $msg = "Warning: File '$abcFile' not found, skipping\n";
+            if ($errorFile) {
+                \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+            } else {
+                echo $msg;
+            }
+            continue;
+        }
+
         $abcContent = file_get_contents($abcFile);
         $dict = include __DIR__ . '/../src/Ksfraser/PhpabcCanntaireachd/abc_dict.php';
         $result = \Ksfraser\PhpabcCanntaireachd\AbcProcessor::process($abcContent, $dict);
+
         $output = $result['lines'];
         $canntDiff = $result['canntDiff'];
-        $newFile = preg_replace('/\.abc$/', '_1.abc', $abcFile);
+
+        $newFile = preg_replace('/\.abc$/', '_processed.abc', $abcFile);
         file_put_contents($newFile, implode("\n", $output));
+
         $files = [$newFile];
-        $msg = "Saved with canntaireachd: $newFile\n";
+        $msg = "Processed ABC file: $abcFile\n";
+        $msg .= "✓ Output: $newFile\n";
+
         if ($canntDiff) {
-            $diffFile = 'cannt_diff.txt';
+            $diffFile = preg_replace('/\.abc$/', '_cannt_diff.txt', $abcFile);
             file_put_contents($diffFile, implode("\n", $canntDiff));
-            $msg .= "Canntaireachd diff written to $diffFile\n";
+            $msg .= "✓ Canntaireachd diff: $diffFile\n";
             $files[] = $diffFile;
         }
-        if ($result['errors'] ?? false) {
-            $errFile = 'abc_errors.txt';
+
+        if (isset($result['errors']) && !empty($result['errors'])) {
+            $errFile = preg_replace('/\.abc$/', '_errors.txt', $abcFile);
             file_put_contents($errFile, implode("\n", $result['errors']));
-            $msg .= "Errors written to $errFile\n";
+            $msg .= "✓ Errors: $errFile\n";
             $files[] = $errFile;
         }
-        $msg .= "Output files for $abcFile:\n";
-        foreach ($files as $f) {
-            $msg .= "  $f\n";
-        }
+
+        $processedCount++;
         if ($errorFile) {
             \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
         } else {
             echo $msg;
         }
     }
-    exit;
-} else {
-    $msg = "Usage:\n  --list\n  --add=<voice> --midi_channel=<ch> --midi_program=<prog>\n  --edit=<voice> [--midi_channel=<ch>] [--midi_program=<prog>]\n  --delete=<voice>\n  --validate=<file.abc>\n  --save=<file.abc>\n  [--errorfile=err.txt]\n";
+
+    $summaryMsg = "Processing completed\n";
+    $summaryMsg .= "✓ Processed $processedCount file(s)\n";
+
     if ($errorFile) {
-        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($summaryMsg, $errorFile);
     } else {
-        echo $msg;
+        echo $summaryMsg;
     }
+
+} else {
+    showUsage();
+    exit(1);
+}
+
+function showUsage() {
+    global $argv;
+    $script = basename($argv[0]);
+    echo "ABC MIDI Defaults CLI Tool
+
+Manages MIDI channel and program defaults for ABC voices in the database.
+Supports listing, adding, editing, and deleting voice MIDI settings.
+
+Usage:
+  php $script <command> [options]
+
+Commands:
+  --list                    List all voice MIDI defaults
+  --add <voice>             Add a new voice MIDI default
+  --edit <voice>            Edit an existing voice MIDI default
+  --delete <voice>          Delete a voice MIDI default
+  --validate <file.abc>     Validate ABC file with MIDI defaults
+  --save <file.abc>         Process and save ABC file with MIDI defaults
+
+Options:
+  --midi_channel <N>        MIDI channel number (0-15)
+  --midi_program <N>        MIDI program number (0-127)
+  --voice_output_style <s>  Voice output style for processing
+  --interleave_bars <N>     Bars to interleave
+  --bars_per_line <N>       Bars per line in output
+  --join_bars_with_backslash Join bars with backslash
+  --mysql_user <user>       MySQL username
+  --mysql_pass <pass>       MySQL password
+  --mysql_db <db>           MySQL database name
+  --mysql_host <host>       MySQL host (default: localhost)
+  --mysql_port <port>       MySQL port (default: 3306)
+  -e, --errorfile <file>    Output file for messages and errors
+  -h, --help                Show this help message
+
+Examples:
+  php $script --list
+  php $script --add Bagpipe --midi_channel 1 --midi_program 109
+  php $script --edit Melody --midi_program 25
+  php $script --delete Drums
+  php $script --validate tune.abc
+  php $script --save tune.abc --errorfile=process.log
+";
 }
