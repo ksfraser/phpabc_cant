@@ -42,7 +42,7 @@ class AbcCanntaireachdPass {
                 } elseif (preg_match('/^[A-Z]:/', $line)) {
                     // Header line (X:, T:, M:, L:, K:, etc.) - skip for canntaireachd generation
                     $output[] = $line;
-                } elseif (!$hasLyrics && !preg_match('/TIMING/', $line)) {
+                } elseif (!$hasLyrics && !preg_match('/^%/', $line) && !preg_match('/^w:/', $line) && trim($line) !== '' && !preg_match('/^[A-Z]:/', $line)) {
                     // This is a music line without lyrics, generate canntaireachd
                     $canntText = $canntGenerator->generateForNotes($line);
                     if ($canntText && $canntText !== '[?]') {

@@ -3,7 +3,7 @@ T:First Tune
 M:4/4
 L:1/4
 V:Bagpipes
-w: | dar dod hid dar TIMING| dar dod | dar dod |
+w: | dar dod hid dar dar dod dar dod TIMING
 |A B C D|A2 B2|A B|
 % Missing K Header
 % Voice Bagpipe missing name and sname
@@ -17,7 +17,7 @@ M:2/4
 L:1/8
 K:HP
 V:Bagpipes
-w: | dar dod | dar | dar |
+w: | dar dod dar dar TIMING
 |A B|A2|A|
 % Voice Bagpipe missing name and sname
 
@@ -67,11 +67,11 @@ U: r = //
 U: V = !accent!
 V:Bagpipes name="Bagpipes" sname="Bagpipes"
 %canntaireachd: <add your canntaireachd here>
-w: {g} dar dod {g} hid dod {g} dod dar {g} hid [{d}B] {g} dar dod {g} hid dod {g} dod [{d}c] [{G}A] TIMING
+w: [{] [g}] dar dod [{] [g}] hid dod [{] [g}] dod dar [{] [g}] hid [{] [d}] dod [{] [g}] dar dod [{] [g}] hid dod [{] [g}] dod [{] [d}] hid [{] [G}] dar TIMING
 [V:Bagpipes]{g}A3B {g}ce3 TIMING| {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING|
-w: {g} hid dar {g} dod hid {g} hid dar {g} dod hid {g} hid dar {g} dod hid [{ag}af] [{gef}e] TIMING
+w: [{] [g}] hid dar [{] [g}] dod hid [{] [g}] hid dar [{] [g}] dod hid [{] [g}] hid dar [{] [g}] dod hid [{] dar [g}] dar hid [{] dar dod [f}] dod TIMING
 [V:Bagpipes]{g}c3d {g}ec3 TIMING| {g}f3d {g}ec3 TIMING| {g}c3d {g}ec3 TIMING| {ag}a2f2 {gef}e4 TIMING|
-w: {g} dar dod {g} hid dod {g} dod dar {g} hid [{d}B] {g} dar dod {g} hid dod {g} dod [{d}c] [{G}A] TIMING|]
+w: [{] [g}] dar dod [{] [g}] hid dod [{] [g}] dod dar [{] [g}] hid [{] [d}] dod [{] [g}] dar dod [{] [g}] hid dod [{] [g}] dod [{] [d}] hid [{] [G}] dar TIMING|]
 [V:Bagpipes]{g}A3B {g}ce3 TIMING| {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING|]
 V:M gstem=up stem=down name="Melody" sname="Melody"
 V:H gstem=up stem=down name="Harmony" sname="Harmony"

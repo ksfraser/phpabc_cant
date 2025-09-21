@@ -38,34 +38,40 @@ class CanntGenerator {
     public function generateForNotes(string $noteBody): string {
         $noteBody = trim($noteBody);
         if ($noteBody === '') return '[?]';
+        
+        // Strip voice prefixes like [V:Bagpipes] from the beginning of the line
+        $noteBody = preg_replace('/^\[V:[^\]]*\]/', '', $noteBody);
+        $noteBody = trim($noteBody);
+        
         // Attempt to split on whitespace first
         $parts = preg_split('/\s+/', $noteBody);
         $out = [];
         foreach ($parts as $part) {
             $part = trim($part);
             if ($part === '' || $part === '|' ) continue;
-            // If the token contains multiple notes concatenated (e.g., A3B or {g}A3B), split on lookahead for letters or brace
-            $subtokens = preg_split('/(?=[A-Ga-g\{])/', $part);
-            if ($subtokens === false) $subtokens = [$part];
-            foreach ($subtokens as $st) {
-                $st = trim($st);
-                if ($st === '') continue;
-                // Normalize by stripping duration digits and bar separators for lookup
-                $norm = preg_replace('/\d+/', '', $st);
-                $norm = trim($norm, "|\/\n\r\t ");
-                $cannt = $this->dict->convertAbcToCannt($st);
-                if ($cannt === null) $cannt = $this->dict->convertAbcToCannt($norm);
-                if ($cannt === null) {
-                    // Try small heuristics: if token has braces like {g}A -> try full without duration
-                    if (preg_match('/^\{[^}]+\}[A-Ga-g]$/', $norm)) {
-                        $cannt = $this->dict->convertAbcToCannt($norm);
+            // Process the part by finding longest matching tokens
+            $remaining = $part;
+            while ($remaining !== '') {
+                $found = false;
+                for ($len = strlen($remaining); $len > 0; $len--) {
+                    $token = substr($remaining, 0, $len);
+                    $norm = preg_replace('/\d+/', '', $token);
+                    $cannt = $this->dict->convertAbcToCannt($token);
+                    if ($cannt === null) $cannt = $this->dict->convertAbcToCannt($norm);
+                    if ($cannt !== null) {
+                        $out[] = $cannt;
+                        $remaining = substr($remaining, $len);
+                        $found = true;
+                        break;
                     }
                 }
-                if ($cannt === null) {
+                if (!$found) {
                     // Fallback: wrap the normalized token
-                    $cannt = '[' . ($norm === '' ? $st : $norm) . ']';
+                    $norm = preg_replace('/\d+/', '', $remaining);
+                    $cannt = '[' . ($norm === '' ? $remaining : $norm) . ']';
+                    $out[] = $cannt;
+                    $remaining = '';
                 }
-                $out[] = $cannt;
             }
         }
         // Ensure we always return a non-empty string

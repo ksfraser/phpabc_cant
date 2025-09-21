@@ -87,8 +87,8 @@ class AbcProcessor {
             if (preg_match('/^V:Melody/', $line) || preg_match('/^V:M\s/', $line) || preg_match('/name="Melody"/', $line)) {
                 $hasMelody = true;
             }
-            // Check for bagpipe voice patterns
-            if (preg_match('/^V:Bagpipes/', $line) || preg_match('/^V:B\s/', $line) || preg_match('/name="Bagpipes"/', $line)) {
+            // Check for bagpipe voice patterns - be more specific to avoid matching V:Bass etc.
+            if (preg_match('/^V:Bagpipes/', $line) || preg_match('/name="Bagpipes"/', $line)) {
                 $hasBagpipes = true;
             }
         }
@@ -166,60 +166,44 @@ class AbcProcessor {
     
     private static function copyMelodyToBagpipesInTune($lines) {
         $output = [];
-        $currentVoice = null;
-        $voiceContent = [];
-        $melodyContents = []; // Store melody voice content for bagpipe creation
-        $isCurrentVoiceMelody = false;
-
+        $hasMelody = false;
+        $melodyVoiceId = null;
+        
+        // First pass: find melody voice
         foreach ($lines as $line) {
-            $trimmed = trim($line);
-            
-            // Check if this is a voice header
-            if (preg_match('/^V:/', $line)) {
-                // Save previous voice if any
-                if ($currentVoice) {
-                    $output = array_merge($output, $voiceContent);
+            if (preg_match('/^V:([^\s]+)/', $line, $m)) {
+                $voiceId = $m[1];
+                if (preg_match('/name=.*Melody/', $line)) {
+                    $hasMelody = true;
+                    $melodyVoiceId = $voiceId;
                 }
-                
-                $currentVoice = $line;
-                $voiceContent = [$line];
-                
-                // Check if this is a melody voice
-                $isCurrentVoiceMelody = preg_match('/^V:Melody/', $line) || 
-                                       preg_match('/^V:M\s/', $line) || 
-                                       preg_match('/name="Melody"/', $line);
-                
-                if ($isCurrentVoiceMelody) {
-                    // Start collecting content for this melody voice
-                    $melodyContents[] = [];
-                }
-            } elseif ($currentVoice && self::isVoiceContent($line)) {
-                // This line belongs to the current voice
-                $voiceContent[] = $line;
-                
-                // If this is a melody voice, collect content for copying
-                if ($isCurrentVoiceMelody && !empty($melodyContents)) {
-                    $lastIndex = count($melodyContents) - 1;
-                    $melodyContents[$lastIndex][] = $line;
-                }
-            } elseif (!$currentVoice) {
-                // This is a header or other content before first voice
-                $output[] = $line;
             }
         }
         
-        // Handle the last voice
-        if ($currentVoice) {
-            $output = array_merge($output, $voiceContent);
+        if (!$hasMelody) {
+            return $lines;
         }
         
-        // Add bagpipe voices for each melody voice found
-        foreach ($melodyContents as $content) {
+        // Second pass: copy lines and collect melody content
+        $melodyContent = [];
+        foreach ($lines as $line) {
+            $output[] = $line;
+            
+            // Collect melody content
+            if (preg_match('/^\[V:' . preg_quote($melodyVoiceId, '/') . '\](.*)$/i', $line, $m)) {
+                // This is melody content, copy it for bagpipe
+                $bagpipeLine = '[V:Bagpipes]' . $m[1];
+                $melodyContent[] = $bagpipeLine;
+            }
+        }
+        
+        // Add bagpipe voice with copied content
+        if (!empty($melodyContent)) {
             $output[] = 'V:Bagpipes name="Bagpipes" sname="Bagpipes"';
             $output[] = '%canntaireachd: <add your canntaireachd here>';
-            $output = array_merge($output, $content);
+            $output = array_merge($output, $melodyContent);
         }
-
+        
         return $output;
     }
 
@@ -303,13 +287,53 @@ class AbcProcessor {
         return $output;
     }
     public static function reorderVoices($output) {
+        // Split output into individual tunes
+        $tunes = [];
+        $currentTune = [];
+        $hasStartedTunes = false;
+        
+        foreach ($output as $line) {
+            if (preg_match('/^X:/', $line)) {
+                // Start of new tune
+                if (!empty($currentTune)) {
+                    $tunes[] = $currentTune;
+                }
+                $currentTune = [$line];
+                $hasStartedTunes = true;
+            } elseif ($hasStartedTunes && !empty($currentTune)) {
+                // Add line to current tune
+                $currentTune[] = $line;
+            } elseif (!$hasStartedTunes && trim($line) !== '') {
+                // Content before first tune
+                $currentTune = [$line];
+                $hasStartedTunes = true;
+            }
+        }
+        
+        // Don't forget the last tune
+        if (!empty($currentTune)) {
+            $tunes[] = $currentTune;
+        }
+        
+        // Process each tune separately
+        $result = [];
+        foreach ($tunes as $tuneLines) {
+            $result = array_merge($result, self::reorderVoicesInTune($tuneLines));
+            // Add blank lines between tunes
+            $result = array_merge($result, ['', '']);
+        }
+        
+        return $result;
+    }
+    
+    private static function reorderVoicesInTune($lines) {
         $headers = [];
         $voiceBlocks = [];
         $currentVoice = null;
         $currentBlock = [];
 
         // Parse into headers and voice blocks
-        foreach ($output as $line) {
+        foreach ($lines as $line) {
             if (preg_match('/^V:/', $line)) {
                 // Save previous voice block
                 if ($currentVoice) {
@@ -354,7 +378,7 @@ class AbcProcessor {
             }
         }
 
-        // Reconstruct output
+        // Reconstruct tune
         $result = $headers;
         foreach ($otherBlocks as $block) {
             $result = array_merge($result, $block);
