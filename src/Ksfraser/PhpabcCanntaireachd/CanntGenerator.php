@@ -37,6 +37,7 @@ class CanntGenerator {
 
     public function generateForNotes(string $noteBody): string {
         $noteBody = trim($noteBody);
+        error_log("generateForNotes input: $noteBody"); // Log input
         if ($noteBody === '') return '[?]';
         
         // Strip voice prefixes like [V:Bagpipes] from the beginning of the line
@@ -49,6 +50,7 @@ class CanntGenerator {
         foreach ($parts as $part) {
             $part = trim($part);
             if ($part === '' || $part === '|' ) continue;
+            error_log("Processing part: $part"); // Log each part
             // Process the part by finding longest matching tokens
             $remaining = $part;
             while ($remaining !== '') {
@@ -59,6 +61,7 @@ class CanntGenerator {
                     $cannt = $this->dict->convertAbcToCannt($token);
                     if ($cannt === null) $cannt = $this->dict->convertAbcToCannt($norm);
                     if ($cannt !== null) {
+                        error_log("Matched token: $token -> Cannt: $cannt"); // Log matched token
                         $out[] = $cannt;
                         $remaining = substr($remaining, $len);
                         $found = true;
@@ -69,6 +72,7 @@ class CanntGenerator {
                     // Fallback: wrap the normalized token
                     $norm = preg_replace('/\d+/', '', $remaining);
                     $cannt = '[' . ($norm === '' ? $remaining : $norm) . ']';
+                    error_log("Unmatched token: $remaining -> Fallback: $cannt"); // Log unmatched token
                     $out[] = $cannt;
                     $remaining = '';
                 }
@@ -80,6 +84,8 @@ class CanntGenerator {
             if ($safe === '') return '[?]';
             return '[' . $safe . ']';
         }
-        return implode(' ', $out);
+        $result = implode(' ', $out);
+        error_log("generateForNotes output: $result"); // Log output
+        return $result;
     }
 }
