@@ -1,23 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Header;
 
-abstract class AbcHeaderField {
-    protected $value = '';
-    public static $label = '';
-    public function __construct($value = '') { $this->value = $value; }
-    public function set($value) { $this->value = $value; }
-    public function get() { return $this->value; }
-    public function render() {
-        if (is_array($this->value)) {
-            $out = '';
-            foreach ($this->value as $v) {
-                $out .= static::$label . ':' . $v . "\n";
-            }
-            return $out;
-        }
-        return static::$label . ':' . $this->value . "\n";
-    }
-}
+//AbcHeaderField now has it's own file!
 
 // Multi-value field base
 abstract class AbcHeaderMultiField extends AbcHeaderField {
