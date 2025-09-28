@@ -5,11 +5,17 @@ namespace Ksfraser\PhpabcCanntaireachd;
  * Adds 'TIMING' at the end of bars with issues and logs errors.
  */
 class AbcTimingValidator {
+    private $addTimingMarkers = false;
+
     /**
      * Validate bar timing for ABC content.
      * @param array $lines ABC file lines
      * @return array [lines, errors]
      */
+    public function __construct($addTimingMarkers = false) {
+        $this->addTimingMarkers = $addTimingMarkers;
+    }
+
     public function validate(array $lines): array {
         $meter = null;
         $unit = null;
@@ -50,7 +56,13 @@ class AbcTimingValidator {
                     $isPickup = $barNum == 1 && $beats < $beatsPerBar;
                     if (!$isPickup && $beats > $beatsPerBar) {
                         $errors[] = "Bar $barNum: Expected $beatsPerBar beats, found $beats";
-                        $parts[0] = rtrim($bar) . ' TIMING';
+                        if ($this->addTimingMarkers) {
+                            $parts[0] .= rtrim($bar) . ' TIMING';
+                        }
+                        else
+                        {
+                            $parts[0] = rtrim($bar);
+                        }
                     }
                 }
                 
@@ -65,7 +77,11 @@ class AbcTimingValidator {
                         $isPickup = $barNum == 1 && $beats < $beatsPerBar;
                         if (!$isPickup && $beats > $beatsPerBar) {
                             $errors[] = "Bar $barNum: Expected $beatsPerBar beats, found $beats";
-                            $parts[$i+1] = rtrim($bar) . ' TIMING';
+                            if ($this->addTimingMarkers) {
+                                $parts[$i+1] .= rtrim($bar) . ' TIMING';
+                            } else {
+                                $parts[$i+1] = rtrim($bar);
+                            }
                         }
                     }
                 }
