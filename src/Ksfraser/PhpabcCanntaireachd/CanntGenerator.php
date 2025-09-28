@@ -36,8 +36,10 @@ class CanntGenerator {
     }
 
     public function generateForNotes(string $noteBody): string {
+        $logFile = __DIR__ . '/cannt_generator_debug.log'; // Define log file path
         $noteBody = trim($noteBody);
         error_log("generateForNotes input: $noteBody"); // Log input
+        file_put_contents($logFile, "generateForNotes input: $noteBody\n", FILE_APPEND); // Log input to file
         if ($noteBody === '') return '[?]';
         
         // Strip voice prefixes like [V:Bagpipes] from the beginning of the line
@@ -51,6 +53,7 @@ class CanntGenerator {
             $part = trim($part);
             if ($part === '' || $part === '|' ) continue;
             error_log("Processing part: $part"); // Log each part
+            file_put_contents($logFile, "Processing part: $part\n", FILE_APPEND); // Log each part to file
             // Process the part by finding longest matching tokens
             $remaining = $part;
             while ($remaining !== '') {
@@ -62,6 +65,7 @@ class CanntGenerator {
                     if ($cannt === null) $cannt = $this->dict->convertAbcToCannt($norm);
                     if ($cannt !== null) {
                         error_log("Matched token: $token -> Cannt: $cannt"); // Log matched token
+                        file_put_contents($logFile, "Matched token: $token -> Cannt: $cannt\n", FILE_APPEND); // Log matched token to file
                         $out[] = $cannt;
                         $remaining = substr($remaining, $len);
                         $found = true;
@@ -73,6 +77,7 @@ class CanntGenerator {
                     $norm = preg_replace('/\d+/', '', $remaining);
                     $cannt = '[' . ($norm === '' ? $remaining : $norm) . ']';
                     error_log("Unmatched token: $remaining -> Fallback: $cannt"); // Log unmatched token
+                    file_put_contents($logFile, "Unmatched token: $remaining -> Fallback: $cannt\n", FILE_APPEND); // Log unmatched token to file
                     $out[] = $cannt;
                     $remaining = '';
                 }
@@ -86,6 +91,7 @@ class CanntGenerator {
         }
         $result = implode(' ', $out);
         error_log("generateForNotes output: $result"); // Log output
+        file_put_contents($logFile, "generateForNotes output: $result\n", FILE_APPEND); // Log output to file
         return $result;
     }
 }
