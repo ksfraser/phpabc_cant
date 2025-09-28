@@ -3,6 +3,6 @@ namespace Ksfraser\PhpabcCanntaireachd\Decorator;
 
 class FermataDecorator {
     public function render() {
-        return '!fermata!';
+        return '!Fermata!';
     }
 }

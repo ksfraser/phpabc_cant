@@ -1,8 +1,8 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Decorator;
 
-class TrillDecorator {
+class UpbowDecorator {
     public function render() {
-        return '!Trill!';
+        return '!Upbow!';
     }
 }

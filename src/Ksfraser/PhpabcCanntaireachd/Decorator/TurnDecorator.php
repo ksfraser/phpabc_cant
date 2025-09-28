@@ -1,8 +1,8 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Decorator;
 
-class TrillDecorator {
+class TurnDecorator {
     public function render() {
-        return '!Trill!';
+        return '!Turn!';
     }
 }

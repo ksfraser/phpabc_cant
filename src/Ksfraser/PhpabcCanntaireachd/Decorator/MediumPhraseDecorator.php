@@ -1,8 +1,8 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Decorator;
 
-class TrillDecorator {
+class MediumPhraseDecorator {
     public function render() {
-        return '!Trill!';
+        return '!MediumPhrase!';
     }
 }
