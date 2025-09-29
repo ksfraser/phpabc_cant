@@ -1,5 +1,6 @@
 <?php
-namespace Ksfraser\PhpabcCanntaireachd;
+namespace Ksfraser\PhpabcCanntaireachd\Tune;
+
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderX;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderT;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderC;

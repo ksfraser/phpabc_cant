@@ -6,6 +6,8 @@
  *
  * @package Ksfraser\PhpabcCanntaireachd
  */
-namespace Ksfraser\PhpabcCanntaireachd;
+namespace Ksfraser\PhpabcCanntaireachd\Tune;
+
 use Ksfraser\PhpabcCanntaireachd\AbcNote;
+
 class AbcGracenote extends AbcNote {}

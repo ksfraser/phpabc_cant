@@ -1,5 +1,5 @@
 <?php
-namespace Ksfraser\PhpabcCanntaireachd;
+namespace Ksfraser\PhpabcCanntaireachd\Tune;
 
 /**
  * Represents a bar in ABC notation, with notes, lyrics, and canntaireachd.
