@@ -121,16 +121,21 @@ class AbcTune extends AbcItem {
             new \Ksfraser\PhpabcCanntaireachd\BodyLineHandler\CanntaireachdHandler(),
             new \Ksfraser\PhpabcCanntaireachd\BodyLineHandler\SolfegeHandler(),
             new \Ksfraser\PhpabcCanntaireachd\BodyLineHandler\NoteHandler(),
+		//There should be a MIDI and Instruction %% and Comment % handler here!!
         ];
         foreach ($lines as $line) {
             $trimmed = trim($line);
-            // Voice change: V:xx or [V:xx]
+            // Voice change: V:xx or [V:xx] or possibly continuation of same voice
             if (preg_match('/^(?:\[)?V:([^\s\]]+)(?:\])?/', $trimmed, $m)) {
+		//Ensures that context->voiceBars has an array for the voice
+		//also sets the current voice pointer to the voice string
                 $context->getOrCreateVoice($m[1]);
                 continue;
             }
             // If we have not seen a voice yet, create a default melody voice when content appears
             if ($context->currentVoice === null && $trimmed !== '' && !preg_match('/^[A-Z]:/i', $trimmed)) {
+		//If the line isn't a header line then it should be a voice/music line.  
+		//Unless its a comment/instruction.  If it is a V: line it will have been created above! (currentVoice != NULL)
                 $context->getOrCreateVoice('M');
             }
             foreach ($handlers as $handler) {
