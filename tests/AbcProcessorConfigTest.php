@@ -61,3 +61,4 @@ class AbcProcessorConfigTest extends TestCase {
         $this->assertEquals('grouped', $config2->voiceOutputStyle);
         $this->assertEquals(5, $config2->tuneNumberWidth);
     }
+}

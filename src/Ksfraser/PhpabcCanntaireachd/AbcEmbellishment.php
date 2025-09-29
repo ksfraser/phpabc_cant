@@ -5,11 +5,6 @@ namespace Ksfraser\PhpabcCanntaireachd;
  *
  * Represents an embellishment in ABC notation.
  * @package Ksfraser\PhpabcCanntaireachd
- * @uml
- * @startuml
- * class AbcEmbellishment {
- * }
- * @enduml
  */
 use Ksfraser\origin\Origin;
 class AbcEmbellishment extends Origin {}

@@ -83,8 +83,20 @@ class AbcNote extends Origin
 	 */
 	protected $error;
 	protected $decorator = '';
-	// Only one static property declaration
 	protected $instanceShortcutLookup = [];
+	protected $chordSymbol = null;
+	protected $graceNotes = [];
+	protected $annotations = [];
+	protected $accidentals = [];
+	protected $decorators = [];
+	protected $pitch = '';
+	protected $octave = '';
+	protected $sharpflat = '';
+	protected $length = '';
+	protected $lyrics = '';
+	protected $canntaireachd = '';
+	protected $solfege = '';
+	protected $bmwToken = '';
 	protected function parseAbcNote($noteStr)
 	{
 		// Use new parser classes for each ABC element
@@ -95,6 +107,9 @@ class AbcNote extends Origin
 		$noteParser = new \Ksfraser\PhpabcCanntaireachd\Parser\NoteParser();
 		$octaveParser = new \Ksfraser\PhpabcCanntaireachd\Parser\OctaveParser();
 		$lengthParser = new \Ksfraser\PhpabcCanntaireachd\Parser\NoteLengthParser();
+
+		// Load gotchas (ambiguous shortcuts)
+		$gotchas = \Ksfraser\PhpabcCanntaireachd\NoteElementLoader::getGotchas();
 
 		// 1. Chord symbol
 		$this->chordSymbol = $chordParser->parse($noteStr);
@@ -120,6 +135,19 @@ class AbcNote extends Origin
 				$noteStr = str_replace($acc, '', $noteStr);
 			}
 		}
+
+		// Ambiguity resolution: check for gotchas in noteStr
+		foreach ($gotchas as $shortcut => $types) {
+			$pos = strpos($noteStr, $shortcut);
+			if ($pos !== false) {
+				// Find pitch position
+				$pitchPos = preg_match('/[a-gA-GzZ]/', $noteStr, $m, PREG_OFFSET_CAPTURE) ? $m[0][1] : -1;
+				// If shortcut is before pitch, likely decorator; after, likely note element
+				// (This is a simplification; more context-aware logic can be added)
+				// Optionally log or store ambiguity for diagnostics
+			}
+		}
+
 		// 5. Pitch (split point)
 		$pitch = $noteParser->parse($noteStr);
 		$this->set("pitch", $pitch);
