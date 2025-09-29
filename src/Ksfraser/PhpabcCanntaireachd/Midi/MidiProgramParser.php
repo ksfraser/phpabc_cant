@@ -1,6 +1,10 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Midi;
 
+use Ksfraser\PhpabcCanntaireachd\AbcLineParser;
+use Ksfraser\PhpabcCanntaireachd\AbcMidiLine;
+use Ksfraser\PhpabcCanntaireachd\AbcTune;
+
 /**
  * Parser for %%MIDI program directives
  */

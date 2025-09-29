@@ -12,6 +12,6 @@ namespace Ksfraser\PhpabcCanntaireachd\InformationField;
  * Some expect a string
  * Others expect a specific "special Instruction" format that is specific to the field
  */
-class mInformationField extends AbcInformationField {
-	static public  = 'm'
+class MInformationField extends AbcInformationField {
+	static public  = 'M'
 }

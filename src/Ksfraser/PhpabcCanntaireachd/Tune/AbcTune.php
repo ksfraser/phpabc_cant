@@ -1,6 +1,8 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Tune;
 
+use Ksfraser\PhpabcCanntaireachd\AbcItem;
+use Ksfraser\PhpabcCanntaireachd\Midi\MidiInstrumentMapper;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderX;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderT;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderC;
@@ -9,7 +11,6 @@ use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderM;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderL;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcFixVoiceHeader;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderGeneric;
-use Ksfraser\PhpabcCanntaireachd\AbcTune;
 
 class AbcTune extends AbcItem {
     /**

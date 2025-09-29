@@ -1,6 +1,10 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Midi;
 
+use Ksfraser\PhpabcCanntaireachd\AbcLineParser;
+use Ksfraser\PhpabcCanntaireachd\AbcTune;
+use Ksfraser\PhpabcCanntaireachd\AbcMidiLine;
+
 /**
  * Parser for %%MIDI ratio directive (broken rhythm ratio)
  */
