@@ -1,5 +1,5 @@
 <?php
-namespace Ksfraser\PhpabcCanntaireachd;
+namespace Ksfraser\PhpabcCanntaireachd\Midi;
 
 /**
  * MIDI instrument mapping and validation

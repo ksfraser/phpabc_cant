@@ -104,7 +104,7 @@ class AbcValidator
                     $valid = false;
                     $parsers = [
                         new \Ksfraser\PhpabcCanntaireachd\FormattingParser(),
-                        new \Ksfraser\PhpabcCanntaireachd\MidiParser(),
+                        new \Ksfraser\PhpabcCanntaireachd\Midi\MidiParser(),
                         new \Ksfraser\PhpabcCanntaireachd\CommentParser(),
                         new \Ksfraser\PhpabcCanntaireachd\BodyParser()
                     ];

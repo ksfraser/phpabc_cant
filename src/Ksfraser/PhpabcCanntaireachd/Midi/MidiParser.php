@@ -1,15 +1,16 @@
 <?php
-namespace Ksfraser\PhpabcCanntaireachd;
+namespace Ksfraser\PhpabcCanntaireachd\Midi;
 
+use Ksfraser\PhpabcCanntaireachd;
 /**
  * Parser for MIDI directive lines (%%MIDI, etc.)
  */
-class MidiParser implements AbcLineParser {
+class MidiParser implements \Ksfraser\PhpabcCanntaireachd\AbcLineParser {
     public function canParse(string $line): bool {
         return preg_match('/^%%MIDI/i', trim($line));
     }
 
-    public function parse(string $line, AbcTune $tune): bool {
+    public function parse(string $line, \Ksfraser\PhpabcCanntaireachd\Tune\AbcTune $tune): bool {
         if (!preg_match('/^%%MIDI/i', trim($line))) {
             return false;
         }

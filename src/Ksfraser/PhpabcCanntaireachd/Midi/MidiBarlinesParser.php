@@ -1,5 +1,5 @@
 <?php
-namespace Ksfraser\PhpabcCanntaireachd;
+namespace Ksfraser\PhpabcCanntaireachd\Midi;
 
 /**
  * Parser for %%MIDI nobarlines and barlines directives

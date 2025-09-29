@@ -1,6 +1,8 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd;
 
+use Ksfraser\PhpabcCanntaireachd\Tune;
+
 /**
  * Interface for line parsers that can handle different types of ABC lines
  */

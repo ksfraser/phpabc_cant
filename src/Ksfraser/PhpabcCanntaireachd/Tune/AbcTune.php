@@ -9,6 +9,7 @@ use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderM;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderL;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcFixVoiceHeader;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderGeneric;
+use Ksfraser\PhpabcCanntaireachd\AbcTune;
 
 class AbcTune extends AbcItem {
     /**
