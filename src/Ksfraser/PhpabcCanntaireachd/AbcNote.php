@@ -75,166 +75,68 @@ use Ksfraser\origin\Origin;
 
 class AbcNote extends Origin
 {
+	public static $shortcutLookup = null;
 	use NoteParserTrait;
 	// Properties
+	/**
+	 * @var mixed Error state for this note (for legacy compatibility)
+	 */
+	protected $error;
 	protected $decorator = '';
-	public static $shortcutLookup = null;
-	use NoteParserTrait;
-	// Properties
-	public static $shortcutLookup = null;
-	protected $shortcutLookup = [];
-	protected $pitch;    // a-gA-G
-	protected $octave;   // , or '
-	protected $sharpflat; // =^_ null/natural/sharp/flat
-	protected $length;   // (int)(/)(int)
-	/**
-	 * @var BaseDecorator[] Decorator objects for this note
-	 */
-	/**
-	 * @var \Ksfraser\PhpabcCanntaireachd\Decorator\BaseDecorator[] Decorator objects for this note
-	 */
-	protected $decorators = [];
-	protected $name;
-	protected $lyrics;
-	protected $canntaireachd;
-	protected $solfege;
-	protected $bmwToken;
-	protected $callback;
-	// ABC spec fields
-	protected $graceNotes = [];
-	protected $chordSymbol = null;
-	protected $annotations = [];
-	protected $accidentals = [];
-
-	// Methods
-	/**
-	 * Exception for invalid ABC note length.
-	 */
-	private function throwLengthException($length, $noteStr = '') {
-		throw new \Exception("Invalid ABC note length: '$length' in note '$noteStr'. Three or more slashes are not ABC spec compliant.");
-	}
-
-	/**
-	 * Parse an ABC note string into components.
-	 * @param string $noteStr
-	 * @return array [pitch, octave, sharpflat, length, decorator]
-	 */
-	private function parseNote($noteStr) {
-		if (preg_match("/^([_=^]?)([a-gA-GzZ])([,']*)([0-9]+\/?[0-9]*|\/{1,}|)(.*)$/", $noteStr, $m)) {
-			return [
-				'pitch' => $m[2],
-				'octave' => $m[3],
-				'sharpflat' => $m[1],
-				'length' => $m[4],
-				'decorator' => $m[5]
-			];
-		}
-		return [
-			'pitch' => '',
-			'octave' => '',
-			'sharpflat' => '',
-			'length' => '',
-			'decorator' => ''
-		];
-	}
-
-	/**
-	 * @param string $noteStr
-	 * @param callable|null $callback
-	 * @param array|null $shortcutLookup Dependency-injected decorator shortcut map
-	 */
-	public function __construct($noteStr, $callback = null, $shortcutLookup = null)
-	{
-		parent::__construct();
-		$this->callback = $callback;
-		if ($shortcutLookup !== null) {
-			$this->shortcutLookup = $shortcutLookup;
-		}
-		$this->parseAbcNote($noteStr);
-	}
-
-	/**
-	 * Parse an ABC note string into all ABC spec components (full ABC v2.1 compliance).
-	 * @param string $noteStr
-	 */
+	// Only one static property declaration
+	protected $instanceShortcutLookup = [];
 	protected function parseAbcNote($noteStr)
 	{
-		// Extract chord symbol: "[chord]"
-		if (preg_match('/"([^"]+)"/', $noteStr, $m)) {
-			$this->chordSymbol = $m[1];
-			$noteStr = str_replace($m[0], '', $noteStr);
-		}
-		// Extract grace notes: {grace notes}
-		if (preg_match('/\{([^}]*)\}/', $noteStr, $m)) {
-			$this->graceNotes = preg_split('/\s+/', trim($m[1]));
-			$noteStr = str_replace($m[0], '', $noteStr);
-		}
+		// Use new parser classes for each ABC element
+		$chordParser = new \Ksfraser\PhpabcCanntaireachd\Parser\ChordSymbolsParser();
+		$graceParser = new \Ksfraser\PhpabcCanntaireachd\Parser\GraceNotesParser();
+		$annotationsParser = new \Ksfraser\PhpabcCanntaireachd\Parser\AnnotationsParser();
+		$accidentalsParser = new \Ksfraser\PhpabcCanntaireachd\Parser\AccidentalsParser();
+		$noteParser = new \Ksfraser\PhpabcCanntaireachd\Parser\NoteParser();
+		$octaveParser = new \Ksfraser\PhpabcCanntaireachd\Parser\OctaveParser();
+		$lengthParser = new \Ksfraser\PhpabcCanntaireachd\Parser\NoteLengthParser();
 
-		// Use injected shortcutLookup if available, else build static
-		if (!empty($this->shortcutLookup)) {
-			$shortcutLookup = $this->shortcutLookup;
-		} else {
-			if (self::$shortcutLookup === null) {
-				$decoratorMap = \Ksfraser\PhpabcCanntaireachd\Decorator\DecoratorLoader::getDecoratorMap();
-				self::$shortcutLookup = [];
-				foreach ($decoratorMap as $shortcut => $class) {
-					self::$shortcutLookup[strtolower($shortcut)] = $class;
-				}
+		// 1. Chord symbol
+		$this->chordSymbol = $chordParser->parse($noteStr);
+		if ($this->chordSymbol !== null) {
+			$noteStr = preg_replace('/"[^\"]+"/', '', $noteStr);
+		}
+		// 2. Grace notes
+		$this->graceNotes = $graceParser->parse($noteStr);
+		if (!empty($this->graceNotes)) {
+			$noteStr = preg_replace('/\{[^}]*\}/', '', $noteStr);
+		}
+		// 3. Annotations/decorators
+		$this->annotations = $annotationsParser->parse($noteStr);
+		if (!empty($this->annotations)) {
+			foreach ($this->annotations as $ann) {
+				$noteStr = str_replace($ann, '', $noteStr);
 			}
-			$shortcutLookup = self::$shortcutLookup;
 		}
-
-		// Find all !wrapped! decorators
-		preg_match_all('/!(.*?)!/', $noteStr, $bangMatches);
-		$this->annotations = $bangMatches[0];
+		// 4. Accidentals
+		$this->accidentals = $accidentalsParser->parse($noteStr);
+		if (!empty($this->accidentals)) {
+			foreach ($this->accidentals as $acc) {
+				$noteStr = str_replace($acc, '', $noteStr);
+			}
+		}
+		// 5. Pitch (split point)
+		$pitch = $noteParser->parse($noteStr);
+		$this->set("pitch", $pitch);
+		// 6. Octave (after pitch)
+		$octave = $octaveParser->parse($noteStr);
+		$this->set("octave", $octave);
+		// 7. Note length (after pitch/octave)
+		$length = $lengthParser->parse($noteStr);
+		$this->set("length", $length);
+		// 8. Decorator (legacy, for compatibility)
+		$decorator = '';
+		if (!empty($this->annotations)) {
+			$decorator = implode('', $this->annotations);
+		}
+		$this->set("decorator", $decorator);
+		// Decorator objects (instantiate if shortcut matches)
 		$this->decorators = [];
-		foreach ($bangMatches[1] as $rawShortcut) {
-			$shortcut = strtolower('!' . $rawShortcut . '!');
-			if (isset($shortcutLookup[$shortcut])) {
-				$class = $shortcutLookup[$shortcut];
-				$this->decorators[] = new $class();
-			}
-			$noteStr = str_replace('!' . $rawShortcut . '!', '', $noteStr);
-		}
-
-		// Find all raw shortcut decorators (e.g., '.', 'tr', etc.)
-		$rawShortcuts = array_filter(array_keys($shortcutLookup), function($s) {
-			return strpos($s, '!') !== 0 && $s !== '';
-		});
-		if (!empty($rawShortcuts)) {
-			$shortcutRegex = '/(' . implode('|', array_map('preg_quote', $rawShortcuts)) . ')/i';
-			if (count($rawShortcuts) > 0 && preg_match_all($shortcutRegex, $noteStr, $rawMatches) && isset($rawMatches[1])) {
-				foreach ($rawMatches[1] as $rawShortcut) {
-					$shortcut = strtolower($rawShortcut);
-					if (isset($shortcutLookup[$shortcut])) {
-						$class = $shortcutLookup[$shortcut];
-						$this->decorators[] = new $class();
-					}
-					$noteStr = str_replace($rawShortcut, '', $noteStr);
-				}
-			}
-		}
-
-		// Extract accidentals: = ^ _
-		preg_match_all('/[=_^]/', $noteStr, $accs);
-		$this->accidentals = isset($accs[0]) ? $accs[0] : [];
-		foreach ($this->accidentals as $a) {
-			$noteStr = str_replace($a, '', $noteStr);
-		}
-		// Parse remaining note string
-	$parsed = $this->parseNote($noteStr);
-		$this->set("pitch", $parsed['pitch']);
-		$this->set("octave", $parsed['octave']);
-		$this->set("sharpflat", $parsed['sharpflat']);
-		$this->set("length", $parsed['length']);
-		// Legacy decorator string (for compatibility)
-		$this->set("decorator", $parsed['decorator']);
-		// If parsed decorator matches a known shortcut, instantiate its class
-		$legacyShortcut = strtolower($parsed['decorator']);
-		if ($legacyShortcut && isset($shortcutLookup[$legacyShortcut])) {
-			$class = $shortcutLookup[$legacyShortcut];
-			$this->decorators[] = new $class();
-		}
 	}
 
 	public function setBmwToken($bmw) {
