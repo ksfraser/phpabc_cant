@@ -1,5 +1,73 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd;
+/**
+ * Class AbcNote
+ *
+ * Represents a single note in ABC notation, including pitch, octave, accidental, length, decorator, lyrics, canntaireachd, and solfege.
+ * Provides parsing, validation, and rendering logic for ABC notes.
+ *
+ * SOLID: Single Responsibility (note model), DRY (trait for parsing), SRP (validation methods).
+ *
+ * @package Ksfraser\PhpabcCanntaireachd
+ *
+ * @property string $pitch Note pitch (a-gA-G)
+ * @property string $octave Octave modifier (', ,,)
+ * @property string $sharpflat Accidental (=, ^, _)
+ * @property string $length Note length (1, /, //, etc.)
+ * @property string $decorator Note decorator (.MHTR!trill! etc.)
+ * @property string $lyrics Lyrics for this note
+ * @property string $canntaireachd Canntaireachd for this note
+ * @property string $solfege Solfege for this note
+ * @property string $bmwToken BMW token for this note
+ * @property callable $callback Optional callback for processing
+ *
+ * @method __construct(string $noteStr, callable|null $callback)
+ * @method set(string $field, mixed $value, bool $enforce_only_native_vars)
+ * @method setLyrics(string $lyrics)
+ * @method getLyrics(): string
+ * @method setCanntaireachd(string $cannt)
+ * @method getCanntaireachd(): string
+ * @method setSolfege(string $solfege)
+ * @method getSolfege(): string
+ * @method setBmwToken(string $bmw)
+ * @method getBmwToken(): string
+ * @method renderLyrics(): string
+ * @method renderCanntaireachd(): string
+ * @method renderSolfege(): string
+ * @method get_body_out(): string
+ *
+ * @uml
+ * @startuml
+ * class AbcNote {
+ *   - pitch: string
+ *   - octave: string
+ *   - sharpflat: string
+ *   - length: string
+ *   - decorator: string
+ *   - lyrics: string
+ *   - canntaireachd: string
+ *   - solfege: string
+ *   - bmwToken: string
+ *   - callback: callable
+ *   + __construct(noteStr: string, callback: callable)
+ *   + set(field: string, value: mixed, enforce_only_native_vars: bool)
+ *   + setLyrics(lyrics: string)
+ *   + getLyrics(): string
+ *   + setCanntaireachd(cannt: string)
+ *   + getCanntaireachd(): string
+ *   + setSolfege(solfege: string)
+ *   + getSolfege(): string
+ *   + setBmwToken(bmw: string)
+ *   + getBmwToken(): string
+ *   + renderLyrics(): string
+ *   + renderCanntaireachd(): string
+ *   + renderSolfege(): string
+ *   + get_body_out(): string
+ * }
+ * AbcNote --|> Origin
+ * AbcNote <|-- NoteParserTrait
+ * @enduml
+ */
 
 class AbcNoteLengthException extends \Exception {
 	public function __construct($length, $noteStr = '') {
@@ -39,17 +107,67 @@ class AbcNote extends Origin
 {
 	use NoteParserTrait;
 
-	protected $pitch;    //a-gA-G
-	protected $octave;    //, or '
-	protected $sharpflat;    // =^_    null/natural/sharp/flat
-	protected $length;    //!<string    (int)(/)(int)
-	protected $decorator;    //!<string .MHTR!trill!    stacatto Legato Fermato Trill Roll
+	protected $pitch;    // a-gA-G
+	protected $octave;   // , or '
+	protected $sharpflat; // =^_ null/natural/sharp/flat
+	protected $length;   // (int)(/)(int)
+	protected $decorator; // .MHTR!trill! staccato Legato Fermato Trill Roll
 	protected $name;
 	protected $lyrics;
 	protected $canntaireachd;
 	protected $solfege;
 	protected $bmwToken;
-	protected $callback;    //Function to process this voice
+	protected $callback;
+	// ABC spec fields
+	protected $graceNotes = [];
+	protected $chordSymbol = null;
+	protected $annotations = [];
+	protected $accidentals = [];
+
+	public function __construct($noteStr, $callback = null)
+	{
+		parent::__construct();
+		$this->callback = $callback;
+		$this->parseAbcNote($noteStr);
+	}
+
+	/**
+	 * Parse an ABC note string into all ABC spec components.
+	 * @param string $noteStr
+	 */
+	protected function parseAbcNote($noteStr)
+	{
+		// Extract chord symbol: "[chord]"
+		if (preg_match('/\"([^\"]+)\"/', $noteStr, $m)) {
+			$this->chordSymbol = $m[1];
+			$noteStr = str_replace($m[0], '', $noteStr);
+		}
+		// Extract grace notes: {grace notes}
+		if (preg_match('/\{([^}]*)\}/', $noteStr, $m)) {
+			$this->graceNotes = preg_split('/\s+/', trim($m[1]));
+			$noteStr = str_replace($m[0], '', $noteStr);
+		}
+		// Extract annotations/decorations: !...! or .
+		preg_match_all('/!(.*?)!|\.|[HTR]/', $noteStr, $annots);
+		$this->annotations = $annots[0];
+		foreach ($this->annotations as $a) {
+			$noteStr = str_replace($a, '', $noteStr);
+		}
+		// Extract accidentals: = ^ _
+		preg_match_all('/[=_^]/', $noteStr, $accs);
+		$this->accidentals = $accs[0];
+		foreach ($this->accidentals as $a) {
+			$noteStr = str_replace($a, '', $noteStr);
+		}
+		// Parse remaining note string
+		$parsed = self::parseNote($noteStr);
+		$this->set("pitch", $parsed['pitch']);
+		$this->set("octave", $parsed['octave']);
+		$this->set("sharpflat", $parsed['sharpflat']);
+		$this->set("length", $parsed['length']);
+		$this->set("decorator", $parsed['decorator']);
+	}
+
 	public function setBmwToken($bmw) {
 		$this->bmwToken = $bmw;
 	}
@@ -83,18 +201,6 @@ class AbcNote extends Origin
 	}
 	public function renderSolfege() {
 		return $this->solfege ?? '';
-	}
-
-	public function __construct($noteStr, $callback = null)
-	{
-		parent::__construct();
-		$parsed = self::parseNote($noteStr);
-		$this->set("pitch", $parsed['pitch']);
-		$this->set("octave", $parsed['octave']);
-		$this->set("sharpflat", $parsed['sharpflat']);
-		$this->set("length", $parsed['length']);
-		$this->set("decorator", $parsed['decorator']);
-		$this->callback = $callback;
 	}
 
 	public function set($field, $value = null, $enforce_only_native_vars = true)
@@ -218,12 +324,24 @@ class AbcNote extends Origin
 	}
 
 	/**
-	 * Format the class variables into the Voice line in the body
+	 * Render the note as ABC, including all spec fields.
 	 * @return string
 	 */
-	function get_body_out()
+	public function get_body_out()
 	{
 		$out = "";
+		if (!empty($this->graceNotes)) {
+			$out .= "{" . implode(' ', $this->graceNotes) . "}";
+		}
+		if ($this->chordSymbol) {
+			$out .= '"' . $this->chordSymbol . '"';
+		}
+		foreach ($this->annotations as $a) {
+			$out .= $a;
+		}
+		foreach ($this->accidentals as $a) {
+			$out .= $a;
+		}
 		if (isset($this->decorator) && $this->decorator !== "") {
 			$out .= $this->decorator;
 		}

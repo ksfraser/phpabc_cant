@@ -1,8 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Decorator;
 
-class ShortPhraseDecorator {
-    public function render() {
-        return '!ShortPhrase!';
-    }
+class ShortPhraseDecorator extends BaseDecorator {
+    protected static $latinName = 'ShortPhrase';
+    protected static $shortcuts = ['!shortphrase!', 'sp'];
 }

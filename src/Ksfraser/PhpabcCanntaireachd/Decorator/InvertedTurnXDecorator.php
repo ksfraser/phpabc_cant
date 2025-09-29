@@ -1,8 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Decorator;
 
-class InvertedTurnXDecorator {
-    public function render() {
-        return '!InvertedTurnX!';
-    }
+class InvertedTurnXDecorator extends BaseDecorator {
+    protected static $latinName = 'InvertedTurnX';
+    protected static $shortcuts = ['!invertedturnx!', 'itx'];
 }

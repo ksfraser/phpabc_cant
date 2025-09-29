@@ -1,8 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Decorator;
 
-class TenutoDecorator {
-    public function render() {
-        return '!Tenuto!';
-    }
+class TenutoDecorator extends BaseDecorator {
+    protected static $latinName = 'Tenuto';
+    protected static $shortcuts = ['!tenuto!', '-'];
 }

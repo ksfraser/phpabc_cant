@@ -1,8 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Decorator;
 
-class TurnxDecorator {
-    public function render() {
-        return '!Turnx!';
-    }
+class TurnxDecorator extends BaseDecorator {
+    protected static $latinName = 'Turnx';
+    protected static $shortcuts = ['!turnx!', 'tx'];
 }

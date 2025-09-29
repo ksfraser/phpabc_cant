@@ -1,8 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Decorator;
 
-class FermataDecorator {
-    public function render() {
-        return '!Fermata!';
-    }
+class FermataDecorator extends BaseDecorator {
+    protected static $latinName = 'Fermata';
+    protected static $shortcuts = ['!fermata!', '^'];
 }

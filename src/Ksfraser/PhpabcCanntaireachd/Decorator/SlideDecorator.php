@@ -1,8 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Decorator;
 
-class SlideDecorator {
-    public function render() {
-        return '!Slide!';
-    }
+class SlideDecorator extends BaseDecorator {
+    protected static $latinName = 'Slide';
+    protected static $shortcuts = ['!slide!', '/'];
 }

@@ -1,5 +1,72 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Tune;
+/**
+ * Class AbcTune
+ *
+ * Represents a parsed ABC tune, including headers, voices, bars, and rendering logic.
+ * Supports header management, voice assignment, MIDI instrument mapping, and body line parsing via handler classes.
+ *
+ * SOLID: Single Responsibility (tune model), Dependency Injection (configurable options), DRY (delegates to handlers).
+ *
+ * @package Ksfraser\PhpabcCanntaireachd\Tune
+ *
+ * @property array $headers Array of header objects
+ * @property array $voices Array of voice metadata
+ * @property array $voiceBars Per-voice array of AbcBar objects
+ * @property int $interleaveWidth Number of bars per interleave block
+ * @property bool $renderSolfege Render solfege for non-bagpipe voices
+ *
+ * @method renderSelf(): string Render this tune as an ABC string
+ * @method setInterleaveWidth(int $width) Set interleave width
+ * @method setRenderSolfege(bool $render) Set solfege rendering
+ * @method parseBodyLines(array $lines) Parse body lines using handler classes
+ * @method fixVoiceHeaders(): string Fix missing name/sname in V: header lines
+ * @method addHeader(string $key, $value) Add header object
+ * @method replaceHeader(string $key, $value) Replace header object
+ * @method getHeaders(): array Get all header objects
+ * @method getLines(): array Get all subitems/lines
+ * @method getVoiceBars(): array Get all voice bars
+ * @method copyVoice(string $from, string $to): void Copy voice bars
+ * @method ensureVoiceInsertedFirst(string $voiceId, array $bars): void Prepend voice bars
+ * @method addVoiceHeader(string $voiceId, ?string $name, ?string $sname): void Add voice header
+ * @method updateVoiceNamesFromMidi() Replace generic voice names with MIDI instrument names
+ *
+ * @uml
+ * @startuml
+ * class AbcTune {
+ *   - headers: array
+ *   - voices: array
+ *   - voiceBars: array
+ *   - interleaveWidth: int
+ *   - renderSolfege: bool
+ *   + renderSelf(): string
+ *   + setInterleaveWidth(width: int)
+ *   + setRenderSolfege(render: bool)
+ *   + parseBodyLines(lines: array)
+ *   + fixVoiceHeaders(): string
+ *   + addHeader(key: string, value)
+ *   + replaceHeader(key: string, value)
+ *   + getHeaders(): array
+ *   + getLines(): array
+ *   + getVoiceBars(): array
+ *   + copyVoice(from: string, to: string)
+ *   + ensureVoiceInsertedFirst(voiceId: string, bars: array)
+ *   + addVoiceHeader(voiceId: string, name: string, sname: string)
+ *   + updateVoiceNamesFromMidi()
+ * }
+ * AbcTune --|> AbcItem
+ * AbcTune --> AbcBar
+ * AbcTune --> AbcHeaderX
+ * AbcTune --> AbcHeaderT
+ * AbcTune --> AbcHeaderC
+ * AbcTune --> AbcHeaderB
+ * AbcTune --> AbcHeaderM
+ * AbcTune --> AbcHeaderL
+ * AbcTune --> AbcHeaderGeneric
+ * AbcTune --> MidiInstrumentMapper
+ * AbcTune --> BodyLineHandler
+ * @enduml
+ */
 
 use Ksfraser\PhpabcCanntaireachd\AbcItem;
 use Ksfraser\PhpabcCanntaireachd\Midi\MidiInstrumentMapper;

@@ -1,8 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Decorator;
 
-class SnapDecorator {
-    public function render() {
-        return '!Snap!';
-    }
+class SnapDecorator extends BaseDecorator {
+    protected static $latinName = 'Snap';
+    protected static $shortcuts = ['!snap!', 's'];
 }

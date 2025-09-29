@@ -1,8 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Decorator;
 
-class UpbowDecorator {
-    public function render() {
-        return '!Upbow!';
-    }
+class UpbowDecorator extends BaseDecorator {
+    protected static $latinName = 'Upbow';
+    protected static $shortcuts = ['!upbow!', 'u'];
 }

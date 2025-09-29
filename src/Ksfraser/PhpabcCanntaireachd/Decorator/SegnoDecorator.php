@@ -1,8 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Decorator;
 
-class SegnoDecorator {
-    public function render() {
-        return '!Segno!';
-    }
+class SegnoDecorator extends BaseDecorator {
+    protected static $latinName = 'Segno';
+    protected static $shortcuts = ['!segno!', 'S'];
 }

@@ -1,8 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Decorator;
 
-class LongPhraseDecorator {
-    public function render() {
-        return '!LongPhrase!';
-    }
+class LongPhraseDecorator extends BaseDecorator {
+    protected static $latinName = 'LongPhrase';
+    protected static $shortcuts = ['!longphrase!', 'lp'];
 }

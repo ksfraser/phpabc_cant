@@ -1,8 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Decorator;
 
-class TremoloDecorator {
-    public function render() {
-        return '!Tremolo!';
-    }
+class TremoloDecorator extends BaseDecorator {
+    protected static $latinName = 'Tremolo';
+    protected static $shortcuts = ['!tremolo!', 't'];
 }

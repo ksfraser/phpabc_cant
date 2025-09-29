@@ -2,15 +2,74 @@
 namespace Ksfraser\PhpabcCanntaireachd\Tune;
 
 /**
- * Represents a bar in ABC notation, with notes, lyrics, and canntaireachd.
+ * Class AbcBar
+ *
+ * Represents a bar in ABC notation, containing notes, lyrics, canntaireachd, and solfege.
+ * Handles parsing of bar content, note management, and rendering for output.
+ *
+ * SOLID: Single Responsibility (bar model), DRY (delegates note/lyric/canntaireachd rendering).
+ *
+ * @package Ksfraser\PhpabcCanntaireachd\Tune
+ *
+ * @property int $number Bar number
+ * @property \Ksfraser\PhpabcCanntaireachd\Render\BarLineRenderer $barLineRenderer Bar line renderer instance
+ * @property \Ksfraser\PhpabcCanntaireachd\AbcNote[] $notes Notes in this bar
+ * @property string|null $lyrics Lyrics for this bar
+ * @property string|null $canntaireachd Canntaireachd for this bar (bagpipe voice only)
+ * @property string|null $solfege Do-re-mi for this bar (other voices)
+ * @property string|null $contentText Raw content string when created from parser without parsing notes
+ *
+ * @method __construct(int|string $numberOrText, string $barLine)
+ * @method addNote(string $noteStr, string|null $lyrics, string|null $canntaireachd, string|null $solfege)
+ * @method setLyrics(string $lyrics)
+ * @method setCanntaireachd(string $cannt)
+ * @method setSolfege(string $solfege)
+ * @method renderBarLine(): string
+ * @method renderNotes(): string
+ * @method renderLyrics(): string
+ * @method getCanntaireachd(): string
+ * @method renderCanntaireachd(): string
+ * @method renderSolfege(): string
+ * @method renderSelf(): string
+ *
+ * @uml
+ * @startuml
+ * class AbcBar {
+ *   - number: int
+ *   - barLineRenderer: BarLineRenderer
+ *   - notes: AbcNote[]
+ *   - lyrics: string
+ *   - canntaireachd: string
+ *   - solfege: string
+ *   - contentText: string
+ *   + __construct(numberOrText: int|string, barLine: string)
+ *   + addNote(noteStr: string, lyrics: string, canntaireachd: string, solfege: string)
+ *   + setLyrics(lyrics: string)
+ *   + setCanntaireachd(cannt: string)
+ *   + setSolfege(solfege: string)
+ *   + renderBarLine(): string
+ *   + renderNotes(): string
+ *   + renderLyrics(): string
+ *   + getCanntaireachd(): string
+ *   + renderCanntaireachd(): string
+ *   + renderSolfege(): string
+use Ksfraser\PhpabcCanntaireachd\AbcItem;
+use Ksfraser\PhpabcCanntaireachd\AbcNote;
+use Ksfraser\PhpabcCanntaireachd\Render\BarLineRenderer;
+ *   + renderSelf(): string
+ * }
+ * AbcBar --|> AbcItem
+ * AbcBar --> AbcNote
+ * AbcBar --> BarLineRenderer
+ * @enduml
  */
-class AbcBar extends AbcItem
+class AbcBar extends \Ksfraser\PhpabcCanntaireachd\AbcItem
 {
     /** @var int Bar number */
     public $number;
-    /** @var BarLineRenderer Bar line renderer instance */
+    /** @var \Ksfraser\PhpabcCanntaireachd\Render\BarLineRenderer Bar line renderer instance */
     public $barLineRenderer;
-    /** @var AbcNote[] Notes in this bar */
+    /** @var \Ksfraser\PhpabcCanntaireachd\AbcNote[] Notes in this bar */
     public $notes = [];
     /** @var string|null Lyrics for this bar */
     public $lyrics = null;
@@ -74,7 +133,7 @@ class AbcBar extends AbcItem
 
     public function addNote($noteStr, $lyrics = null, $canntaireachd = null, $solfege = null)
     {
-        $note = new AbcNote($noteStr);
+    $note = new \Ksfraser\PhpabcCanntaireachd\AbcNote($noteStr);
         if ($lyrics !== null) $note->setLyrics($lyrics);
         if ($canntaireachd !== null) $note->setCanntaireachd($canntaireachd);
         if ($solfege !== null) $note->setSolfege($solfege);

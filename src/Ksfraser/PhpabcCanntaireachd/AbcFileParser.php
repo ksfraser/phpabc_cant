@@ -1,9 +1,42 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd;
 /**
+ * Class AbcFileParser
+ *
  * Parses ABC files into AbcTune objects, handling multiple tunes per file.
+ * Applies header defaults, supports configurable parsing policies, and delegates line parsing to specialized parsers.
+ *
+ * SOLID: Single Responsibility (parsing files into tunes), Dependency Injection (configurable policies), DRY (delegates to parsers).
+ *
+ * @package Ksfraser\PhpabcCanntaireachd
+ *
+ * @property string $singleHeaderPolicy Policy for single-value header fields ('first' or 'last')
+ * @property bool $updateVoiceNamesFromMidi Whether to update voice names from MIDI program info
+ *
+ * @method __construct(array $config) Constructor with DI for config
+ * @method array parse(string $abcContent) Parse ABC file content into array of AbcTune objects
+ *
+ * @uml
+ * @startuml
+ * class AbcFileParser {
+ *   - singleHeaderPolicy: string
+ *   - updateVoiceNamesFromMidi: bool
+ *   + __construct(config: array)
+ *   + parse(abcContent: string): AbcTune[]
+ * }
+ * AbcFileParser --> AbcTune
+ * AbcFileParser --> HeaderParser
+ * AbcFileParser --> FormattingParser
+ * AbcFileParser --> MidiParser
+ * AbcFileParser --> CommentParser
+ * AbcFileParser --> BodyParser
+ * @enduml
  */
+
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderAll;
+use Ksfraser\PhpabcCanntaireachd\Tune\AbcTune;
+use Ksfraser\PhpabcCanntaireachd\Tune\AbcBar;
+use Ksfraser\PhpabcCanntaireachd\Midi\MidiParser;
 
 class AbcFileParser {
     /**

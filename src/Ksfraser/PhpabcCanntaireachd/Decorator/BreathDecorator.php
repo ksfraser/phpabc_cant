@@ -1,8 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Decorator;
 
-class BreathDecorator {
-    public function render() {
-        return '!Breath!';
-    }
+class BreathDecorator extends BaseDecorator {
+    protected static $latinName = 'Breath';
+    protected static $shortcuts = ['!breath!', ','];
 }

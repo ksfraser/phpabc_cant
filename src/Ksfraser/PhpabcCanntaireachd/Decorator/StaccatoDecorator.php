@@ -1,8 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Decorator;
 
-class StaccatoDecorator {
-    public function render() {
-        return '!Staccato!';
-    }
+class StaccatoDecorator extends BaseDecorator {
+    protected static $latinName = 'Staccato';
+    protected static $shortcuts = ['.', '!staccato!'];
 }

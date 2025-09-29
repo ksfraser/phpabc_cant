@@ -1,5 +1,30 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd;
+/**
+ * Class CanntGenerator
+ *
+ * Generates canntaireachd lyrics for ABC note bodies using a token dictionary.
+ * Supports legacy dictionary loading and robust token matching for bagpipe voice conversion.
+ *
+ * SOLID: Single Responsibility (canntaireachd generation), DI (dictionary injection), DRY (token matching logic).
+ *
+ * @package Ksfraser\PhpabcCanntaireachd
+ *
+ * @property TokenDictionary $dict Token dictionary for ABC-to-canntaireachd conversion
+ *
+ * @method __construct(TokenDictionary|null $dict) Inject or load token dictionary
+ * @method generateForNotes(string $noteBody): string Generate canntaireachd lyrics for ABC note body
+ *
+ * @uml
+ * @startuml
+ * class CanntGenerator {
+ *   - dict: TokenDictionary
+ *   + __construct(dict: TokenDictionary)
+ *   + generateForNotes(noteBody: string): string
+ * }
+ * CanntGenerator --> TokenDictionary
+ * @enduml
+ */
 
 class CanntGenerator {
     protected $dict;

@@ -1,8 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Decorator;
 
-class OpenDecorator {
-    public function render() {
-        return '!Open!';
-    }
+class OpenDecorator extends BaseDecorator {
+    protected static $latinName = 'Open';
+    protected static $shortcuts = ['!open!', 'o'];
 }

@@ -1,8 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Decorator;
 
-class EmphasisDecorator {
-    public function render() {
-        return '!Emphasis!';
-    }
+class EmphasisDecorator extends BaseDecorator {
+    protected static $latinName = 'Emphasis';
+    protected static $shortcuts = ['!emphasis!', 'em'];
 }

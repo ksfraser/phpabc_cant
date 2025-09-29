@@ -1,8 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Decorator;
 
-class ArpeggioDecorator {
-    public function render() {
-        return '!Arpeggio!';
-    }
+class ArpeggioDecorator extends BaseDecorator {
+    protected static $latinName = 'Arpeggio';
+    protected static $shortcuts = ['!arpeggio!', '~'];
 }

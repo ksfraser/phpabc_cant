@@ -1,8 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Decorator;
 
-class DiminuendoDecorator {
-    public function render() {
-        return '!Diminuendo!';
-    }
+class DiminuendoDecorator extends BaseDecorator {
+    protected static $latinName = 'Diminuendo';
+    protected static $shortcuts = ['!diminuendo!', '>'];
 }

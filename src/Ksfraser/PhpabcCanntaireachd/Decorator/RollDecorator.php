@@ -1,8 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Decorator;
 
-class RollDecorator {
-    public function render() {
-        return '!Roll!';
-    }
+class RollDecorator extends BaseDecorator {
+    protected static $latinName = 'Roll';
+    protected static $shortcuts = ['!roll!', 'r'];
 }

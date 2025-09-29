@@ -1,8 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Decorator;
 
-class CaCodaDecorator {
-    public function render() {
-        return '!CaCoda!';
-    }
+class CaCodaDecorator extends BaseDecorator {
+    protected static $latinName = 'CaCoda';
+    protected static $shortcuts = ['!cacoda!', 'cc'];
 }

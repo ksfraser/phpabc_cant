@@ -1,8 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Decorator;
 
-class PrallTrillerDecorator {
-    public function render() {
-        return '!PrallTriller!';
-    }
+class PrallTrillerDecorator extends BaseDecorator {
+    protected static $latinName = 'PrallTriller';
+    protected static $shortcuts = ['!pralltriller!', 'pt'];
 }
