@@ -21,8 +21,11 @@ class RedefinableSymbol {
         $this->shortcut = $shortcut;
         $this->name = $name;
     }
+    public function getName() {
+        return $this->name;
+    }
     public static function getType() { return 'redefinable_symbol'; }
-    public static function getName() { return 'redefinable_symbol'; }
+    public static function getStaticName() { return 'redefinable_symbol'; }
     public function getShortcut() { return $this->shortcut; }
     public static function fromUserDefinition($shortcut, $name) {
         return new self($shortcut, $name);

@@ -40,6 +40,33 @@ use Ksfraser\PhpabcCanntaireachd\Midi\MidiParser;
 
 class AbcFileParser {
     /**
+     * Recursively parse ABC file content into tunes, voices, bars, and notes.
+     * @param string $abcContent
+     * @return AbcTune[]
+     */
+    /**
+     * @param string $abcContent
+     * @return array AbcTune[]
+     */
+    public function parseRecursive($abcContent) {
+        $lines = preg_split('/\r?\n/', $abcContent);
+        $tunes = [];
+        $currentTune = null;
+        foreach ($lines as $idx => $line) {
+            if (preg_match('/^X:/', $line)) {
+                if ($currentTune) $tunes[] = $currentTune;
+                $currentTune = new \Ksfraser\PhpabcCanntaireachd\Tune\AbcTune();
+                $currentTune->addHeader('X', substr($line, 2));
+                continue;
+            }
+            if (!$currentTune) continue;
+            if (trim($line) === '') continue;
+            $currentTune->parseLineRecursive($line);
+        }
+        if ($currentTune) $tunes[] = $currentTune;
+        return $tunes;
+    }
+    /**
      * Config: 'first' or 'last' for single-value header fields
      */
     protected $singleHeaderPolicy = 'last';
@@ -53,7 +80,6 @@ class AbcFileParser {
      * @var HeaderParser
      */
     protected $headerParser;
-
     /**
      * @var FormattingParser
      */
@@ -102,85 +128,30 @@ class AbcFileParser {
      * @param string $abcContent
      * @return AbcTune[]
      */
-    public function parse($abcContent): array {
+    /**
+     * @param string $abcContent
+     * @return array AbcTune[]
+     */
+    public function parse($abcContent) {
         $lines = preg_split('/\r?\n/', $abcContent);
-        $tunes = [];
-        $currentTune = null;
-        
-        foreach ($lines as $idx => $line) {
-            // Special handling for X: lines that start new tunes
-            if (preg_match('/^X:/', $line)) {
-                // Ensure blank line before X: header
-                if ($idx > 0 && trim($lines[$idx-1]) !== '') {
-                    if ($currentTune) $tunes[] = $currentTune;
-                    $currentTune = null;
-                }
-                if ($currentTune) $tunes[] = $currentTune;
-                $currentTune = new AbcTune();
-                $currentTune->addHeader('X', substr($line, 2));
-                continue; // Skip further processing of this line
+        $tuneBlocks = [];
+        $currentBlock = [];
+        foreach ($lines as $line) {
+            // Start of new tune (X: field)
+            if (preg_match('/^X:/', $line) && count($currentBlock) > 0) {
+                $tuneBlocks[] = implode("\n", $currentBlock);
+                $currentBlock = [];
             }
-            
-            if (!$currentTune) {
-                continue;
-            }
-            
-            // Skip blank lines
-            if (trim($line) === '') {
-                continue;
-            }
-            
-            // Special handling for V: lines (preserve original behavior)
-            if ($currentTune && preg_match('/^V:/', $line)) {
-                // Always preserve V: header line
-                $abcLine = new AbcLine();
-                $abcLine->setHeaderLine($line);
-                $currentTune->add($abcLine);
-                continue; // Skip further parser processing
-            }
-            
-            // Try each parser in order
-            $parsed = false;
-            $valid = true;
-            $parsers = [
-                $this->headerParser,
-                $this->formattingParser,
-                $this->midiParser,
-                $this->commentParser,
-                $this->bodyParser
-            ];
-            foreach ($parsers as $parser) {
-                if ($parser->canParse($line)) {
-                    $parsed = $parser->parse($line, $currentTune);
-                    $valid = $parser->validate($line);
-                    if ($parsed) {
-                        break;
-                    }
-                }
-            }
-            
-            // If parsing failed or line is invalid, add as body line (fallback)
-            if (!$parsed) {
-                $abcLine = new AbcLine();
-                foreach (preg_split('/\|/', $line) as $barText) {
-                    $barText = trim($barText);
-                    if ($barText !== '') {
-                        $abcLine->add(new AbcBar($barText));
-                    }
-                }
-                $currentTune->add($abcLine);
-                // For fallback body lines, validate using BodyParser
-                $bodyParser = new BodyParser();
-                $valid = $bodyParser->validate($line);
-            }
-            
-            // Store validation result for later use
-            if (!$valid) {
-                // Could store validation errors here for reporting
-            }
+            $currentBlock[] = $line;
         }
-        
-        if ($currentTune) $tunes[] = $currentTune;
+        if (count($currentBlock) > 0) {
+            $tuneBlocks[] = implode("\n", $currentBlock);
+        }
+        $tunes = [];
+        foreach ($tuneBlocks as $tuneText) {
+            $tune = AbcTune::parse($tuneText);
+            if ($tune) $tunes[] = $tune;
+        }
         // Centralized header defaults loader
         $headerDefaults = \Ksfraser\PhpabcCanntaireachd\HeaderDefaults::getDefaults();
         // Fill missing header fields with defaults

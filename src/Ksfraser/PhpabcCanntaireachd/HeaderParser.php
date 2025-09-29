@@ -11,11 +11,20 @@ class HeaderParser implements AbcLineParser {
         $this->singleHeaderPolicy = $singleHeaderPolicy;
     }
 
-    public function canParse(string $line): bool {
+    /**
+     * @param string $line
+     * @return bool
+     */
+    public function canParse($line) {
         return preg_match('/^([A-Z]):(.*)/', trim($line)) && !preg_match('/^X:/', trim($line));
     }
 
-    public function parse(string $line, AbcTune $tune): bool {
+    /**
+     * @param string $line
+    * @param \Ksfraser\PhpabcCanntaireachd\Tune\AbcTune $tune
+     * @return bool
+     */
+    public function parse($line, $tune) {
         if (!preg_match('/^([A-Z]):(.*)/', trim($line), $matches)) {
             return false;
         }
@@ -46,7 +55,11 @@ class HeaderParser implements AbcLineParser {
         return true;
     }
     
-    public function validate(string $line): bool {
+    /**
+     * @param string $line
+     * @return bool
+     */
+    public function validate($line) {
         // Header lines are valid if they match the expected format
         return preg_match('/^([A-Z]):(.*)/', trim($line)) && !preg_match('/^X:/', trim($line));
     }

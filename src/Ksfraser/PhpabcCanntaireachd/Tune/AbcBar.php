@@ -65,6 +65,38 @@ use Ksfraser\PhpabcCanntaireachd\Render\BarLineRenderer;
  */
 class AbcBar extends \Ksfraser\PhpabcCanntaireachd\AbcItem
 {
+    /**
+     * Parse a bar text into an AbcBar object (recursive descent entry point).
+     * @param string $barText
+     * @return AbcBar
+     */
+    public static function parse($barText, $context = [])
+    {
+        $bar = new self($barText, '');
+        $ctxMgr = new \Ksfraser\PhpabcCanntaireachd\ContextManager($context);
+        $bar->parseBarRecursive($barText, $ctxMgr);
+        return $bar;
+    }
+    /**
+     * Recursively parse bar content into notes.
+     * @param string $barText
+     */
+    public function parseBarRecursive($barText, $ctxMgr)
+    {
+        $clean = trim($barText);
+        $clean = preg_replace('/^[|:\s]+|[|:\s]+$/', '', $clean);
+        if ($clean === '') return;
+        $tokens = preg_split('/\s+/', $clean);
+        foreach ($tokens as $tok) {
+            $tok = trim($tok);
+            if ($tok === '') continue;
+            // Apply context changes
+            if ($ctxMgr->applyToken($tok)) continue;
+            // Pass current context to note
+            $note = new \Ksfraser\PhpabcCanntaireachd\AbcNote($tok, $ctxMgr->getAll());
+            $this->notes[] = $note;
+        }
+    }
     /** @var int Bar number */
     public $number;
     /** @var \Ksfraser\PhpabcCanntaireachd\Render\BarLineRenderer Bar line renderer instance */
@@ -100,9 +132,7 @@ class AbcBar extends \Ksfraser\PhpabcCanntaireachd\AbcItem
     protected function parseContentNotes(string $text): void
     {
         // Strip leading/trailing barline characters and repeat markers
-        $clean = trim($text);
-        $clean = preg_replace('/^[|:\s]+|[|:\s]+$/', '', $clean);
-        if ($clean === '') return;
+        $clean = preg_replace('/^[|:\s]+|[|:\s]+$/', '', trim($text));
         // Split on whitespace to tokens (simple heuristic)
         $tokens = preg_split('/\s+/', $clean);
         foreach ($tokens as $tok) {

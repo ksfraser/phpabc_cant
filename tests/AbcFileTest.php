@@ -20,7 +20,7 @@ class AbcFileTest extends TestCase {
         $this->assertNull($composer);
     }
     public function testCanInstantiate() {
-        $obj = new AbcFile();
+        $obj = new AbcFile("");
         $this->assertInstanceOf(AbcFile::class, $obj);
     }
 }

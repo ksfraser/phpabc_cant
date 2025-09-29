@@ -75,6 +75,12 @@ use Ksfraser\origin\Origin;
 
 class AbcNote extends Origin
 {
+	public function getPitch() {
+		return $this->pitch;
+	}
+	public function getDecorator() {
+		return $this->decorator;
+	}
 	public static $shortcutLookup = null;
 	use NoteParserTrait;
 	// Properties
@@ -107,14 +113,45 @@ class AbcNote extends Origin
 		$noteParser = new \Ksfraser\PhpabcCanntaireachd\Parser\NoteParser();
 		$octaveParser = new \Ksfraser\PhpabcCanntaireachd\Parser\OctaveParser();
 		$lengthParser = new \Ksfraser\PhpabcCanntaireachd\Parser\NoteLengthParser();
+	$typesettingSpaceParser = new \Ksfraser\PhpabcCanntaireachd\Parser\TypesettingSpaceParser();
+	$redefinableSymbolParser = new \Ksfraser\PhpabcCanntaireachd\Parser\RedefinableSymbolParser();
 
 		// Load gotchas (ambiguous shortcuts)
 		$gotchas = \Ksfraser\PhpabcCanntaireachd\NoteElementLoader::getGotchas();
 
+		// EasyABC-inspired: sequential token parsing
+		$decoratorMap = \Ksfraser\PhpabcCanntaireachd\Decorator\DecoratorLoader::getDecoratorMap();
+		$originalStr = $noteStr;
+	error_log("Initial noteStr: $noteStr");
+	if (defined('PHPABC_VERBOSE') && PHPABC_VERBOSE) echo "Initial noteStr: $noteStr\n";
+		// 1. Remove decorator shortcuts at the start
+		foreach (array_keys($decoratorMap) as $shortcut) {
+			if (strpos($noteStr, $shortcut) === 0) {
+				$noteStr = substr($noteStr, strlen($shortcut));
+				$this->decorator = $shortcut;
+				break;
+			}
+		}
+	error_log("After decorator strip: $noteStr");
+	if (defined('PHPABC_VERBOSE') && PHPABC_VERBOSE) echo "After decorator strip: $noteStr\n";
+		// 2. Remove accidentals (=, ^, _)
+		$noteStr = preg_replace('/^[=_^]+/', '', $noteStr);
+	error_log("After accidental strip: $noteStr");
+	if (defined('PHPABC_VERBOSE') && PHPABC_VERBOSE) echo "After accidental strip: $noteStr\n";
+		// 3. Remove gracenotes (e.g., {g})
+		$noteStr = preg_replace('/^\{[^}]*\}/', '', $noteStr);
+	error_log("After gracenote strip: $noteStr");
+	if (defined('PHPABC_VERBOSE') && PHPABC_VERBOSE) echo "After gracenote strip: $noteStr\n";
+		// 4. Remove annotations (!...!) at the start
+		if (preg_match('/^!(.*?)!/', $noteStr, $m)) {
+			$noteStr = substr($noteStr, strlen($m[0]));
+		}
+	error_log("After annotation strip: $noteStr");
+	if (defined('PHPABC_VERBOSE') && PHPABC_VERBOSE) echo "After annotation strip: $noteStr\n";
 		// 1. Chord symbol
 		$this->chordSymbol = $chordParser->parse($noteStr);
 		if ($this->chordSymbol !== null) {
-			$noteStr = preg_replace('/"[^\"]+"/', '', $noteStr);
+			$noteStr = preg_replace('/"[^"]+"/', '', $noteStr);
 		}
 		// 2. Grace notes
 		$this->graceNotes = $graceParser->parse($noteStr);
@@ -136,28 +173,50 @@ class AbcNote extends Origin
 			}
 		}
 
+	// 5. Typesetting space
+	$this->typesettingSpace = $typesettingSpaceParser->parse($noteStr);
+	// 6. Redefinable symbol
+	$this->redefinableSymbol = $redefinableSymbolParser->parse($noteStr);
+
 		// Ambiguity resolution: check for gotchas in noteStr
 		foreach ($gotchas as $shortcut => $types) {
 			$pos = strpos($noteStr, $shortcut);
 			if ($pos !== false) {
-				// Find pitch position
 				$pitchPos = preg_match('/[a-gA-GzZ]/', $noteStr, $m, PREG_OFFSET_CAPTURE) ? $m[0][1] : -1;
-				// If shortcut is before pitch, likely decorator; after, likely note element
-				// (This is a simplification; more context-aware logic can be added)
-				// Optionally log or store ambiguity for diagnostics
+				$resolvedType = null;
+				if ($pitchPos !== -1) {
+					if ($pos < $pitchPos) {
+						// Shortcut before pitch: likely decorator
+						$resolvedType = in_array('decorator', $types) ? 'decorator' : $types[0];
+					} else {
+						// Shortcut after pitch: likely note element
+						$nonDecoratorTypes = array_filter($types, function($t) { return $t !== 'decorator'; });
+						$resolvedType = !empty($nonDecoratorTypes) ? reset($nonDecoratorTypes) : $types[0];
+					}
+				} else {
+					// No pitch found, cannot resolve
+					$resolvedType = $types[0];
+				}
+				// Instantiate or log ambiguity
+				if ($resolvedType) {
+					// Optionally instantiate or mark element type here
+					// Example: $this->ambiguousElements[$shortcut] = $resolvedType;
+				} else {
+					error_log("Ambiguity unresolved for shortcut '$shortcut' in noteStr '$noteStr' (types: " . implode(',', $types) . ")");
+				}
 			}
 		}
 
-		// 5. Pitch (split point)
+		// 13. Pitch (split point)
 		$pitch = $noteParser->parse($noteStr);
 		$this->set("pitch", $pitch);
-		// 6. Octave (after pitch)
+		// 14. Octave (after pitch)
 		$octave = $octaveParser->parse($noteStr);
 		$this->set("octave", $octave);
-		// 7. Note length (after pitch/octave)
+		// 15. Note length (after pitch/octave)
 		$length = $lengthParser->parse($noteStr);
 		$this->set("length", $length);
-		// 8. Decorator (legacy, for compatibility)
+		// 16. Decorator (legacy, for compatibility)
 		$decorator = '';
 		if (!empty($this->annotations)) {
 			$decorator = implode('', $this->annotations);

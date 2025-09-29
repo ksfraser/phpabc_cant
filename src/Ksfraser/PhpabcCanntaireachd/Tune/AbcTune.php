@@ -81,8 +81,126 @@ use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderGeneric;
 
 class AbcTune extends AbcItem {
     /**
-     * Render this tune as an ABC string (stub implementation)
+     * Parse a block of ABC text into an AbcTune object (recursive descent entry point).
+     * @param string $abcText
+     * @return AbcTune|null
      */
+    public static function parse($abcText)
+    {
+                $lines = preg_split('/\r?\n/', $abcText);
+                $tune = new self();
+                $headerDone = false;
+                $headerLines = [];
+                $bodyLines = [];
+                // Split header and body
+                foreach ($lines as $line) {
+                    $trimmed = trim($line);
+                    if (!$headerDone && ($trimmed === '' || preg_match('/^[A-Z]:/', $trimmed))) {
+                        $headerLines[] = $line;
+                        if ($trimmed !== '' && preg_match('/^K:/', $trimmed)) {
+                            $headerDone = true;
+                        }
+                    } else {
+                        $bodyLines[] = $line;
+                    }
+                }
+                // Parse header fields
+                foreach ($headerLines as $line) {
+                    if (preg_match('/^([A-Z]):(.*)$/', trim($line), $m)) {
+                        $key = $m[1];
+                        $value = $m[2];
+                        $tune->addHeader($key, $value);
+                    }
+                }
+                // Initial context from headers
+                $initialContext = [
+                    'voice' => null,
+                    'key' => $tune->headers['K']->get() ?? null,
+                    'meter' => $tune->headers['M']->get() ?? null,
+                    'length' => $tune->headers['L']->get() ?? null,
+                ];
+                $ctxMgr = new \Ksfraser\PhpabcCanntaireachd\ContextManager($initialContext);
+                $voiceBlocks = [];
+                $currentVoiceId = null;
+                $currentVoiceLines = [];
+                foreach ($bodyLines as $line) {
+                    $trimmed = trim($line);
+                    // Apply context changes
+                    $ctxMgr->applyToken($trimmed);
+                    // Voice change
+                    if (preg_match('/^(?:\[)?V:([^\s\]]+)(?:\])?/', $trimmed, $m)) {
+                        if ($currentVoiceId && count($currentVoiceLines) > 0) {
+                            $voiceBlocks[$currentVoiceId] = $currentVoiceLines;
+                        }
+                        $currentVoiceId = $m[1];
+                        $currentVoiceLines = [$line];
+                        continue;
+                    }
+                    if ($currentVoiceId) {
+                        $currentVoiceLines[] = $line;
+                    }
+                }
+                if ($currentVoiceId && count($currentVoiceLines) > 0) {
+                    $voiceBlocks[$currentVoiceId] = $currentVoiceLines;
+                }
+                // If no V: lines, treat as single default voice
+                if (empty($voiceBlocks)) {
+                    $voiceBlocks['default'] = $bodyLines;
+                }
+                $tune->voiceBars = [];
+                foreach ($voiceBlocks as $voiceId => $voiceLines) {
+                    $voice = \Ksfraser\PhpabcCanntaireachd\AbcVoice::parse($voiceLines, $voiceId, $ctxMgr->getAll());
+                    $tune->voiceBars[$voiceId] = $voice->bars;
+                }
+                return $tune;
+            }
+    protected $currentVoice = null;
+    /**
+     * Recursively parse a line into voices and bars.
+     * @param string $line
+     */
+    public function parseLineRecursive($line) {
+        // Voice change
+        if (preg_match('/^(?:\[)?V:([^\s\]]+)(?:\])?/', trim($line), $m)) {
+            $voiceId = $m[1];
+            if (!isset($this->voiceBars[$voiceId])) {
+                $this->voiceBars[$voiceId] = [];
+            }
+            $this->currentVoice = $voiceId;
+            return;
+        }
+        // If no voice, create default
+        if (!isset($this->currentVoice)) {
+            $this->currentVoice = 'default';
+            if (!isset($this->voiceBars[$this->currentVoice])) {
+                $this->voiceBars[$this->currentVoice] = [];
+            }
+        }
+        // Split line into bars
+        $bars = preg_split('/\|/', $line);
+        // Ensure $ctxMgr is available
+        static $ctxMgrInstance = null;
+        if ($ctxMgrInstance === null) {
+            $initialContext = [
+                'voice' => null,
+                'key' => $this->headers['K']->get() ?? null,
+                'meter' => $this->headers['M']->get() ?? null,
+                'length' => $this->headers['L']->get() ?? null,
+            ];
+            $ctxMgrInstance = new \Ksfraser\PhpabcCanntaireachd\ContextManager($initialContext);
+        }
+        foreach ($bars as $barText) {
+            $barText = trim($barText);
+            if ($barText !== '') {
+                $bar = new AbcBar($barText);
+                $bar->parseBarRecursive($barText, $ctxMgrInstance);
+                $this->voiceBars[$this->currentVoice][] = $bar;
+            }
+        }
+    }
+    /**
+     * Render this tune as an ABC string (stub implementation)
+    */
     public function renderSelf(): string {
         $out = '';
         // Render headers in defined order
@@ -269,6 +387,7 @@ class AbcTune extends AbcItem {
             $h->setLabel( $key );
             $this->headers[$key] = $h;
         }
+        // Voice change
     }
 
     public function getHeaders(): array {
