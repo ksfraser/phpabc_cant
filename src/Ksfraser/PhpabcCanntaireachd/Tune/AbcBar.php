@@ -131,9 +131,19 @@ class AbcBar extends \Ksfraser\PhpabcCanntaireachd\AbcItem
         }
     }
 
-    public function addNote($noteStr, $lyrics = null, $canntaireachd = null, $solfege = null)
+    /**
+     * @param string $noteStr
+     * @param string|null $lyrics
+     * @param string|null $canntaireachd
+     * @param string|null $solfege
+     * @param array|null $decoratorShortcutMap Dependency-injected decorator shortcut map
+     */
+    public function addNote($noteStr, $lyrics = null, $canntaireachd = null, $solfege = null, $decoratorShortcutMap = null)
     {
-    $note = new \Ksfraser\PhpabcCanntaireachd\AbcNote($noteStr);
+        if ($decoratorShortcutMap === null && method_exists($this, 'getDecoratorShortcutMap')) {
+            $decoratorShortcutMap = $this->getDecoratorShortcutMap();
+        }
+        $note = new \Ksfraser\PhpabcCanntaireachd\AbcNote($noteStr, null, $decoratorShortcutMap);
         if ($lyrics !== null) $note->setLyrics($lyrics);
         if ($canntaireachd !== null) $note->setCanntaireachd($canntaireachd);
         if ($solfege !== null) $note->setSolfege($solfege);

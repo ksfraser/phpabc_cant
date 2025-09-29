@@ -41,8 +41,29 @@ class AbcFile extends Origin
 	protected $raw;
 	protected $FileHeader;
 	protected $Body;
+	protected $decoratorShortcutMap = null;
 	public function __construct( $contents )
 	{
 		$this->raw = $contents;
+		$this->decoratorShortcutMap = $this->buildDecoratorShortcutMap();
+	}
+
+	/**
+	 * Build the decorator shortcut map once per file.
+	 */
+	protected function buildDecoratorShortcutMap() {
+		$decoratorMap = \Ksfraser\PhpabcCanntaireachd\Decorator\DecoratorLoader::getDecoratorMap();
+		$shortcutLookup = array();
+		foreach ($decoratorMap as $shortcut => $class) {
+			$shortcutLookup[strtolower($shortcut)] = $class;
+		}
+		return $shortcutLookup;
+	}
+
+	/**
+	 * Get the decorator shortcut map for dependency injection.
+	 */
+	public function getDecoratorShortcutMap() {
+		return $this->decoratorShortcutMap;
 	}
 }

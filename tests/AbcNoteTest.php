@@ -1,9 +1,22 @@
 <?php
 use PHPUnit\Framework\TestCase;
 use Ksfraser\PhpabcCanntaireachd\AbcNote;
-use Ksfraser\PhpabcCanntaireachd\AbcNoteLengthException;
+use Ksfraser\PhpabcCanntaireachd\Exceptions\AbcNoteLengthException;
 
 class AbcNoteTest extends TestCase {
+    public function testDecoratorParsingWithDI() {
+        $shortcutMap = [
+            '.' => \Ksfraser\PhpabcCanntaireachd\Decorator\StaccatoDecorator::class,
+            '!staccato!' => \Ksfraser\PhpabcCanntaireachd\Decorator\StaccatoDecorator::class
+        ];
+        $note = new AbcNote('A.', null, $shortcutMap);
+        $decorators = (new \ReflectionClass($note))->getProperty('decorators');
+        $decorators->setAccessible(true);
+        $decoratorObjs = $decorators->getValue($note);
+        $this->assertNotEmpty($decoratorObjs);
+        $this->assertInstanceOf(\Ksfraser\PhpabcCanntaireachd\Decorator\StaccatoDecorator::class, $decoratorObjs[0]);
+        $this->assertEquals('!staccato!', $decoratorObjs[0]->render());
+    }
     public function testValidNoteLength() {
         $note = new AbcNote('A/');
         $this->assertEquals('A/', $note->get_body_out());

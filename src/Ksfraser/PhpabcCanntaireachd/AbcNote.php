@@ -69,21 +69,57 @@ namespace Ksfraser\PhpabcCanntaireachd;
  * @enduml
  */
 
-class AbcNoteLengthException extends \Exception {
-	public function __construct($length, $noteStr = '') {
-		parent::__construct("Invalid ABC note length: '$length' in note '$noteStr'. Three or more slashes are not ABC spec compliant.");
-	}
-}
-
+use Ksfraser\PhpabcCanntaireachd\Exceptions\AbcNoteLengthException;
+use Ksfraser\PhpabcCanntaireachd\NoteParserTrait;
 use Ksfraser\origin\Origin;
 
-trait NoteParserTrait {
+class AbcNote extends Origin
+{
+	use NoteParserTrait;
+	// Properties
+	protected $decorator = '';
+	public static $shortcutLookup = null;
+	use NoteParserTrait;
+	// Properties
+	public static $shortcutLookup = null;
+	protected $shortcutLookup = [];
+	protected $pitch;    // a-gA-G
+	protected $octave;   // , or '
+	protected $sharpflat; // =^_ null/natural/sharp/flat
+	protected $length;   // (int)(/)(int)
+	/**
+	 * @var BaseDecorator[] Decorator objects for this note
+	 */
+	/**
+	 * @var \Ksfraser\PhpabcCanntaireachd\Decorator\BaseDecorator[] Decorator objects for this note
+	 */
+	protected $decorators = [];
+	protected $name;
+	protected $lyrics;
+	protected $canntaireachd;
+	protected $solfege;
+	protected $bmwToken;
+	protected $callback;
+	// ABC spec fields
+	protected $graceNotes = [];
+	protected $chordSymbol = null;
+	protected $annotations = [];
+	protected $accidentals = [];
+
+	// Methods
+	/**
+	 * Exception for invalid ABC note length.
+	 */
+	private function throwLengthException($length, $noteStr = '') {
+		throw new \Exception("Invalid ABC note length: '$length' in note '$noteStr'. Three or more slashes are not ABC spec compliant.");
+	}
+
 	/**
 	 * Parse an ABC note string into components.
 	 * @param string $noteStr
 	 * @return array [pitch, octave, sharpflat, length, decorator]
 	 */
-	public static function parseNote($noteStr) {
+	private function parseNote($noteStr) {
 		if (preg_match("/^([_=^]?)([a-gA-GzZ])([,']*)([0-9]+\/?[0-9]*|\/{1,}|)(.*)$/", $noteStr, $m)) {
 			return [
 				'pitch' => $m[2],
@@ -101,44 +137,30 @@ trait NoteParserTrait {
 			'decorator' => ''
 		];
 	}
-}
 
-class AbcNote extends Origin
-{
-	use NoteParserTrait;
-
-	protected $pitch;    // a-gA-G
-	protected $octave;   // , or '
-	protected $sharpflat; // =^_ null/natural/sharp/flat
-	protected $length;   // (int)(/)(int)
-	protected $decorator; // .MHTR!trill! staccato Legato Fermato Trill Roll
-	protected $name;
-	protected $lyrics;
-	protected $canntaireachd;
-	protected $solfege;
-	protected $bmwToken;
-	protected $callback;
-	// ABC spec fields
-	protected $graceNotes = [];
-	protected $chordSymbol = null;
-	protected $annotations = [];
-	protected $accidentals = [];
-
-	public function __construct($noteStr, $callback = null)
+	/**
+	 * @param string $noteStr
+	 * @param callable|null $callback
+	 * @param array|null $shortcutLookup Dependency-injected decorator shortcut map
+	 */
+	public function __construct($noteStr, $callback = null, $shortcutLookup = null)
 	{
 		parent::__construct();
 		$this->callback = $callback;
+		if ($shortcutLookup !== null) {
+			$this->shortcutLookup = $shortcutLookup;
+		}
 		$this->parseAbcNote($noteStr);
 	}
 
 	/**
-	 * Parse an ABC note string into all ABC spec components.
+	 * Parse an ABC note string into all ABC spec components (full ABC v2.1 compliance).
 	 * @param string $noteStr
 	 */
 	protected function parseAbcNote($noteStr)
 	{
 		// Extract chord symbol: "[chord]"
-		if (preg_match('/\"([^\"]+)\"/', $noteStr, $m)) {
+		if (preg_match('/"([^"]+)"/', $noteStr, $m)) {
 			$this->chordSymbol = $m[1];
 			$noteStr = str_replace($m[0], '', $noteStr);
 		}
@@ -147,25 +169,72 @@ class AbcNote extends Origin
 			$this->graceNotes = preg_split('/\s+/', trim($m[1]));
 			$noteStr = str_replace($m[0], '', $noteStr);
 		}
-		// Extract annotations/decorations: !...! or .
-		preg_match_all('/!(.*?)!|\.|[HTR]/', $noteStr, $annots);
-		$this->annotations = $annots[0];
-		foreach ($this->annotations as $a) {
-			$noteStr = str_replace($a, '', $noteStr);
+
+		// Use injected shortcutLookup if available, else build static
+		if (!empty($this->shortcutLookup)) {
+			$shortcutLookup = $this->shortcutLookup;
+		} else {
+			if (self::$shortcutLookup === null) {
+				$decoratorMap = \Ksfraser\PhpabcCanntaireachd\Decorator\DecoratorLoader::getDecoratorMap();
+				self::$shortcutLookup = [];
+				foreach ($decoratorMap as $shortcut => $class) {
+					self::$shortcutLookup[strtolower($shortcut)] = $class;
+				}
+			}
+			$shortcutLookup = self::$shortcutLookup;
 		}
+
+		// Find all !wrapped! decorators
+		preg_match_all('/!(.*?)!/', $noteStr, $bangMatches);
+		$this->annotations = $bangMatches[0];
+		$this->decorators = [];
+		foreach ($bangMatches[1] as $rawShortcut) {
+			$shortcut = strtolower('!' . $rawShortcut . '!');
+			if (isset($shortcutLookup[$shortcut])) {
+				$class = $shortcutLookup[$shortcut];
+				$this->decorators[] = new $class();
+			}
+			$noteStr = str_replace('!' . $rawShortcut . '!', '', $noteStr);
+		}
+
+		// Find all raw shortcut decorators (e.g., '.', 'tr', etc.)
+		$rawShortcuts = array_filter(array_keys($shortcutLookup), function($s) {
+			return strpos($s, '!') !== 0 && $s !== '';
+		});
+		if (!empty($rawShortcuts)) {
+			$shortcutRegex = '/(' . implode('|', array_map('preg_quote', $rawShortcuts)) . ')/i';
+			if (count($rawShortcuts) > 0 && preg_match_all($shortcutRegex, $noteStr, $rawMatches) && isset($rawMatches[1])) {
+				foreach ($rawMatches[1] as $rawShortcut) {
+					$shortcut = strtolower($rawShortcut);
+					if (isset($shortcutLookup[$shortcut])) {
+						$class = $shortcutLookup[$shortcut];
+						$this->decorators[] = new $class();
+					}
+					$noteStr = str_replace($rawShortcut, '', $noteStr);
+				}
+			}
+		}
+
 		// Extract accidentals: = ^ _
 		preg_match_all('/[=_^]/', $noteStr, $accs);
-		$this->accidentals = $accs[0];
+		$this->accidentals = isset($accs[0]) ? $accs[0] : [];
 		foreach ($this->accidentals as $a) {
 			$noteStr = str_replace($a, '', $noteStr);
 		}
 		// Parse remaining note string
-		$parsed = self::parseNote($noteStr);
+	$parsed = $this->parseNote($noteStr);
 		$this->set("pitch", $parsed['pitch']);
 		$this->set("octave", $parsed['octave']);
 		$this->set("sharpflat", $parsed['sharpflat']);
 		$this->set("length", $parsed['length']);
+		// Legacy decorator string (for compatibility)
 		$this->set("decorator", $parsed['decorator']);
+		// If parsed decorator matches a known shortcut, instantiate its class
+		$legacyShortcut = strtolower($parsed['decorator']);
+		if ($legacyShortcut && isset($shortcutLookup[$legacyShortcut])) {
+			$class = $shortcutLookup[$legacyShortcut];
+			$this->decorators[] = new $class();
+		}
 	}
 
 	public function setBmwToken($bmw) {
@@ -287,7 +356,7 @@ class AbcNote extends Origin
 	{
 		// Check for three or more slashes
 		if (preg_match('/^\/{3,}$/', $value)) {
-			throw new AbcNoteLengthException($value);
+			throw new \Ksfraser\PhpabcCanntaireachd\Exceptions\AbcNoteLengthException($value);
 		}
 		switch ($value) {
 			case "1": case "2": case "3": case "4": case "5": case "6": case "7": case "8":
@@ -324,34 +393,39 @@ class AbcNote extends Origin
 	}
 
 	/**
-	 * Render the note as ABC, including all spec fields.
+	 * Render the note as ABC, including all spec fields in correct order, using Decorator classes.
 	 * @return string
 	 */
 	public function get_body_out()
 	{
 		$out = "";
+		// Grace notes first
 		if (!empty($this->graceNotes)) {
 			$out .= "{" . implode(' ', $this->graceNotes) . "}";
 		}
+		// Chord symbol next
 		if ($this->chordSymbol) {
 			$out .= '"' . $this->chordSymbol . '"';
 		}
-		foreach ($this->annotations as $a) {
-			$out .= $a;
-		}
+		// Accidentals before note
 		foreach ($this->accidentals as $a) {
 			$out .= $a;
 		}
+		// Decorators/annotations (ABC spec: decorations before note)
+		foreach ($this->decorators as $decoratorObj) {
+			$out .= $decoratorObj->render();
+		}
+		// Decorator field (legacy, for compatibility)
 		if (isset($this->decorator) && $this->decorator !== "") {
 			$out .= $this->decorator;
 		}
-		if (isset($this->sharpflat) && $this->sharpflat !== "") {
-			$out .= $this->sharpflat;
-		}
+		// Pitch
 		$out .= $this->pitch;
+		// Octave
 		if (isset($this->octave) && $this->octave !== "") {
 			$out .= $this->octave;
 		}
+		// Note length
 		if (isset($this->length) && $this->length !== "") {
 			$out .= $this->length;
 		}

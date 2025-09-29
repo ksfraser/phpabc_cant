@@ -49,7 +49,32 @@ class AbcFileParser {
      */
     protected $updateVoiceNamesFromMidi = false;
 
-    public function __construct($config = []) {
+    /**
+     * @var HeaderParser
+     */
+    protected $headerParser;
+
+    /**
+     * @var FormattingParser
+     */
+    protected $formattingParser;
+
+    /**
+     * @var MidiParser
+     */
+    protected $midiParser;
+
+    /**
+     * @var CommentParser
+     */
+    protected $commentParser;
+
+    /**
+     * @var BodyParser
+     */
+    protected $bodyParser;
+
+    public function __construct($config = [], $headerParser = null, $formattingParser = null, $midiParser = null, $commentParser = null, $bodyParser = null) {
         if (isset($config['singleHeaderPolicy'])) {
             switch ($config['singleHeaderPolicy']) {
                 case 'first':
@@ -64,6 +89,12 @@ class AbcFileParser {
         if (isset($config['updateVoiceNamesFromMidi'])) {
             $this->updateVoiceNamesFromMidi = (bool)$config['updateVoiceNamesFromMidi'];
         }
+        // Inject parsers or use defaults
+        $this->headerParser = $headerParser ?: new HeaderParser();
+        $this->formattingParser = $formattingParser ?: new FormattingParser();
+        $this->midiParser = $midiParser ?: new MidiParser();
+        $this->commentParser = $commentParser ?: new CommentParser();
+        $this->bodyParser = $bodyParser ?: new BodyParser();
     }
 
     /**
@@ -75,15 +106,6 @@ class AbcFileParser {
         $lines = preg_split('/\r?\n/', $abcContent);
         $tunes = [];
         $currentTune = null;
-        
-        // Initialize parsers in order of specificity
-        $parsers = [
-            new HeaderParser($this->singleHeaderPolicy),
-            new FormattingParser(),
-            new MidiParser(),
-            new CommentParser(),
-            new BodyParser()
-        ];
         
         foreach ($lines as $idx => $line) {
             // Special handling for X: lines that start new tunes
@@ -120,6 +142,13 @@ class AbcFileParser {
             // Try each parser in order
             $parsed = false;
             $valid = true;
+            $parsers = [
+                $this->headerParser,
+                $this->formattingParser,
+                $this->midiParser,
+                $this->commentParser,
+                $this->bodyParser
+            ];
             foreach ($parsers as $parser) {
                 if ($parser->canParse($line)) {
                     $parsed = $parser->parse($line, $currentTune);
