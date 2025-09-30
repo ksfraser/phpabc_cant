@@ -5,6 +5,24 @@ use Ksfraser\PhpabcCanntaireachd\HeaderExtractorTrait;
 
 class AbcProcessor {
     use HeaderExtractorTrait;
+    /**
+     * Process ABC content using the AbcProcessingPipeline.
+     *
+     * @param string $abcContent
+     * @param TokenDictionary $dict
+     * @param array|null $headerTable
+     * @return array
+     * @throws Exceptions\AbcProcessingException
+     * @uml
+     * @startuml
+     * :explode abcContent into lines;
+     * :initialize passes array;
+     * :extract header fields;
+     * :match/update header fields;
+     * :run AbcProcessingPipeline;
+     * :return result array;
+     * @enduml
+     */
     public static function process($abcContent, $dict, $headerTable = null) {
         $lines = explode("\n", $abcContent);
         $passes = [
@@ -15,10 +33,6 @@ class AbcProcessor {
             new AbcVoiceOrderPass(),
             new AbcTimingValidator()
         ];
-        $canntDiff = [];
-        $errors = [];
-
-        // Extract header fields from ABC (e.g., C: composer, B: book)
         $headerFields = self::extractHeaders($lines, ['C','B','K','T','M','L','Q']);
         $tuneFields = [
             'composer' => isset($headerFields['C']) ? $headerFields['C'] : null,
@@ -29,54 +43,13 @@ class AbcProcessor {
             'notelength' => isset($headerFields['L']) ? $headerFields['L'] : null,
             'tempo' => isset($headerFields['Q']) ? $headerFields['Q'] : null
         ];
-
-        // Match and update header fields
         $suggestions = [];
         if ($headerTable) {
             $matcher = new AbcHeaderFieldMatcher($headerTable);
             $suggestions = $matcher->processTuneFields($tuneFields);
         }
-
-        foreach ($passes as $pass) {
-            if ($pass instanceof AbcTuneNumberValidatorPass) {
-                $result = $pass->validate($lines);
-                $lines = $result['lines'];
-                if (!empty($result['errors'])) {
-                    foreach ($result['errors'] as $err) {
-                        $errors[] = 'TUNE NUMBER: ' . $err;
-                    }
-                }
-            } elseif ($pass instanceof AbcLyricsPass) {
-                $result = $pass->process($lines);
-                $lines = $result['lines'];
-                if (!empty($result['lyricsWords'])) {
-                    $lines[] = 'W: ' . implode(' ', $result['lyricsWords']);
-                }
-            } elseif ($pass instanceof AbcCanntaireachdPass) {
-                $result = $pass->process($lines);
-                $lines = $result['lines'];
-                $canntDiff = $result['canntDiff'];
-            } elseif ($pass instanceof AbcTimingValidator) {
-                $result = $pass->validate($lines);
-                $lines = $result['lines'];
-                if (!empty($result['errors'])) {
-                    $errors = array_map(function($e){return 'TIMING: '.$e;}, $result['errors']);
-                }
-            } else {
-                $lines = $pass->process($lines);
-            }
-        }
-
-        // Add suggestions as comments for review
-        foreach ($suggestions as $s) {
-            $lines[] = "% Suggested: {$s['field']} '{$s['value']}' ~ '{$s['bestMatch']}' (score: {$s['score']})";
-        }
-
-        return [
-            'lines' => $lines,
-            'canntDiff' => $canntDiff,
-            'errors' => $errors
-        ];
+        $pipeline = new AbcProcessingPipeline($passes);
+        return $pipeline->run($lines, $headerFields, $suggestions);
     }
     // Make internal pass methods public static for use by pass classes
     public static function detectVoices($lines) {

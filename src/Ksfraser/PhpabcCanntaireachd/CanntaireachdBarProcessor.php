@@ -7,30 +7,25 @@ use Ksfraser\PhpabcCanntaireachd\Exceptions\TokenMappingException;
 
 class CanntaireachdBarProcessor
 {
-    protected $mapper;
-
-    public function __construct($dictionary)
-    {
-        $this->mapper = new TokenToCanntMapper($dictionary);
-    }
-
     /**
-     * Convert an array of ABC tokens to a canntaireachd string.
+     * Convert an array of ABC tokens to a canntaireachd string using static mapping.
      * @param array $tokens
+     * @param array $dictionary
      * @return string
      */
-    public function tokensToCanntaireachd(array $tokens): string
+    public static function tokensToCanntaireachd(array $tokens, array $dictionary): string
     {
         $canntArr = [];
-        foreach ($tokens as $token) {
+        $normalizedTokens = \Ksfraser\PhpabcCanntaireachd\TokenNormalizerForBar::normalizeTokens($tokens);
+        foreach ($normalizedTokens as $token) {
             if (trim($token) === '' || $token === '|' || $token === '||' || $token === '|:' || $token === ':') {
                 continue;
             }
             try {
-                $canntArr[] = $this->mapper->map($token);
+                $canntArr[] = CanntaireachdSyllableMapper::mapToken($token, $dictionary);
             } catch (TokenMappingException $e) {
-                // Optionally log or skip unmapped tokens
-                // error_log($e->getMessage());
+                // Output raw token if not mapped
+                $canntArr[] = $token;
             }
         }
         return implode(' ', $canntArr);

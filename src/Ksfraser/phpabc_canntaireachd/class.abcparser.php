@@ -490,37 +490,29 @@ class abcparser extends abc_tunebase
 		$this->var_dump(get_class() . "::" . __METHOD__ . "::" . __LINE__);
 		$this->var_dump($bars, PEAR_LOG_DEBUG);
 		require_once(__DIR__ . '/abc_dict.php');
-		require_once(__DIR__ . '/../PhpabcCanntaireachd/TokenMappingHelpers.php');
-		require_once(__DIR__ . '/../PhpabcCanntaireachd/Exceptions/TokenMappingException.php');
-		use Ksfraser\PhpabcCanntaireachd\Exceptions\TokenMappingException;
+		// Flatten and normalize canntaireachd dictionary keys
 		$cannt_dict = array();
 		if (isset($abc) && is_array($abc)) {
 			foreach ($abc as $key => $entry) {
-				if (isset($entry['cannt'])) {
-					$cannt_dict[$key] = $entry['cannt'];
+				if (is_array($entry)) {
+					foreach ($entry as $subkey => $value) {
+						if ($subkey === 'cannt') {
+							$norm_key = \Ksfraser\PhpabcCanntaireachd\TokenNormalizer::normalize($key);
+							$cannt_dict[$norm_key] = $value;
+						}
+					}
 				}
 			}
 		}
 		$tokenizer = new \Ksfraser\PhpabcCanntaireachd\Tokenizer();
-		$mapper = new \Ksfraser\PhpabcCanntaireachd\TokenToCanntMapper($cannt_dict);
+		$barProcessor = new \Ksfraser\PhpabcCanntaireachd\CanntaireachdBarProcessor($cannt_dict);
 		$canntaireachd_lines = array();
 		foreach ($bars as $bar) {
 			$bar = trim($bar);
 			if (empty($bar)) continue;
 			$tokens = $tokenizer->tokenize($bar);
-			$filteredTokens = array_filter($tokens, function($token) {
-				return !(trim($token) === '' || $token === '|' || $token === '||' || $token === '|:' || $token === ':');
-			});
-			$canntArr = array();
-			foreach ($filteredTokens as $token) {
-				try {
-					$canntArr[] = $mapper->map($token);
-				} catch (TokenMappingException $e) {
-					// Optionally log or skip unmapped tokens
-					// error_log($e->getMessage());
-				}
-			}
-			$canntStr = implode(' ', $canntArr);
+			// Always map tokens to canntaireachd syllables for Bagpipes voice
+			$canntStr = $barProcessor->tokensToCanntaireachd($tokens);
 			if (trim($canntStr) !== '') {
 				$canntaireachd_lines[] = $canntStr;
 			}
@@ -528,6 +520,7 @@ class abcparser extends abc_tunebase
 		}
 		$this->canntaireachd_output = implode(' | ', $canntaireachd_lines);
 		if (!empty($canntaireachd_lines)) {
+			// Output mapped canntaireachd syllables for UAT
 			echo $this->canntaireachd_output . "\n";
 		}
 		return true;

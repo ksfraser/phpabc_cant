@@ -76,36 +76,18 @@ class CanntGenerator {
         $out = [];
         foreach ($parts as $part) {
             $part = trim($part);
-            if ($part === '' || $part === '|' ) continue;
-            error_log("Processing part: $part"); // Log each part
-            file_put_contents($logFile, "Processing part: $part\n", FILE_APPEND); // Log each part to file
-            // Process the part by finding longest matching tokens
-            $remaining = $part;
-            while ($remaining !== '') {
-                $found = false;
-                for ($len = strlen($remaining); $len > 0; $len--) {
-                    $token = substr($remaining, 0, $len);
-                    $norm = preg_replace('/\d+/', '', $token);
-                    $cannt = $this->dict->convertAbcToCannt($token);
-                    if ($cannt === null) $cannt = $this->dict->convertAbcToCannt($norm);
-                    if ($cannt !== null) {
-                        error_log("Matched token: $token -> Cannt: $cannt"); // Log matched token
-                        file_put_contents($logFile, "Matched token: $token -> Cannt: $cannt\n", FILE_APPEND); // Log matched token to file
-                        $out[] = $cannt;
-                        $remaining = substr($remaining, $len);
-                        $found = true;
-                        break;
-                    }
-                }
-                if (!$found) {
-                    // Fallback: wrap the normalized token
-                    $norm = preg_replace('/\d+/', '', $remaining);
-                    $cannt = '[' . ($norm === '' ? $remaining : $norm) . ']';
-                    error_log("Unmatched token: $remaining -> Fallback: $cannt"); // Log unmatched token
-                    file_put_contents($logFile, "Unmatched token: $remaining -> Fallback: $cannt\n", FILE_APPEND); // Log unmatched token to file
-                    $out[] = $cannt;
-                    $remaining = '';
-                }
+            if ($part === '' || $part === '|') continue;
+            error_log("Processing part: $part");
+            file_put_contents($logFile, "Processing part: $part\n", FILE_APPEND);
+            $norm = preg_replace('/\d+/', '', $part);
+            $cannt = $this->dict->convertAbcToCannt($part);
+            if ($cannt === null) $cannt = $this->dict->convertAbcToCannt($norm);
+            if ($cannt !== null) {
+                error_log("Matched token: $part -> Cannt: $cannt");
+                file_put_contents($logFile, "Matched token: $part -> Cannt: $cannt\n", FILE_APPEND);
+                $out[] = $cannt;
+            } else {
+                $out[] = '[' . ($norm === '' ? $part : $norm) . ']';
             }
         }
         // Ensure we always return a non-empty string

@@ -3,80 +3,27 @@ namespace Ksfraser\PhpabcCanntaireachd;
 class AbcCanntaireachdPass {
     private $dict;
     public function __construct($dict) { $this->dict = $dict; }
+    /**
+     * Process ABC lines, generating canntaireachd lyrics using LyricsGenerator.
+     * @param array $lines
+     * @return array
+     */
     public function process(array $lines): array {
         $canntDiff = [];
         $output = AbcProcessor::validateCanntaireachd($lines, $canntDiff);
-
-        // Generate canntaireachd w: lines for bagpipe voices
-        $output = $this->generateCanntaireachdLyrics($output);
-
+        $lyricsGenerator = new LyricsGenerator(new CanntGenerator($this->dict));
+        $output = $lyricsGenerator->generate($output);
         // Remove TIMING markers from the output while keeping logs
         foreach ($output as &$line) {
             if (strpos($line, 'TIMING') !== false) {
-                // Log the timing issue but do not insert it into the tune
                 error_log("Timing issue detected: $line");
                 $line = str_replace(' TIMING', '', $line);
             }
         }
-
         return ['lines' => $output, 'canntDiff' => $canntDiff];
     }
     
-    private function generateCanntaireachdLyrics($lines) {
-        $canntGenerator = new CanntGenerator($this->dict);
-
-        // Log dictionary contents for debugging
-        error_log("Dictionary contents: " . print_r($this->dict, true));
-
-        $output = [];
-        $inBagpipeVoice = false;
-        $hasLyrics = false;
-
-        foreach ($lines as $line) {
-            if (preg_match('/^V:Bagpipes/', $line)) {
-                $inBagpipeVoice = true;
-                $hasLyrics = false;
-                $output[] = $line;
-            } elseif (preg_match('/^V:/', $line)) {
-                $inBagpipeVoice = false;
-                $hasLyrics = false;
-                $output[] = $line;
-            } elseif ($inBagpipeVoice) {
-                if (preg_match('/^w:/', $line)) {
-                    // Already has lyrics, don't generate
-                    $hasLyrics = true;
-                    $output[] = $line;
-                } elseif (!$hasLyrics && $this->isMusicLine($line)) {
-                    // Remove voice tag before generating canntaireachd
-                    $musicLine = preg_replace('/^\[V:[^\]]+\]/', '', $line);
-                    error_log("INPUT to generateForNotes: $musicLine");
-                    // Tokenize music line by spaces
-                    $musicTokens = preg_split('/\s+/', trim($musicLine));
-                    $canntTextRaw = $canntGenerator->generateForNotes($musicLine);
-                    // Tokenize canntaireachd output by spaces
-                    $canntTokens = preg_split('/\s+/', trim($canntTextRaw));
-                    // Align canntaireachd tokens to music tokens
-                    $canntTextAligned = '';
-                    for ($i = 0; $i < count($musicTokens); $i++) {
-                        $canntTextAligned .= ($canntTokens[$i] ?? '') . ' ';
-                    }
-                    $canntTextAligned = trim($canntTextAligned);
-                    if ($canntTextAligned && $canntTextAligned !== '[?]') {
-                        $output[] = 'w: ' . $canntTextAligned; // Add the w: line above
-                        $output[] = $line; // Add the music line below
-                    } else {
-                        $output[] = $line;
-                    }
-                } else {
-                    $output[] = $line;
-                }
-            } else {
-                $output[] = $line;
-            }
-        }
-
-        return $output;
-    }
+    // Lyrics generation now handled by LyricsGenerator class
 
     private function isMusicLine($line) {
         // A music line is one that is not a header (V:, X:, T:, etc.), comment (%), or empty
