@@ -1,0 +1,22 @@
+<?php
+/**
+ * UML for AbcTokenTranslator and BagpipeAbcToCanntTranslator
+ *
+ * @startuml
+ * abstract class AbcTokenTranslator {
+ *   - dictionary: TokenDictionary
+ *   + __construct(dictionary: TokenDictionary)
+ *   + translate(token): string|null
+ * }
+ * class BagpipeAbcToCanntTranslator extends AbcTokenTranslator {
+ *   + translate(note: AbcNote): string|null
+ * }
+ * AbcTokenTranslator <|-- BagpipeAbcToCanntTranslator
+ *
+ * class TokenDictionary
+ * class AbcNote
+ * BagpipeAbcToCanntTranslator --> TokenDictionary
+ * BagpipeAbcToCanntTranslator --> AbcNote
+ *
+ * @enduml
+ */

@@ -1,0 +1,17 @@
+<?php
+/**
+ * UML for AbcBar translation using DI translator
+ *
+ * @startuml
+ * class AbcBar {
+ *   + translateNotes(translator: AbcTokenTranslator)
+ * }
+ * class AbcNote {
+ *   + translate(translator: AbcTokenTranslator)
+ * }
+ * AbcBar --> AbcNote : contains
+ * AbcBar --> AbcTokenTranslator : uses
+ * AbcNote --> AbcTokenTranslator : uses
+ *
+ * @enduml
+ */

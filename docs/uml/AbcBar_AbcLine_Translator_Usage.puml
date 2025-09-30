@@ -1,0 +1,18 @@
+<?php
+/**
+ * UML for AbcBar and AbcLine using translators
+ *
+ * @startuml
+ * class AbcBar {
+ *   + translateNotesToCanntaireachd(translator: AbcTokenTranslator)
+ * }
+ * class AbcLine {
+ *   + renderWLine(): string
+ * }
+ * class AbcNote
+ * AbcBar --> AbcNote : contains
+ * AbcBar --> AbcTokenTranslator : uses
+ * AbcLine --> AbcBar : contains
+ *
+ * @enduml
+ */

@@ -1,0 +1,17 @@
+<?php
+/**
+ * UML for AbcLine canntaireachd lyric line aggregation
+ *
+ * @startuml
+ * class AbcLine {
+ *   + renderCanntLyricLine(): string
+ *   + add(bar: AbcBar)
+ * }
+ * class AbcBar {
+ *   + renderCanntaireachd(): string
+ * }
+ * AbcLine --> AbcBar : contains
+ * AbcBar --> AbcNote : contains
+ *
+ * @enduml
+ */

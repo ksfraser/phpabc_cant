@@ -1,6 +1,48 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd;
 class AbcLine extends AbcItem {
+
+    /**
+     * Translate all bars in this line using the provided translator (DI, SRP, DRY).
+     * @param object $translator Any AbcTokenTranslator subclass
+     */
+    public function translateBars($translator) {
+        file_put_contents('debug.log', "AbcLine::translateBars: called\n", FILE_APPEND);
+        foreach ($this->bars as $i => $bar) {
+            $barClass = get_class($bar);
+            $hasTranslateNotes = method_exists($bar, 'translateNotes') ? 'yes' : 'no';
+            file_put_contents('debug.log', "AbcLine::translateBars: bar $i class=$barClass method_exists(translateNotes)=$hasTranslateNotes\n", FILE_APPEND);
+            if (!($bar instanceof \Ksfraser\PhpabcCanntaireachd\Contract\RenderableCanntaireachdInterface)) {
+                file_put_contents('debug.log', "AbcLine::translateBars: bar $i does not implement RenderableCanntaireachdInterface\n", FILE_APPEND);
+                throw new \LogicException('Bar does not implement RenderableCanntaireachdInterface');
+            }
+            if (!method_exists($bar, 'translateNotes')) {
+                file_put_contents('debug.log', "AbcLine::translateBars: bar $i does not implement translateNotes\n", FILE_APPEND);
+                throw new \LogicException('Bar does not implement translateNotes');
+            }
+            file_put_contents('debug.log', "AbcLine::translateBars: calling translateNotes on bar $i\n", FILE_APPEND);
+            $bar->translateNotes($translator);
+        }
+    }
+
+    /**
+     * Render the canntaireachd lyric (w:) line for this line, using canntaireachd from each bar/note.
+     * @return string
+     */
+    public function renderCanntLyricLine(): string {
+        $wTokens = [];
+        foreach ($this->bars as $bar) {
+            if (!($bar instanceof \Ksfraser\PhpabcCanntaireachd\Contract\RenderableCanntaireachdInterface)) {
+                throw new \LogicException('Bar does not implement RenderableCanntaireachdInterface');
+            }
+            $cannt = trim($bar->renderCanntaireachd());
+            if ($cannt !== '') {
+                $wTokens[] = $cannt;
+            }
+        }
+        if (empty($wTokens)) return '';
+        return 'w: ' . implode(' ', $wTokens);
+    }
     protected $headerLine = '';
     protected $bars = [];
 
@@ -13,7 +55,8 @@ class AbcLine extends AbcItem {
 
     // Override add() to handle AbcBar objects specially
     public function add(AbcItem $item) {
-        if ($item instanceof \Ksfraser\PhpabcCanntaireachd\AbcBar) {
+        // Accept both possible AbcBar namespaces for compatibility
+        if ($item instanceof \Ksfraser\PhpabcCanntaireachd\AbcBar || $item instanceof \Ksfraser\PhpabcCanntaireachd\Tune\AbcBar) {
             $this->bars[] = $item;
         } else {
             parent::add($item);

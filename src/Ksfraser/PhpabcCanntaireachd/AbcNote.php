@@ -72,12 +72,30 @@ echo 'PHPABC_VERBOSE: ' . (defined('PHPABC_VERBOSE') ? (PHPABC_VERBOSE ? 'true' 
  * @enduml
  */
 
+
 use Ksfraser\PhpabcCanntaireachd\Exceptions\AbcNoteLengthException;
 use Ksfraser\PhpabcCanntaireachd\NoteParserTrait;
 use Ksfraser\origin\Origin;
+use Ksfraser\PhpabcCanntaireachd\Contract\TranslatableNoteInterface;
+use Ksfraser\PhpabcCanntaireachd\Contract\RenderableCanntaireachdInterface;
 
-class AbcNote extends Origin
+class AbcNote extends Origin implements TranslatableNoteInterface, RenderableCanntaireachdInterface
 {
+	/**
+	 * Translate this note using the provided translator and store the result (e.g., canntaireachd, BMW, etc).
+	 * @param object $translator Any AbcTokenTranslator subclass
+	 */
+	   public function translate($translator) {
+		   file_put_contents('debug.log', "AbcNote::translate: called for token={$this->get_body_out()}\n", FILE_APPEND);
+		   $result = $translator->translate($this);
+		   file_put_contents('debug.log', "AbcNote::translate: token={$this->get_body_out()} result=".var_export($result, true)."\n", FILE_APPEND);
+		   // Store in canntaireachd for BagpipeAbcToCanntTranslator, or extend for other translators
+		   if (method_exists($this, 'setCanntaireachd')) {
+			   $this->setCanntaireachd($result);
+		   }
+		   return $result;
+	   }
+	// ...existing code...
 	public function getPitch() {
 		return $this->pitch;
 	}
@@ -219,7 +237,7 @@ class AbcNote extends Origin
 	public function renderLyrics() {
 		return $this->lyrics ?? '';
 	}
-	public function renderCanntaireachd() {
+	public function renderCanntaireachd(): string {
 		return $this->canntaireachd ?? '';
 	}
 	public function renderSolfege() {

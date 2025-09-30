@@ -49,28 +49,48 @@ class LyricsGenerator {
         $inBagpipeVoice = false;
         $hasLyrics = false;
         try {
+            $pendingWLine = null;
             foreach ($lines as $idx => $line) {
                 // Preserve blank lines and comments
                 if (trim($line) === '' || preg_match('/^%/', $line)) {
+                    if ($pendingWLine !== null) {
+                        $output[] = $pendingWLine;
+                        $pendingWLine = null;
+                    }
                     $output[] = $line;
                     continue;
                 }
                 // Reset lyric state on tune boundary
                 if (preg_match('/^X:/', $line)) {
+                    if ($pendingWLine !== null) {
+                        $output[] = $pendingWLine;
+                        $pendingWLine = null;
+                    }
                     $inBagpipeVoice = false;
                     $hasLyrics = false;
                     $output[] = $line;
                     continue;
                 }
                 if (preg_match('/^V:Bagpipes/', $line)) {
+                    if ($pendingWLine !== null) {
+                        $output[] = $pendingWLine;
+                        $pendingWLine = null;
+                    }
                     $inBagpipeVoice = true;
                     $hasLyrics = false;
                     $output[] = $line;
+                    continue;
                 } elseif (preg_match('/^V:/', $line)) {
+                    if ($pendingWLine !== null) {
+                        $output[] = $pendingWLine;
+                        $pendingWLine = null;
+                    }
                     $inBagpipeVoice = false;
                     $hasLyrics = false;
                     $output[] = $line;
-                } elseif ($inBagpipeVoice) {
+                    continue;
+                }
+                if ($inBagpipeVoice) {
                     if (preg_match('/^w:/', $line)) {
                         $hasLyrics = true;
                         $output[] = $line;
@@ -86,7 +106,7 @@ class LyricsGenerator {
                         $canntTextAligned = trim($canntTextAligned);
                         $output[] = $line;
                         if ($canntTextAligned && $canntTextAligned !== '[?]') {
-                            $output[] = 'w: ' . $canntTextAligned;
+                            $output[] = 'w: ' + $canntTextAligned;
                         }
                         $hasLyrics = false;
                     } else {
@@ -96,7 +116,13 @@ class LyricsGenerator {
                     $output[] = $line;
                 }
             }
+            // No need to flush pending w: line at end, as it is always output after music line
         } catch (\Throwable $ex) {
             throw new LyricsGeneratorException('Error in LyricsGenerator: ' . $ex->getMessage(), 0, $ex);
         }
-      
+        return $output;
+    }
+    private function isMusicLine($line) {
+        return !preg_match('/^[VXT:]/', $line) && trim($line) !== '' && !preg_match('/^%/', $line);
+    }
+}

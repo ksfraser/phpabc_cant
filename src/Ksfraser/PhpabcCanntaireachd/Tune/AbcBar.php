@@ -63,8 +63,29 @@ use Ksfraser\PhpabcCanntaireachd\Render\BarLineRenderer;
  * AbcBar --> BarLineRenderer
  * @enduml
  */
-class AbcBar extends \Ksfraser\PhpabcCanntaireachd\AbcItem
+use Ksfraser\PhpabcCanntaireachd\Contract\RenderableCanntaireachdInterface;
+use Ksfraser\PhpabcCanntaireachd\Contract\TranslatableNoteInterface;
+
+class AbcBar extends \Ksfraser\PhpabcCanntaireachd\AbcItem implements RenderableCanntaireachdInterface
 {
+    /**
+     * Translate all notes in this bar using the provided translator (DI, SRP, DRY).
+     * @param object $translator Any AbcTokenTranslator subclass
+     */
+    public function translateNotes($translator)
+    {
+        file_put_contents('debug.log', "AbcBar::translateNotes: called\n", FILE_APPEND);
+        foreach ($this->notes as $i => $note) {
+            file_put_contents('debug.log', "AbcBar::translateNotes: note class=".get_class($note)."\n", FILE_APPEND);
+            if (!($note instanceof \Ksfraser\PhpabcCanntaireachd\Contract\TranslatableNoteInterface)) {
+                file_put_contents('debug.log', "AbcBar::translateNotes: note at index $i does not implement TranslatableNoteInterface\n", FILE_APPEND);
+                throw new \LogicException('Note does not implement TranslatableNoteInterface');
+            }
+            file_put_contents('debug.log', "AbcBar::translateNotes: calling translate on note at index $i\n", FILE_APPEND);
+            $note->translate($translator);
+        }
+    }
+// ...existing code...
     /**
      * Parse a bar text into an AbcBar object (recursive descent entry point).
      * @param string $barText
@@ -173,7 +194,7 @@ class AbcBar extends \Ksfraser\PhpabcCanntaireachd\AbcItem
         if ($decoratorShortcutMap === null && method_exists($this, 'getDecoratorShortcutMap')) {
             $decoratorShortcutMap = $this->getDecoratorShortcutMap();
         }
-        $note = new \Ksfraser\PhpabcCanntaireachd\AbcNote($noteStr, null, $decoratorShortcutMap);
+    $note = new \Ksfraser\PhpabcCanntaireachd\AbcNote($noteStr, null);
         if ($lyrics !== null) $note->setLyrics($lyrics);
         if ($canntaireachd !== null) $note->setCanntaireachd($canntaireachd);
         if ($solfege !== null) $note->setSolfege($solfege);
@@ -224,17 +245,21 @@ class AbcBar extends \Ksfraser\PhpabcCanntaireachd\AbcItem
         return trim($out);
     }
 
-    public function renderCanntaireachd()
+    public function renderCanntaireachd(): string
     {
+        file_put_contents('debug.log', "AbcBar::renderCanntaireachd: called\n", FILE_APPEND);
         // If bar-level cannt available return it first
         if ($this->canntaireachd !== null) return $this->canntaireachd;
         $out = [];
+        $i = 0;
         foreach ($this->notes as $note) {
-            if (method_exists($note, 'renderCanntaireachd')) {
-                $out[] = $note->renderCanntaireachd();
-            } else {
-                $out[] = '';
+            if (!($note instanceof RenderableCanntaireachdInterface)) {
+                throw new \LogicException('Note does not implement RenderableCanntaireachdInterface');
             }
+            $cannt = $note->renderCanntaireachd();
+            file_put_contents('debug.log', "AbcBar::renderCanntaireachd: note $i canntaireachd='".$cannt."'\n", FILE_APPEND);
+            $out[] = $cannt;
+            $i++;
         }
         return implode(' ', $out);
     }

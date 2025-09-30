@@ -1,0 +1,15 @@
+<?php
+/**
+ * UML for BagpipeAbcToCanntTranslator usage in AbcNote
+ *
+ * @startuml
+ * class AbcNote {
+ *   + get_body_out(): string
+ *   + getCanntaireachd(): string
+ *   + setCanntaireachd(cannt: string)
+ * }
+ * class BagpipeAbcToCanntTranslator
+ * AbcNote --> BagpipeAbcToCanntTranslator : uses
+ *
+ * @enduml
+ */

@@ -1,0 +1,23 @@
+<?php
+/**
+ * UML for TokenDictionary
+ *
+ * @startuml
+ * class TokenDictionary {
+ *   - tokens: array
+ *   + prepopulate(dict: array)
+ *   + addOrUpdateToken(abc, cannt, bmw, desc)
+ *   + getToken(abc)
+ *   + deleteToken(abc)
+ *   + convertAbcToCannt(abc)
+ *   + convertBmwToAbc(bmw)
+ *   + convertCanntToBmw(cannt)
+ *   + convertMultipleAbcToCannt(abcs)
+ *   + convertMultipleBmwToAbc(bmws)
+ *   + convertMultipleCanntToBmw(cannts)
+ *   + bulkImport(rows)
+ *   + getAllTokens()
+ *   + convertAbcToBmw(abc)
+ * }
+ * @enduml
+ */
