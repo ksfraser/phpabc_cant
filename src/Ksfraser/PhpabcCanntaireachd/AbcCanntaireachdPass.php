@@ -4,23 +4,42 @@ class AbcCanntaireachdPass {
     private $dict;
     public function __construct($dict) { $this->dict = $dict; }
     /**
-     * Process ABC lines, generating canntaireachd lyrics using LyricsGenerator.
+     * Process ABC lines, generating canntaireachd lyrics using the new translation pipeline.
      * @param array $lines
      * @return array
      */
     public function process(array $lines): array {
         $canntDiff = [];
         $output = AbcProcessor::validateCanntaireachd($lines, $canntDiff);
-        $lyricsGenerator = new LyricsGenerator(new CanntGenerator($this->dict));
-        $output = $lyricsGenerator->generate($output);
+
+        // Use BagpipeAbcToCanntTranslator for translation
+        $translator = new \Ksfraser\PhpabcCanntaireachd\BagpipeAbcToCanntTranslator($this->dict);
+        $translatedOutput = [];
+        foreach ($output as $line) {
+            // Only translate music lines (not headers/comments)
+            if ($this->isMusicLine($line)) {
+                $musicTokens = preg_split('/\s+/', trim($line));
+                $canntTokens = array_map(function($token) use ($translator) {
+                    $note = new \Ksfraser\PhpabcCanntaireachd\AbcNote($token);
+                    return $translator->translate($note);
+                }, $musicTokens);
+                $canntTextAligned = trim(implode(' ', $canntTokens));
+                $translatedOutput[] = $line;
+                if ($canntTextAligned && $canntTextAligned !== '[?]') {
+                    $translatedOutput[] = 'w: ' . $canntTextAligned;
+                }
+            } else {
+                $translatedOutput[] = $line;
+            }
+        }
         // Remove TIMING markers from the output while keeping logs
-        foreach ($output as &$line) {
+        foreach ($translatedOutput as &$line) {
             if (strpos($line, 'TIMING') !== false) {
                 error_log("Timing issue detected: $line");
                 $line = str_replace(' TIMING', '', $line);
             }
         }
-        return ['lines' => $output, 'canntDiff' => $canntDiff];
+        return ['lines' => $translatedOutput, 'canntDiff' => $canntDiff];
     }
     
     // Lyrics generation now handled by LyricsGenerator class

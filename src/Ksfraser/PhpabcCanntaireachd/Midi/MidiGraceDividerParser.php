@@ -10,11 +10,20 @@ use Ksfraser\PhpabcCanntaireachd\AbcMidiLine;
  */
 class MidiGraceDividerParser implements AbcLineParser
 {
-    public function canParse(string $line): bool {
+    /**
+     * @param mixed $line
+     * @return bool
+     */
+    public function canParse($line) {
         return preg_match('/^%%MIDI\s+gracedivider\s+/i', trim($line));
     }
 
-    public function parse(string $line, AbcTune $tune): bool {
+    /**
+     * @param mixed $line
+     * @param mixed $tune
+     * @return bool
+     */
+    public function parse($line, $tune) {
         if (!preg_match('/^%%MIDI\s+gracedivider\s+(\d+)(?:\s+(.+))?/i', trim($line), $matches)) {
             return false;
         }
@@ -36,7 +45,11 @@ class MidiGraceDividerParser implements AbcLineParser
         return true;
     }
 
-    public function validate(string $line): bool {
+    /**
+     * @param mixed $line
+     * @return bool
+     */
+    public function validate($line) {
         return preg_match('/^%%MIDI\s+gracedivider\s+(\d+)(?:\s+%.*)?$/i', trim($line), $matches) &&
                $matches[1] > 0;
     }

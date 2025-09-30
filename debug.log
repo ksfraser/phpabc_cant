@@ -386,3 +386,590 @@ AbcBar::renderCanntaireachd: called
 AbcBar::renderCanntaireachd: note 0 canntaireachd='tum'
 TEST: wLine=w: dare tum
 TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd END
+TEST DEBUG
+ENTERED parseAbcNote with: A
+Initial noteStr: A
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: A
+Initial noteStr: A
+ENTERED parseAbcNote with: B
+Initial noteStr: B
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: B
+Initial noteStr: B
+AbcBar::translateNotes: called
+AbcBar::translateNotes: note class=Ksfraser\PhpabcCanntaireachd\AbcNote
+AbcBar::translateNotes: calling translate on note at index 0
+AbcNote::translate: called for token=A
+BagpipeAbcToCanntTranslator::translate: abcToken=A
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dare'
+AbcNote::translate: token=A result='dare'
+AbcBar::translateNotes: note class=Ksfraser\PhpabcCanntaireachd\AbcNote
+AbcBar::translateNotes: calling translate on note at index 1
+AbcNote::translate: called for token=B
+BagpipeAbcToCanntTranslator::translate: abcToken=B
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='tum'
+AbcNote::translate: token=B result='tum'
+ENTERED parseAbcNote with: G
+Initial noteStr: G
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: G
+Initial noteStr: G
+TEST DEBUG
+ENTERED parseAbcNote with: A
+Initial noteStr: A
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: A
+Initial noteStr: A
+ENTERED parseAbcNote with: B
+Initial noteStr: B
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: B
+Initial noteStr: B
+AbcBar::translateNotes: called
+AbcBar::translateNotes: note class=Ksfraser\PhpabcCanntaireachd\AbcNote
+AbcBar::translateNotes: calling translate on note at index 0
+AbcNote::translate: called for token=A
+BagpipeAbcToCanntTranslator::translate: abcToken=A
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dare'
+AbcNote::translate: token=A result='dare'
+AbcBar::translateNotes: note class=Ksfraser\PhpabcCanntaireachd\AbcNote
+AbcBar::translateNotes: calling translate on note at index 1
+AbcNote::translate: called for token=B
+BagpipeAbcToCanntTranslator::translate: abcToken=B
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='tum'
+AbcNote::translate: token=B result='tum'
+ENTERED parseAbcNote with: G
+Initial noteStr: G
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: G
+Initial noteStr: G
+TEST DEBUG
+ENTERED parseAbcNote with: A
+Initial noteStr: A
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: A
+Initial noteStr: A
+ENTERED parseAbcNote with: B
+Initial noteStr: B
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: B
+Initial noteStr: B
+AbcBar::translateNotes: called
+AbcBar::translateNotes: note class=Ksfraser\PhpabcCanntaireachd\AbcNote
+AbcBar::translateNotes: calling translate on note at index 0
+AbcNote::translate: called for token=A
+BagpipeAbcToCanntTranslator::translate: abcToken=A
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dare'
+AbcNote::translate: token=A result='dare'
+AbcBar::translateNotes: note class=Ksfraser\PhpabcCanntaireachd\AbcNote
+AbcBar::translateNotes: calling translate on note at index 1
+AbcNote::translate: called for token=B
+BagpipeAbcToCanntTranslator::translate: abcToken=B
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='tum'
+AbcNote::translate: token=B result='tum'
+ENTERED parseAbcNote with: G
+Initial noteStr: G
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: G
+Initial noteStr: G
+TEST DEBUG
+ENTERED parseAbcNote with: A
+Initial noteStr: A
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: A
+Initial noteStr: A
+ENTERED parseAbcNote with: B
+Initial noteStr: B
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: B
+Initial noteStr: B
+AbcBar::translateNotes: called
+AbcBar::translateNotes: note class=Ksfraser\PhpabcCanntaireachd\AbcNote
+AbcBar::translateNotes: calling translate on note at index 0
+AbcNote::translate: called for token=A
+BagpipeAbcToCanntTranslator::translate: abcToken=A
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dare'
+AbcNote::translate: token=A result='dare'
+AbcBar::translateNotes: note class=Ksfraser\PhpabcCanntaireachd\AbcNote
+AbcBar::translateNotes: calling translate on note at index 1
+AbcNote::translate: called for token=B
+BagpipeAbcToCanntTranslator::translate: abcToken=B
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='tum'
+AbcNote::translate: token=B result='tum'
+ENTERED parseAbcNote with: A
+Initial noteStr: A
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: A
+Initial noteStr: A
+BagpipeAbcToCanntTranslator::translate: abcToken=A
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dar'
+ENTERED parseAbcNote with: B
+Initial noteStr: B
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: B
+Initial noteStr: B
+BagpipeAbcToCanntTranslator::translate: abcToken=B
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dod'
+ENTERED parseAbcNote with: C
+Initial noteStr: C
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: C
+Initial noteStr: C
+BagpipeAbcToCanntTranslator::translate: abcToken=C
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='hid'
+ENTERED parseAbcNote with: D
+Initial noteStr: D
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: D
+Initial noteStr: D
+BagpipeAbcToCanntTranslator::translate: abcToken=D
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dar'
+ENTERED parseAbcNote with: A
+Initial noteStr: A
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: A
+Initial noteStr: A
+BagpipeAbcToCanntTranslator::translate: abcToken=A
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dar'
+ENTERED parseAbcNote with: B
+Initial noteStr: B
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: B
+Initial noteStr: B
+BagpipeAbcToCanntTranslator::translate: abcToken=B
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dod'
+ENTERED parseAbcNote with: C
+Initial noteStr: C
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: C
+Initial noteStr: C
+BagpipeAbcToCanntTranslator::translate: abcToken=C
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='hid'
+ENTERED parseAbcNote with: D
+Initial noteStr: D
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: D
+Initial noteStr: D
+BagpipeAbcToCanntTranslator::translate: abcToken=D
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dar'
+ENTERED parseAbcNote with: w:
+Initial noteStr: w:
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+Decorator match: array (
+  0 => 'w',
+  1 => 'w',
+)
+After decorator strip: :
+Initial noteStr: :
+No valid pitch/octave/length found in: :
+BagpipeAbcToCanntTranslator::translate: abcToken=w
+BagpipeAbcToCanntTranslator::translate: cannt (exact)=NULL
+BagpipeAbcToCanntTranslator::translate: cannt (norm)=NULL
+ENTERED parseAbcNote with: existing
+Initial noteStr: existing
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: existing
+Initial noteStr: existing
+BagpipeAbcToCanntTranslator::translate: abcToken=e
+BagpipeAbcToCanntTranslator::translate: cannt (exact)=NULL
+BagpipeAbcToCanntTranslator::translate: cannt (norm)=NULL
+ENTERED parseAbcNote with: lyrics
+Initial noteStr: lyrics
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: lyrics
+Initial noteStr: lyrics
+BagpipeAbcToCanntTranslator::translate: abcToken=c
+BagpipeAbcToCanntTranslator::translate: cannt (exact)=NULL
+BagpipeAbcToCanntTranslator::translate: cannt (norm)=NULL
+ENTERED parseAbcNote with: A
+Initial noteStr: A
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: A
+Initial noteStr: A
+BagpipeAbcToCanntTranslator::translate: abcToken=A
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dar'
+ENTERED parseAbcNote with: B
+Initial noteStr: B
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: B
+Initial noteStr: B
+BagpipeAbcToCanntTranslator::translate: abcToken=B
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dod'
+ENTERED parseAbcNote with: C
+Initial noteStr: C
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: C
+Initial noteStr: C
+BagpipeAbcToCanntTranslator::translate: abcToken=C
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='hid'
+ENTERED parseAbcNote with: D
+Initial noteStr: D
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: D
+Initial noteStr: D
+BagpipeAbcToCanntTranslator::translate: abcToken=D
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dar'
+ENTERED parseAbcNote with: A
+Initial noteStr: A
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: A
+Initial noteStr: A
+BagpipeAbcToCanntTranslator::translate: abcToken=A
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dar'
+ENTERED parseAbcNote with: B
+Initial noteStr: B
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: B
+Initial noteStr: B
+BagpipeAbcToCanntTranslator::translate: abcToken=B
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dod'
+ENTERED parseAbcNote with: C
+Initial noteStr: C
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: C
+Initial noteStr: C
+BagpipeAbcToCanntTranslator::translate: abcToken=C
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='hid'
+ENTERED parseAbcNote with: D
+Initial noteStr: D
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: D
+Initial noteStr: D
+BagpipeAbcToCanntTranslator::translate: abcToken=D
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dar'
+ENTERED parseAbcNote with: A
+Initial noteStr: A
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: A
+Initial noteStr: A
+BagpipeAbcToCanntTranslator::translate: abcToken=A
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dar'
+ENTERED parseAbcNote with: B
+Initial noteStr: B
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: B
+Initial noteStr: B
+BagpipeAbcToCanntTranslator::translate: abcToken=B
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dod'
+ENTERED parseAbcNote with: C
+Initial noteStr: C
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: C
+Initial noteStr: C
+BagpipeAbcToCanntTranslator::translate: abcToken=C
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='hid'
+ENTERED parseAbcNote with: D
+Initial noteStr: D
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: D
+Initial noteStr: D
+BagpipeAbcToCanntTranslator::translate: abcToken=D
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dar'
+ENTERED parseAbcNote with: A
+Initial noteStr: A
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: A
+Initial noteStr: A
+BagpipeAbcToCanntTranslator::translate: abcToken=A
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dar'
+ENTERED parseAbcNote with: B
+Initial noteStr: B
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: B
+Initial noteStr: B
+BagpipeAbcToCanntTranslator::translate: abcToken=B
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dod'
+ENTERED parseAbcNote with: C
+Initial noteStr: C
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: C
+Initial noteStr: C
+BagpipeAbcToCanntTranslator::translate: abcToken=C
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='hid'
+ENTERED parseAbcNote with: D
+Initial noteStr: D
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: D
+Initial noteStr: D
+BagpipeAbcToCanntTranslator::translate: abcToken=D
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dar'
+ENTERED parseAbcNote with: A
+Initial noteStr: A
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: A
+Initial noteStr: A
+BagpipeAbcToCanntTranslator::translate: abcToken=A
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dar'
+ENTERED parseAbcNote with: B
+Initial noteStr: B
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: B
+Initial noteStr: B
+BagpipeAbcToCanntTranslator::translate: abcToken=B
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dod'
+ENTERED parseAbcNote with: C
+Initial noteStr: C
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: C
+Initial noteStr: C
+BagpipeAbcToCanntTranslator::translate: abcToken=C
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='hid'
+ENTERED parseAbcNote with: D
+Initial noteStr: D
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: D
+Initial noteStr: D
+BagpipeAbcToCanntTranslator::translate: abcToken=D
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dar'
+ENTERED parseAbcNote with: A
+Initial noteStr: A
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: A
+Initial noteStr: A
+BagpipeAbcToCanntTranslator::translate: abcToken=A
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dar'
+ENTERED parseAbcNote with: B
+Initial noteStr: B
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: B
+Initial noteStr: B
+BagpipeAbcToCanntTranslator::translate: abcToken=B
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dod'
+ENTERED parseAbcNote with: C
+Initial noteStr: C
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: C
+Initial noteStr: C
+BagpipeAbcToCanntTranslator::translate: abcToken=C
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='hid'
+ENTERED parseAbcNote with: D
+Initial noteStr: D
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: D
+Initial noteStr: D
+BagpipeAbcToCanntTranslator::translate: abcToken=D
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dar'
+ENTERED parseAbcNote with: |
+Initial noteStr: |
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: |
+Initial noteStr: |
+No valid pitch/octave/length found in: |
+BagpipeAbcToCanntTranslator::translate: abcToken=
+BagpipeAbcToCanntTranslator::translate: cannt (exact)=NULL
+BagpipeAbcToCanntTranslator::translate: cannt (norm)=NULL
+ENTERED parseAbcNote with: A
+Initial noteStr: A
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: A
+Initial noteStr: A
+BagpipeAbcToCanntTranslator::translate: abcToken=A
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dar'
+ENTERED parseAbcNote with: B
+Initial noteStr: B
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: B
+Initial noteStr: B
+BagpipeAbcToCanntTranslator::translate: abcToken=B
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dod'
+ENTERED parseAbcNote with: |TIMING
+Initial noteStr: |TIMING
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: |TIMING
+Initial noteStr: |TIMING
+BagpipeAbcToCanntTranslator::translate: abcToken=G
+BagpipeAbcToCanntTranslator::translate: cannt (exact)=NULL
+BagpipeAbcToCanntTranslator::translate: cannt (norm)=NULL
+ENTERED parseAbcNote with: ERROR|
+Initial noteStr: ERROR|
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: ERROR|
+Initial noteStr: ERROR|
+BagpipeAbcToCanntTranslator::translate: abcToken=E
+BagpipeAbcToCanntTranslator::translate: cannt (exact)=NULL
+BagpipeAbcToCanntTranslator::translate: cannt (norm)=NULL
+ENTERED parseAbcNote with: A
+Initial noteStr: A
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: A
+Initial noteStr: A
+BagpipeAbcToCanntTranslator::translate: abcToken=A
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dar'
+ENTERED parseAbcNote with: B
+Initial noteStr: B
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: B
+Initial noteStr: B
+BagpipeAbcToCanntTranslator::translate: abcToken=B
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dod'
+ENTERED parseAbcNote with: C
+Initial noteStr: C
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: C
+Initial noteStr: C
+BagpipeAbcToCanntTranslator::translate: abcToken=C
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='hid'
+ENTERED parseAbcNote with: D
+Initial noteStr: D
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: D
+Initial noteStr: D
+BagpipeAbcToCanntTranslator::translate: abcToken=D
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dar'
+ENTERED parseAbcNote with: A
+Initial noteStr: A
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: A
+Initial noteStr: A
+BagpipeAbcToCanntTranslator::translate: abcToken=A
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dar'
+ENTERED parseAbcNote with: B
+Initial noteStr: B
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: B
+Initial noteStr: B
+BagpipeAbcToCanntTranslator::translate: abcToken=B
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dod'
+ENTERED parseAbcNote with: C
+Initial noteStr: C
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: C
+Initial noteStr: C
+BagpipeAbcToCanntTranslator::translate: abcToken=C
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='hid'
+ENTERED parseAbcNote with: D
+Initial noteStr: D
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: D
+Initial noteStr: D
+BagpipeAbcToCanntTranslator::translate: abcToken=D
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dar'
+ENTERED parseAbcNote with: D
+Initial noteStr: D
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: D
+Initial noteStr: D
+BagpipeAbcToCanntTranslator::translate: abcToken=D
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dar'
+ENTERED parseAbcNote with: C
+Initial noteStr: C
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: C
+Initial noteStr: C
+BagpipeAbcToCanntTranslator::translate: abcToken=C
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='hid'
+ENTERED parseAbcNote with: B
+Initial noteStr: B
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: B
+Initial noteStr: B
+BagpipeAbcToCanntTranslator::translate: abcToken=B
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dod'
+ENTERED parseAbcNote with: A
+Initial noteStr: A
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: A
+Initial noteStr: A
+BagpipeAbcToCanntTranslator::translate: abcToken=A
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dar'
+ENTERED parseAbcNote with: A
+Initial noteStr: A
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: A
+Initial noteStr: A
+BagpipeAbcToCanntTranslator::translate: abcToken=A
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dar'
+ENTERED parseAbcNote with: B
+Initial noteStr: B
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: B
+Initial noteStr: B
+BagpipeAbcToCanntTranslator::translate: abcToken=B
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dod'
+ENTERED parseAbcNote with: C
+Initial noteStr: C
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: C
+Initial noteStr: C
+BagpipeAbcToCanntTranslator::translate: abcToken=C
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='hid'
+ENTERED parseAbcNote with: A
+Initial noteStr: A
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: A
+Initial noteStr: A
+BagpipeAbcToCanntTranslator::translate: abcToken=A
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dar'
+ENTERED parseAbcNote with: B
+Initial noteStr: B
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: B
+Initial noteStr: B
+BagpipeAbcToCanntTranslator::translate: abcToken=B
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dod'
+ENTERED parseAbcNote with: C
+Initial noteStr: C
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: C
+Initial noteStr: C
+BagpipeAbcToCanntTranslator::translate: abcToken=C
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='hid'
+ENTERED parseAbcNote with: A2
+Initial noteStr: A2
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: A2
+Initial noteStr: A2
+BagpipeAbcToCanntTranslator::translate: abcToken=A2
+BagpipeAbcToCanntTranslator::translate: cannt (exact)=NULL
+BagpipeAbcToCanntTranslator::translate: cannt (norm)='dar'
+ENTERED parseAbcNote with: B3
+Initial noteStr: B3
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: B3
+Initial noteStr: B3
+BagpipeAbcToCanntTranslator::translate: abcToken=B3
+BagpipeAbcToCanntTranslator::translate: cannt (exact)=NULL
+BagpipeAbcToCanntTranslator::translate: cannt (norm)='dod'
+ENTERED parseAbcNote with: C
+Initial noteStr: C
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: C
+Initial noteStr: C
+BagpipeAbcToCanntTranslator::translate: abcToken=C
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='hid'
+ENTERED parseAbcNote with: D/2
+Initial noteStr: D/2
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: D/2
+Initial noteStr: D/2
+BagpipeAbcToCanntTranslator::translate: abcToken=D
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dar'
+ENTERED parseAbcNote with: {g}A
+Initial noteStr: {g}A
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: {g}A
+Initial noteStr: {g}A
+BagpipeAbcToCanntTranslator::translate: abcToken={g}A
+BagpipeAbcToCanntTranslator::translate: cannt (exact)=NULL
+BagpipeAbcToCanntTranslator::translate: cannt (norm)=NULL
+ENTERED parseAbcNote with: B
+Initial noteStr: B
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: B
+Initial noteStr: B
+BagpipeAbcToCanntTranslator::translate: abcToken=B
+BagpipeAbcToCanntTranslator::translate: cannt (exact)='dod'
+ENTERED parseAbcNote with: {e}C
+Initial noteStr: {e}C
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: {e}C
+Initial noteStr: {e}C
+BagpipeAbcToCanntTranslator::translate: abcToken={e}C
+BagpipeAbcToCanntTranslator::translate: cannt (exact)=NULL
+BagpipeAbcToCanntTranslator::translate: cannt (norm)=NULL
+ENTERED parseAbcNote with: G
+Initial noteStr: G
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: G
+Initial noteStr: G

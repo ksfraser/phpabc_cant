@@ -1,16 +1,28 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Midi;
 
+use Ksfraser\PhpabcCanntaireachd\AbcMidiLine;
+use Ksfraser\PhpabcCanntaireachd\AbcLineParser;
+
 /**
  * Parser for %%MIDI beat directive (basic velocity control)
  */
 class MidiBeatParser implements AbcLineParser
 {
-    public function canParse(string $line): bool {
+    /**
+     * @param mixed $line
+     * @return bool
+     */
+    public function canParse($line) {
         return preg_match('/^%%MIDI\s+beat\s+/i', trim($line));
     }
 
-    public function parse(string $line, AbcTune $tune): bool {
+    /**
+     * @param mixed $line
+     * @param mixed $tune
+     * @return bool
+     */
+    public function parse($line, $tune) {
         if (!preg_match('/^%%MIDI\s+beat\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)/i', trim($line), $matches)) {
             return false;
         }
@@ -40,7 +52,11 @@ class MidiBeatParser implements AbcLineParser
         return true;
     }
 
-    public function validate(string $line): bool {
+    /**
+     * @param mixed $line
+     * @return bool
+     */
+    public function validate($line) {
         if (!preg_match('/^%%MIDI\s+beat\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)$/i', trim($line), $matches)) {
             return false;
         }

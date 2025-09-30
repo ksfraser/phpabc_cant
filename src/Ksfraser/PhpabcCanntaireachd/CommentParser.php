@@ -5,11 +5,20 @@ namespace Ksfraser\PhpabcCanntaireachd;
  * Parser for comment lines (%)
  */
 class CommentParser implements AbcLineParser {
-    public function canParse(string $line): bool {
+    /**
+     * @param mixed $line
+     * @return bool
+     */
+    public function canParse($line) {
         return preg_match('/^%/', trim($line));
     }
 
-    public function parse(string $line, AbcTune $tune): bool {
+    /**
+     * @param mixed $line
+     * @param mixed $tune
+     * @return bool
+     */
+    public function parse($line, $tune) {
         if (!preg_match('/^%/', trim($line))) {
             return false;
         }
@@ -18,7 +27,11 @@ class CommentParser implements AbcLineParser {
         return true;
     }
 
-    public function validate(string $line): bool {
+    /**
+     * @param mixed $line
+     * @return bool
+     */
+    public function validate($line) {
         // Comment lines are always valid if they match our pattern
         return $this->canParse($line);
     }

@@ -8,11 +8,20 @@ use Ksfraser\PhpabcCanntaireachd\AbcMidiLine;
  * Parser for MIDI directive lines (%%MIDI, etc.)
  */
 class MidiParser implements \Ksfraser\PhpabcCanntaireachd\AbcLineParser {
-    public function canParse(string $line): bool {
+    /**
+     * @param mixed $line
+     * @return bool
+     */
+    public function canParse($line) {
         return preg_match('/^%%MIDI/i', trim($line));
     }
 
-    public function parse(string $line, AbcTune $tune): bool {
+    /**
+     * @param mixed $line
+     * @param mixed $tune
+     * @return bool
+     */
+    public function parse($line, $tune) {
         if (!preg_match('/^%%MIDI/i', trim($line))) {
             return false;
         }
@@ -46,7 +55,11 @@ class MidiParser implements \Ksfraser\PhpabcCanntaireachd\AbcLineParser {
         return true;
     }
 
-    public function validate(string $line): bool {
+    /**
+     * @param mixed $line
+     * @return bool
+     */
+    public function validate($line) {
         if (!preg_match('/^%%MIDI/i', trim($line))) {
             return false;
         }

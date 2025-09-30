@@ -106,7 +106,7 @@ class LyricsGenerator {
                         $canntTextAligned = trim($canntTextAligned);
                         $output[] = $line;
                         if ($canntTextAligned && $canntTextAligned !== '[?]') {
-                            $output[] = 'w: ' + $canntTextAligned;
+                            $output[] = 'w: ' . $canntTextAligned;
                         }
                         $hasLyrics = false;
                     } else {

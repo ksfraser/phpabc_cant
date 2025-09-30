@@ -71,7 +71,8 @@ class AbcCanntaireachdPassTest extends TestCase
         // Should preserve existing lyrics and not generate new ones
         $this->assertCount(5, $result['lines']);
         $this->assertEquals('w: existing lyrics', $result['lines'][3]);
-        $this->assertEquals('A B C D', $result['lines'][4]);
+    $this->assertEquals('A B C D', $result['lines'][4]); // Music line
+    $this->assertEquals('w: dar dod hid dar', $result['lines'][5]); // Canntaireachd line
     }
 
     public function testProcessBagpipeVoiceWithoutLyrics()
@@ -86,10 +87,10 @@ class AbcCanntaireachdPassTest extends TestCase
         $result = $this->pass->process($lines);
 
     // Should add w: line with generated canntaireachd
-    $this->assertCount(5, $result['lines']);
+    $this->assertCount(6, $result['lines']);
     $this->assertEquals('V:Bagpipes', $result['lines'][2]);
     $this->assertEquals('A B C D', $result['lines'][3]);
-    $this->assertStringStartsWith('w: ', $result['lines'][4]);
+    $this->assertEquals('w: dar dod hid dar', $result['lines'][4]);
     }
 
     public function testProcessMultipleVoicesWithBagpipes()
@@ -113,7 +114,7 @@ class AbcCanntaireachdPassTest extends TestCase
     $this->assertEquals('A B C D', $result['lines'][3]);
     $this->assertEquals('V:Bagpipes', $result['lines'][4]);
     $this->assertEquals('A B C D', $result['lines'][5]);
-    $this->assertStringStartsWith('w: ', $result['lines'][6]);
+    $this->assertEquals('w: dar dod hid dar', $result['lines'][6]);
     $this->assertEquals('V:Drums', $result['lines'][7]);
     $this->assertEquals('A B C D', $result['lines'][8]);
     }
@@ -178,10 +179,10 @@ class AbcCanntaireachdPassTest extends TestCase
     $this->assertCount(11, $result['lines']);
     // First tune
     $this->assertEquals('A B C D', $result['lines'][4]);
-    $this->assertStringStartsWith('w: ', $result['lines'][5]);
+    $this->assertEquals('w: dar dod hid dar', $result['lines'][5]);
     // Second tune
     $this->assertEquals('D C B A', $result['lines'][10]);
-    $this->assertStringStartsWith('w: ', $result['lines'][11]);
+    $this->assertEquals('w: dar hid dod dar', $result['lines'][11]);
     }
 
     public function testCanntaireachdGenerationWithTokenDictionary()
@@ -196,11 +197,7 @@ class AbcCanntaireachdPassTest extends TestCase
     // Should generate canntaireachd using token dictionary
     $this->assertCount(3, $result['lines']);
     $this->assertEquals('A B C', $result['lines'][1]);
-    $this->assertStringStartsWith('w: ', $result['lines'][2]);
-    // Should contain the mapped tokens
-    $this->assertStringContainsString('dar', $result['lines'][2]);
-    $this->assertStringContainsString('dod', $result['lines'][2]);
-    $this->assertStringContainsString('hid', $result['lines'][2]);
+    $this->assertEquals('w: dar dod hid', $result['lines'][2]);
     }
 
     public function testCanntDiffLogging()
