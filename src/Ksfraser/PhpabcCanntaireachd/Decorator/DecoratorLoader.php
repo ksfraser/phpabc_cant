@@ -6,6 +6,20 @@ namespace Ksfraser\PhpabcCanntaireachd\Decorator;
  * Returns an array of [shortcut => className, ...] for parser use.
  */
 class DecoratorLoader {
+    /**
+     * Generate a regex pattern matching all decorator shortcuts and latin names.
+     * @return string Regex pattern (e.g., /^(shortcut1|shortcut2|...)/)
+     */
+    public static function getRegex() {
+        $map = self::getDecoratorMap();
+        if (empty($map)) return '/^$/';
+        $keys = array_filter(array_keys($map), function($s) { return $s !== ''; });
+        $escaped = array_map(function($s) {
+            return preg_quote($s, '/');
+        }, $keys);
+        $pattern = '/^(' . implode('|', $escaped) . ')/';
+        return $pattern;
+    }
     protected static $decoratorMap = null;
 
     /**

@@ -49,16 +49,21 @@ class AbcCanntaireachdPass {
                 } elseif (!$hasLyrics && $this->isMusicLine($line)) {
                     // Remove voice tag before generating canntaireachd
                     $musicLine = preg_replace('/^\[V:[^\]]+\]/', '', $line);
-
-                    // Log input to generateForNotes for debugging
                     error_log("INPUT to generateForNotes: $musicLine");
-
-                    // Use the Trie to convert the music line to canntaireachd
-                    $canntText = $canntGenerator->generateForNotes($musicLine);
-
-                    if ($canntText && $canntText !== '[?]') {
-                        $output[] = $line; // Add the music line first
-                        $output[] = 'w: ' . $canntText; // Add the w: line below
+                    // Tokenize music line by spaces
+                    $musicTokens = preg_split('/\s+/', trim($musicLine));
+                    $canntTextRaw = $canntGenerator->generateForNotes($musicLine);
+                    // Tokenize canntaireachd output by spaces
+                    $canntTokens = preg_split('/\s+/', trim($canntTextRaw));
+                    // Align canntaireachd tokens to music tokens
+                    $canntTextAligned = '';
+                    for ($i = 0; $i < count($musicTokens); $i++) {
+                        $canntTextAligned .= ($canntTokens[$i] ?? '') . ' ';
+                    }
+                    $canntTextAligned = trim($canntTextAligned);
+                    if ($canntTextAligned && $canntTextAligned !== '[?]') {
+                        $output[] = 'w: ' . $canntTextAligned; // Add the w: line above
+                        $output[] = $line; // Add the music line below
                     } else {
                         $output[] = $line;
                     }

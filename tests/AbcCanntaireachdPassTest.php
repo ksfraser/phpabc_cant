@@ -85,11 +85,11 @@ class AbcCanntaireachdPassTest extends TestCase
 
         $result = $this->pass->process($lines);
 
-        // Should add w: line with generated canntaireachd
-        $this->assertCount(5, $result['lines']);
-        $this->assertEquals('V:Bagpipes', $result['lines'][2]);
-        $this->assertStringStartsWith('w: ', $result['lines'][3]);
-        $this->assertEquals('A B C D', $result['lines'][4]);
+    // Should add w: line with generated canntaireachd
+    $this->assertCount(5, $result['lines']);
+    $this->assertEquals('V:Bagpipes', $result['lines'][2]);
+    $this->assertEquals('A B C D', $result['lines'][3]);
+    $this->assertStringStartsWith('w: ', $result['lines'][4]);
     }
 
     public function testProcessMultipleVoicesWithBagpipes()
@@ -107,15 +107,15 @@ class AbcCanntaireachdPassTest extends TestCase
 
         $result = $this->pass->process($lines);
 
-        // Should add w: line only for Bagpipes voice
-        $this->assertCount(9, $result['lines']);
-        $this->assertEquals('V:Flute', $result['lines'][2]);
-        $this->assertEquals('A B C D', $result['lines'][3]);
-        $this->assertEquals('V:Bagpipes', $result['lines'][4]);
-        $this->assertStringStartsWith('w: ', $result['lines'][5]);
-        $this->assertEquals('A B C D', $result['lines'][6]);
-        $this->assertEquals('V:Drums', $result['lines'][7]);
-        $this->assertEquals('A B C D', $result['lines'][8]);
+    // Should add w: line only for Bagpipes voice
+    $this->assertCount(9, $result['lines']);
+    $this->assertEquals('V:Flute', $result['lines'][2]);
+    $this->assertEquals('A B C D', $result['lines'][3]);
+    $this->assertEquals('V:Bagpipes', $result['lines'][4]);
+    $this->assertEquals('A B C D', $result['lines'][5]);
+    $this->assertStringStartsWith('w: ', $result['lines'][6]);
+    $this->assertEquals('V:Drums', $result['lines'][7]);
+    $this->assertEquals('A B C D', $result['lines'][8]);
     }
 
     public function testProcessBagpipeVoiceWithTimingErrors()
@@ -129,11 +129,11 @@ class AbcCanntaireachdPassTest extends TestCase
 
         $result = $this->pass->process($lines);
 
-        // Should not add w: line for timing error lines
-        $this->assertCount(5, $result['lines']);
-        $this->assertEquals('V:Bagpipes', $result['lines'][2]);
-        $this->assertStringStartsWith('w: ', $result['lines'][3]);
-        $this->assertEquals('A B C D | A B |TIMING ERROR|', $result['lines'][4]);
+    // Should not add w: line for timing error lines
+    $this->assertCount(5, $result['lines']);
+    $this->assertEquals('V:Bagpipes', $result['lines'][2]);
+    $this->assertEquals('A B C D | A B |TIMING ERROR|', $result['lines'][3]);
+    $this->assertStringStartsWith('w: ', $result['lines'][4]);
     }
 
     public function testProcessCommentsAndEmptyLines()
@@ -149,13 +149,13 @@ class AbcCanntaireachdPassTest extends TestCase
 
         $result = $this->pass->process($lines);
 
-        // Should preserve comments and empty lines, add w: line for music
-        $this->assertCount(7, $result['lines']);
-        $this->assertEquals('V:Bagpipes', $result['lines'][2]);
-        $this->assertEquals('% This is a comment', $result['lines'][3]);
-        $this->assertEquals('', $result['lines'][4]);
-        $this->assertStringStartsWith('w: ', $result['lines'][5]);
-        $this->assertEquals('A B C D', $result['lines'][6]);
+    // Should preserve comments and empty lines, add w: line for music
+    $this->assertCount(7, $result['lines']);
+    $this->assertEquals('V:Bagpipes', $result['lines'][2]);
+    $this->assertEquals('% This is a comment', $result['lines'][3]);
+    $this->assertEquals('', $result['lines'][4]);
+    $this->assertEquals('A B C D', $result['lines'][5]);
+    $this->assertStringStartsWith('w: ', $result['lines'][6]);
     }
 
     public function testProcessMultipleTunes()
@@ -174,14 +174,14 @@ class AbcCanntaireachdPassTest extends TestCase
 
         $result = $this->pass->process($lines);
 
-        // Should add w: lines for both tunes
-        $this->assertCount(11, $result['lines']);
-        // First tune
-        $this->assertStringStartsWith('w: ', $result['lines'][4]);
-        $this->assertEquals('A B C D', $result['lines'][5]);
-        // Second tune
-        $this->assertStringStartsWith('w: ', $result['lines'][10]);
-        $this->assertEquals('D C B A', $result['lines'][11]);
+    // Should add w: lines for both tunes
+    $this->assertCount(11, $result['lines']);
+    // First tune
+    $this->assertEquals('A B C D', $result['lines'][4]);
+    $this->assertStringStartsWith('w: ', $result['lines'][5]);
+    // Second tune
+    $this->assertEquals('D C B A', $result['lines'][10]);
+    $this->assertStringStartsWith('w: ', $result['lines'][11]);
     }
 
     public function testCanntaireachdGenerationWithTokenDictionary()
@@ -193,13 +193,14 @@ class AbcCanntaireachdPassTest extends TestCase
 
         $result = $this->pass->process($lines);
 
-        // Should generate canntaireachd using token dictionary
-        $this->assertCount(3, $result['lines']);
-        $this->assertStringStartsWith('w: ', $result['lines'][1]);
-        // Should contain the mapped tokens
-        $this->assertStringContains('dar', $result['lines'][1]);
-        $this->assertStringContains('dod', $result['lines'][1]);
-        $this->assertStringContains('hid', $result['lines'][1]);
+    // Should generate canntaireachd using token dictionary
+    $this->assertCount(3, $result['lines']);
+    $this->assertEquals('A B C', $result['lines'][1]);
+    $this->assertStringStartsWith('w: ', $result['lines'][2]);
+    // Should contain the mapped tokens
+    $this->assertStringContainsString('dar', $result['lines'][2]);
+    $this->assertStringContainsString('dod', $result['lines'][2]);
+    $this->assertStringContainsString('hid', $result['lines'][2]);
     }
 
     public function testCanntDiffLogging()
@@ -228,10 +229,10 @@ class AbcCanntaireachdPassTest extends TestCase
 
         $result = $this->pass->process($lines);
 
-        // Should handle complex note patterns with durations
-        $this->assertCount(3, $result['lines']);
-        $this->assertStringStartsWith('w: ', $result['lines'][1]);
-        $this->assertEquals('A2 B3 C D/2', $result['lines'][2]);
+    // Should handle complex note patterns with durations
+    $this->assertCount(3, $result['lines']);
+    $this->assertEquals('A2 B3 C D/2', $result['lines'][1]);
+    $this->assertStringStartsWith('w: ', $result['lines'][2]);
     }
 
     public function testGraceNotesAndEmbellishments()
@@ -243,9 +244,9 @@ class AbcCanntaireachdPassTest extends TestCase
 
         $result = $this->pass->process($lines);
 
-        // Should handle grace notes and embellishments
-        $this->assertCount(3, $result['lines']);
-        $this->assertStringStartsWith('w: ', $result['lines'][1]);
-        $this->assertEquals('{g}A B {e}C', $result['lines'][2]);
+    // Should handle grace notes and embellishments
+    $this->assertCount(3, $result['lines']);
+    $this->assertEquals('{g}A B {e}C', $result['lines'][1]);
+    $this->assertStringStartsWith('w: ', $result['lines'][2]);
     }
 }

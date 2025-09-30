@@ -1,5 +1,8 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd;
+
+echo 'PHPABC_VERBOSE: ' . (defined('PHPABC_VERBOSE') ? (PHPABC_VERBOSE ? 'true' : 'false') : 'not defined') . "\n";
+
 /**
  * Class AbcNote
  *
@@ -103,8 +106,14 @@ class AbcNote extends Origin
 	protected $canntaireachd = '';
 	protected $solfege = '';
 	protected $bmwToken = '';
-	protected function parseAbcNote($noteStr)
+	public function __construct($noteStr, $callback = null)
 	{
+		$this->callback = $callback;
+		$this->parseAbcNote($noteStr);
+	}
+	protected function parseAbcNote($noteStr)
+		{
+			file_put_contents('debug.log', "ENTERED parseAbcNote with: $noteStr\n", FILE_APPEND);
 		// Use new parser classes for each ABC element
 		$chordParser = new \Ksfraser\PhpabcCanntaireachd\Parser\ChordSymbolsParser();
 		$graceParser = new \Ksfraser\PhpabcCanntaireachd\Parser\GraceNotesParser();
@@ -122,107 +131,63 @@ class AbcNote extends Origin
 		// EasyABC-inspired: sequential token parsing
 		$decoratorMap = \Ksfraser\PhpabcCanntaireachd\Decorator\DecoratorLoader::getDecoratorMap();
 		$originalStr = $noteStr;
-	error_log("Initial noteStr: $noteStr");
-	if (defined('PHPABC_VERBOSE') && PHPABC_VERBOSE) echo "Initial noteStr: $noteStr\n";
-		// 1. Remove decorator shortcuts at the start
-		foreach (array_keys($decoratorMap) as $shortcut) {
-			if (strpos($noteStr, $shortcut) === 0) {
-				$noteStr = substr($noteStr, strlen($shortcut));
-				$this->decorator = $shortcut;
-				break;
+	file_put_contents('debug.log', "Initial noteStr: $noteStr\n", FILE_APPEND);
+		// 1. Remove decorator shortcuts at the start using regex
+		$decoratorPattern = \Ksfraser\PhpabcCanntaireachd\Decorator\DecoratorLoader::getRegex();
+		file_put_contents('debug.log', "Decorator regex: $decoratorPattern\n", FILE_APPEND);
+		if (preg_match($decoratorPattern, $noteStr, $dm)) {
+			file_put_contents('debug.log', "Decorator match: " . var_export($dm, true) . "\n", FILE_APPEND);
+			if (isset($dm[1]) && $dm[1] !== '') {
+				$this->decorator = $dm[1];
+				$noteStr = substr($noteStr, strlen($dm[1]));
 			}
 		}
-	error_log("After decorator strip: $noteStr");
-	if (defined('PHPABC_VERBOSE') && PHPABC_VERBOSE) echo "After decorator strip: $noteStr\n";
+		file_put_contents('debug.log', "After decorator strip: $noteStr\n", FILE_APPEND);
 		// 2. Remove accidentals (=, ^, _)
-		$noteStr = preg_replace('/^[=_^]+/', '', $noteStr);
-	error_log("After accidental strip: $noteStr");
-	if (defined('PHPABC_VERBOSE') && PHPABC_VERBOSE) echo "After accidental strip: $noteStr\n";
-		// 3. Remove gracenotes (e.g., {g})
-		$noteStr = preg_replace('/^\{[^}]*\}/', '', $noteStr);
-	error_log("After gracenote strip: $noteStr");
-	if (defined('PHPABC_VERBOSE') && PHPABC_VERBOSE) echo "After gracenote strip: $noteStr\n";
-		// 4. Remove annotations (!...!) at the start
-		if (preg_match('/^!(.*?)!/', $noteStr, $m)) {
-			$noteStr = substr($noteStr, strlen($m[0]));
-		}
-	error_log("After annotation strip: $noteStr");
-	if (defined('PHPABC_VERBOSE') && PHPABC_VERBOSE) echo "After annotation strip: $noteStr\n";
+		// EasyABC-inspired: prioritized regex patterns for ABC elements
+		$patterns = [
+			'chord' => \Ksfraser\PhpabcCanntaireachd\Parser\ChordSymbolsParser::getRegex(),
+			'grace' => \Ksfraser\PhpabcCanntaireachd\Parser\GraceNotesParser::getRegex(),
+			'decorator' => \Ksfraser\PhpabcCanntaireachd\Decorator\DecoratorLoader::getRegex(),
+			'accidental' => \Ksfraser\PhpabcCanntaireachd\Parser\AccidentalsParser::getRegex(),
+			'pitch_octave_length' => '/([=_^]*)([a-gA-G])([\',]*)(\d*\/?\d*)/', // This composite regex can be moved to a loader if needed
+		];
+		$originalStr = $noteStr;
+		file_put_contents('debug.log', "Initial noteStr: $noteStr\n", FILE_APPEND);
 		// 1. Chord symbol
-		$this->chordSymbol = $chordParser->parse($noteStr);
-		if ($this->chordSymbol !== null) {
-			$noteStr = preg_replace('/"[^"]+"/', '', $noteStr);
+		if (preg_match($patterns['chord'], $noteStr, $m)) {
+			$this->chordSymbol = $m[1];
+			$noteStr = preg_replace($patterns['chord'], '', $noteStr);
 		}
 		// 2. Grace notes
-		$this->graceNotes = $graceParser->parse($noteStr);
-		if (!empty($this->graceNotes)) {
-			$noteStr = preg_replace('/\{[^}]*\}/', '', $noteStr);
+		if (preg_match($patterns['grace'], $noteStr, $m)) {
+			$this->graceNotes = [$m[1]];
+			$noteStr = preg_replace($patterns['grace'], '', $noteStr);
 		}
-		// 3. Annotations/decorators
-		$this->annotations = $annotationsParser->parse($noteStr);
-		if (!empty($this->annotations)) {
-			foreach ($this->annotations as $ann) {
-				$noteStr = str_replace($ann, '', $noteStr);
-			}
+		// 3. Decorator (ABC !...! at start)
+		if (preg_match($patterns['decorator'], $noteStr, $m)) {
+			$this->decorator = $m[1];
+			$noteStr = substr($noteStr, strlen($m[1]));
 		}
 		// 4. Accidentals
-		$this->accidentals = $accidentalsParser->parse($noteStr);
-		if (!empty($this->accidentals)) {
-			foreach ($this->accidentals as $acc) {
-				$noteStr = str_replace($acc, '', $noteStr);
-			}
+		if (preg_match($patterns['accidental'], $noteStr, $m)) {
+			$this->accidentals = [$m[1]];
+			$noteStr = substr($noteStr, strlen($m[1]));
 		}
-
-	// 5. Typesetting space
-	$this->typesettingSpace = $typesettingSpaceParser->parse($noteStr);
-	// 6. Redefinable symbol
-	$this->redefinableSymbol = $redefinableSymbolParser->parse($noteStr);
-
-		// Ambiguity resolution: check for gotchas in noteStr
-		foreach ($gotchas as $shortcut => $types) {
-			$pos = strpos($noteStr, $shortcut);
-			if ($pos !== false) {
-				$pitchPos = preg_match('/[a-gA-GzZ]/', $noteStr, $m, PREG_OFFSET_CAPTURE) ? $m[0][1] : -1;
-				$resolvedType = null;
-				if ($pitchPos !== -1) {
-					if ($pos < $pitchPos) {
-						// Shortcut before pitch: likely decorator
-						$resolvedType = in_array('decorator', $types) ? 'decorator' : $types[0];
-					} else {
-						// Shortcut after pitch: likely note element
-						$nonDecoratorTypes = array_filter($types, function($t) { return $t !== 'decorator'; });
-						$resolvedType = !empty($nonDecoratorTypes) ? reset($nonDecoratorTypes) : $types[0];
-					}
-				} else {
-					// No pitch found, cannot resolve
-					$resolvedType = $types[0];
-				}
-				// Instantiate or log ambiguity
-				if ($resolvedType) {
-					// Optionally instantiate or mark element type here
-					// Example: $this->ambiguousElements[$shortcut] = $resolvedType;
-				} else {
-					error_log("Ambiguity unresolved for shortcut '$shortcut' in noteStr '$noteStr' (types: " . implode(',', $types) . ")");
-				}
-			}
+		// 5. Pitch, octave, length (single pass)
+		if (preg_match($patterns['pitch_octave_length'], $noteStr, $m)) {
+			$this->set('sharpflat', $m[1]);
+			// Preserve case for pitch
+			$this->set('pitch', $m[2]);
+			$this->set('octave', $m[3]);
+			$this->set('length', $m[4]);
+		} else {
+			// No valid note found, log error
+			file_put_contents('debug.log', "No valid pitch/octave/length found in: $noteStr\n", FILE_APPEND);
 		}
-
-		// 13. Pitch (split point)
-		$pitch = $noteParser->parse($noteStr);
-		$this->set("pitch", $pitch);
-		// 14. Octave (after pitch)
-		$octave = $octaveParser->parse($noteStr);
-		$this->set("octave", $octave);
-		// 15. Note length (after pitch/octave)
-		$length = $lengthParser->parse($noteStr);
-		$this->set("length", $length);
-		// 16. Decorator (legacy, for compatibility)
-		$decorator = '';
-		if (!empty($this->annotations)) {
-			$decorator = implode('', $this->annotations);
-		}
-		$this->set("decorator", $decorator);
-		// Decorator objects (instantiate if shortcut matches)
+		// 6. Ambiguity resolution: longest match wins, pattern order resolves ambiguity
+		// No manual gotchas logic needed; regex order and specificity handle ambiguity
+		// 7. Decorator objects (legacy, for compatibility)
 		$this->decorators = [];
 	}
 
@@ -422,3 +387,6 @@ class AbcNote extends Origin
 	}
 
 }
+
+
+

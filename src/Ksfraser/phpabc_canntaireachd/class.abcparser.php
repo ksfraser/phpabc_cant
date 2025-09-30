@@ -33,12 +33,12 @@ require_once( 'defines.inc.php' );
 
 class abc_token extends origin
 {
-	protected $token;	//string
-}
-class abc_comment extends abc_token
-{
-	//Line starts with % but not %%
-}
+		protected $token; //string
+	// End of previous function
+	class abc_comment extends abc_token
+	{
+		//Line starts with % but not %%
+	}
 class abc_wrapped extends abc_token
 {
 	//string wrapped in a matching pair e.g. { }
@@ -487,68 +487,50 @@ class abcparser extends abc_tunebase
 	*********************************************/
 	protected function process_bars( /*array*/ $bars )
 	{
-		$this->var_dump( get_class() . "::" . __METHOD__ . "::" . __LINE__ );
-		$this->var_dump( $bars, PEAR_LOG_DEBUG );
-		$cannt_arr = array();
-		$currentbar = 0;
-		$zerobar = false;
-		foreach( $bars as $bar )
-		{
-			$currentbar++;
-			if( strlen( $bar ) == 0 )
-			{
-				//A double bar line will put us here
-				$this->var_dump( get_class() . "::" . __METHOD__ . "::" . __LINE__, PEAR_LOG_DEBUG );
-				$this->var_dump( "We hit a bar of ZERO length." , PEAR_LOG_DEBUG );
-				$zerobar = true;
-				continue;
-			}
-			else
-			{
-				$bar = trim( $bar );
-				if( $zerobar )
-				{
-					$zerobar = false;
-					$bar = "|" . $bar;
+		$this->var_dump(get_class() . "::" . __METHOD__ . "::" . __LINE__);
+		$this->var_dump($bars, PEAR_LOG_DEBUG);
+		require_once(__DIR__ . '/abc_dict.php');
+		require_once(__DIR__ . '/../PhpabcCanntaireachd/TokenMappingHelpers.php');
+		require_once(__DIR__ . '/../PhpabcCanntaireachd/Exceptions/TokenMappingException.php');
+		use Ksfraser\PhpabcCanntaireachd\Exceptions\TokenMappingException;
+		$cannt_dict = array();
+		if (isset($abc) && is_array($abc)) {
+			foreach ($abc as $key => $entry) {
+				if (isset($entry['cannt'])) {
+					$cannt_dict[$key] = $entry['cannt'];
 				}
-				$this->add_bar( $bar );
-	/** Refactoring
-	 * A Parser should not be adding extra processing.
-	 * Moving to aspd_tune
-				$this->var_dump( get_class() . "::" . __METHOD__ . "::" . __LINE__, PEAR_LOG_DEBUG );
-				$tokens = $this->tokenizer( $bar, true );	//array without timing
-				$this->var_dump( get_class() . "::" . __METHOD__ . "::" . __LINE__, PEAR_LOG_DEBUG );
-				$this->var_dump( $tokens, PEAR_LOG_DEBUG );
-				$notes = implode( ' ', $tokens );
-				$this->var_dump( get_class() . "::" . __METHOD__ . "::" . __LINE__ );
-				$this->var_dump( $notes, PEAR_LOG_DEBUG );
-				$nograce = $this->remove_gracenotes( $notes );
-				$this->var_dump( $nograce, PEAR_LOG_DEBUG );
-				$this->add_ABC( $nograce );
-				if( is_array( $notes ) )
-				{
-					foreach( $notes as $note )
-					{
-						$cannt = $this->get_cannt( $note );
-						if( strnmp( $cannt, $note, strlen($note) ) == 0 )
-						{
-							//we don't have a cannt equivalent
-							$cannt_arr[] = "OOPS";
-							$this->var_dump( "Didn't find a CANNT string for: $notes", PEAR_LOG_ERR );
-						}
-						else
-						{
-							$cannt_arr[] = $cannt;
-							$this->var_dump( "CANNT string for $notes is $cannt", PEAR_LOG_DEBUG );
-						}
-					}
-					$c = implode( " ", $cannt_arr );
-					$this->add_canntaireachd( $c );
-				}
-				//$tune->add_melody( "{g}GA {GAG}AB",  1, 1 );
-	 ***/
 			}
 		}
+		$tokenizer = new \Ksfraser\PhpabcCanntaireachd\Tokenizer();
+		$mapper = new \Ksfraser\PhpabcCanntaireachd\TokenToCanntMapper($cannt_dict);
+		$canntaireachd_lines = array();
+		foreach ($bars as $bar) {
+			$bar = trim($bar);
+			if (empty($bar)) continue;
+			$tokens = $tokenizer->tokenize($bar);
+			$filteredTokens = array_filter($tokens, function($token) {
+				return !(trim($token) === '' || $token === '|' || $token === '||' || $token === '|:' || $token === ':');
+			});
+			$canntArr = array();
+			foreach ($filteredTokens as $token) {
+				try {
+					$canntArr[] = $mapper->map($token);
+				} catch (TokenMappingException $e) {
+					// Optionally log or skip unmapped tokens
+					// error_log($e->getMessage());
+				}
+			}
+			$canntStr = implode(' ', $canntArr);
+			if (trim($canntStr) !== '') {
+				$canntaireachd_lines[] = $canntStr;
+			}
+			$this->add_canntaireachd($canntStr);
+		}
+		$this->canntaireachd_output = implode(' | ', $canntaireachd_lines);
+		if (!empty($canntaireachd_lines)) {
+			echo $this->canntaireachd_output . "\n";
+		}
+		return true;
 	}
 	/**//************************************
 	* Take in string of data, return tokens
@@ -579,78 +561,44 @@ class abcparser extends abc_tunebase
 * Line can be a bunch of:
 * Notes
 * Embellishments
-* Guitar Chords ""
-* Decorations !!
-* Chords [ ]
-* Bar Lines
-**********/
-		$len = strlen( $clean );
-		$isComment = false;	//Comment or %%MIDI.  either way, don't process the rest of the bar (line)
-		$conscount = 0;	//How many notes in a row note separated by a space 
-		$embellishment = "";
-		$full_emb = "";
-		$token = "";
-		$emb_started = false;
-		$emb_ended = false;
-		$emb_done = false;
-		$tiednote = false;
-		$isBarLine = false;		//There are variations of barlines, some with multi characters, so need to check
-		for( $i=0; $i<$len; $i++ )
+		foreach( $bars as $bar )
 		{
-			if( $isComment )
-				return $this->tokens;
-	
-			switch( $clean[$i] )
+			$currentbar++;
+			if( strlen( $bar ) == 0 )
 			{
-				case ' ':
-					//Separator between beats
-					if( ! $tiednote )
-					{
-						//I would separate tied notes across beats with the space for readability...
-						$conscount = 0;
-						if( strlen( $token ) > 0 )
-						{
-							$this->set( "tokens", $token );
-							if( $isBarLine )
-							{
-								$this->set( "tokens", "|" );
-								$isBarLine = false;
-							}
-						}
-						else
-							$this->var_dump( "How did we end up with a zero length token?", PEAR_LOG_DEBUG );
-						$token = "";
-					}
-					else
-					{
-					}
-					break;
-				case '[':
-					if( $isBarLine )
-					{
-						//As the last character was a barline, we need to add it as a token
-						$this->set( "tokens", "|" );
-						$isBarLine = false;
-					}
-					//start of instruction OR chord (grouped notes)
-					break;
-				case ']':
-					//end of instruction or chord
-					if( $isBarLine )
-					{
-						//As the last character was a barline, we need to add it as a token
-						//NOTE THIS IS PROBABLY AN ERROR
-						$this->set( "tokens", "|" );
-						$isBarLine = false;
-					}
-					break;
-				case '{':
-					if( $isBarLine )
-					{
-						//As the last character was a barline, we need to add it as a token
-						$this->set( "tokens", "|" );
-						$isBarLine = false;
-					}
+				//A double bar line will put us here
+				$this->var_dump( get_class() . "::" . __METHOD__ . "::" . __LINE__, PEAR_LOG_DEBUG );
+				$this->var_dump( "We hit a bar of ZERO length." , PEAR_LOG_DEBUG );
+				$zerobar = true;
+				continue;
+			}
+			$bar = trim( $bar );
+			if( $zerobar )
+			{
+				$zerobar = false;
+				$bar = "|" . $bar;
+			}
+			$this->add_bar( $bar );
+
+			// Patch: Map ABC tokens to canntaireachd for Bagpipes voice
+			$tokens = $this->tokenizer( $bar, true ); // array without timing
+			$cannt_arr = array();
+			foreach( $tokens as $token ) {
+				// Skip barlines and empty tokens
+				if (trim($token) === '' || $token === '|' || $token === '||' || $token === '|:' || $token === ':') {
+					continue;
+				}
+				$cannt = $this->get_cannt($token);
+				if ($cannt === null || $cannt === $token) {
+					// No mapping found, fallback to token
+					$cannt_arr[] = $token;
+				} else {
+					$cannt_arr[] = $cannt;
+				}
+			}
+			$c = implode(' ', $cannt_arr);
+			$this->add_canntaireachd($c);
+		}
 					//Start of Gracenotes
       						$this->var_dump( __FUNCTION__  . ":" . __LINE__ . "::" . "start emb" );
                                         $emb_started = true;

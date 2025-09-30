@@ -1,7 +1,17 @@
 <?php
 require 'vendor/autoload.php';
 
-$abc = "X:1\nT:Test\nM:4/4\nL:1/4\nK:HP\nV:Melody\n|A B C D|\nw:hello world\n";
+
+if ($argc < 2) {
+	fwrite(STDERR, "Usage: php test_cannt.php <abc_file>\n");
+	exit(1);
+}
+$abcFile = $argv[1];
+if (!file_exists($abcFile)) {
+	fwrite(STDERR, "File not found: $abcFile\n");
+	exit(1);
+}
+$abc = file_get_contents($abcFile);
 echo "Input:\n$abc\n\n";
 
 $result = Ksfraser\PhpabcCanntaireachd\AbcProcessor::process($abc, ['cannt' => 1]);

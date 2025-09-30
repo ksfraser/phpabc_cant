@@ -26,7 +26,7 @@ class RedefinableSymbol {
     }
     public static function getType() { return 'redefinable_symbol'; }
     public static function getStaticName() { return 'redefinable_symbol'; }
-    public function getShortcut() { return $this->shortcut; }
+    public static function getShortcut() { return ''; }
     public static function fromUserDefinition($shortcut, $name) {
         return new self($shortcut, $name);
     }

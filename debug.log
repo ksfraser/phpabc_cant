@@ -1,0 +1,139 @@
+TEST DEBUG
+TEST DEBUG
+TEST DEBUG
+ENTERED parseAbcNote with: !trill!A
+ENTERED parseAbcNote with: A!trill!
+ENTERED parseAbcNote with: !ambiguous!A
+TEST DEBUG
+ENTERED parseAbcNote with: !trill!A
+ENTERED parseAbcNote with: A!trill!
+ENTERED parseAbcNote with: !ambiguous!A
+TEST DEBUG
+ENTERED parseAbcNote with: !trill!A
+ENTERED parseAbcNote with: A!trill!
+ENTERED parseAbcNote with: !ambiguous!A
+TEST DEBUG
+ENTERED parseAbcNote with: !trill!A
+Initial noteStr: !trill!A
+After decorator strip: !trill!A
+Initial noteStr: !trill!A
+ENTERED parseAbcNote with: A!trill!
+Initial noteStr: A!trill!
+After decorator strip: A!trill!
+Initial noteStr: A!trill!
+ENTERED parseAbcNote with: !ambiguous!A
+Initial noteStr: !ambiguous!A
+After decorator strip: !ambiguous!A
+Initial noteStr: !ambiguous!A
+TEST DEBUG
+ENTERED parseAbcNote with: !trill!A
+Initial noteStr: !trill!A
+After decorator strip: !trill!A
+Initial noteStr: !trill!A
+ENTERED parseAbcNote with: A!trill!
+Initial noteStr: A!trill!
+After decorator strip: A!trill!
+Initial noteStr: A!trill!
+ENTERED parseAbcNote with: !ambiguous!A
+Initial noteStr: !ambiguous!A
+After decorator strip: !ambiguous!A
+Initial noteStr: !ambiguous!A
+TEST DEBUG
+ENTERED parseAbcNote with: !trill!A
+Initial noteStr: !trill!A
+After decorator strip: !trill!A
+Initial noteStr: !trill!A
+ENTERED parseAbcNote with: A!trill!
+Initial noteStr: A!trill!
+After decorator strip: A!trill!
+Initial noteStr: A!trill!
+ENTERED parseAbcNote with: !ambiguous!A
+Initial noteStr: !ambiguous!A
+After decorator strip: !ambiguous!A
+Initial noteStr: !ambiguous!A
+TEST DEBUG
+ENTERED parseAbcNote with: !trill!A
+Initial noteStr: !trill!A
+After decorator strip: !trill!A
+Initial noteStr: !trill!A
+Decorator value: ''
+ENTERED parseAbcNote with: A!trill!
+Initial noteStr: A!trill!
+After decorator strip: A!trill!
+Initial noteStr: A!trill!
+ENTERED parseAbcNote with: !ambiguous!A
+Initial noteStr: !ambiguous!A
+After decorator strip: !ambiguous!A
+Initial noteStr: !ambiguous!A
+TEST DEBUG
+ENTERED parseAbcNote with: !trill!A
+Initial noteStr: !trill!A
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio||\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+Decorator match: array (
+  0 => '',
+  1 => '',
+)
+After decorator strip: !trill!A
+Initial noteStr: !trill!A
+Decorator value: ''
+ENTERED parseAbcNote with: A!trill!
+Initial noteStr: A!trill!
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio||\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+Decorator match: array (
+  0 => '',
+  1 => '',
+)
+After decorator strip: A!trill!
+Initial noteStr: A!trill!
+ENTERED parseAbcNote with: !ambiguous!A
+Initial noteStr: !ambiguous!A
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio||\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+Decorator match: array (
+  0 => '',
+  1 => '',
+)
+After decorator strip: !ambiguous!A
+Initial noteStr: !ambiguous!A
+TEST DEBUG
+ENTERED parseAbcNote with: !trill!A
+Initial noteStr: !trill!A
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+Decorator match: array (
+  0 => '!trill!',
+  1 => '!trill!',
+)
+After decorator strip: A
+Initial noteStr: A
+Decorator value: '!trill!'
+ENTERED parseAbcNote with: A!trill!
+Initial noteStr: A!trill!
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: A!trill!
+Initial noteStr: A!trill!
+ENTERED parseAbcNote with: !ambiguous!A
+Initial noteStr: !ambiguous!A
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: !ambiguous!A
+Initial noteStr: !ambiguous!A
+TEST DEBUG
+TEST DEBUG
+ENTERED parseAbcNote with: G
+Initial noteStr: G
+Decorator regex: /^(\!accent\!|\>|Accent|\!arpeggio\!|~|Arpeggio|\!breath\!|,|Breath|\!cacoda\!|cc|CaCoda|\!coda\!|c|Coda|\!crescendo\!|\<|Crescendo|\!dc\!|dc|DC|\!ds\!|ds|DS|\!dacapo\!|DaCapo|\!dacoda\!|DaCoda|\!diminuendo\!|Diminuendo|\!downbow\!|d|Downbow|\!emphasis\!|em|Emphasis|\!fermata\!|\^|Fermata|\!fine\!|f|Fine|\!invertedfermata\!|if|InvertedFermata|\!invertedturn\!|it|InvertedTurn|\!invertedturnx\!|itx|InvertedTurnX|\!longphrase\!|lp|LongPhrase|\!lowermordent\!|lm|LowerMordent|\!mediumphrase\!|mp|MediumPhrase|\!mordent\!|m|Mordent|\!open\!|o|Open|\!plus\!|\+|Plus|\!pralltriller\!|pt|PrallTriller|\!roll\!|r|Roll|\!segno\!|S|Segno|\!shortphrase\!|sp|ShortPhrase|\!slide\!|Slide|\!snap\!|s|Snap|\.|\!staccato\!|Staccato|\!tenuto\!|\-|Tenuto|\!thumb\!|th|Thumb|\!tremolo\!|t|Tremolo|\!trill\!|tr|Trill|\!turn\!|tu|Turn|\!turnx\!|tx|Turnx|\!upbow\!|u|Upbow|\!uppermordent\!|um|UpperMordent|\!wedge\!|w|Wedge)/
+After decorator strip: G
+Initial noteStr: G
+TEST DEBUG
+TEST DEBUG
+TEST DEBUG
+TEST DEBUG
+TEST DEBUG
+TEST DEBUG
+TEST DEBUG
+TEST DEBUG
+TEST DEBUG
+TEST DEBUG
+TEST DEBUG
+TEST DEBUG
+TEST DEBUG
+TEST DEBUG
+TEST DEBUG

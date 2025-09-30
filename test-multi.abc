@@ -76,4 +76,7 @@ I:MIDI=program 110
 [V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
 [V:M]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
 [V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |]
-
+%expected cannt:
+%hen o ho e | ho en ho do | hen o ho e | ho do den |
+%ho a he o | che a he o | ho a he o | dili ve hete |
+%hen o ho e | ho en ho do | hen o ho e | ho do den |
