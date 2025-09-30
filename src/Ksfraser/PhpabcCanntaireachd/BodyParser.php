@@ -1,17 +1,29 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd;
+require_once __DIR__ . '/AbcLine.php';
+
+use Ksfraser\PhpabcCanntaireachd\AbcLine;
 
 /**
  * Parser for music body lines
  */
 class BodyParser implements AbcLineParser {
-    public function canParse(string $line): bool {
+    /**
+     * @param string $line
+     * @return bool
+     */
+    public function canParse($line) {
         // Body lines are anything that doesn't match other parsers
         // This should be the last parser in the chain
         return true;
     }
 
-    public function parse(string $line, AbcTune $tune): bool {
+    /**
+     * @param string $line
+     * @param AbcTune $tune
+     * @return bool
+     */
+    public function parse($line, $tune) {
         $abcLine = new AbcLine();
 
         // Handle embedded instructions like [K:...], [M:...], etc.
@@ -43,7 +55,11 @@ class BodyParser implements AbcLineParser {
         return true;
     }
     
-    public function validate(string $line): bool {
+    /**
+     * @param string $line
+     * @return bool
+     */
+    public function validate($line) {
         // Validate notes, barlines, lyrics, etc. - standard ABC notation
         return preg_match('/^[\|\[\]a-gA-GzZ0-9\s,:!\'\"\/\^_\.\-]+$/', $line);
     }

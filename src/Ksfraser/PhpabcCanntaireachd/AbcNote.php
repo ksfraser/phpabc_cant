@@ -68,7 +68,29 @@ echo 'PHPABC_VERBOSE: ' . (defined('PHPABC_VERBOSE') ? (PHPABC_VERBOSE ? 'true' 
  *   + get_body_out(): string
  * }
  * AbcNote --|> Origin
- * AbcNote <|-- NoteParserTrait
+ * AbcNote ..> NoteParserTrait : uses
+ * @enduml
+ *
+ * @sequence
+ * @startuml
+ * participant User
+ * participant AbcNote
+ * participant Translator
+ * User -> AbcNote: __construct(noteStr)
+ * User -> AbcNote: translate(translator)
+ * AbcNote -> Translator: translate(this)
+ * Translator --> AbcNote: canntToken
+ * AbcNote --> User: canntToken
+ * @enduml
+ *
+ * @flowchart
+ * @startuml
+ * start
+ * :Parse note string into fields;
+ * :Validate fields;
+ * :Provide accessors and mutators;
+ * :Support translation via translator;
+ * stop
  * @enduml
  */
 

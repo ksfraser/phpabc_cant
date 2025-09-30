@@ -16,6 +16,9 @@
  * 8	Tenor
  *************************************** */
 require_once( 'class.tunesetting.php' );
+
+use Ksfraser\PhpabcCanntaireachd\Voices\AbcVoice;
+use Ksfraser\PhpabcCanntaireachd\Voices\VoiceFactory;
 class aspd_tune extends abc_tunesetting
 {
 	protected $current_voice;	//For when the source file doesn't use [V: at the start of each line
@@ -27,24 +30,24 @@ class aspd_tune extends abc_tunesetting
 		parent::__construct();
 		$this->transcription = "Kevin Fraser, <bagpipes@ksfraser.com> ";
 			//$voice_indicator, $name = "", $sname = "", $stem = null, $gstem = "up", $octave = 0, $transpose = 0
-/**
- *Added to BASE
-		$vm = new abc_voice( 'M', "Melody", "Melody", 'down', 'up', 0, 0, "add_melody" );
-		//Lyrics need to go first so that when searching by indicator, for legacy listings, it gets found.
-		$vl = new abc_voice( 'w', "Lyrics", "Lyrics", 'down', 'up', 0, 0, "add_lyrics" );
-*/
-		$va = new abc_voice( 'w', "ABC", "ABC", 'down', 'up', 0, 0, "add_ABC" );
-		$vn = new abc_voice( 'w', "Canntaireachd", "Cannt", 'down', 'up', 0, 0, "add_canntaireachd" );
-		$vw = new abc_voice( 'W', "Words", "Words", 'down', 'up', 0, 0, "add_words" );
-		$vh = new abc_voice( 'H', "Harmony", "Harmony", 'down', 'up', 0, 0, "add_harmony" );
-		$vc = new abc_voice( 'C', "C-Harmony", "C-Harmony", 'down', 'up', 0, 0, "add_c_harmony" );
-		$vs = new abc_voice( 'S', "Snare", "Snare", 'down', 'up', 0, 0, "add_snare" );
-		$vb = new abc_voice( 'B', "Bass", "Bass", 'down', 'up', 0, 0, "add_bass" );
-		$vt = new abc_voice( 'T', "Tenor", "Tenor", 'down', 'up', 0, 0, "add_tenor" );
-		$vA = new abc_voice( 'BA', "Brass A", "Brass A", 'down', 'up', 0, -1, "add_brassA" );
-		$vA = new abc_voice( 'BB', "Brass B", "Brass B", 'down', 'up', 0, -1, "add_brassB" );
-		$vA = new abc_voice( 'BC', "Brass C", "Brass C", 'down', 'up', 0, -1, "add_brassC" );
-		$vA = new abc_voice( 'BD', "Brass D", "Brass D", 'down', 'up', 0, -1, "add_brassD" );
+	/*
+	 * Added to BASE
+	 */
+	$vm = (new VoiceFactory('M', 'Melody', 'Melody', 'down', 'up', 0, 0, 'add_melody'))->createVoice();
+	//Lyrics need to go first so that when searching by indicator, for legacy listings, it gets found.
+	$vl = (new VoiceFactory('w', 'Lyrics', 'Lyrics', 'down', 'up', 0, 0, 'add_lyrics'))->createVoice();
+	$va = (new VoiceFactory('w', 'ABC', 'ABC', 'down', 'up', 0, 0, 'add_ABC'))->createVoice();
+	$vn = (new VoiceFactory('w', 'Canntaireachd', 'Cannt', 'down', 'up', 0, 0, 'add_canntaireachd'))->createVoice();
+	$vw = (new VoiceFactory('W', 'Words', 'Words', 'down', 'up', 0, 0, 'add_words'))->createVoice();
+	$vh = (new VoiceFactory('H', 'Harmony', 'Harmony', 'down', 'up', 0, 0, 'add_harmony'))->createVoice();
+	$vc = (new VoiceFactory('C', 'C-Harmony', 'C-Harmony', 'down', 'up', 0, 0, 'add_c_harmony'))->createVoice();
+	$vs = (new VoiceFactory('S', 'Snare', 'Snare', 'down', 'up', 0, 0, 'add_snare'))->createVoice();
+	$vb = (new VoiceFactory('B', 'Bass', 'Bass', 'down', 'up', 0, 0, 'add_bass'))->createVoice();
+	$vt = (new VoiceFactory('T', 'Tenor', 'Tenor', 'down', 'up', 0, 0, 'add_tenor'))->createVoice();
+	$vA = (new VoiceFactory('BA', 'Brass A', 'Brass A', 'down', 'up', 0, -1, 'add_brassA'))->createVoice();
+	$vA = (new VoiceFactory('BB', 'Brass B', 'Brass B', 'down', 'up', 0, -1, 'add_brassB'))->createVoice();
+	$vA = (new VoiceFactory('BC', 'Brass C', 'Brass C', 'down', 'up', 0, -1, 'add_brassC'))->createVoice();
+	$vA = (new VoiceFactory('BD', 'Brass D', 'Brass D', 'down', 'up', 0, -1, 'add_brassD'))->createVoice();
 		//$this->add_voice_obj( $vm );
 		$this->add_voice_obj( $vh );
 		$this->add_voice_obj( $vc );

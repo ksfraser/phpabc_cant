@@ -1,6 +1,5 @@
-// MOVED TO Voices/AbcVoice.php
 <?php
-namespace Ksfraser\PhpabcCanntaireachd;
+namespace Ksfraser\PhpabcCanntaireachd\Voices;
 
 /**
  * Class AbcVoice

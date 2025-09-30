@@ -17,7 +17,29 @@ namespace Ksfraser\PhpabcCanntaireachd;
  *   + translate(token): string|null
  * }
  * AbcTokenTranslator <|-- BagpipeAbcToCanntTranslator
- * ... (other translators inherit)
+ * AbcTokenTranslator <|-- (other translators)
+ * class TokenDictionary
+ * @enduml
+ *
+ * @sequence
+ * @startuml
+ * participant User
+ * participant AbcTokenTranslator
+ * participant TokenDictionary
+ * User -> AbcTokenTranslator: translate(token)
+ * AbcTokenTranslator -> TokenDictionary: ... (translation logic)
+ * TokenDictionary --> AbcTokenTranslator: ...
+ * AbcTokenTranslator --> User: result
+ * @enduml
+ *
+ * @flowchart
+ * @startuml
+ * start
+ * :Receive token and dictionary;
+ * :Subclasses implement translate(token);
+ * :Use dictionary for mapping;
+ * :Return result;
+ * stop
  * @enduml
  */
 abstract class AbcTokenTranslator {

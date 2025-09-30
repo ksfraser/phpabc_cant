@@ -68,7 +68,14 @@ require_once( 'class.aspd_tune.php' );
 $infile = "abc_in.abc";
 $outfile = "abc_out.abc";
 $lbl = new line_by_line( $infile, $outfile );
+// Create tune and ensure Bagpipes voice is present if Bagpipes key/index is set
 $tune = new aspd_tune();
+// If Bagpipes key or index is set, add Bagpipes voice to header
+if ((isset($tune->key) && $tune->key === 'HP') || (isset($tune->index) && $tune->index == 1)) {
+	use Ksfraser\PhpabcCanntaireachd\BagpipeVoiceFactory;
+	$bagpipes_voice = BagpipeVoiceFactory::createVoice('Bagpipes');
+	$tune->add_voice_obj($bagpipes_voice);
+}
 //$intune = new abc_tunesetting();
 $intune = new aspd_tune();
 $sourceline = 0;
@@ -129,8 +136,8 @@ try {
 						}
 						else
 						{
-   							$v0 = new abc_voice( $leadA[0], "TBD", "TBD", 'down', 'up', 0, 0, null );
-                					$tune->add_voice_obj( $v0 );
+	                    $v0 = new \Ksfraser\PhpabcCanntaireachd\AbcVoice($leadA[0], "TBD", "TBD", 'down', 'up', 0, 0, null);
+	                    $tune->add_voice_obj( $v0 );
 
 						}
 					}

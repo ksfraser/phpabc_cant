@@ -8,6 +8,62 @@ namespace Ksfraser\PhpabcCanntaireachd;
  * Can be extended for other translation directions (ABC<->BMW, BMW<->Cannt, etc).
  *
  * @package Ksfraser\PhpabcCanntaireachd
+ *
+ * @uml
+ * @startuml
+ * class AbcTokenTranslator {
+ *   - dictionary: TokenDictionary
+ *   + __construct(dictionary: TokenDictionary)
+ *   + translate(token): string|null
+ * }
+ * AbcTokenTranslator <|-- BagpipeAbcToCanntTranslator
+ * class BagpipeAbcToCanntTranslator {
+ *   + translate(note: AbcNote): string|null
+ * }
+ * class TokenDictionary {
+ *   + convertAbcToCannt(token: string): string|null
+ * }
+ * class AbcNote {
+ *   + get_body_out(): string
+ * }
+ * BagpipeAbcToCanntTranslator --> TokenDictionary : uses
+ * BagpipeAbcToCanntTranslator --> AbcNote : translates
+ * @enduml
+ *
+ * @sequence
+ * @startuml
+ * participant User
+ * participant BagpipeAbcToCanntTranslator
+ * participant AbcNote
+ * participant TokenDictionary
+ * User -> BagpipeAbcToCanntTranslator: translate(note)
+ * BagpipeAbcToCanntTranslator -> AbcNote: get_body_out()
+ * AbcNote --> BagpipeAbcToCanntTranslator: abcToken
+ * BagpipeAbcToCanntTranslator -> TokenDictionary: convertAbcToCannt(abcToken)
+ * TokenDictionary --> BagpipeAbcToCanntTranslator: canntToken
+ * BagpipeAbcToCanntTranslator -> TokenDictionary: convertAbcToCannt(norm)
+ * TokenDictionary --> BagpipeAbcToCanntTranslator: canntToken|null
+ * BagpipeAbcToCanntTranslator --> User: canntToken|null
+ * @enduml
+ *
+ * @flowchart
+ * @startuml
+ * start
+ * :Check note is AbcNote;
+ * if (not AbcNote) then (no)
+ *   :throw InvalidArgumentException;
+ *   stop
+ * else (yes)
+ *   :abcToken = note.get_body_out();
+ *   :cannt = dictionary.convertAbcToCannt(abcToken);
+ *   if (cannt == null) then (yes)
+ *     :norm = strip digits from abcToken;
+ *     :cannt = dictionary.convertAbcToCannt(norm);
+ *   endif
+ *   :return cannt;
+ *   stop
+ * endif
+ * @enduml
  */
 require_once __DIR__ . '/AbcTokenTranslator.php';
 

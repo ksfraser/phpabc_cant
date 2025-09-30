@@ -3,7 +3,7 @@ namespace Ksfraser\PhpabcCanntaireachd\Tests;
 
 use Ksfraser\PhpabcCanntaireachd\TokenNormalizer;
 use Ksfraser\PhpabcCanntaireachd\TokenToCanntMapper;
-use Ksfraser\PhpabcCanntaireachd\TokenMappingException;
+use Ksfraser\PhpabcCanntaireachd\Exceptions\TokenMappingException;
 use PHPUnit\Framework\TestCase;
 
 class TokenMappingHelpersTest extends TestCase {

@@ -1,5 +1,49 @@
-<?php
+/**
 namespace Ksfraser\PhpabcCanntaireachd;
+/**
+ * Class AbcLine
+ *
+ * Represents a line of ABC music, containing bars and supporting translation and rendering of canntaireachd lyrics.
+ *
+ * @uml
+ * @startuml
+ * class AbcLine {
+ *   - headerLine: string
+ *   - bars: array
+ *   + translateBars(translator)
+ *   + renderCanntLyricLine(): string
+ *   + add(item: AbcItem)
+ *   + getBars(): array
+ * }
+ * AbcLine --> AbcBar : contains
+ * AbcLine --> AbcItem : contains
+ * @enduml
+ *
+ * @sequence
+ * @startuml
+ * participant User
+ * participant AbcLine
+ * participant AbcBar
+ * participant Translator
+ * User -> AbcLine: add(bar)
+ * User -> AbcLine: translateBars(translator)
+ * AbcLine -> AbcBar: translateNotes(translator)
+ * AbcBar --> AbcLine: (translated)
+ * User -> AbcLine: renderCanntLyricLine()
+ * AbcLine -> AbcBar: renderCanntaireachd()
+ * AbcBar --> AbcLine: cannt
+ * AbcLine --> User: w: ...
+ * @enduml
+ *
+ * @flowchart
+ * @startuml
+ * start
+ * :Add bars to line;
+ * :Translate all bars using translator;
+ * :Render canntaireachd lyric line;
+ * stop
+ * @enduml
+ */
 class AbcLine extends AbcItem {
 
     /**

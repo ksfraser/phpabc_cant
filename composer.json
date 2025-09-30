@@ -24,7 +24,8 @@
   ],
   "autoload": {
     "psr-4": {
-      "Ksfraser\\PhpabcCanntaireachd\\": "src/Ksfraser/PhpabcCanntaireachd/",
+  "Ksfraser\\PhpabcCanntaireachd\\": "src/Ksfraser/PhpabcCanntaireachd/",
+  "Ksfraser\\PhpabcCanntaireachd\\Voices\\": "src/Ksfraser/PhpabcCanntaireachd/Voices/",
       "Ksfraser\\PhpabcCanntaireachd\\Tune\\": "src/Ksfraser/PhpabcCanntaireachd/Tune/",
       "Ksfraser\\PhpabcCanntaireachd\\Midi\\": "src/Ksfraser/PhpabcCanntaireachd/Midi/",
       "Ksfraser\\Database\\": "src/Ksfraser/Database/",

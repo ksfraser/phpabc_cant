@@ -25,6 +25,13 @@
  * * ***************************************************************/
 
 require_once( 'class.tunesetting.php' );
+// use Ksfraser\PhpabcCanntaireachd\AbcVoice;
+$tune = new aspd_tune();
+$tune->add_key( "HP" );         //bagpipes
+$tune->add_index( 1 );          //bagpipes
+$bagpipes_voice = null;
+$bagpipes_voice = \Ksfraser\PhpabcCanntaireachd\BagpipeVoiceFactory::createVoice('Bagpipes');
+$tune->add_voice_obj($bagpipes_voice);
 
 
 /****************************

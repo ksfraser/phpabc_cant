@@ -1,10 +1,54 @@
-<?php
+<?php 
+
 namespace Ksfraser\PhpabcCanntaireachd;
+/**
+ * Class AbcCanntaireachdPass
+ *
+ * Processes ABC lines and generates canntaireachd lyrics using the translation pipeline.
+ *
+ * @uml
+ * @startuml
+ * class AbcCanntaireachdPass {
+ *   - dict: TokenDictionary
+ *   + process(lines: array): array
+ * }
+ * AbcCanntaireachdPass --> BagpipeAbcToCanntTranslator : uses
+ * BagpipeAbcToCanntTranslator --> TokenDictionary : uses
+ * @enduml
+ *
+ * @sequence
+ * @startuml
+ * participant User
+ * participant AbcCanntaireachdPass
+ * participant BagpipeAbcToCanntTranslator
+ * participant TokenDictionary
+ * User -> AbcCanntaireachdPass: process(lines)
+ * AbcCanntaireachdPass -> BagpipeAbcToCanntTranslator: translate(note)
+ * BagpipeAbcToCanntTranslator -> TokenDictionary: convertAbcToCannt(token)
+ * TokenDictionary --> BagpipeAbcToCanntTranslator: canntToken
+ * BagpipeAbcToCanntTranslator --> AbcCanntaireachdPass: canntToken
+ * AbcCanntaireachdPass --> User: output
+ * @enduml
+ *
+ * @flowchart
+ * @startuml
+ * start
+ * :Receive ABC lines;
+ * :Validate lines;
+ * :For each music line, split into tokens;
+ * :For each token, create AbcNote and translate;
+ * :Collect canntaireachd tokens;
+ * :Output original and w: lines;
+ * stop
+ * @enduml
+ */
 class AbcCanntaireachdPass {
     private $dict;
+    /**
+     * @param array $dict
+     */
     public function __construct($dict) { $this->dict = $dict; }
     /**
-     * Process ABC lines, generating canntaireachd lyrics using the new translation pipeline.
      * @param array $lines
      * @return array
      */
@@ -45,8 +89,28 @@ class AbcCanntaireachdPass {
     // Lyrics generation now handled by LyricsGenerator class
 
     private function isMusicLine($line) {
-        // A music line is one that is not a header (V:, X:, T:, etc.), comment (%), or empty
-        return !preg_match('/^[VXT:]/', $line) && trim($line) !== '' && !preg_match('/^%/', $line);
+        $trimmed = trim($line);
+        // Exclude empty lines and comments
+        if ($trimmed === '' || preg_match('/^%/', $trimmed)) {
+            return false;
+        }
+        // Exclude header lines (X:, T:, M:, L:, K:, etc.)
+        if (preg_match('/^[A-Z]:/', $trimmed)) {
+            return false;
+        }
+        // Exclude voice definition lines (V: at start)
+        if (preg_match('/^V:/', $trimmed)) {
+            return false;
+        }
+        // Accept lines starting with [V:...] as music lines
+        if (preg_match('/^\[V:[^\]]+\]/', $trimmed)) {
+            return true;
+        }
+        // Accept lines with music notation (notes, bars, etc.)
+        if (preg_match('/[A-Ga-gzZ\|\[\]\{\}]/', $trimmed)) {
+            return true;
+        }
+        return false;
     }
 }
 

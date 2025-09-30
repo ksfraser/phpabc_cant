@@ -5,6 +5,9 @@ use Ksfraser\PhpabcCanntaireachd\Exceptions\TokenMappingException;
 
 class TokenNormalizer {
     public static function normalize($token) {
+        if ($token === null || $token === '') {
+            throw new TokenMappingException("Normalization failed for empty token");
+        }
         // Split multi-note tokens (e.g., 'A2B' => ['A','B'])
         // Match gracenote+pitch+duration, e.g. '{g}A3', '{d}B2', 'A2', 'B', etc.
         $pattern = '/(\{[a-z]+\})?[A-Ga-g](?:[0-9.\/\-]*)?/';

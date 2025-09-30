@@ -6,7 +6,10 @@
  *
  * @package Ksfraser\PhpabcCanntaireachd
  */
+
 namespace Ksfraser\PhpabcCanntaireachd;
+
+require_once __DIR__ . '/BodyParser.php';
 
 class AbcValidator
 {

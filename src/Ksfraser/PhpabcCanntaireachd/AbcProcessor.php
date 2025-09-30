@@ -141,7 +141,7 @@ class AbcProcessor {
         $output = [];
         $hasMelody = false;
         $melodyVoiceId = null;
-        
+
         // First pass: find melody voice
         foreach ($lines as $line) {
             if (preg_match('/^V:([^\s]+)/', $line, $m)) {
@@ -152,16 +152,16 @@ class AbcProcessor {
                 }
             }
         }
-        
+
         if (!$hasMelody) {
             return $lines;
         }
-        
+
         // Second pass: copy lines and collect melody content
         $melodyContent = [];
         foreach ($lines as $line) {
             $output[] = $line;
-            
+
             // Collect melody content
             if (preg_match('/^\[V:' . preg_quote($melodyVoiceId, '/') . '\](.*)$/i', $line, $m)) {
                 // This is melody content, copy it for bagpipe
@@ -169,14 +169,13 @@ class AbcProcessor {
                 $melodyContent[] = $bagpipeLine;
             }
         }
-        
-        // Add bagpipe voice with copied content
+
+        // Add bagpipe voice with copied content (header line should be added in header logic, not here)
         if (!empty($melodyContent)) {
-            $output[] = 'V:Bagpipes name="Bagpipes" sname="Bagpipes"';
             $output[] = '%canntaireachd: <add your canntaireachd here>';
             $output = array_merge($output, $melodyContent);
         }
-        
+
         return $output;
     }
 

@@ -3,6 +3,41 @@ namespace Ksfraser\PhpabcCanntaireachd;
 
 /**
  * TokenDictionary manages ABC/canntaireachd/BMW token mappings and CRUD operations.
+ *
+ * @uml
+ * @startuml
+ * class TokenDictionary {
+ *   - tokens: array
+ *   + prepopulate(dict: array)
+ *   + addOrUpdateToken(abc, cannt, bmw, desc)
+ *   + getToken(abc)
+ *   + deleteToken(abc)
+ *   + convertAbcToCannt(abc)
+ *   + convertBmwToAbc(bmw)
+ *   + convertCanntToBmw(cannt)
+ *   + ...
+ * }
+ * @enduml
+ *
+ * @sequence
+ * @startuml
+ * participant Translator
+ * participant TokenDictionary
+ * Translator -> TokenDictionary: convertAbcToCannt(abc)
+ * TokenDictionary --> Translator: canntToken|null
+ * @enduml
+ *
+ * @flowchart
+ * @startuml
+ * start
+ * :Receive mapping request (e.g. convertAbcToCannt);
+ * if (token exists) then (yes)
+ *   :return mapped value;
+ * else (no)
+ *   :return null;
+ * endif
+ * stop
+ * @enduml
  */
 class TokenDictionary
 {
