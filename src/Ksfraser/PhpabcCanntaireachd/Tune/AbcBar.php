@@ -274,7 +274,7 @@ class AbcBar extends \Ksfraser\PhpabcCanntaireachd\AbcItem implements Renderable
     }
 
     // Render the bar content for inclusion in a line (without surrounding '|')
-    protected function renderSelf(): string
+    public function renderSelf(): string
     {
         if ($this->contentText !== null) {
             return $this->contentText;
@@ -282,5 +282,14 @@ class AbcBar extends \Ksfraser\PhpabcCanntaireachd\AbcItem implements Renderable
         // If notes parsed, render notes
         $notes = $this->renderNotes();
         return $notes;
+    }
+
+    /**
+     * Get the notes array (for testing and inspection)
+     * @return array
+     */
+    public function getContent(): array
+    {
+        return $this->notes;
     }
 }

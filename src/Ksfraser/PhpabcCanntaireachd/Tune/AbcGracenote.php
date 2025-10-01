@@ -1,5 +1,5 @@
 <?php
-namespace Ksfraser\PhpabcCanntaireachd;
+namespace Ksfraser\PhpabcCanntaireachd\Tune;
 /**
  * Class AbcGracenote
  *

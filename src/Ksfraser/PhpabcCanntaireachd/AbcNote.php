@@ -101,6 +101,7 @@ use Ksfraser\origin\Origin;
 use Ksfraser\PhpabcCanntaireachd\Contract\TranslatableNoteInterface;
 use Ksfraser\PhpabcCanntaireachd\Contract\RenderableCanntaireachdInterface;
 
+
 class AbcNote extends Origin implements TranslatableNoteInterface, RenderableCanntaireachdInterface
 {
 	/**
@@ -426,6 +427,13 @@ class AbcNote extends Origin implements TranslatableNoteInterface, RenderableCan
 		return $out;
 	}
 
+	/**
+	 * Get the note pitch (for compatibility with AbcGracenoteTest).
+	 * @return string
+	 */
+	public function getNote() {
+		return $this->pitch;
+	}
 }
 
 

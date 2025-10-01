@@ -1,6 +1,9 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd;
 
+use Ksfraser\PhpabcCanntaireachd\Tune\AbcBar;
+use Ksfraser\PhpabcCanntaireachd\Tune\AbcTune;
+
 class TuneService {
     protected $bagpipeAliases = ['P', 'pipes', 'pipe', 'bagpipe', 'BAGPIPES', 'Bagpipes'];
     protected $canntGenerator;
@@ -68,7 +71,7 @@ class TuneService {
             }
             if ($fallbackLine !== '') {
                 // Create a single AbcBar from the fallback line and insert as 'P'
-                $bar = new \Ksfraser\PhpabcCanntaireachd\AbcBar($fallbackLine);
+                $bar = new AbcBar($fallbackLine);
                 $tune->ensureVoiceInsertedFirst('P', [$bar]);
                 $tune->addVoiceHeader('P', 'Bagpipes', 'Bagpipes');
                 $headers = $tune->getHeaders();

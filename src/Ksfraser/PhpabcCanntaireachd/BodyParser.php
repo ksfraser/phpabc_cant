@@ -3,6 +3,7 @@ namespace Ksfraser\PhpabcCanntaireachd;
 require_once __DIR__ . '/AbcLine.php';
 
 use Ksfraser\PhpabcCanntaireachd\AbcLine;
+use Ksfraser\PhpabcCanntaireachd\Tune\AbcBar;
 
 /**
  * Parser for music body lines
@@ -24,7 +25,7 @@ class BodyParser implements AbcLineParser {
      * @return bool
      */
     public function parse($line, $tune) {
-        $abcLine = new AbcLine();
+    $abcLine = new AbcLine();
 
         // Handle embedded instructions like [K:...], [M:...], etc.
         if (preg_match_all('/\[([A-Z]):([^\]]+)\]/', $line, $matches, PREG_SET_ORDER)) {

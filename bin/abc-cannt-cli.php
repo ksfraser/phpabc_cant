@@ -106,7 +106,7 @@ if (file_exists($legacyPath)) {
 $config = [
     'updateVoiceNamesFromMidi' => $updateVoiceNamesFromMidi
 ];
-$result = AbcProcessor::process($abcContent, $dict);
+$result = AbcProcessor::process($abcContent, $dict, null, $convert);
 
 $outputMsg = "ABC Canntaireachd processing completed\n";
 $outputMsg .= "✓ File: $file\n";
