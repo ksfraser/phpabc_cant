@@ -45,9 +45,17 @@ namespace Ksfraser\PhpabcCanntaireachd;
 class AbcCanntaireachdPass {
     private $dict;
     /**
-     * @param array $dict
+     * @param array|TokenDictionary $dict
      */
-    public function __construct($dict) { $this->dict = $dict; }
+    public function __construct($dict) {
+        if ($dict instanceof TokenDictionary) {
+            $this->dict = $dict;
+        } else {
+            $td = new TokenDictionary();
+            $td->prepopulate($dict);
+            $this->dict = $td;
+        }
+    }
     /**
      * @param array $lines
      * @return array

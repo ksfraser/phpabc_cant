@@ -1,3 +1,20 @@
+    /**
+     * Get the voice indicator (V: field)
+     * @return string
+     */
+    public function getVoiceIndicator()
+    {
+        return $this->voiceIndicator;
+    }
+
+    /**
+     * Get the name of the voice
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Voices;
 
@@ -22,11 +39,30 @@ namespace Ksfraser\PhpabcCanntaireachd\Voices;
  *   + getHeaderOut(): string
  *   + getBodyOut(): string
  *   + getLineStartOut(): string
+ *   + getVoiceIndicator(): string
+ *   + getName(): string
  * }
  * @enduml
  */
 class AbcVoice
 {
+    /**
+     * Get the voice indicator (V: field)
+     * @return string
+     */
+    public function getVoiceIndicator()
+    {
+        return $this->voiceIndicator;
+    }
+
+    /**
+     * Get the name of the voice
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
     private string $voiceIndicator;
     private string $name;
     private string $sname;

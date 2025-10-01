@@ -18,7 +18,7 @@
 require_once( 'class.tunesetting.php' );
 
 use Ksfraser\PhpabcCanntaireachd\Voices\AbcVoice;
-use Ksfraser\PhpabcCanntaireachd\Voices\VoiceFactory;
+use Ksfraser\PhpabcCanntaireachd\Voices\InstrumentVoiceFactory;
 class aspd_tune extends abc_tunesetting
 {
 	protected $current_voice;	//For when the source file doesn't use [V: at the start of each line
@@ -33,21 +33,21 @@ class aspd_tune extends abc_tunesetting
 	/*
 	 * Added to BASE
 	 */
-	$vm = (new VoiceFactory('M', 'Melody', 'Melody', 'down', 'up', 0, 0, 'add_melody'))->createVoice();
+	$vm = InstrumentVoiceFactory::createVoiceFromParams('M', 'Melody', 'Melody', 'down', 'up', 0, 0, 'add_melody');
 	//Lyrics need to go first so that when searching by indicator, for legacy listings, it gets found.
-	$vl = (new VoiceFactory('w', 'Lyrics', 'Lyrics', 'down', 'up', 0, 0, 'add_lyrics'))->createVoice();
-	$va = (new VoiceFactory('w', 'ABC', 'ABC', 'down', 'up', 0, 0, 'add_ABC'))->createVoice();
-	$vn = (new VoiceFactory('w', 'Canntaireachd', 'Cannt', 'down', 'up', 0, 0, 'add_canntaireachd'))->createVoice();
-	$vw = (new VoiceFactory('W', 'Words', 'Words', 'down', 'up', 0, 0, 'add_words'))->createVoice();
-	$vh = (new VoiceFactory('H', 'Harmony', 'Harmony', 'down', 'up', 0, 0, 'add_harmony'))->createVoice();
-	$vc = (new VoiceFactory('C', 'C-Harmony', 'C-Harmony', 'down', 'up', 0, 0, 'add_c_harmony'))->createVoice();
-	$vs = (new VoiceFactory('S', 'Snare', 'Snare', 'down', 'up', 0, 0, 'add_snare'))->createVoice();
-	$vb = (new VoiceFactory('B', 'Bass', 'Bass', 'down', 'up', 0, 0, 'add_bass'))->createVoice();
-	$vt = (new VoiceFactory('T', 'Tenor', 'Tenor', 'down', 'up', 0, 0, 'add_tenor'))->createVoice();
-	$vA = (new VoiceFactory('BA', 'Brass A', 'Brass A', 'down', 'up', 0, -1, 'add_brassA'))->createVoice();
-	$vA = (new VoiceFactory('BB', 'Brass B', 'Brass B', 'down', 'up', 0, -1, 'add_brassB'))->createVoice();
-	$vA = (new VoiceFactory('BC', 'Brass C', 'Brass C', 'down', 'up', 0, -1, 'add_brassC'))->createVoice();
-	$vA = (new VoiceFactory('BD', 'Brass D', 'Brass D', 'down', 'up', 0, -1, 'add_brassD'))->createVoice();
+	$vl = InstrumentVoiceFactory::createVoiceFromParams('w', 'Lyrics', 'Lyrics', 'down', 'up', 0, 0, 'add_lyrics');
+	$va = InstrumentVoiceFactory::createVoiceFromParams('w', 'ABC', 'ABC', 'down', 'up', 0, 0, 'add_ABC');
+	$vn = InstrumentVoiceFactory::createVoiceFromParams('w', 'Canntaireachd', 'Cannt', 'down', 'up', 0, 0, 'add_canntaireachd');
+	$vw = InstrumentVoiceFactory::createVoiceFromParams('W', 'Words', 'Words', 'down', 'up', 0, 0, 'add_words');
+	$vh = InstrumentVoiceFactory::createVoiceFromParams('H', 'Harmony', 'Harmony', 'down', 'up', 0, 0, 'add_harmony');
+	$vc = InstrumentVoiceFactory::createVoiceFromParams('C', 'C-Harmony', 'C-Harmony', 'down', 'up', 0, 0, 'add_c_harmony');
+	$vs = InstrumentVoiceFactory::createVoiceFromParams('S', 'Snare', 'Snare', 'down', 'up', 0, 0, 'add_snare');
+	$vb = InstrumentVoiceFactory::createVoiceFromParams('B', 'Bass', 'Bass', 'down', 'up', 0, 0, 'add_bass');
+	$vt = InstrumentVoiceFactory::createVoiceFromParams('T', 'Tenor', 'Tenor', 'down', 'up', 0, 0, 'add_tenor');
+	$vA = InstrumentVoiceFactory::createVoiceFromParams('BA', 'Brass A', 'Brass A', 'down', 'up', 0, -1, 'add_brassA');
+	$vA = InstrumentVoiceFactory::createVoiceFromParams('BB', 'Brass B', 'Brass B', 'down', 'up', 0, -1, 'add_brassB');
+	$vA = InstrumentVoiceFactory::createVoiceFromParams('BC', 'Brass C', 'Brass C', 'down', 'up', 0, -1, 'add_brassC');
+	$vA = InstrumentVoiceFactory::createVoiceFromParams('BD', 'Brass D', 'Brass D', 'down', 'up', 0, -1, 'add_brassD');
 		//$this->add_voice_obj( $vm );
 		$this->add_voice_obj( $vh );
 		$this->add_voice_obj( $vc );
@@ -66,19 +66,18 @@ class aspd_tune extends abc_tunesetting
 	}
 	function set( $field, $value = null, $enforce_only_native_vars = true )
 	{
-					//$this->var_dump( __FILE__ . "::" . __FUNCTION__  . ":" . __LINE__ );
 		if( $field == "current_voice" )
 		{
 			$this->set_current_voice( $value );
 		}
 		else
 		{
-			parent::set( $field, $value, $enforce_only_native_vars );
+			// parent::set() does not exist; fallback to property set
+			$this->$field = $value;
 		}
 	}
-	function set_current_voice( abc_voice $current_voice )
+	function set_current_voice( $current_voice )
 	{
-					$this->var_dump( __FUNCTION__  . ":" . __LINE__ );
 		$this->current_voice = $current_voice;
 	}
 	/**//**
@@ -95,25 +94,18 @@ class aspd_tune extends abc_tunesetting
 	 * */
 	function add_body( $bar, $voice = 1, $linenum = 1, $barnum = 1 )
 	{
-		$this->var_dump( __FILE__ . "::" . __FUNCTION__  . "::" . __LINE__ . ":: $bar", PEAR_LOG_DEBUG );
-		//echo "Setting Line by Voice $voice $linenum:$barnum:$bar \r\n";
 		if( $linenum > $this->line_count )
 		{
 			$this->line_count = $linenum;
-			//echo "Setting Linecount to $linenum by Voice $voice:$linenum:$barnum \r\n";
-			//$this->var_dump( $bar );
 		}
 		if( ! isset( $this->body_arr[$voice][$linenum][$barnum] ) )
 		{
-			$this->var_dump( __FUNCTION__  . ":" . __LINE__ . ": Adding Bar:: " . $bar );
 			$this->body_arr[$voice][$linenum][$barnum] = $bar;
 		}
 		else
 		{
 			if( $barnum == 4 )
 			{
-				//Bar 4 for this line is already set
-				//echo "Bar 4 already set for $voice:$linenum:$barnum \n\r";
 				$linenum++;
 				$barnum=1;
 			}
@@ -121,10 +113,8 @@ class aspd_tune extends abc_tunesetting
 			{
 				$barnum++;
 			}
-			$this->var_dump( __FUNCTION__  . ":" . __LINE__ . ": Recursive Call new Bar/Line number :: " . $linenum . "::" . $barnum );
 			$this->add_body( $bar, $voice, $linenum, $barnum );
 		}
-		//$this->var_dump( $this->body_arr );
 	}
 	/**//************************************
 	* Take in string of data, return tokens
@@ -137,12 +127,10 @@ class aspd_tune extends abc_tunesetting
 	*****************************************/
 	protected function tokenizer( $data, $striptiming = false )
 	{
-		$this->var_dump( get_class() . "::" . __METHOD__ );
-		$this->var_dump( $data );
-		$clean = trim( $data );	//strip whitespace front and back
+		$clean = trim( $data );
 		$len = strlen( $clean );
-		$isComment = false;	//Comment or %%MIDI.  either way, don't process the rest of the bar (line)
-		$conscount = 0;	//How many notes in a row note separated by a space 
+		$isComment = false;
+		$conscount = 0;
 		$embellishment = "";
 		$full_emb = "";
 		$token = "";
@@ -150,12 +138,12 @@ class aspd_tune extends abc_tunesetting
 		$emb_ended = false;
 		$emb_done = false;
 		$tiednote = false;
-		$this->tokens = array();	
+		$this->tokens = array();
 		for( $i=0; $i<$len; $i++ )
 		{
 			if( $isComment )
 				return $this->tokens;
-	
+
 			switch( $clean[$i] )
 			{
 				case ' ':
@@ -164,33 +152,20 @@ class aspd_tune extends abc_tunesetting
 					{
 						//I would separate tied notes across beats with the space for readability...
 						$conscount = 0;
-						$this->var_dump( __FUNCTION__  . ":" . __LINE__ . "::Setting Tokens with Token::" . $token ); 
 						$this->set( "tokens", $token );
 						$token = "";
 					}
-					else
-					{
-					}
-					break;
-				case '[':
-					//start of instruction OR chord (grouped notes)
-					break;
-				case ']':
-					//end of instruction or chord
 					break;
 				case '{':
 					//Start of Gracenotes
-      						$this->var_dump( __FUNCTION__  . ":" . __LINE__ . "::" . "start emb" );
-                                        $emb_started = true;
+      						$emb_started = true;
 					break;
 				case '}':
 					//End of Gracenotes
 					 $emb_ended = true;
 					 $emb_done = false;	//The gracenotes may be done, but we still need a melody note and duration
 					 $emb_started = false;
-                                         	$this->var_dump( __FUNCTION__  . ":" . __LINE__ . "::" . "end emb" );
-                                         $full_emb = "{" . "$embellishment" . "}";
-                                         	$this->var_dump( __FUNCTION__  . ":" . __LINE__ . "::FULL EMB:::" . $full_emb );
+                                         	$full_emb = "{" . "$embellishment" . "}";
                                          $embellishment = "";
 					break;
 				case 'a':
@@ -217,10 +192,9 @@ class aspd_tune extends abc_tunesetting
 						if( strncmp( $clean[$i], $clean[$i-2], 1 ) == 0 )
 						{
 							//same note
-							if( ! striptiming )
+							if( ! $striptiming )
 							{
 								$token = $clean[$i];
-								$this->var_dump( __FUNCTION__  . ":" . __LINE__ . "::Token::" . $token ); 
 							}
 							else
 							{
@@ -230,7 +204,6 @@ class aspd_tune extends abc_tunesetting
 						else
 						{	
 							$token = $clean[$i];
-							$this->var_dump( __FUNCTION__  . ":" . __LINE__ . "::Token::" . $token ); 
 							$tiednote = false; 	//slurred note?
 						} 
 					}
@@ -239,8 +212,6 @@ class aspd_tune extends abc_tunesetting
 					{ 
 						//These are gracenotes
 						$embellishment .= $clean[$i];
-						$this->var_dump( __FUNCTION__  . ":" . __LINE__ . "::Note to add::" . $clean[$i] ); 
-						$this->var_dump( __FUNCTION__  . ":" . __LINE__ . "::Embelllishment so far::" . $embellishment ); 
 					} 
 					else 
 					{ 
@@ -249,7 +220,6 @@ class aspd_tune extends abc_tunesetting
 						{
 							$token = $full_emb . $clean[$i]; //Can't set token yet, as there might be timing modifiers as the next char.
 							$full_emb = "";
-							$this->var_dump( __FUNCTION__  . ":" . __LINE__ . "::Token::" . $token ); 
 							$conscount++;
 						}
 						else
@@ -257,7 +227,6 @@ class aspd_tune extends abc_tunesetting
 							//This is the 2nd melody note between spaces
 							$this->set( "tokens", $token );
 							$token = $clean[$i];
-							$this->var_dump( __FUNCTION__  . ":" . __LINE__ . "::Token::" . $token ); 
 							$conscount = 0;
 						}
 					}
@@ -270,16 +239,7 @@ class aspd_tune extends abc_tunesetting
 					if( ! $striptiming )
 					{
 						$token .= $clean[$i];
-						$this->var_dump( __FUNCTION__  . ":" . __LINE__ . "::RToken::" . $token ); 
 					}
-					else
-					{
-						//$token .= " ";
-						$this->var_dump( __FUNCTION__  . ":" . __LINE__ . "::RToken::" . $token ); 
-					}
-					break;
-				case 'H':
-					//Fermata
 					break;
 				case '0':
 				case '1':
@@ -295,7 +255,6 @@ class aspd_tune extends abc_tunesetting
 					if( ! $striptiming )
 					{
 						$token .= $clean[$i];
-						$this->var_dump( __FUNCTION__  . ":" . __LINE__ . "::RToken::" . $token ); 
 					}
 					break;
 				case '-':
@@ -303,7 +262,6 @@ class aspd_tune extends abc_tunesetting
 					if( ! $striptiming )
 					{
 						$token .= $clean[$i];
-						$this->var_dump( __FUNCTION__  . ":" . __LINE__ . "::RToken::" . $token ); 
 					}
 					else
 					{
@@ -356,7 +314,8 @@ class aspd_tune extends abc_tunesetting
 	******************************************************************************************/
 	function add_melody(  $bar,  $linenum = 1, $barnum = 1, $addcannt = true, $addabc = false )
 	{
-		parent::add_melody(  $bar,  $linenum, $barnum, $addcannt = true, $addabc = false );
+	// Only pass the first three arguments as per base signature
+	parent::add_melody(  $bar,  $linenum, $barnum );
 		if( strlen( $bar ) > 0 )
 		{
 		  	if( $addcannt )
@@ -385,12 +344,12 @@ class aspd_tune extends abc_tunesetting
 					{
 						//we don't have a cannt equivalent
 						$cannt_arr[] = "OOPS";
-						$this->var_dump( "Didn't find a CANNT string for::$token::", PEAR_LOG_ERR );
+					$this->var_dump( "Didn't find a CANNT string for::$token::" );
 					}
 					else
 					{
 						$cannt_arr[] = $cannt;
-						$this->var_dump( "CANNT string for $token is $cannt", PEAR_LOG_DEBUG );
+					$this->var_dump( "CANNT string for $token is $cannt" );
 					}
 					$cannt = "";
 				}
@@ -562,37 +521,37 @@ class aspd_tune extends abc_tunesetting
         *********************************************/
         public function process_bars( /*array*/ $bars )
         {
-                $this->var_dump( get_class() . "::" . __METHOD__ . "::" . __LINE__ );
-                $this->var_dump( $bars, PEAR_LOG_DEBUG );
+			$this->var_dump( get_class() . "::" . __METHOD__ . "::" . __LINE__ );
+			$this->var_dump( $bars );
                 $cannt_arr = array();
                 foreach( $bars as $bar )
                 {
                         $this->add_bar( $bar );
-                        $this->var_dump( get_class() . "::" . __METHOD__ . "::" . __LINE__, PEAR_LOG_DEBUG );
+						$this->var_dump( get_class() . "::" . __METHOD__ . "::" . __LINE__ );
                         $tokens = $this->tokenizer( $bar, true );       //array without timing
-                        $this->var_dump( get_class() . "::" . __METHOD__ . "::" . __LINE__, PEAR_LOG_DEBUG );
-                        $this->var_dump( $tokens, PEAR_LOG_DEBUG );
+						$this->var_dump( get_class() . "::" . __METHOD__ . "::" . __LINE__ );
+						$this->var_dump( $tokens );
                         $notes = implode( ' ', $tokens );
                         $this->var_dump( get_class() . "::" . __METHOD__ . "::" . __LINE__ );
-                        $this->var_dump( $notes, PEAR_LOG_DEBUG );
+						$this->var_dump( $notes );
                         $nograce = $this->remove_gracenotes( $notes );
-                        $this->var_dump( $nograce, PEAR_LOG_DEBUG );
+						$this->var_dump( $nograce );
                         $this->add_ABC( $nograce );
                         if( is_array( $notes ) )
                         {
                                 foreach( $notes as $note )
                                 {
                                         $cannt = $this->get_cannt( $note );
-                                        if( strnmp( $cannt, $note, strlen($note) ) == 0 )
+										if( strncmp( $cannt, $note, strlen($note) ) == 0 )
                                         {
                                                 //we don't have a cannt equivalent
                                                 $cannt_arr[] = "OOPS";
-                                                $this->var_dump( "Didn't find a CANNT string for: $notes", PEAR_LOG_ERR );
+												$this->var_dump( "Didn't find a CANNT string for: " . print_r($notes, true) );
                                         }
                                         else
                                         {
                                                 $cannt_arr[] = $cannt;
-                                                $this->var_dump( "CANNT string for $notes is $cannt", PEAR_LOG_DEBUG );
+												$this->var_dump( "CANNT string for " . print_r($notes, true) . " is $cannt" );
                                         }
                                 }
                                 $c = implode( " ", $cannt_arr );
@@ -603,16 +562,16 @@ class aspd_tune extends abc_tunesetting
         }
 	function add_bar( $bar )
 	{
-		$this->var_dump( get_class() . "::" . __METHOD__ . ":: $bar", PEAR_LOG_DEBUG );
+	$this->var_dump( get_class() . "::" . __METHOD__ . ":: $bar" );
 		if( isset( $this->current_voice ) )
 		{
 			$v = $this->current_voice;
-			$this->Log( "Current Voice $v", PEAR_LOG_DEBUG );
+			// $this->Log( "Current Voice $v", PEAR_LOG_DEBUG ); // Method Log() does not exist
 		}
 		else
 		{
 			$v = "melody";
-			$this->Log( "Current Voice not set so calling $v", PEAR_LOG_DEBUG );
+			// $this->Log( "Current Voice not set so calling $v", PEAR_LOG_DEBUG ); // Method Log() does not exist
 		}
 		$fn = "add_" . $v;
 		return $this->$fn( $bar );

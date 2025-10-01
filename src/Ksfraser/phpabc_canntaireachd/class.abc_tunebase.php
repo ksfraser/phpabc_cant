@@ -14,7 +14,9 @@
 global $abc_dict;
 require_once( 'abc_dict.php' );	//Used by get_cannt
 require_once( 'class.origin.php' );	//Used by get_cannt
-require_once( 'class.abc_voice.php' );	//Used by get_cannt
+require_once( 'class.abc_voice.php' ); // Used by get_cannt
+use Ksfraser\PhpabcCanntaireachd\Voices\InstrumentVoiceFactory;
+use Ksfraser\PhpabcCanntaireachd\Voices\AbcVoice;
 
 
 /**//**
@@ -70,7 +72,7 @@ class abc_tunebase extends origin
 	// 	^^ and __ allowed
 	function __construct()
 	{
-					$this->var_dump( __FUNCTION__  . ":" . __LINE__ );
+        $this->var_dump( __FUNCTION__  . ":" . __LINE__ );
 		parent::__construct();
 		$this->headers_anglo_arr = array();
 		$this->headers_anglo_arr['X'] = "index";
@@ -131,11 +133,10 @@ class abc_tunebase extends origin
 			"index" => "X:",
 		);
 		$this->voicecount = 0;
-	//	$this->body_voice_arr = array( "" );
-		$vm = new abc_voice( 'M', "Melody", "Melody", 'down', 'up', 0, 0, "add_melody" );
+		// Use InstrumentVoiceFactory for all default voices
+		$vm = \Ksfraser\PhpabcCanntaireachd\Voices\InstrumentVoiceFactory::createVoiceFromParams('M', 'Melody', 'Melody', 'down', 'up', 0, 0, 'add_melody');
 		$this->add_voice_obj( $vm );
-		//Lyrics need to go first so that when searching by indicator, for legacy listings, it gets found.
-		$vl = new abc_voice( 'w', "Lyrics", "Lyrics", 'down', 'up', 0, 0, "add_lyrics" );
+		$vl = \Ksfraser\PhpabcCanntaireachd\Voices\InstrumentVoiceFactory::createVoiceFromParams('w', 'Lyrics', 'Lyrics', 'down', 'up', 0, 0, 'add_lyrics');
 		$this->add_voice_obj( $vl );
 	}
 	/**//**************************************************************************
@@ -155,7 +156,6 @@ class abc_tunebase extends origin
 		{
 			//How did we get this far where the arr isn't set?
 			throw new Exception( "Header_symbol_arr not set.  How so, as the constructor sets it?", KSF_FIELD_NOT_SET );
-			return FALSE;
 		}
 	}
 	function add_index( $index = 1 )
@@ -470,14 +470,17 @@ class abc_tunebase extends origin
                 }
                 //$this->var_dump( $this->body_arr );
         }
-        function add_voice_obj( abc_voice $voice )
-        {
-                                        //$this->var_dump( __FUNCTION__  . ":" . __LINE__ );
-                $this->voices_obj_arr[] = $voice;
-                $this->add_voice( $voice->get( 'voice_indicator' ) );
-                $this->add_voice_name( $voice->get( 'name' ) );
-                $this->add_voice_arr( $voice->get_header_out() );
-        }
+        /**
+    * Add a voice object (AbcVoice) to the tune
+    */
+	function add_voice_obj( AbcVoice $voice )
+	{
+		$this->voices_obj_arr[] = $voice;
+	// Use public getters for voiceIndicator and name
+	$this->add_voice( $voice->getVoiceIndicator() );
+	$this->add_voice_name( $voice->getName() );
+		$this->add_voice_arr( $voice->getHeaderOut() );
+	}
 
 	/**//**
 	* TODO: REfactor to use array key search like above
@@ -487,7 +490,7 @@ class abc_tunebase extends origin
 					$this->var_dump( __FUNCTION__  . ":" . __LINE__ );
 		foreach( $this->voices_obj_arr as $voice )
 		{
-			$vname = $voice->get( "name" );
+			$vname = $voice->getName();
 			if( strcasecmp( $vname, $name ) == 0 )
 			{
 				return $voice;
@@ -505,7 +508,7 @@ class abc_tunebase extends origin
 					$this->var_dump( __FUNCTION__  . ":" . __LINE__ );
 		foreach( $this->voices_obj_arr as $voice )
 		{
-			if( strcasecmp( $voice->voice_indicator, $ind ) == 0 )
+			if( strcasecmp( $voice->getVoiceIndicator(), $ind ) == 0 )
 			{
 				return $voice;
 			}

@@ -2,6 +2,7 @@
 namespace Ksfraser\PhpabcCanntaireachd;
 
 use Ksfraser\PhpabcCanntaireachd\HeaderExtractorTrait;
+use Ksfraser\PhpabcCanntaireachd\Voices\InstrumentVoiceFactory;
 
 class AbcProcessor {
     use HeaderExtractorTrait;
@@ -29,7 +30,7 @@ class AbcProcessor {
             new AbcTuneNumberValidatorPass(),
             new AbcVoicePass(),
             new AbcLyricsPass($dict),
-            new AbcCanntaireachdPass($dict),
+             new AbcCanntaireachdPass($dict),
             new AbcVoiceOrderPass(),
             new AbcTimingValidator()
         ];
@@ -45,7 +46,15 @@ class AbcProcessor {
         ];
         $suggestions = [];
         if ($headerTable) {
-            $matcher = new AbcHeaderFieldMatcher($headerTable);
+            $table = $headerTable instanceof AbcHeaderFieldTable ? $headerTable : new AbcHeaderFieldTable();
+            if (is_array($headerTable)) {
+                foreach ($headerTable as $field => $values) {
+                    foreach ((array)$values as $value) {
+                        $table->addFieldValue($field, $value);
+                    }
+                }
+            }
+            $matcher = new AbcHeaderFieldMatcher($table);
             $suggestions = $matcher->processTuneFields($tuneFields);
         }
         $pipeline = new AbcProcessingPipeline($passes);
@@ -393,6 +402,51 @@ class AbcProcessor {
             }
         }
         return $output;
+    }
+    /**
+     * Parse a V: line and return an AbcVoice using InstrumentVoiceFactory
+     * Example V: line: V:T name="Trumpet" sname="Trumpet" stem=up gstem=up octave=0 transpose=0 clef="treble"
+     */
+    public static function parseVoiceLine($line) {
+        if (!preg_match('/^V:([^\s]+)(.*)$/', $line, $m)) {
+            return null;
+        }
+        $indicator = $m[1];
+        $params = $m[2];
+        $name = '';
+        $sname = '';
+        $stem = null;
+        $gstem = null;
+        $octave = 0;
+        $transpose = 0;
+        $callback = null;
+        $clef = null;
+        if (preg_match('/name="([^"]+)"/', $params, $mm)) {
+            $name = $mm[1];
+        }
+        if (preg_match('/sname="([^"]+)"/', $params, $mm)) {
+            $sname = $mm[1];
+        }
+        if (preg_match('/stem=([a-zA-Z]+)/', $params, $mm)) {
+            $stem = $mm[1];
+        }
+        if (preg_match('/gstem=([a-zA-Z]+)/', $params, $mm)) {
+            $gstem = $mm[1];
+        }
+        if (preg_match('/octave=(-?\d+)/', $params, $mm)) {
+            $octave = (int)$mm[1];
+        }
+        if (preg_match('/transpose=(-?\d+)/', $params, $mm)) {
+            $transpose = (int)$mm[1];
+        }
+        if (preg_match('/clef="([^"]+)"/', $params, $mm)) {
+            $clef = $mm[1];
+        }
+        // Optionally parse callback if present
+        if (preg_match('/callback=([a-zA-Z0-9_]+)/', $params, $mm)) {
+            $callback = $mm[1];
+        }
+        return InstrumentVoiceFactory::createVoiceFromParams($indicator, $name, $sname, $stem, $gstem, $octave, $transpose, $callback, $clef);
     }
 }
 
