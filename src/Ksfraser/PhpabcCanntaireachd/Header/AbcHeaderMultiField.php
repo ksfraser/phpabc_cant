@@ -33,8 +33,8 @@ abstract class AbcHeaderMultiField extends AbcHeaderField {
 	 *
 	 * @param string
 	 */
-	public add( $value )
-	{
-		$this->set(  $value );
-	}
+       public function add($value)
+       {
+	       $this->set($value);
+       }
 }

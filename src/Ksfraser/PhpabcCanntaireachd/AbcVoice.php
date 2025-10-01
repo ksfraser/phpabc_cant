@@ -1,4 +1,3 @@
-// MOVED TO Voices/AbcVoice.php
 <?php
 namespace Ksfraser\PhpabcCanntaireachd;
 
