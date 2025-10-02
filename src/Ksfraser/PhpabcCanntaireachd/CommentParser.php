@@ -23,7 +23,10 @@ class CommentParser implements AbcLineParser {
             return false;
         }
 
-        $tune->add(new AbcCommentLine($line));
+    // Remove the comment character(s) from the start
+    $commentChar = CommentSyntax::COMMENT_CHAR;
+    $text = ltrim(preg_replace('/^' . preg_quote($commentChar, '/') . '+\s*/', '', $line));
+    $tune->add(new AbcComment($text, false));
         return true;
     }
 

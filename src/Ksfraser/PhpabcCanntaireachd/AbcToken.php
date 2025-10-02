@@ -4,7 +4,7 @@ use Ksfraser\origin\Origin;
 class AbcToken extends Origin
 {
     protected $token;
-    function set($field, $value, $enforce = true)
+    function set($field, $value = null, $enforce_only_native_vars = true)
     {
         switch ($field) {
             case "token":
