@@ -25,7 +25,7 @@ This traceability matrix links system requirements to their corresponding implem
 | Detect bagpipe tunes by key | `AbcCanntaireachdPass::isBagpipeTune()` | `AbcCanntaireachdPassTest` | ✅🧪📋🔗 |
 | Create Bagpipes voice when missing | `AbcCanntaireachdPass::ensureBagpipeVoice()` | `test_melody_copy.php`, integration tests | ✅🧪📋🔗 |
 | Copy melody to Bagpipes voice | Voice copying logic in pass | `test_melody_copy.php` | ✅🧪📋🔗 |
-| Convert ABC to canntaireachd | `TokenDictionary`, token mapping | `TokenDictionaryTest`, `Dict2phpTest` | ✅🧪📋🔗 |
+| Convert ABC to canntaireachd | `TokenDictionary`, token mapping, note-level canntaireachd in `AbcCanntaireachdPass` | `TokenDictionaryTest`, `Dict2phpTest`, `AbcCanntaireachdPassTest` (note-level) | ✅🧪📋🔗 |
 | Add canntaireachd as w: lines | w: line insertion in pass | `test_cannt.php`, `test_final.php` | ✅🧪📋🔗 |
 
 ### R3: Multi-Pass Processing Pipeline

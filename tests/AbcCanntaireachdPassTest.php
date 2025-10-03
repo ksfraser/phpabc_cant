@@ -4,6 +4,30 @@ use Ksfraser\PhpabcCanntaireachd\TokenDictionary;
 use PHPUnit\Framework\TestCase;
 
 class AbcCanntaireachdPassTest extends TestCase
+
+    public function testNoteLevelCanntaireachdAssignment()
+    {
+        // Simulate a parsed tune with Bagpipe and Flute voices
+        $abcText = "X:1\nT:Note Level Test\nV:Bagpipes\nA B C D\nV:Flute\nA B C D";
+        $tuneClass = \Ksfraser\PhpabcCanntaireachd\Tune\AbcTune::class;
+        $tune = $tuneClass::parse($abcText);
+        $this->pass->process($tune);
+        $voices = $tune->getVoices();
+        $barsBagpipes = $tune->getVoiceBars()['Bagpipes'] ?? [];
+        $barsFlute = $tune->getVoiceBars()['Flute'] ?? [];
+        // BagpipeVoice: each note should have canntaireachd
+        foreach ($barsBagpipes as $bar) {
+            foreach ($bar->notes as $i => $note) {
+                $this->assertEquals(['dar','dod','hid','dar'][$i], $note->getCanntaireachd(), "Bagpipe note $i should have correct canntaireachd");
+            }
+        }
+        // Flute: each note should have null or empty canntaireachd
+        foreach ($barsFlute as $bar) {
+            foreach ($bar->notes as $note) {
+                $this->assertTrue($note->getCanntaireachd() === null || $note->getCanntaireachd() === '', "Non-bagpipe note should have null/empty canntaireachd");
+            }
+        }
+    }
 {
     private $dict;
     private $pass;
@@ -245,5 +269,29 @@ class AbcCanntaireachdPassTest extends TestCase
     $this->assertCount(3, $result['lines']);
     $this->assertEquals('{g}A B {e}C', $result['lines'][1]);
     $this->assertStringStartsWith('w: ', $result['lines'][2]);
+    }
+
+    public function testNoteLevelCanntaireachdAssignment()
+    {
+        // Simulate a parsed tune with Bagpipe and Flute voices
+        $abcText = "X:1\nT:Note Level Test\nV:Bagpipes\nA B C D\nV:Flute\nA B C D";
+        $tuneClass = \Ksfraser\PhpabcCanntaireachd\Tune\AbcTune::class;
+        $tune = $tuneClass::parse($abcText);
+        $this->pass->process($tune);
+        $voices = $tune->getVoices();
+        $barsBagpipes = $tune->getVoiceBars()['Bagpipes'] ?? [];
+        $barsFlute = $tune->getVoiceBars()['Flute'] ?? [];
+        // BagpipeVoice: each note should have canntaireachd
+        foreach ($barsBagpipes as $bar) {
+            foreach ($bar->notes as $i => $note) {
+                $this->assertEquals(['dar','dod','hid','dar'][$i], $note->getCanntaireachd(), "Bagpipe note $i should have correct canntaireachd");
+            }
+        }
+        // Flute: each note should have null or empty canntaireachd
+        foreach ($barsFlute as $bar) {
+            foreach ($bar->notes as $note) {
+                $this->assertTrue($note->getCanntaireachd() === null || $note->getCanntaireachd() === '', "Non-bagpipe note should have null/empty canntaireachd");
+            }
+        }
     }
 }

@@ -1,3 +1,32 @@
+    /**
+     * Get all Voice objects, keyed by voice ID.
+     * @return array<string, \Ksfraser\PhpabcCanntaireachd\Voices\AbcVoice>
+     */
+    public function getVoices(): array {
+        // If $this->voiceObjs exists, return it; otherwise, build from voiceBars
+        if (property_exists($this, 'voiceObjs') && is_array($this->voiceObjs)) {
+            return $this->voiceObjs;
+        }
+        $result = [];
+        // If voiceBars contains objects with getVoiceIndicator, use those
+        if (isset($this->voiceBars) && is_array($this->voiceBars)) {
+            foreach ($this->voiceBars as $voiceId => $bars) {
+                if (is_array($bars) && count($bars) > 0 && method_exists($bars[0], 'getVoiceIndicator')) {
+                    // Try to get the voice object from the first bar (if it stores a reference)
+                    if (property_exists($bars[0], 'voice') && $bars[0]->voice instanceof \Ksfraser\PhpabcCanntaireachd\Voices\AbcVoice) {
+                        $result[$voiceId] = $bars[0]->voice;
+                    }
+                }
+            }
+        }
+        // Fallback: if $this->voices is an array of metadata, create AbcVoice objects
+        if (empty($result) && isset($this->voices) && is_array($this->voices)) {
+            foreach ($this->voices as $voiceId => $meta) {
+                $result[$voiceId] = new \Ksfraser\PhpabcCanntaireachd\Voices\AbcVoice($voiceId, $meta['name'] ?? '', $meta['sname'] ?? '');
+            }
+        }
+        return $result;
+    }
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Tune;
 /**
@@ -80,6 +109,36 @@ use Ksfraser\PhpabcCanntaireachd\Header\AbcFixVoiceHeader;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderGeneric;
 
 class AbcTune extends AbcItem {
+
+    /**
+     * Get all Voice objects, keyed by voice ID.
+     * @return array<string, \Ksfraser\PhpabcCanntaireachd\Voices\AbcVoice>
+     */
+    public function getVoices(): array {
+        // If $this->voiceObjs exists, return it; otherwise, build from voiceBars
+        if (property_exists($this, 'voiceObjs') && is_array($this->voiceObjs)) {
+            return $this->voiceObjs;
+        }
+        $result = [];
+        // If voiceBars contains objects with getVoiceIndicator, use those
+        if (isset($this->voiceBars) && is_array($this->voiceBars)) {
+            foreach ($this->voiceBars as $voiceId => $bars) {
+                if (is_array($bars) && count($bars) > 0 && method_exists($bars[0], 'getVoiceIndicator')) {
+                    // Try to get the voice object from the first bar (if it stores a reference)
+                    if (property_exists($bars[0], 'voice') && $bars[0]->voice instanceof \Ksfraser\PhpabcCanntaireachd\Voices\AbcVoice) {
+                        $result[$voiceId] = $bars[0]->voice;
+                    }
+                }
+            }
+        }
+        // Fallback: if $this->voices is an array of metadata, create AbcVoice objects
+        if (empty($result) && isset($this->voices) && is_array($this->voices)) {
+            foreach ($this->voices as $voiceId => $meta) {
+                $result[$voiceId] = new \Ksfraser\PhpabcCanntaireachd\Voices\AbcVoice($voiceId, $meta['name'] ?? '', $meta['sname'] ?? '');
+            }
+        }
+        return $result;
+    }
     /**
      * Parse a block of ABC text into an AbcTune object (recursive descent entry point).
      * @param string $abcText
