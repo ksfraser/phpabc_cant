@@ -22,6 +22,10 @@ class NoteHandlerTest extends TestCase {
             'getOrCreateVoice' => function($v) { $this->currentVoice = $v; }
         ];
         $handler->handle($context, 'C D E');
-        $this->assertEquals(['C D E'], $context->voiceBars['V1'][1]->getNotes());
+        $notes = $context->voiceBars['V1'][1]->notes;
+        $this->assertCount(3, $notes);
+        $this->assertEquals('C', $notes[0]->get_body_out());
+        $this->assertEquals('D', $notes[1]->get_body_out());
+        $this->assertEquals('E', $notes[2]->get_body_out());
     }
 }

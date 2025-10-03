@@ -623,3 +623,2316 @@
 [DEBUG][2025-10-03 01:20:45] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator EXIT
 [DEBUG][2025-10-03 01:20:45] AbcProcessingPipeline::run EXIT
 [DEBUG][2025-10-03 01:20:45] AbcProcessor::process EXIT
+[DEBUG][2025-10-03 01:25:57] AbcProcessor::process ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcProcessingPipeline::run ENTRY
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:25:57] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:25:57] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:25:57] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:25:57] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:25:57] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator EXIT
+[DEBUG][2025-10-03 01:25:57] AbcProcessingPipeline::run EXIT
+[DEBUG][2025-10-03 01:25:57] AbcProcessingPipeline::run ENTRY
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:25:57] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:25:57] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:25:57] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:25:57] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:25:57] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator EXIT
+[DEBUG][2025-10-03 01:25:57] AbcProcessingPipeline::run EXIT
+[DEBUG][2025-10-03 01:25:57] AbcProcessingPipeline::run ENTRY
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:25:57] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:25:57] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:25:57] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:25:57] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:25:57] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator EXIT
+[DEBUG][2025-10-03 01:25:57] AbcProcessingPipeline::run EXIT
+[DEBUG][2025-10-03 01:25:57] AbcProcessingPipeline::run ENTRY
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:25:57] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:25:57] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:25:57] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:25:57] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:25:57] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator EXIT
+[DEBUG][2025-10-03 01:25:57] AbcProcessingPipeline::run EXIT
+[DEBUG][2025-10-03 01:25:57] AbcProcessingPipeline::run ENTRY
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass EXIT
+[DEBUG][2025-10-03 01:25:57] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:25:57] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:25:58] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:25:58] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:25:58] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass EXIT
+[DEBUG][2025-10-03 01:25:58] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass ENTRY
+[DEBUG][2025-10-03 01:25:58] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:25:58] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:25:58] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:25:58] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass EXIT
+[DEBUG][2025-10-03 01:25:58] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass ENTRY
+[DEBUG][2025-10-03 01:25:58] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:25:58] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:25:58] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:25:58] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass EXIT
+[DEBUG][2025-10-03 01:25:58] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass ENTRY
+[DEBUG][2025-10-03 01:25:58] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:25:58] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:25:58] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:25:58] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass EXIT
+[DEBUG][2025-10-03 01:25:58] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator ENTRY
+[DEBUG][2025-10-03 01:25:58] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:25:58] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:25:58] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator EXIT
+[DEBUG][2025-10-03 01:25:58] AbcProcessingPipeline::run EXIT
+[DEBUG][2025-10-03 01:25:58] AbcProcessor::process EXIT
+[DEBUG][2025-10-03 01:32:27] AbcProcessor::process ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcProcessingPipeline::run ENTRY
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:32:27] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:32:27] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:32:27] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:32:27] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:32:27] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator EXIT
+[DEBUG][2025-10-03 01:32:27] AbcProcessingPipeline::run EXIT
+[DEBUG][2025-10-03 01:32:27] AbcProcessingPipeline::run ENTRY
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:32:27] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:32:27] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:32:27] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:32:27] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:32:27] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator EXIT
+[DEBUG][2025-10-03 01:32:27] AbcProcessingPipeline::run EXIT
+[DEBUG][2025-10-03 01:32:27] AbcProcessingPipeline::run ENTRY
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:32:27] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:32:27] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:32:27] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:32:27] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:32:27] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator EXIT
+[DEBUG][2025-10-03 01:32:27] AbcProcessingPipeline::run EXIT
+[DEBUG][2025-10-03 01:32:27] AbcProcessingPipeline::run ENTRY
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:32:27] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:32:27] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:32:27] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:32:27] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:32:27] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator EXIT
+[DEBUG][2025-10-03 01:32:27] AbcProcessingPipeline::run EXIT
+[DEBUG][2025-10-03 01:32:27] AbcProcessingPipeline::run ENTRY
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass EXIT
+[DEBUG][2025-10-03 01:32:27] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:32:27] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:32:28] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:32:28] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:32:28] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass EXIT
+[DEBUG][2025-10-03 01:32:28] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass ENTRY
+[DEBUG][2025-10-03 01:32:28] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:32:28] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:32:28] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:32:28] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass EXIT
+[DEBUG][2025-10-03 01:32:28] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass ENTRY
+[DEBUG][2025-10-03 01:32:28] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:32:28] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:32:28] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:32:28] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass EXIT
+[DEBUG][2025-10-03 01:32:28] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass ENTRY
+[DEBUG][2025-10-03 01:32:28] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:32:28] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:32:28] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:32:28] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass EXIT
+[DEBUG][2025-10-03 01:32:28] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator ENTRY
+[DEBUG][2025-10-03 01:32:28] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:32:28] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:32:28] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator EXIT
+[DEBUG][2025-10-03 01:32:28] AbcProcessingPipeline::run EXIT
+[DEBUG][2025-10-03 01:32:28] AbcProcessor::process EXIT
+[DEBUG][2025-10-03 01:44:42] AbcProcessor::process ENTRY
+[DEBUG][2025-10-03 01:44:42] AbcProcessingPipeline::run ENTRY
+[DEBUG][2025-10-03 01:44:42] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass ENTRY
+[DEBUG][2025-10-03 01:44:42] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:44:42] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:44:42] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass EXIT
+[DEBUG][2025-10-03 01:44:42] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass ENTRY
+[DEBUG][2025-10-03 01:44:42] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:44:42] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:44:43] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:44:43] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:44:43] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:44:43] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:44:43] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator EXIT
+[DEBUG][2025-10-03 01:44:43] AbcProcessingPipeline::run EXIT
+[DEBUG][2025-10-03 01:44:43] AbcProcessingPipeline::run ENTRY
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:44:43] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:44:43] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:44:43] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:44:43] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:44:43] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator EXIT
+[DEBUG][2025-10-03 01:44:43] AbcProcessingPipeline::run EXIT
+[DEBUG][2025-10-03 01:44:43] AbcProcessingPipeline::run ENTRY
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:44:43] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:44:43] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:44:43] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:44:43] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:44:43] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator EXIT
+[DEBUG][2025-10-03 01:44:43] AbcProcessingPipeline::run EXIT
+[DEBUG][2025-10-03 01:44:43] AbcProcessingPipeline::run ENTRY
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:44:43] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:44:43] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:44:43] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:44:43] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:44:43] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass EXIT
+[DEBUG][2025-10-03 01:44:43] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator ENTRY
+[DEBUG][2025-10-03 01:44:43] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:44:44] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:44:44] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator EXIT
+[DEBUG][2025-10-03 01:44:44] AbcProcessingPipeline::run EXIT
+[DEBUG][2025-10-03 01:44:44] AbcProcessingPipeline::run ENTRY
+[DEBUG][2025-10-03 01:44:44] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass ENTRY
+[DEBUG][2025-10-03 01:44:44] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:44:44] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:44:44] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass EXIT
+[DEBUG][2025-10-03 01:44:44] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass ENTRY
+[DEBUG][2025-10-03 01:44:44] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:44:44] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:44:44] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:44:44] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:44:44] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass EXIT
+[DEBUG][2025-10-03 01:44:44] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass ENTRY
+[DEBUG][2025-10-03 01:44:44] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:44:44] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:44:44] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:44:44] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass EXIT
+[DEBUG][2025-10-03 01:44:44] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass ENTRY
+[DEBUG][2025-10-03 01:44:44] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:44:44] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:44:44] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:44:44] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass EXIT
+[DEBUG][2025-10-03 01:44:44] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass ENTRY
+[DEBUG][2025-10-03 01:44:44] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:44:44] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:44:44] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:44:44] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass EXIT
+[DEBUG][2025-10-03 01:44:44] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator ENTRY
+[DEBUG][2025-10-03 01:44:44] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:44:44] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:44:44] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator EXIT
+[DEBUG][2025-10-03 01:44:44] AbcProcessingPipeline::run EXIT
+[DEBUG][2025-10-03 01:44:44] AbcProcessor::process EXIT
+[DEBUG][2025-10-03 01:47:19] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:47:19] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:47:19] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:47:20] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:47:20] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:47:20] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:47:20] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:47:20] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:47:20] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:47:20] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:47:20] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:47:20] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:47:20] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:47:20] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:47:20] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:47:20] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:47:20] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:47:20] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:47:20] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:47:20] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:47:21] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:47:21] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:47:21] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:47:21] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:47:21] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:47:21] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:47:21] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:47:21] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:47:21] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:47:21] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:47:21] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:47:21] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:47:22] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:47:22] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:47:22] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:47:22] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:47:24] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:47:24] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:47:24] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:47:24] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:47:24] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:47:24] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:47:24] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:47:24] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:47:24] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:47:24] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:47:24] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:47:24] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:47:24] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:47:24] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:47:24] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:47:24] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:47:24] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:47:27] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:47:27] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:47:27] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:47:29] AbcProcessor::process ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcProcessingPipeline::run ENTRY
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:47:29] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:47:29] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:47:29] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:47:29] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:47:29] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator EXIT
+[DEBUG][2025-10-03 01:47:29] AbcProcessingPipeline::run EXIT
+[DEBUG][2025-10-03 01:47:29] AbcProcessingPipeline::run ENTRY
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:47:29] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:47:29] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:47:29] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:47:29] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:47:29] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator EXIT
+[DEBUG][2025-10-03 01:47:29] AbcProcessingPipeline::run EXIT
+[DEBUG][2025-10-03 01:47:29] AbcProcessingPipeline::run ENTRY
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:47:29] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:47:29] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:47:29] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:47:29] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:47:29] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator EXIT
+[DEBUG][2025-10-03 01:47:29] AbcProcessingPipeline::run EXIT
+[DEBUG][2025-10-03 01:47:29] AbcProcessingPipeline::run ENTRY
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass EXIT
+[DEBUG][2025-10-03 01:47:29] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:47:29] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:47:30] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:47:30] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:47:30] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass EXIT
+[DEBUG][2025-10-03 01:47:30] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass ENTRY
+[DEBUG][2025-10-03 01:47:30] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:47:30] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:47:30] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:47:30] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass EXIT
+[DEBUG][2025-10-03 01:47:30] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass ENTRY
+[DEBUG][2025-10-03 01:47:30] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:47:30] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:47:30] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:47:30] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass EXIT
+[DEBUG][2025-10-03 01:47:30] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass ENTRY
+[DEBUG][2025-10-03 01:47:30] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:47:30] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:47:30] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:47:30] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass EXIT
+[DEBUG][2025-10-03 01:47:30] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator ENTRY
+[DEBUG][2025-10-03 01:47:30] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:47:30] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:47:30] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator EXIT
+[DEBUG][2025-10-03 01:47:30] AbcProcessingPipeline::run EXIT
+[DEBUG][2025-10-03 01:47:30] AbcProcessingPipeline::run ENTRY
+[DEBUG][2025-10-03 01:47:30] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass ENTRY
+[DEBUG][2025-10-03 01:47:30] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:47:30] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:47:30] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass EXIT
+[DEBUG][2025-10-03 01:47:30] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass ENTRY
+[DEBUG][2025-10-03 01:47:30] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:47:30] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:47:30] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:47:30] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:47:30] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass EXIT
+[DEBUG][2025-10-03 01:47:30] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass ENTRY
+[DEBUG][2025-10-03 01:47:30] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:47:30] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:47:30] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:47:30] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass EXIT
+[DEBUG][2025-10-03 01:47:30] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass ENTRY
+[DEBUG][2025-10-03 01:47:30] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:47:30] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:47:30] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:47:30] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass EXIT
+[DEBUG][2025-10-03 01:47:30] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass ENTRY
+[DEBUG][2025-10-03 01:47:30] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:47:30] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:47:30] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:47:30] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass EXIT
+[DEBUG][2025-10-03 01:47:30] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator ENTRY
+[DEBUG][2025-10-03 01:47:30] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:47:30] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:47:30] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator EXIT
+[DEBUG][2025-10-03 01:47:30] AbcProcessingPipeline::run EXIT
+[DEBUG][2025-10-03 01:47:30] AbcProcessor::process EXIT
+[DEBUG][2025-10-03 01:50:08] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:50:08] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:50:08] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:50:08] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:50:08] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:50:08] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:50:08] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:50:08] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:50:08] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:50:08] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:50:08] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:50:08] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:50:08] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:50:08] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:50:08] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:50:08] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:50:08] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:50:08] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:50:08] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:50:08] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:50:08] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:50:08] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:50:08] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:50:08] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:50:08] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:50:08] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:50:08] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:50:08] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:50:08] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:50:08] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:50:08] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:50:08] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:50:08] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:50:08] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:50:08] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:50:08] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:50:08] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:50:08] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:50:08] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:50:08] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:50:08] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:50:08] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:50:08] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:50:08] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:50:08] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:50:08] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:50:08] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:50:08] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:50:08] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:50:08] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:50:08] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:50:08] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:50:08] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:50:09] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:50:09] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:50:09] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:50:09] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:50:09] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:50:09] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:50:09] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:50:09] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:50:09] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:50:09] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:50:09] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:50:09] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:50:09] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:50:09] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:50:09] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:50:09] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:50:09] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:50:09] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:50:09] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:50:09] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:50:22] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:50:22] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:50:22] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:50:22] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:50:22] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:50:22] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:50:22] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:50:22] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:50:22] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:50:22] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:50:22] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:50:22] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:50:22] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:50:22] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:50:22] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:50:22] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:50:22] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:50:22] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:50:22] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:50:22] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:50:22] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:50:22] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:50:22] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:50:22] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:50:22] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:50:22] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:50:22] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:50:22] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:50:22] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:50:22] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:50:22] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:50:22] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:50:22] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:50:22] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:55:19] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:55:19] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:55:19] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:55:19] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:55:19] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:55:19] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:55:19] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:55:19] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:55:19] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:55:19] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:55:19] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:55:19] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:55:19] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:55:19] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:55:19] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:55:19] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:55:19] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:55:19] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:55:19] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:55:19] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:55:19] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:55:19] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:55:19] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:55:19] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:55:19] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:55:19] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:55:19] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:55:19] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:55:19] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:55:19] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:55:19] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:55:19] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:55:19] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:55:19] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:55:19] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:55:19] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:55:19] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:55:19] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:55:19] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:55:19] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:55:19] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:55:19] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:55:19] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:55:19] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:55:19] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:55:19] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:55:19] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:55:19] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:55:19] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:55:19] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:55:19] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:55:19] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:55:19] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:55:20] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:55:20] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:55:20] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:55:20] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:55:20] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:55:20] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:55:20] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:55:20] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:55:20] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:55:20] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:55:20] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:55:20] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:55:20] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:55:20] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:55:20] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:55:20] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:55:20] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:55:20] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:55:20] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:55:20] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:55:21] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:55:21] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:55:21] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:55:21] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:55:21] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:55:21] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:55:21] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:55:21] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:55:21] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:55:21] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:55:21] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:55:21] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:55:21] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:55:21] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:55:21] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:55:21] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:55:21] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 01:55:21] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 01:55:21] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 01:55:21] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 01:55:21] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 01:55:21] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 01:55:21] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 01:55:21] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 01:55:21] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 01:55:21] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 01:55:21] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 01:55:21] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 01:55:21] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 01:55:21] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 01:55:21] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 01:55:21] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 01:55:21] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 01:55:21] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 14:40:44] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:40:44] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:40:44] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:40:45] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:40:45] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:40:45] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:40:45] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:40:45] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:40:45] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:40:45] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:40:45] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:40:45] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:40:45] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:40:45] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:40:45] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:40:45] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:40:45] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:40:46] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:40:46] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:40:46] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:40:46] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:40:46] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:40:46] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:40:46] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:40:47] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:40:47] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:40:47] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:40:47] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:40:47] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:40:47] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:40:47] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:40:47] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:40:47] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:40:55] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 14:40:55] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 14:40:55] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 14:40:55] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 14:40:55] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 14:40:55] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 14:40:55] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 14:40:55] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 14:40:55] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 14:40:55] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:40:55] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:40:55] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:40:55] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 14:40:55] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 14:40:55] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 14:40:55] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 14:40:55] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 14:40:58] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 14:40:58] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 14:40:58] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 14:40:58] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 14:40:58] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 14:40:58] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 14:40:58] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 14:40:59] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 14:40:59] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 14:40:59] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 14:40:59] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 14:40:59] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 14:40:59] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:40:59] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:40:59] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:40:59] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 14:40:59] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 14:40:59] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 14:40:59] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 14:40:59] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 14:41:05] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 14:41:05] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 14:41:05] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 14:41:05] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 14:41:05] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 14:41:05] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 14:41:05] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 14:41:05] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 14:41:05] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 14:41:05] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:41:05] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:41:05] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:41:05] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 14:41:05] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 14:41:05] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 14:41:05] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 14:41:05] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 14:41:05] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 14:41:05] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 14:41:05] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 14:41:05] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 14:41:05] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 14:41:05] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 14:41:05] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 14:41:05] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 14:41:05] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 14:41:05] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:41:05] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:41:05] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:41:05] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 14:41:05] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 14:41:05] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 14:41:05] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 14:41:05] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 14:53:03] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:03] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:03] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:03] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:03] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:03] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:03] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:03] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:03] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:03] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:03] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:03] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:03] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:03] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:03] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:03] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:03] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:03] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:03] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:03] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:03] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:03] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:03] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:03] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:03] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:03] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:03] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:03] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:03] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:03] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:03] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:03] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:03] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:03] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 14:53:03] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 14:53:03] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 14:53:03] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 14:53:03] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 14:53:03] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 14:53:03] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 14:53:03] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 14:53:03] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 14:53:03] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:03] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:03] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:03] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 14:53:03] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 14:53:03] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 14:53:03] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 14:53:03] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 14:53:04] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 14:53:04] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 14:53:04] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 14:53:04] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 14:53:04] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 14:53:04] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 14:53:04] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 14:53:04] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 14:53:04] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 14:53:04] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 14:53:04] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 14:53:04] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 14:53:04] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:04] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:04] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:04] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 14:53:04] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 14:53:04] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 14:53:04] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 14:53:04] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 14:53:05] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 14:53:05] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 14:53:05] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 14:53:05] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 14:53:05] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 14:53:05] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 14:53:05] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 14:53:05] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 14:53:05] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 14:53:05] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:05] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:05] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:05] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 14:53:05] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 14:53:05] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 14:53:05] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 14:53:05] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 14:53:05] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 14:53:05] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 14:53:05] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 14:53:05] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 14:53:05] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 14:53:05] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 14:53:05] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 14:53:05] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 14:53:05] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 14:53:05] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:05] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:05] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:05] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 14:53:05] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 14:53:05] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 14:53:05] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 14:53:05] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 14:53:26] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:26] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:26] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:26] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:26] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:26] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:26] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:26] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:26] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:26] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:26] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:26] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:26] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:26] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:26] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:26] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:26] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:26] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:26] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:26] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:26] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:26] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:26] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:26] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:26] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:26] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:26] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:26] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:26] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:26] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:26] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:26] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:26] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:27] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 14:53:27] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 14:53:27] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 14:53:27] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 14:53:27] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 14:53:27] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 14:53:27] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 14:53:27] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 14:53:27] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 14:53:27] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:27] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:27] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:27] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 14:53:27] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 14:53:27] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 14:53:27] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 14:53:27] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 14:53:27] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 14:53:27] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 14:53:27] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 14:53:27] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 14:53:27] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 14:53:27] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 14:53:27] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 14:53:27] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 14:53:27] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 14:53:27] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 14:53:27] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 14:53:27] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 14:53:27] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:27] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:27] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:27] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 14:53:27] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 14:53:27] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 14:53:27] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 14:53:27] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 14:53:28] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 14:53:28] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 14:53:28] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 14:53:28] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 14:53:28] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 14:53:28] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 14:53:28] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 14:53:28] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 14:53:28] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 14:53:28] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:28] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:28] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:28] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 14:53:28] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 14:53:28] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 14:53:28] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 14:53:28] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 14:53:28] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 14:53:28] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 14:53:28] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 14:53:28] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 14:53:28] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 14:53:28] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 14:53:28] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 14:53:28] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 14:53:28] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 14:53:28] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:28] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:28] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:28] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 14:53:28] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 14:53:28] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 14:53:28] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 14:53:28] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 14:53:47] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:47] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:47] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:47] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:47] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:47] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:47] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:47] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:47] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:47] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:47] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:47] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:47] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:47] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:47] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:47] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:47] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:47] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:47] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:47] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:47] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:47] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:47] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:47] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:47] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:47] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:47] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:47] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:47] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:47] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:48] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:48] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:48] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:48] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 14:53:48] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 14:53:48] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 14:53:48] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 14:53:48] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 14:53:48] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 14:53:48] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 14:53:48] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 14:53:48] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 14:53:48] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:48] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:48] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:48] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 14:53:48] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 14:53:48] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 14:53:48] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 14:53:48] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 14:53:48] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 14:53:48] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 14:53:48] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 14:53:48] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 14:53:48] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 14:53:48] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 14:53:48] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 14:53:49] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 14:53:49] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 14:53:49] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 14:53:49] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 14:53:49] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 14:53:49] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:49] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:49] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:49] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 14:53:49] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 14:53:49] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 14:53:49] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 14:53:49] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 14:53:49] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 14:53:49] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 14:53:49] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 14:53:49] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 14:53:49] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 14:53:49] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 14:53:49] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 14:53:49] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 14:53:49] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 14:53:49] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:49] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:49] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:49] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 14:53:49] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 14:53:49] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 14:53:49] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 14:53:49] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 14:53:49] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 14:53:49] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 14:53:49] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 14:53:49] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 14:53:49] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 14:53:49] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 14:53:49] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 14:53:49] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 14:53:49] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 14:53:49] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:53:49] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:53:49] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:53:49] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 14:53:49] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 14:53:49] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 14:53:49] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 14:53:49] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 14:58:17] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:58:17] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:58:17] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:58:17] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:58:17] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:58:17] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:58:17] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:58:17] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:58:17] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:58:17] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:58:17] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:58:17] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:58:17] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:58:17] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:58:17] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:58:17] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:58:17] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:58:17] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:58:17] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:58:17] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:58:17] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:58:17] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:58:17] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:58:17] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:58:17] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:58:17] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:58:17] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:58:17] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:58:17] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:58:17] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:58:17] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:58:17] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:58:17] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:58:17] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:58:17] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:58:17] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:58:17] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 14:58:17] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 14:58:17] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 14:58:17] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 14:58:17] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 14:58:17] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 14:58:17] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 14:58:17] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 14:58:17] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 14:58:17] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:58:17] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:58:17] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:58:17] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 14:58:17] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 14:58:17] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 14:58:17] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 14:58:17] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 14:58:18] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 14:58:18] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 14:58:18] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 14:58:18] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 14:58:18] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 14:58:18] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 14:58:18] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 14:58:18] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 14:58:18] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 14:58:18] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 14:58:18] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 14:58:18] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 14:58:18] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:58:18] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:58:18] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:58:18] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 14:58:18] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 14:58:18] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 14:58:18] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 14:58:18] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 14:58:19] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 14:58:19] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 14:58:19] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 14:58:19] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 14:58:19] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 14:58:19] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 14:58:19] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 14:58:19] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 14:58:19] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 14:58:19] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:58:19] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:58:19] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:58:19] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 14:58:19] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 14:58:19] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 14:58:19] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 14:58:19] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 14:58:19] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 14:58:19] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 14:58:19] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 14:58:19] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 14:58:19] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 14:58:19] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 14:58:19] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 14:58:19] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 14:58:19] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 14:58:19] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:58:19] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:58:19] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:58:19] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 14:58:19] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 14:58:19] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 14:58:19] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 14:58:19] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 14:59:59] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:59:59] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:59:59] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:59:59] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:59:59] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:59:59] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:59:59] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:59:59] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:59:59] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:59:59] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:59:59] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:59:59] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:59:59] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:59:59] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:59:59] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:59:59] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:59:59] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:59:59] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:59:59] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:59:59] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:59:59] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:59:59] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:59:59] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:59:59] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:59:59] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:59:59] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:59:59] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:59:59] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:59:59] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:59:59] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:59:59] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:59:59] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:59:59] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:59:59] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:59:59] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:59:59] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:59:59] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 14:59:59] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 14:59:59] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 14:59:59] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 14:59:59] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 14:59:59] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 14:59:59] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 14:59:59] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 14:59:59] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 14:59:59] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 14:59:59] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 14:59:59] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 14:59:59] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 14:59:59] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 14:59:59] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 14:59:59] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 14:59:59] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:00:00] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:00:00] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:00:00] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:00:00] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:00:00] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:00:00] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:00:00] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:00:00] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:00:00] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:00:00] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:00:00] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:00:00] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:00:00] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:00:00] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:00:00] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:00:00] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:00:00] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:00:00] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:00:00] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:00:00] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:00:01] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:00:01] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:00:01] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:00:01] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:00:01] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:00:01] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:00:01] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:00:01] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:00:01] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:00:01] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:00:01] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:00:01] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:00:01] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:00:01] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:00:01] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:00:01] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:00:01] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:00:01] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:00:01] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:00:01] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:00:01] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:00:01] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:00:01] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:00:01] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:00:01] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:00:01] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:00:01] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:00:01] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:00:01] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:00:01] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:00:01] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:00:01] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:00:01] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:00:01] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:03:28] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:03:28] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:03:28] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:03:29] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:03:29] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:03:29] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:03:29] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:03:29] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:03:29] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:03:29] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:03:29] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:03:29] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:03:29] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:03:29] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:03:29] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:03:29] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:03:29] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:03:29] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:03:29] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:03:29] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:03:29] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:03:29] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:03:29] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:03:29] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:03:30] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:03:30] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:03:30] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:03:30] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:03:30] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:03:30] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:03:30] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:03:30] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:03:30] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:03:30] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:03:30] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:03:30] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:03:32] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:03:32] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:03:32] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:03:32] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:03:32] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:03:32] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:03:32] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:03:32] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:03:32] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:03:32] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:03:32] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:03:32] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:03:32] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:03:32] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:03:32] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:03:32] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:03:32] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:03:33] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:03:33] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:03:33] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:03:33] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:03:33] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:03:33] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:03:33] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:03:33] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:03:33] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:03:33] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:03:33] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:03:33] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:03:33] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:03:33] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:03:33] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:03:33] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:03:33] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:03:33] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:03:33] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:03:33] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:03:35] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:03:35] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:03:35] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:03:35] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:03:35] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:03:35] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:03:35] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:03:35] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:03:35] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:03:35] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:03:35] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:03:35] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:03:35] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:03:35] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:03:35] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:03:35] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:03:35] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:03:35] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:03:35] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:03:35] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:03:35] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:03:35] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:03:35] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:03:35] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:03:35] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:03:35] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:03:35] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:03:35] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:03:35] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:03:35] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:03:35] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:03:35] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:03:35] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:03:35] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:09:41] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:09:41] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:09:41] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:09:41] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:09:41] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:09:41] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:09:41] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:09:41] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:09:41] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:09:41] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:09:41] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:09:41] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:09:41] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:09:41] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:09:41] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:09:41] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:09:41] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:09:41] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:09:41] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:09:41] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:09:41] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:09:41] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:09:41] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:09:41] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:09:41] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:09:41] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:09:41] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:09:41] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:09:41] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:09:41] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:09:41] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:09:41] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:09:41] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:09:41] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:09:41] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:09:41] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:09:41] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:09:41] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:09:41] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:09:41] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:09:41] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:09:41] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:09:41] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:09:41] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:09:41] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:09:41] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:09:41] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:09:41] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:09:41] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:09:41] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:09:41] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:09:41] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:09:41] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:09:42] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:09:42] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:09:42] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:09:42] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:09:42] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:09:42] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:09:42] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:09:42] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:09:42] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:09:42] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:09:42] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:09:42] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:09:42] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:09:42] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:09:42] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:09:42] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:09:42] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:09:42] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:09:42] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:09:42] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:09:43] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:09:43] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:09:43] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:09:43] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:09:43] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:09:43] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:09:43] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:09:43] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:09:43] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:09:43] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:09:43] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:09:43] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:09:43] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:09:43] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:09:43] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:09:43] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:09:43] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:09:43] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:09:43] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:09:43] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:09:43] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:09:43] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:09:43] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:09:43] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:09:43] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:09:43] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:09:43] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:09:43] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:09:43] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:09:43] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:09:43] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:09:43] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:09:43] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:09:43] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:13:57] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:13:57] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:13:57] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:13:57] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:13:57] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:13:57] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:13:57] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:13:57] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:13:57] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:13:57] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:13:57] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:13:57] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:13:57] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:13:57] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:13:57] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:13:57] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:13:57] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:13:57] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:13:57] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:13:57] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:13:57] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:13:57] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:13:57] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:13:57] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:13:57] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:13:57] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:13:57] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:13:57] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:13:57] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:13:57] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:13:57] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:13:57] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:13:57] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:13:57] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:13:57] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:13:57] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:13:58] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:13:58] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:13:58] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:13:58] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:13:58] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:13:58] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:13:58] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:13:58] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:13:58] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:13:58] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:13:58] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:13:58] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:13:58] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:13:58] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:13:58] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:13:58] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:13:58] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:13:58] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:13:58] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:13:58] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:13:58] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:13:58] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:13:58] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:13:58] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:13:58] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:13:58] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:13:58] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:13:58] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:13:58] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:13:58] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:13:58] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:13:58] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:13:58] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:13:58] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:13:58] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:13:58] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:13:58] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:13:59] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:13:59] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:13:59] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:13:59] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:13:59] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:13:59] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:13:59] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:13:59] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:13:59] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:13:59] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:13:59] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:13:59] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:13:59] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:13:59] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:13:59] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:13:59] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:13:59] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:13:59] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:13:59] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:13:59] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:13:59] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:13:59] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:13:59] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:13:59] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:13:59] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:13:59] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:13:59] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:13:59] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:13:59] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:13:59] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:13:59] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:13:59] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:13:59] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:13:59] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:15:25] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:15:25] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:15:25] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:15:25] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:15:25] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:15:25] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:15:25] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:15:25] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:15:25] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:15:25] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:15:25] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:15:25] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:15:25] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:15:25] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:15:25] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:15:25] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:15:25] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:15:25] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:15:25] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:15:25] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:15:25] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:15:25] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:15:25] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:15:25] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:15:25] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:15:25] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:15:25] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:15:25] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:15:25] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:15:25] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:15:25] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:15:25] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:15:25] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:15:25] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:15:25] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:15:25] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:15:25] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:15:25] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:15:25] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:15:25] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:15:26] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:15:26] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:15:26] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:15:26] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:15:26] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:15:26] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:15:26] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:15:26] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:15:26] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:15:26] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:15:26] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:15:26] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:15:26] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:15:26] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:15:26] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:15:26] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:15:26] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:15:26] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:15:26] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:15:26] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:15:27] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:15:27] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:15:27] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:15:27] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:15:27] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:15:27] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:15:27] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:15:27] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:15:27] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:15:27] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:15:27] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:15:27] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:15:27] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:15:27] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:15:27] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:15:27] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:15:27] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:15:27] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:15:27] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:15:27] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:15:27] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:15:27] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:15:27] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:15:27] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:15:27] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:15:27] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:15:27] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:15:27] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:15:27] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:15:27] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:15:27] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:15:27] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:15:27] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:15:27] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:15:27] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:15:27] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:15:27] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:15:27] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:15:27] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:15:27] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:15:27] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:15:27] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:15:27] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:15:27] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:15:27] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:15:27] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:15:27] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:16:14] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:16:14] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:16:14] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:16:14] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:16:14] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:16:14] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:16:14] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:16:14] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:16:14] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:16:14] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:16:14] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:16:14] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:16:14] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:16:14] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:16:14] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:16:14] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:16:14] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:16:14] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:16:14] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:16:14] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:16:14] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:16:14] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:16:14] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:16:14] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:16:14] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:16:14] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:16:14] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:16:14] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:16:14] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:16:14] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:16:14] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:16:14] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:16:14] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:16:14] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:16:14] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:16:14] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:16:14] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:16:14] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:16:14] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:16:14] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:16:14] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:16:14] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:16:14] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:16:14] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:16:14] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:16:14] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:16:14] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:16:14] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:16:14] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:16:14] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:16:14] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:16:14] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:16:14] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:16:16] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:16:16] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:16:16] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:16:16] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:16:16] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:16:16] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:16:16] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:16:16] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:16:16] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:16:16] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:16:16] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:16:16] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:16:16] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:16:16] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:16:17] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:16:17] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:16:17] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:16:17] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:16:17] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:16:17] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:16:17] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:16:17] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:16:17] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:16:17] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:16:17] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:16:17] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:16:17] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:16:17] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:16:17] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:16:17] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:16:17] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:16:17] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:16:17] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:16:17] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:16:17] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:16:17] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:16:17] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:16:17] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:16:17] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:16:17] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:16:17] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:16:17] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:16:17] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:16:17] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:16:17] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:16:17] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:16:17] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:16:17] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:16:17] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:16:17] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:16:17] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:16:17] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:16:17] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:16:17] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:21:26] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:21:26] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:21:26] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:21:26] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:21:26] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:21:26] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:21:26] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:21:26] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:21:26] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:21:26] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:21:26] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:21:26] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:21:26] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:21:26] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:21:26] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:21:26] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:21:26] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:21:26] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:21:26] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:21:26] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:21:26] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:21:26] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:21:26] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:21:26] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:21:26] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:21:26] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:21:26] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:21:26] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:21:26] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:21:26] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:21:26] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:21:26] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:21:26] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:21:26] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:21:26] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:21:26] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:21:26] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:21:26] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:21:26] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:21:26] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:21:26] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:21:26] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:21:26] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:21:26] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:21:26] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:21:26] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:21:26] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:21:26] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:21:26] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:21:26] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:21:26] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:21:26] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:21:26] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:21:27] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:21:27] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:21:27] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:21:27] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:21:27] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:21:27] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:21:27] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:21:27] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:21:27] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:21:27] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:21:27] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:21:27] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:21:27] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:21:27] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:21:27] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:21:27] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:21:27] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:21:27] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:21:27] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:21:27] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:21:28] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:21:28] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:21:28] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:21:28] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:21:28] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:21:28] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:21:28] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:21:28] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:21:28] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:21:28] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:21:28] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:21:28] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:21:28] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:21:28] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:21:28] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:21:28] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:21:28] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:21:28] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:21:28] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:21:28] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:21:28] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:21:28] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:21:28] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:21:28] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:21:28] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:21:28] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:21:28] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:21:28] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:21:28] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:21:28] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:21:28] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:21:28] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:21:28] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:21:28] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:25:35] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:25:35] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:25:35] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:25:35] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:25:35] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:25:35] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:25:35] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:25:35] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:25:35] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:25:35] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:25:35] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:25:35] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:25:35] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:25:35] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:25:35] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:25:35] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:25:35] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:25:36] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:25:36] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:25:36] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:25:36] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:25:36] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:25:36] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:25:36] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:25:36] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:25:36] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:25:36] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:25:36] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:25:36] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:25:36] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:25:36] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:25:36] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:25:36] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:25:36] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:25:36] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:25:36] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:25:36] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:25:36] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:25:36] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:25:36] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:25:36] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:25:36] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:25:36] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:25:36] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:25:36] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:25:36] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:25:36] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:25:36] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:25:36] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:25:36] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:25:36] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:25:36] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:25:36] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:25:37] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:25:37] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:25:37] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:25:37] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:25:37] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:25:37] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:25:37] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:25:38] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:25:38] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:25:38] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:25:38] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:25:38] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:25:38] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:25:38] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:25:38] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:25:38] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:25:38] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:25:38] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:25:38] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:25:38] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:25:39] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:25:39] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:25:39] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:25:39] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:25:39] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:25:39] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:25:39] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:25:39] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:25:39] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:25:39] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:25:39] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:25:39] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:25:39] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:25:39] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:25:39] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:25:39] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:25:39] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:25:39] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-10-03 15:25:39] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-10-03 15:25:39] AbcVoicePass::process ENTRY
+[DEBUG][2025-10-03 15:25:39] AbcProcessor::copyMelodyToBagpipes called
+[DEBUG][2025-10-03 15:25:39] AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated
+[DEBUG][2025-10-03 15:25:39] AbcVoicePass::process EXIT
+[DEBUG][2025-10-03 15:25:39] AbcLyricsPass::process ENTRY
+[DEBUG][2025-10-03 15:25:39] AbcProcessor::handleLyrics called
+[DEBUG][2025-10-03 15:25:39] AbcLyricsPass::process EXIT
+[DEBUG][2025-10-03 15:25:39] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:25:39] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:25:39] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:25:39] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-10-03 15:25:39] AbcProcessor::reorderVoices called
+[DEBUG][2025-10-03 15:25:39] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-10-03 15:25:39] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-10-03 15:25:39] AbcTimingValidator::validate EXIT
+[DEBUG][2025-10-03 15:32:55] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:32:55] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:32:56] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:32:57] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:32:58] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:33:22] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:33:24] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:33:24] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:33:24] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:33:24] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:33:24] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:33:25] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:33:25] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:33:25] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:33:25] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:33:25] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:33:25] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:33:26] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:33:28] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:33:28] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:33:28] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:33:28] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:33:28] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:33:28] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:33:28] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:33:28] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:33:28] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:33:28] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:33:28] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:33:28] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:33:29] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:33:29] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:33:29] AbcCanntaireachdPass::process EXIT
+[DEBUG][2025-10-03 15:33:29] AbcCanntaireachdPass::process ENTRY
+[DEBUG][2025-10-03 15:33:29] AbcProcessor::validateCanntaireachd called
+[DEBUG][2025-10-03 15:33:29] AbcCanntaireachdPass::process EXIT

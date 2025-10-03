@@ -232,7 +232,7 @@ class AbcCanntaireachdPassTest extends TestCase
     $this->assertStringStartsWith('w: ', $result['lines'][2]);
     }
 
-    public function testGraceNotesAndEmbellishments()
+    public function testGraceNotes()
     {
         $lines = [
             'V:Bagpipes',

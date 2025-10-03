@@ -22,9 +22,9 @@ class AbcTune extends AbcItem {
             }
         }
         // Render voice headers (V: lines)
-        foreach ($this->voices as $voiceId => $meta) {
-            $name = $meta['name'] ?? $voiceId;
-            $sname = $meta['sname'] ?? $name;
+        foreach ($this->voices as $voiceId => $voice) {
+            $name = $voice['name'] ?? $voiceId;
+            $sname = $voice['sname'] ?? $name;
             $out .= "V:$voiceId name=\"$name\" sname=\"$sname\"\n";
         }
         // Render any other headers not in headerOrder
@@ -36,22 +36,48 @@ class AbcTune extends AbcItem {
         // Ensure header/body separator
         $out .= "\n";
 
+        // Always try to populate bars if empty and lines exist
+        $hasBars = false;
+        foreach ($this->voices as $voice) {
+            if (!empty($voice['bars'])) {
+                $hasBars = true;
+                break;
+            }
+        }
+        if (!$hasBars && !empty($this->getLines())) {
+            $lines = [];
+            foreach ($this->getLines() as $lineObj) {
+                if (is_string($lineObj)) {
+                    $lines[] = $lineObj;
+                } elseif (method_exists($lineObj, 'render')) {
+                    $lines[] = trim($lineObj->render());
+                } else {
+                    $lines[] = (string)$lineObj;
+                }
+            }
+            if (!empty($lines)) {
+                $this->parseBodyLines($lines);
+            }
+        }
+
         // Render body/music lines for each voice
-        // If there are voiceBars, render them in order
-        if (!empty($this->voiceBars)) {
-            foreach ($this->voiceBars as $voiceId => $bars) {
+        $voiceCount = count($this->voices);
+        $anyBars = false;
+        foreach ($this->voices as $voiceId => $voice) {
+            if (!empty($voice['bars'])) {
+                $anyBars = true;
                 // Output voice header for each voice (except if only one voice)
-                if (count($this->voiceBars) > 1) {
+                if ($voiceCount > 1) {
                     $out .= "V:$voiceId\n";
                 }
-                foreach ($bars as $barObj) {
+                foreach ($voice['bars'] as $barObj) {
                     $out .= $barObj->renderSelf() . " ";
                 }
                 $out = rtrim($out) . "\n";
                 // If Bagpipe voice, render canntaireachd line
                 if (strtolower($voiceId) === 'p' || strtolower($voiceId) === 'bagpipes') {
                     $out .= "%%Canntaireachd\n";
-                    foreach ($bars as $barObj) {
+                    foreach ($voice['bars'] as $barObj) {
                         if (method_exists($barObj, 'getCanntaireachd')) {
                             $out .= $barObj->getCanntaireachd() . " ";
                         }
@@ -59,13 +85,19 @@ class AbcTune extends AbcItem {
                     $out = rtrim($out) . "\n";
                 }
             }
-        } else {
+        }
+        if (!$anyBars) {
             // Fallback: render subitems (legacy)
             foreach ($this->getLines() as $lineObj) {
                 if (method_exists($lineObj, 'render')) {
-                    $out .= $lineObj->render();
+                    $line = $lineObj->render();
+                    if ($line !== '' && substr($line, -1) !== "\n") {
+                        $out .= $line . "\n";
+                    } else {
+                        $out .= $line;
+                    }
                 } elseif (is_string($lineObj)) {
-                    $out .= $lineObj . "\n";
+                    $out .= rtrim($lineObj) . "\n";
                 }
             }
         }
@@ -146,7 +178,31 @@ class AbcTune extends AbcItem {
      */
     public function parseBodyLines(array $lines)
     {
-        $context = new \Ksfraser\PhpabcCanntaireachd\ParseContext($this->voiceBars);
+        // Use a custom context that writes to $this->voices[voiceId]['bars']
+        $context = new class($this) extends \Ksfraser\PhpabcCanntaireachd\ParseContext {
+            private $tune;
+            public function __construct($tune) {
+                $this->tune = $tune;
+                $empty = [];
+                parent::__construct($empty);
+            }
+            public function getOrCreateVoice($voiceId) {
+                if (!isset($this->tune->voices[$voiceId])) {
+                    $this->tune->voices[$voiceId] = [
+                        'name' => $voiceId,
+                        'sname' => $voiceId,
+                        'bars' => []
+                    ];
+                }
+                $this->currentVoice = $voiceId;
+                return $voiceId;
+            }
+            public function addBar($barObj) {
+                if ($this->currentVoice !== null) {
+                    $this->tune->voices[$this->currentVoice]['bars'][] = $barObj;
+                }
+            }
+        };
         $barLines = \Ksfraser\PhpabcCanntaireachd\Render\BarLineRenderer::getSupportedBarLines();
         $handlers = [
             new \Ksfraser\PhpabcCanntaireachd\BodyLineHandler\BarLineHandler($barLines),
@@ -243,32 +299,48 @@ class AbcTune extends AbcItem {
     }
 
     public function getVoiceBars(): array {
-        return $this->voiceBars;
+        $bars = [];
+        foreach ($this->voices as $voiceId => $voice) {
+            $bars[$voiceId] = $voice['bars'] ?? [];
+        }
+        return $bars;
     }
 
     public function copyVoice(string $from, string $to): void {
-        if (!isset($this->voiceBars[$from])) return;
-        $this->voiceBars[$to] = [];
-        foreach ($this->voiceBars[$from] as $barNum => $barObj) {
-            // Shallow clone bar object
-            $this->voiceBars[$to][$barNum] = clone $barObj;
+        if (!isset($this->voices[$from]['bars'])) return;
+        $this->voices[$to] = $this->voices[$from];
+        $this->voices[$to]['bars'] = [];
+        foreach ($this->voices[$from]['bars'] as $barNum => $barObj) {
+            $this->voices[$to]['bars'][$barNum] = clone $barObj;
         }
     }
 
     public function ensureVoiceInsertedFirst(string $voiceId, array $bars): void {
         // Remove any existing instance to avoid duplicates
-        if (isset($this->voiceBars[$voiceId])) {
-            unset($this->voiceBars[$voiceId]);
+        if (isset($this->voices[$voiceId])) {
+            unset($this->voices[$voiceId]);
         }
         // Prepend this voice so it becomes the first in output ordering
-        $this->voiceBars = array_merge([$voiceId => $bars], $this->voiceBars);
+        $this->voices = array_merge([
+            $voiceId => [
+                'name' => $voiceId,
+                'sname' => $voiceId,
+                'bars' => $bars
+            ]
+        ], $this->voices);
     }
 
     public function addVoiceHeader(string $voiceId, ?string $name = null, ?string $sname = null): void {
-        $this->voices[$voiceId] = [
-            'name' => $name ?? $voiceId,
-            'sname' => $sname ?? ($name ?? $voiceId)
-        ];
+        if (!isset($this->voices[$voiceId])) {
+            $this->voices[$voiceId] = [
+                'name' => $name ?? $voiceId,
+                'sname' => $sname ?? ($name ?? $voiceId),
+                'bars' => []
+            ];
+        } else {
+            if ($name !== null) $this->voices[$voiceId]['name'] = $name;
+            if ($sname !== null) $this->voices[$voiceId]['sname'] = $sname;
+        }
     }
 
     /**

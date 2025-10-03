@@ -34,7 +34,10 @@ class TuneServiceBagpipeTest extends TestCase {
         $tune->parseBodyLines($bodyLines);
 
         // Ensure bagpipe voice is created and cannt tokens generated
-        $service = new TuneService();
+        $mockGen = new class {
+            public function generateForNotes($notes) { return 'mock-cannt'; }
+        };
+        $service = new TuneService($mockGen);
         $service->ensureBagpipeVoice($tune);
 
         // Bagpipe voice should now exist

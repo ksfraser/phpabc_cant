@@ -10698,3 +10698,147 @@ No valid pitch/octave/length found in: |]
 BagpipeAbcToCanntTranslator::translate: abcToken=
 BagpipeAbcToCanntTranslator::translate: cannt (exact)=NULL
 BagpipeAbcToCanntTranslator::translate: cannt (norm)=NULL
+TEST DEBUG
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd START
+TEST: bar1 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: bar2 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: calling translateBars
+TEST: calling renderCanntLyricLine
+TEST: wLine=w: dare tum
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd END
+Decorator value: '!trill!'
+TEST DEBUG
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd START
+TEST: bar1 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: bar2 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: calling translateBars
+TEST: calling renderCanntLyricLine
+TEST: wLine=w: dare tum
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd END
+Decorator value: '!trill!'
+TEST DEBUG
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd START
+TEST: bar1 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: bar2 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: calling translateBars
+TEST: calling renderCanntLyricLine
+TEST: wLine=w: dare tum
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd END
+Decorator value: '!trill!'
+TEST DEBUG
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd START
+TEST: bar1 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: bar2 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: calling translateBars
+TEST: calling renderCanntLyricLine
+TEST: wLine=w: dare tum
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd END
+Decorator value: '!trill!'
+TEST DEBUG
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd START
+TEST: bar1 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: bar2 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: calling translateBars
+TEST: calling renderCanntLyricLine
+TEST: wLine=w: dare tum
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd END
+Decorator value: '!trill!'
+TEST DEBUG
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd START
+TEST: bar1 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: bar2 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: calling translateBars
+TEST: calling renderCanntLyricLine
+TEST: wLine=w: dare tum
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd END
+Decorator value: '!trill!'
+TEST DEBUG
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd START
+TEST: bar1 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: bar2 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: calling translateBars
+TEST: calling renderCanntLyricLine
+TEST: wLine=w: dare tum
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd END
+Decorator value: '!trill!'
+TEST DEBUG
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd START
+TEST: bar1 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: bar2 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: calling translateBars
+TEST: calling renderCanntLyricLine
+TEST: wLine=w: dare tum
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd END
+Decorator value: '!trill!'
+TEST DEBUG
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd START
+TEST: bar1 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: bar2 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: calling translateBars
+TEST: calling renderCanntLyricLine
+TEST: wLine=w: dare tum
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd END
+Decorator value: '!trill!'
+TEST DEBUG
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd START
+TEST: bar1 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: bar2 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: calling translateBars
+TEST: calling renderCanntLyricLine
+TEST: wLine=w: dare tum
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd END
+Decorator value: '!trill!'
+TEST DEBUG
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd START
+TEST: bar1 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: bar2 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: calling translateBars
+TEST: calling renderCanntLyricLine
+TEST: wLine=w: dare tum
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd END
+Decorator value: '!trill!'
+TEST DEBUG
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd START
+TEST: bar1 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: bar2 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: calling translateBars
+TEST: calling renderCanntLyricLine
+TEST: wLine=w: dare tum
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd END
+Decorator value: '!trill!'
+TEST DEBUG
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd START
+TEST: bar1 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: bar2 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: calling translateBars
+TEST: calling renderCanntLyricLine
+TEST: wLine=w: dare tum
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd END
+Decorator value: '!trill!'
+TEST DEBUG
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd START
+TEST: bar1 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: bar2 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: calling translateBars
+TEST: calling renderCanntLyricLine
+TEST: wLine=w: dare tum
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd END
+Decorator value: '!trill!'
+TEST DEBUG
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd START
+TEST: bar1 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: bar2 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: calling translateBars
+TEST: calling renderCanntLyricLine
+TEST: wLine=w: dare tum
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd END
+Decorator value: '!trill!'
+TEST DEBUG
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd START
+TEST: bar1 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: bar2 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: calling translateBars
+TEST: calling renderCanntLyricLine
+TEST: wLine=w: dare tum
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd END
+Decorator value: '!trill!'

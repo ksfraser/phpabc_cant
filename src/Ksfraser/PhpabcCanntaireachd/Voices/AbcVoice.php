@@ -1,20 +1,3 @@
-    /**
-     * Get the voice indicator (V: field)
-     * @return string
-     */
-    public function getVoiceIndicator()
-    {
-        return $this->voiceIndicator;
-    }
-
-    /**
-     * Get the name of the voice
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Voices;
 

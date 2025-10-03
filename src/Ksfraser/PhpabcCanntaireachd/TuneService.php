@@ -103,12 +103,15 @@ class TuneService {
             // Build note sequence string from bar's notes
             $noteBody = $barObj->renderNotes();
             $cannt = $this->canntGenerator->generateForNotes($noteBody);
-            if (!is_string($cannt) || trim($cannt) === '') {
+            if (!is_string($cannt) || trim((string)$cannt) === '') {
                 $cannt = '[?]';
             }
             $barObj->setCanntaireachd($cannt);
-            // Ensure bar-level cannt is readable
-            if (method_exists($barObj, 'getCanntaireachd') && trim($barObj->getCanntaireachd()) === '') {
+            $canntVal = $barObj->getCanntaireachd();
+            if (!is_string($canntVal)) {
+                $canntVal = (string)$canntVal;
+            }
+            if (trim($canntVal) === '') {
                 $barObj->setCanntaireachd($cannt);
             }
         }

@@ -1,6 +1,6 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\BodyLineHandler;
-use Ksfraser\PhpabcCanntaireachd\AbcBar;
+use Ksfraser\PhpabcCanntaireachd\Tune\AbcBar;
 
 class CanntaireachdHandler implements AbcBodyLineHandlerInterface {
     public function matches($line): bool {
