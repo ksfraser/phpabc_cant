@@ -1,5 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd;
+
+use Ksfraser\PhpabcCanntaireachd\Log\FlowLog;
 /**
  * Checks for duplicate X: tune numbers in ABC files.
  * Lists duplicates with their first associated T: header.
@@ -9,7 +11,8 @@ class AbcTuneNumberValidatorPass {
      * @param array $lines ABC file lines
      * @return array [lines, errors]
      */
-    public function validate(array $lines): array {
+    public function validate(array $lines, $logFlow = false): array {
+        FlowLog::log('AbcTuneNumberValidatorPass::validate ENTRY', true);
         $xNumbers = [];
         $errors = [];
         $currentX = null;
@@ -30,6 +33,8 @@ class AbcTuneNumberValidatorPass {
                 }
             }
         }
-        return ['lines' => $lines, 'errors' => $errors];
+        $result = ['lines' => $lines, 'errors' => $errors];
+        FlowLog::log('AbcTuneNumberValidatorPass::validate EXIT', true);
+        return $result;
     }
 }

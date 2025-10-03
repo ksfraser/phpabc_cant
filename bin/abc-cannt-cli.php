@@ -43,6 +43,14 @@ use Ksfraser\PhpabcCanntaireachd\TokenDictionary;
 use Ksfraser\PhpabcCanntaireachd\AbcValidator;
 
 // Parse command line arguments
+
+$logFlow = false;
+foreach ($argv as $arg) {
+    if ($arg === '--log-flow') {
+        $logFlow = true;
+        break;
+    }
+}
 $cli = CLIOptions::fromArgv($argv);
 
 // Show help if requested
@@ -106,7 +114,7 @@ if (file_exists($legacyPath)) {
 $config = [
     'updateVoiceNamesFromMidi' => $updateVoiceNamesFromMidi
 ];
-$result = AbcProcessor::process($abcContent, $dict, null, $convert);
+$result = AbcProcessor::process($abcContent, $dict, null, $convert, $logFlow);
 
 $outputMsg = "ABC Canntaireachd processing completed\n";
 $outputMsg .= "✓ File: $file\n";

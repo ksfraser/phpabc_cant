@@ -8,8 +8,8 @@ class TuneService {
     protected $bagpipeAliases = ['P', 'pipes', 'pipe', 'bagpipe', 'BAGPIPES', 'Bagpipes'];
     protected $canntGenerator;
 
-    public function __construct(?CanntGenerator $gen = null) {
-        $this->canntGenerator = $gen ?? new CanntGenerator();
+    public function __construct($gen) {
+        $this->canntGenerator = $gen;
     }
 
     /**

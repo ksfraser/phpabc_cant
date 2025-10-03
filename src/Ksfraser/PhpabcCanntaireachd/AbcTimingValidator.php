@@ -1,5 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd;
+
+use Ksfraser\PhpabcCanntaireachd\Log\FlowLog;
 /**
  * Validates bar timing in ABC notation using M: and L: headers.
  * Adds 'TIMING' at the end of bars with issues and logs errors.
@@ -16,7 +18,8 @@ class AbcTimingValidator {
         $this->addTimingMarkers = $addTimingMarkers;
     }
 
-    public function validate(array $lines): array {
+    public function validate(array $lines, $logFlow = false): array {
+        FlowLog::log('AbcTimingValidator::validate ENTRY', true);
         $meter = null;
         $unit = null;
         $errors = [];
@@ -91,7 +94,9 @@ class AbcTimingValidator {
                 $output[] = $newLine;
             }
         }
-        return ['lines' => $output, 'errors' => $errors];
+    $result = ['lines' => $output, 'errors' => $errors];
+    FlowLog::log('AbcTimingValidator::validate EXIT', true);
+    return $result;
     }
     private function replaceNthBar($line, $n, $bar) {
         // Replace the nth bar in a line (1-based)

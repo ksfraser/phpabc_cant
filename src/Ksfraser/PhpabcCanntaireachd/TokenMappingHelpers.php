@@ -3,6 +3,9 @@
 namespace Ksfraser\PhpabcCanntaireachd;
 use Ksfraser\PhpabcCanntaireachd\Exceptions\TokenMappingException;
 
+
+use Ksfraser\PhpabcCanntaireachd\Log\CanntLog;
+
 class TokenNormalizer {
     public static function normalize($token) {
         if ($token === null || $token === '') {
@@ -17,7 +20,7 @@ class TokenNormalizer {
             // Strip duration/symbols after pitch
             $norm = preg_replace('/(\{[a-z]+\})?([A-Ga-g]).*/', '$1$2', $match);
             $norm = trim($norm);
-            file_put_contents(__DIR__ . '/../../cannt_debug.log', "TokenNormalizer: token='$token' part='$match' normalized='$norm'\n", FILE_APPEND);
+            CanntLog::log("TokenNormalizer: token='$token' part='$match' normalized='$norm'", true);
             if ($norm === null || $norm === '') {
                 throw new TokenMappingException("Normalization failed for token part: $match");
             }
@@ -37,13 +40,12 @@ class TokenToCanntMapper {
     }
     public function map($token) {
         $norm = TokenNormalizer::normalize($token);
-        // Debug output to file only
-        file_put_contents(__DIR__ . '/../../cannt_debug.log', "TokenToCanntMapper: token='$token' normalized='$norm'\n", FILE_APPEND);
+        CanntLog::log("TokenToCanntMapper: token='$token' normalized='$norm'", true);
         if (isset($this->dictionary[$norm])) {
-            file_put_contents(__DIR__ . '/../../cannt_debug.log', "TokenToCanntMapper: MAPPED '$norm' => '{$this->dictionary[$norm]}'\n", FILE_APPEND);
+            CanntLog::log("TokenToCanntMapper: MAPPED '$norm' => '{$this->dictionary[$norm]}'", true);
             return $this->dictionary[$norm];
         }
-        file_put_contents(__DIR__ . '/../../cannt_debug.log', "TokenToCanntMapper: NO MAPPING for '$norm'\n", FILE_APPEND);
+        CanntLog::log("TokenToCanntMapper: NO MAPPING for '$norm'", true);
         throw new TokenMappingException("No canntaireachd mapping for token: $norm");
     }
 }

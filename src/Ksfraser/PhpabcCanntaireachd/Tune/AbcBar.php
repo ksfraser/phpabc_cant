@@ -65,6 +65,7 @@ use Ksfraser\PhpabcCanntaireachd\Render\BarLineRenderer;
  */
 use Ksfraser\PhpabcCanntaireachd\Contract\RenderableCanntaireachdInterface;
 use Ksfraser\PhpabcCanntaireachd\Contract\TranslatableNoteInterface;
+use Ksfraser\PhpabcCanntaireachd\Log\DebugLog;
 
 class AbcBar extends \Ksfraser\PhpabcCanntaireachd\AbcItem implements RenderableCanntaireachdInterface
 {
@@ -74,14 +75,14 @@ class AbcBar extends \Ksfraser\PhpabcCanntaireachd\AbcItem implements Renderable
      */
     public function translateNotes($translator)
     {
-        file_put_contents('debug.log', "AbcBar::translateNotes: called\n", FILE_APPEND);
+        DebugLog::log('AbcBar::translateNotes: called', true);
         foreach ($this->notes as $i => $note) {
-            file_put_contents('debug.log', "AbcBar::translateNotes: note class=".get_class($note)."\n", FILE_APPEND);
+            DebugLog::log('AbcBar::translateNotes: note class='.get_class($note), true);
             if (!($note instanceof \Ksfraser\PhpabcCanntaireachd\Contract\TranslatableNoteInterface)) {
-                file_put_contents('debug.log', "AbcBar::translateNotes: note at index $i does not implement TranslatableNoteInterface\n", FILE_APPEND);
+                DebugLog::log('AbcBar::translateNotes: note at index '.$i.' does not implement TranslatableNoteInterface', true);
                 throw new \LogicException('Note does not implement TranslatableNoteInterface');
             }
-            file_put_contents('debug.log', "AbcBar::translateNotes: calling translate on note at index $i\n", FILE_APPEND);
+            DebugLog::log('AbcBar::translateNotes: calling translate on note at index '.$i, true);
             $note->translate($translator);
         }
     }
@@ -247,7 +248,7 @@ class AbcBar extends \Ksfraser\PhpabcCanntaireachd\AbcItem implements Renderable
 
     public function renderCanntaireachd(): string
     {
-        file_put_contents('debug.log', "AbcBar::renderCanntaireachd: called\n", FILE_APPEND);
+        DebugLog::log('AbcBar::renderCanntaireachd: called', true);
         // If bar-level cannt available return it first
         if ($this->canntaireachd !== null) return $this->canntaireachd;
         $out = [];
@@ -257,7 +258,7 @@ class AbcBar extends \Ksfraser\PhpabcCanntaireachd\AbcItem implements Renderable
                 throw new \LogicException('Note does not implement RenderableCanntaireachdInterface');
             }
             $cannt = $note->renderCanntaireachd();
-            file_put_contents('debug.log', "AbcBar::renderCanntaireachd: note $i canntaireachd='".$cannt."'\n", FILE_APPEND);
+            DebugLog::log("AbcBar::renderCanntaireachd: note $i canntaireachd='".$cannt."'", true);
             $out[] = $cannt;
             $i++;
         }

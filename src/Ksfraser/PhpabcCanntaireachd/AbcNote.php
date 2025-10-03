@@ -100,6 +100,7 @@ use Ksfraser\PhpabcCanntaireachd\NoteParserTrait;
 use Ksfraser\origin\Origin;
 use Ksfraser\PhpabcCanntaireachd\Contract\TranslatableNoteInterface;
 use Ksfraser\PhpabcCanntaireachd\Contract\RenderableCanntaireachdInterface;
+use Ksfraser\PhpabcCanntaireachd\Log\DebugLog;
 
 
 class AbcNote extends Origin implements TranslatableNoteInterface, RenderableCanntaireachdInterface
@@ -109,9 +110,9 @@ class AbcNote extends Origin implements TranslatableNoteInterface, RenderableCan
 	 * @param object $translator Any AbcTokenTranslator subclass
 	 */
 	   public function translate($translator) {
-		   file_put_contents('debug.log', "AbcNote::translate: called for token={$this->get_body_out()}\n", FILE_APPEND);
+		   DebugLog::log('AbcNote::translate: called for token=' . $this->get_body_out(), true);
 		   $result = $translator->translate($this);
-		   file_put_contents('debug.log', "AbcNote::translate: token={$this->get_body_out()} result=".var_export($result, true)."\n", FILE_APPEND);
+		   DebugLog::log('AbcNote::translate: token=' . $this->get_body_out() . ' result=' . var_export($result, true), true);
 		   // Store in canntaireachd for BagpipeAbcToCanntTranslator, or extend for other translators
 		   if (method_exists($this, 'setCanntaireachd')) {
 			   $this->setCanntaireachd($result);
@@ -154,7 +155,7 @@ class AbcNote extends Origin implements TranslatableNoteInterface, RenderableCan
 	}
 	protected function parseAbcNote($noteStr)
 		{
-			file_put_contents('debug.log', "ENTERED parseAbcNote with: $noteStr\n", FILE_APPEND);
+			DebugLog::log('ENTERED parseAbcNote with: ' . $noteStr, true);
 		// Use new parser classes for each ABC element
 		$chordParser = new \Ksfraser\PhpabcCanntaireachd\Parser\ChordSymbolsParser();
 		$graceParser = new \Ksfraser\PhpabcCanntaireachd\Parser\GraceNotesParser();
@@ -172,18 +173,18 @@ class AbcNote extends Origin implements TranslatableNoteInterface, RenderableCan
 		// EasyABC-inspired: sequential token parsing
 		$decoratorMap = \Ksfraser\PhpabcCanntaireachd\Decorator\DecoratorLoader::getDecoratorMap();
 		$originalStr = $noteStr;
-	file_put_contents('debug.log', "Initial noteStr: $noteStr\n", FILE_APPEND);
+	DebugLog::log('Initial noteStr: ' . $noteStr, true);
 		// 1. Remove decorator shortcuts at the start using regex
 		$decoratorPattern = \Ksfraser\PhpabcCanntaireachd\Decorator\DecoratorLoader::getRegex();
-		file_put_contents('debug.log', "Decorator regex: $decoratorPattern\n", FILE_APPEND);
+		DebugLog::log('Decorator regex: ' . $decoratorPattern, true);
 		if (preg_match($decoratorPattern, $noteStr, $dm)) {
-			file_put_contents('debug.log', "Decorator match: " . var_export($dm, true) . "\n", FILE_APPEND);
+			DebugLog::log('Decorator match: ' . var_export($dm, true), true);
 			if (isset($dm[1]) && $dm[1] !== '') {
 				$this->decorator = $dm[1];
 				$noteStr = substr($noteStr, strlen($dm[1]));
 			}
 		}
-		file_put_contents('debug.log', "After decorator strip: $noteStr\n", FILE_APPEND);
+		DebugLog::log('After decorator strip: ' . $noteStr, true);
 		// 2. Remove accidentals (=, ^, _)
 		// EasyABC-inspired: prioritized regex patterns for ABC elements
 		$patterns = [
@@ -194,7 +195,7 @@ class AbcNote extends Origin implements TranslatableNoteInterface, RenderableCan
 			'pitch_octave_length' => '/([=_^]*)([a-gA-G])([\',]*)(\d*\/?\d*)/', // This composite regex can be moved to a loader if needed
 		];
 		$originalStr = $noteStr;
-		file_put_contents('debug.log', "Initial noteStr: $noteStr\n", FILE_APPEND);
+		DebugLog::log('Initial noteStr: ' . $noteStr, true);
 		// 1. Chord symbol
 		if (preg_match($patterns['chord'], $noteStr, $m)) {
 			$this->chordSymbol = $m[1];
@@ -224,7 +225,7 @@ class AbcNote extends Origin implements TranslatableNoteInterface, RenderableCan
 			$this->set('length', $m[4]);
 		} else {
 			// No valid note found, log error
-			file_put_contents('debug.log', "No valid pitch/octave/length found in: $noteStr\n", FILE_APPEND);
+			DebugLog::log('No valid pitch/octave/length found in: ' . $noteStr, true);
 		}
 		// 6. Ambiguity resolution: longest match wins, pattern order resolves ambiguity
 		// No manual gotchas logic needed; regex order and specificity handle ambiguity

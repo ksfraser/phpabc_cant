@@ -1,5 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd;
+
+use Ksfraser\PhpabcCanntaireachd\Log\CanntLog;
 /**
  * Class CanntGenerator
  *
@@ -29,7 +31,12 @@ namespace Ksfraser\PhpabcCanntaireachd;
 class CanntGenerator {
     protected $dict;
 
-    public function __construct(?TokenDictionary $dict = null) {
+    /**
+     * Summary of __construct
+     * @param TokenDictionary $dict
+     * @return void
+     */
+    public function __construct($dict = null) {
         if ($dict !== null) {
             $this->dict = $dict;
             return;
@@ -61,10 +68,8 @@ class CanntGenerator {
     }
 
     public function generateForNotes(string $noteBody): string {
-        $logFile = __DIR__ . '/cannt_generator_debug.log'; // Define log file path
         $noteBody = trim($noteBody);
-        error_log("generateForNotes input: $noteBody"); // Log input
-        file_put_contents($logFile, "generateForNotes input: $noteBody\n", FILE_APPEND); // Log input to file
+    CanntLog::log("generateForNotes input: $noteBody", true);
         if ($noteBody === '') return '[?]';
         
         // Strip voice prefixes like [V:Bagpipes] from the beginning of the line
@@ -77,14 +82,12 @@ class CanntGenerator {
         foreach ($parts as $part) {
             $part = trim($part);
             if ($part === '' || $part === '|') continue;
-            error_log("Processing part: $part");
-            file_put_contents($logFile, "Processing part: $part\n", FILE_APPEND);
+            CanntLog::log("Processing part: $part", true);
             $norm = preg_replace('/\d+/', '', $part);
             $cannt = $this->dict->convertAbcToCannt($part);
             if ($cannt === null) $cannt = $this->dict->convertAbcToCannt($norm);
             if ($cannt !== null) {
-                error_log("Matched token: $part -> Cannt: $cannt");
-                file_put_contents($logFile, "Matched token: $part -> Cannt: $cannt\n", FILE_APPEND);
+                CanntLog::log("Matched token: $part -> Cannt: $cannt", true);
                 $out[] = $cannt;
             } else {
                 $out[] = '[' . ($norm === '' ? $part : $norm) . ']';
@@ -97,8 +100,7 @@ class CanntGenerator {
             return '[' . $safe . ']';
         }
         $result = implode(' ', $out);
-        error_log("generateForNotes output: $result"); // Log output
-        file_put_contents($logFile, "generateForNotes output: $result\n", FILE_APPEND); // Log output to file
+    CanntLog::log("generateForNotes output: $result", true);
         return $result;
     }
 }

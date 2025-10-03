@@ -1,0 +1,20 @@
+[FLOW] AbcProcessor::process ENTRY
+[FLOW] AbcProcessingPipeline::run ENTRY
+[FLOW] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass ENTRY
+[FLOW] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass EXIT
+[FLOW] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass ENTRY
+[PEAR_LOG_DEBUG][2025-10-02 16:59:30] AbcProcessor::copyMelodyToBagpipes called
+[FLOW] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoicePass EXIT
+[FLOW] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass ENTRY
+[PEAR_LOG_DEBUG][2025-10-02 16:59:30] AbcProcessor::handleLyrics called
+[FLOW] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcLyricsPass EXIT
+[FLOW] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass ENTRY
+[PEAR_LOG_DEBUG][2025-10-02 16:59:30] AbcProcessor::validateCanntaireachd called
+[FLOW] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass EXIT
+[FLOW] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass ENTRY
+[PEAR_LOG_DEBUG][2025-10-02 16:59:33] AbcProcessor::reorderVoices called
+[FLOW] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass EXIT
+[FLOW] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator ENTRY
+[FLOW] Pipeline pass: Ksfraser\PhpabcCanntaireachd\AbcTimingValidator EXIT
+[FLOW] AbcProcessingPipeline::run EXIT
+[FLOW] AbcProcessor::process EXIT

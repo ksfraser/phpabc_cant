@@ -1,75 +1,5 @@
 <?php
-namespace Ksfraser\PhpabcCanntaireachd\Tune;
-/**
- * Class AbcTune
- *
- * Represents a parsed ABC tune, including headers, voices, bars, and rendering logic.
- * Supports header management, voice assignment, MIDI instrument mapping, and body line parsing via handler classes.
- *
- * SOLID: Single Responsibility (tune model), Dependency Injection (configurable options), DRY (delegates to handlers).
- *
- * @package Ksfraser\PhpabcCanntaireachd\Tune
- *
- * @property array $headers Array of header objects
- * @property array $voices Array of voice metadata
- * @property array $voiceBars Per-voice array of AbcBar objects
- * @property int $interleaveWidth Number of bars per interleave block
- * @property bool $renderSolfege Render solfege for non-bagpipe voices
- *
- * @method renderSelf(): string Render this tune as an ABC string
- * @method setInterleaveWidth(int $width) Set interleave width
- * @method setRenderSolfege(bool $render) Set solfege rendering
- * @method parseBodyLines(array $lines) Parse body lines using handler classes
- * @method fixVoiceHeaders(): string Fix missing name/sname in V: header lines
- * @method addHeader(string $key, $value) Add header object
- * @method replaceHeader(string $key, $value) Replace header object
- * @method getHeaders(): array Get all header objects
- * @method getLines(): array Get all subitems/lines
- * @method getVoiceBars(): array Get all voice bars
- * @method copyVoice(string $from, string $to): void Copy voice bars
- * @method ensureVoiceInsertedFirst(string $voiceId, array $bars): void Prepend voice bars
- * @method addVoiceHeader(string $voiceId, ?string $name, ?string $sname): void Add voice header
- * @method updateVoiceNamesFromMidi() Replace generic voice names with MIDI instrument names
- *
- * @uml
- * @startuml
- * class AbcTune {
- *   - headers: array
- *   - voices: array
- *   - voiceBars: array
- *   - interleaveWidth: int
- *   - renderSolfege: bool
- *   + renderSelf(): string
- *   + setInterleaveWidth(width: int)
- *   + setRenderSolfege(render: bool)
- *   + parseBodyLines(lines: array)
- *   + fixVoiceHeaders(): string
- *   + addHeader(key: string, value)
- *   + replaceHeader(key: string, value)
- *   + getHeaders(): array
- *   + getLines(): array
- *   + getVoiceBars(): array
- *   + copyVoice(from: string, to: string)
- *   + ensureVoiceInsertedFirst(voiceId: string, bars: array)
- *   + addVoiceHeader(voiceId: string, name: string, sname: string)
- *   + updateVoiceNamesFromMidi()
- * }
- * AbcTune --|> AbcItem
- * AbcTune --> AbcBar
- * AbcTune --> AbcHeaderX
- * AbcTune --> AbcHeaderT
- * AbcTune --> AbcHeaderC
- * AbcTune --> AbcHeaderB
- * AbcTune --> AbcHeaderM
- * AbcTune --> AbcHeaderL
- * AbcTune --> AbcHeaderGeneric
- * AbcTune --> MidiInstrumentMapper
- * AbcTune --> BodyLineHandler
- * @enduml
- */
-
-use Ksfraser\PhpabcCanntaireachd\AbcItem;
-use Ksfraser\PhpabcCanntaireachd\Midi\MidiInstrumentMapper;
+namespace Ksfraser\PhpabcCanntaireachd;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderX;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderT;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderC;
@@ -81,141 +11,8 @@ use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderGeneric;
 
 class AbcTune extends AbcItem {
     /**
-     * Parse a block of ABC text into an AbcTune object (recursive descent entry point).
-     * @param string $abcText
-     * @return AbcTune|null
+     * Render this tune as an ABC string (restored full implementation)
      */
-    public static function parse($abcText)
-    {
-                $lines = preg_split('/\r?\n/', $abcText);
-                $tune = new self();
-                $headerDone = false;
-                $headerLines = [];
-                $bodyLines = [];
-                // Split header and body
-                foreach ($lines as $line) {
-                    $trimmed = trim($line);
-                    if (!$headerDone && ($trimmed === '' || preg_match('/^[A-Z]:/', $trimmed))) {
-                        $headerLines[] = $line;
-                        if ($trimmed !== '' && preg_match('/^K:/', $trimmed)) {
-                            $headerDone = true;
-                        }
-                    } else {
-                        $bodyLines[] = $line;
-                    }
-                }
-                // Parse header fields
-                foreach ($headerLines as $line) {
-                    if (preg_match('/^([A-Z]):(.*)$/', trim($line), $m)) {
-                        $key = $m[1];
-                        $value = $m[2];
-                        $tune->addHeader($key, $value);
-                    }
-                }
-                // Initial context from headers
-                $initialContext = [
-                    'voice' => null,
-                    'key' => (isset($tune->headers['K']) && $tune->headers['K']) ? $tune->headers['K']->get() : "HP",
-                    'meter' => (isset($tune->headers['M']) && $tune->headers['M']) ? $tune->headers['M']->get() : "4/4",
-                    'length' => (isset($tune->headers['L']) && $tune->headers['L']) ? $tune->headers['L']->get() : "1/8",
-                ];
-                $ctxMgr = new \Ksfraser\PhpabcCanntaireachd\ContextManager($initialContext);
-                $voiceBlocks = [];
-                $currentVoiceId = null;
-                $currentVoiceLines = [];
-                foreach ($bodyLines as $line) {
-                    $trimmed = trim($line);
-                    // Apply context changes
-                    $ctxMgr->applyToken($trimmed);
-                    // Voice change
-                    if (preg_match('/^(?:\[)?V:([^\s\]]+)(?:\])?/', $trimmed, $m)) {
-                        if ($currentVoiceId && count($currentVoiceLines) > 0) {
-                            $voiceBlocks[$currentVoiceId] = $currentVoiceLines;
-                        }
-                        $currentVoiceId = $m[1];
-                        $currentVoiceLines = [$line];
-                        continue;
-                    }
-                    if ($currentVoiceId) {
-                        $currentVoiceLines[] = $line;
-                    }
-                }
-                if ($currentVoiceId && count($currentVoiceLines) > 0) {
-                    $voiceBlocks[$currentVoiceId] = $currentVoiceLines;
-                }
-                // If no V: lines, treat as single default voice
-                if (empty($voiceBlocks)) {
-                    $voiceBlocks['default'] = $bodyLines;
-                }
-                $tune->voiceBars = [];
-                foreach ($voiceBlocks as $voiceId => $voiceLines) {
-                    // AbcVoice::parse does not exist; create AbcVoice and parse bars directly
-                    $bars = [];
-                    foreach ($voiceLines as $line) {
-                        $line = trim($line);
-                        if ($line === '' || preg_match('/^[A-Z]:/', $line)) continue;
-                        // Split line into bars
-                        $barTexts = preg_split('/\|/', $line);
-                        foreach ($barTexts as $barText) {
-                            $barText = trim($barText);
-                            if ($barText !== '') {
-                                $bar = new AbcBar($barText, '|');
-                                $bar->parseBarRecursive($barText, $ctxMgr);
-                                $bars[] = $bar;
-                            }
-                        }
-                    }
-                    $tune->voiceBars[$voiceId] = $bars;
-                }
-                return $tune;
-            }
-    protected $currentVoice = null;
-    /**
-     * Recursively parse a line into voices and bars.
-     * @param string $line
-     */
-    public function parseLineRecursive($line) {
-        // Voice change
-        if (preg_match('/^(?:\[)?V:([^\s\]]+)(?:\])?/', trim($line), $m)) {
-            $voiceId = $m[1];
-            if (!isset($this->voiceBars[$voiceId])) {
-                $this->voiceBars[$voiceId] = [];
-            }
-            $this->currentVoice = $voiceId;
-            return;
-        }
-        // If no voice, create default
-        if (!isset($this->currentVoice)) {
-            $this->currentVoice = 'default';
-            if (!isset($this->voiceBars[$this->currentVoice])) {
-                $this->voiceBars[$this->currentVoice] = [];
-            }
-        }
-        // Split line into bars
-        $bars = preg_split('/\|/', $line);
-        // Ensure $ctxMgr is available
-        static $ctxMgrInstance = null;
-        if ($ctxMgrInstance === null) {
-            $initialContext = [
-                'voice' => null,
-                'key' => $this->headers['K']->get() ?? null,
-                'meter' => $this->headers['M']->get() ?? null,
-                'length' => $this->headers['L']->get() ?? null,
-            ];
-            $ctxMgrInstance = new \Ksfraser\PhpabcCanntaireachd\ContextManager($initialContext);
-        }
-        foreach ($bars as $barText) {
-            $barText = trim($barText);
-            if ($barText !== '') {
-                $bar = new AbcBar($barText);
-                $bar->parseBarRecursive($barText, $ctxMgrInstance);
-                $this->voiceBars[$this->currentVoice][] = $bar;
-            }
-        }
-    }
-    /**
-     * Render this tune as an ABC string (stub implementation)
-    */
     public function renderSelf(): string {
         $out = '';
         // Render headers in defined order
@@ -236,17 +33,39 @@ class AbcTune extends AbcItem {
                 $out .= $h->render();
             }
         }
+        // Ensure header/body separator
+        $out .= "\n";
+
         // Render body/music lines for each voice
-        foreach ($this->voiceBars as $voiceId => $bars) {
-            // Output V: line for each voice (if not already output above)
-            if (!isset($this->voices[$voiceId])) {
-                $out .= "V:$voiceId\n";
+        // If there are voiceBars, render them in order
+        if (!empty($this->voiceBars)) {
+            foreach ($this->voiceBars as $voiceId => $bars) {
+                // Output voice header for each voice (except if only one voice)
+                if (count($this->voiceBars) > 1) {
+                    $out .= "V:$voiceId\n";
+                }
+                foreach ($bars as $barObj) {
+                    $out .= $barObj->renderSelf() . " ";
+                }
+                $out = rtrim($out) . "\n";
+                // If Bagpipe voice, render canntaireachd line
+                if (strtolower($voiceId) === 'p' || strtolower($voiceId) === 'bagpipes') {
+                    $out .= "%%Canntaireachd\n";
+                    foreach ($bars as $barObj) {
+                        if (method_exists($barObj, 'getCanntaireachd')) {
+                            $out .= $barObj->getCanntaireachd() . " ";
+                        }
+                    }
+                    $out = rtrim($out) . "\n";
+                }
             }
-            foreach ($bars as $barObj) {
-                if (method_exists($barObj, 'render')) {
-                    $out .= $barObj->render();
-                } elseif (is_string($barObj)) {
-                    $out .= $barObj . "\n";
+        } else {
+            // Fallback: render subitems (legacy)
+            foreach ($this->getLines() as $lineObj) {
+                if (method_exists($lineObj, 'render')) {
+                    $out .= $lineObj->render();
+                } elseif (is_string($lineObj)) {
+                    $out .= $lineObj . "\n";
                 }
             }
         }
@@ -335,21 +154,16 @@ class AbcTune extends AbcItem {
             new \Ksfraser\PhpabcCanntaireachd\BodyLineHandler\CanntaireachdHandler(),
             new \Ksfraser\PhpabcCanntaireachd\BodyLineHandler\SolfegeHandler(),
             new \Ksfraser\PhpabcCanntaireachd\BodyLineHandler\NoteHandler(),
-		//There should be a MIDI and Instruction %% and Comment % handler here!!
         ];
         foreach ($lines as $line) {
             $trimmed = trim($line);
-            // Voice change: V:xx or [V:xx] or possibly continuation of same voice
+            // Voice change: V:xx or [V:xx]
             if (preg_match('/^(?:\[)?V:([^\s\]]+)(?:\])?/', $trimmed, $m)) {
-		//Ensures that context->voiceBars has an array for the voice
-		//also sets the current voice pointer to the voice string
                 $context->getOrCreateVoice($m[1]);
                 continue;
             }
             // If we have not seen a voice yet, create a default melody voice when content appears
             if ($context->currentVoice === null && $trimmed !== '' && !preg_match('/^[A-Z]:/i', $trimmed)) {
-		//If the line isn't a header line then it should be a voice/music line.  
-		//Unless its a comment/instruction.  If it is a V: line it will have been created above! (currentVoice != NULL)
                 $context->getOrCreateVoice('M');
             }
             foreach ($handlers as $handler) {
@@ -413,7 +227,6 @@ class AbcTune extends AbcItem {
             $h->setLabel( $key );
             $this->headers[$key] = $h;
         }
-        // Voice change
     }
 
     public function getHeaders(): array {

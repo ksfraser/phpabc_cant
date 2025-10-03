@@ -1,0 +1,654 @@
+[DEBUG][2025-10-03 01:00:23] generateForNotes input: A B C D A B C D
+[DEBUG][2025-10-03 01:00:23] Processing part: A
+[DEBUG][2025-10-03 01:00:23] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] Processing part: B
+[DEBUG][2025-10-03 01:00:23] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] Processing part: C
+[DEBUG][2025-10-03 01:00:23] Processing part: D
+[DEBUG][2025-10-03 01:00:23] Processing part: A
+[DEBUG][2025-10-03 01:00:23] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] Processing part: B
+[DEBUG][2025-10-03 01:00:23] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] Processing part: C
+[DEBUG][2025-10-03 01:00:23] Processing part: D
+[DEBUG][2025-10-03 01:00:23] generateForNotes output: en o [C] [D] en o [C] [D]
+[DEBUG][2025-10-03 01:00:23] generateForNotes input: A2 B2 A2 B2
+[DEBUG][2025-10-03 01:00:23] Processing part: A2
+[DEBUG][2025-10-03 01:00:23] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] Processing part: B2
+[DEBUG][2025-10-03 01:00:23] Matched token: B2 -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] Processing part: A2
+[DEBUG][2025-10-03 01:00:23] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] Processing part: B2
+[DEBUG][2025-10-03 01:00:23] Matched token: B2 -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] generateForNotes output: en o en o
+[DEBUG][2025-10-03 01:00:23] generateForNotes input: A B A B
+[DEBUG][2025-10-03 01:00:23] Processing part: A
+[DEBUG][2025-10-03 01:00:23] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] Processing part: B
+[DEBUG][2025-10-03 01:00:23] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] Processing part: A
+[DEBUG][2025-10-03 01:00:23] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] Processing part: B
+[DEBUG][2025-10-03 01:00:23] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] generateForNotes output: en o en o
+[DEBUG][2025-10-03 01:00:23] generateForNotes input: g  e  g  e
+[DEBUG][2025-10-03 01:00:23] Processing part: g
+[DEBUG][2025-10-03 01:00:23] Matched token: g -> Cannt: di
+[DEBUG][2025-10-03 01:00:23] Processing part: e
+[DEBUG][2025-10-03 01:00:23] Matched token: e -> Cannt: e 
+[DEBUG][2025-10-03 01:00:23] Processing part: g
+[DEBUG][2025-10-03 01:00:23] Matched token: g -> Cannt: di
+[DEBUG][2025-10-03 01:00:23] Processing part: e
+[DEBUG][2025-10-03 01:00:23] Matched token: e -> Cannt: e 
+[DEBUG][2025-10-03 01:00:23] generateForNotes output: di e  di e 
+[DEBUG][2025-10-03 01:00:23] generateForNotes input: c B mg a a sa  c B mg a a sa
+[DEBUG][2025-10-03 01:00:23] Processing part: c
+[DEBUG][2025-10-03 01:00:23] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] Processing part: B
+[DEBUG][2025-10-03 01:00:23] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] Processing part: mg
+[DEBUG][2025-10-03 01:00:23] Processing part: a
+[DEBUG][2025-10-03 01:00:23] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:00:23] Processing part: a
+[DEBUG][2025-10-03 01:00:23] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:00:23] Processing part: sa
+[DEBUG][2025-10-03 01:00:23] Processing part: c
+[DEBUG][2025-10-03 01:00:23] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] Processing part: B
+[DEBUG][2025-10-03 01:00:23] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] Processing part: mg
+[DEBUG][2025-10-03 01:00:23] Processing part: a
+[DEBUG][2025-10-03 01:00:23] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:00:23] Processing part: a
+[DEBUG][2025-10-03 01:00:23] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:00:23] Processing part: sa
+[DEBUG][2025-10-03 01:00:23] generateForNotes output: o o [mg] I I [sa] o o [mg] I I [sa]
+[DEBUG][2025-10-03 01:00:23] generateForNotes input: A B A B
+[DEBUG][2025-10-03 01:00:23] Processing part: A
+[DEBUG][2025-10-03 01:00:23] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] Processing part: B
+[DEBUG][2025-10-03 01:00:23] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] Processing part: A
+[DEBUG][2025-10-03 01:00:23] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] Processing part: B
+[DEBUG][2025-10-03 01:00:23] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] generateForNotes output: en o en o
+[DEBUG][2025-10-03 01:00:23] generateForNotes input: A2 A2
+[DEBUG][2025-10-03 01:00:23] Processing part: A2
+[DEBUG][2025-10-03 01:00:23] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] Processing part: A2
+[DEBUG][2025-10-03 01:00:23] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] generateForNotes output: en en
+[DEBUG][2025-10-03 01:00:23] generateForNotes input: A A
+[DEBUG][2025-10-03 01:00:23] Processing part: A
+[DEBUG][2025-10-03 01:00:23] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] Processing part: A
+[DEBUG][2025-10-03 01:00:23] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] generateForNotes output: en en
+[DEBUG][2025-10-03 01:00:23] generateForNotes input: c B mg a a sa  c B mg a a sa
+[DEBUG][2025-10-03 01:00:23] Processing part: c
+[DEBUG][2025-10-03 01:00:23] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] Processing part: B
+[DEBUG][2025-10-03 01:00:23] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] Processing part: mg
+[DEBUG][2025-10-03 01:00:23] Processing part: a
+[DEBUG][2025-10-03 01:00:23] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:00:23] Processing part: a
+[DEBUG][2025-10-03 01:00:23] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:00:23] Processing part: sa
+[DEBUG][2025-10-03 01:00:23] Processing part: c
+[DEBUG][2025-10-03 01:00:23] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] Processing part: B
+[DEBUG][2025-10-03 01:00:23] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] Processing part: mg
+[DEBUG][2025-10-03 01:00:23] Processing part: a
+[DEBUG][2025-10-03 01:00:23] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:00:23] Processing part: a
+[DEBUG][2025-10-03 01:00:23] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:00:23] Processing part: sa
+[DEBUG][2025-10-03 01:00:23] generateForNotes output: o o [mg] I I [sa] o o [mg] I I [sa]
+[DEBUG][2025-10-03 01:00:23] generateForNotes input: c e mg sa  c e mg sa
+[DEBUG][2025-10-03 01:00:23] Processing part: c
+[DEBUG][2025-10-03 01:00:23] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] Processing part: e
+[DEBUG][2025-10-03 01:00:23] Matched token: e -> Cannt: e 
+[DEBUG][2025-10-03 01:00:23] Processing part: mg
+[DEBUG][2025-10-03 01:00:23] Processing part: sa
+[DEBUG][2025-10-03 01:00:23] Processing part: c
+[DEBUG][2025-10-03 01:00:23] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] Processing part: e
+[DEBUG][2025-10-03 01:00:23] Matched token: e -> Cannt: e 
+[DEBUG][2025-10-03 01:00:23] Processing part: mg
+[DEBUG][2025-10-03 01:00:23] Processing part: sa
+[DEBUG][2025-10-03 01:00:23] generateForNotes output: o e  [mg] [sa] o e  [mg] [sa]
+[DEBUG][2025-10-03 01:00:23] generateForNotes input: A B A B
+[DEBUG][2025-10-03 01:00:23] Processing part: A
+[DEBUG][2025-10-03 01:00:23] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] Processing part: B
+[DEBUG][2025-10-03 01:00:23] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] Processing part: A
+[DEBUG][2025-10-03 01:00:23] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] Processing part: B
+[DEBUG][2025-10-03 01:00:23] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] generateForNotes output: en o en o
+[DEBUG][2025-10-03 01:00:23] generateForNotes input: A2 A2
+[DEBUG][2025-10-03 01:00:23] Processing part: A2
+[DEBUG][2025-10-03 01:00:23] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] Processing part: A2
+[DEBUG][2025-10-03 01:00:23] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] generateForNotes output: en en
+[DEBUG][2025-10-03 01:00:23] generateForNotes input: A A
+[DEBUG][2025-10-03 01:00:23] Processing part: A
+[DEBUG][2025-10-03 01:00:23] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] Processing part: A
+[DEBUG][2025-10-03 01:00:23] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] generateForNotes output: en en
+[DEBUG][2025-10-03 01:00:23] generateForNotes input: A B A B
+[DEBUG][2025-10-03 01:00:23] Processing part: A
+[DEBUG][2025-10-03 01:00:23] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] Processing part: B
+[DEBUG][2025-10-03 01:00:23] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] Processing part: A
+[DEBUG][2025-10-03 01:00:23] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] Processing part: B
+[DEBUG][2025-10-03 01:00:23] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] generateForNotes output: en o en o
+[DEBUG][2025-10-03 01:00:23] generateForNotes input: A2 A2
+[DEBUG][2025-10-03 01:00:23] Processing part: A2
+[DEBUG][2025-10-03 01:00:23] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] Processing part: A2
+[DEBUG][2025-10-03 01:00:23] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] generateForNotes output: en en
+[DEBUG][2025-10-03 01:00:23] generateForNotes input: A A
+[DEBUG][2025-10-03 01:00:23] Processing part: A
+[DEBUG][2025-10-03 01:00:23] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] Processing part: A
+[DEBUG][2025-10-03 01:00:23] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] generateForNotes output: en en
+[DEBUG][2025-10-03 01:00:23] generateForNotes input: A B A B
+[DEBUG][2025-10-03 01:00:23] Processing part: A
+[DEBUG][2025-10-03 01:00:23] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] Processing part: B
+[DEBUG][2025-10-03 01:00:23] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] Processing part: A
+[DEBUG][2025-10-03 01:00:23] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] Processing part: B
+[DEBUG][2025-10-03 01:00:23] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] generateForNotes output: en o en o
+[DEBUG][2025-10-03 01:00:23] generateForNotes input: A2 A2
+[DEBUG][2025-10-03 01:00:23] Processing part: A2
+[DEBUG][2025-10-03 01:00:23] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] Processing part: A2
+[DEBUG][2025-10-03 01:00:23] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] generateForNotes output: en en
+[DEBUG][2025-10-03 01:00:23] generateForNotes input: A A
+[DEBUG][2025-10-03 01:00:23] Processing part: A
+[DEBUG][2025-10-03 01:00:23] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] Processing part: A
+[DEBUG][2025-10-03 01:00:23] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:00:23] generateForNotes output: en en
+[DEBUG][2025-10-03 01:00:23] generateForNotes input: c me mg a c me mg a
+[DEBUG][2025-10-03 01:00:23] Processing part: c
+[DEBUG][2025-10-03 01:00:23] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] Processing part: me
+[DEBUG][2025-10-03 01:00:23] Processing part: mg
+[DEBUG][2025-10-03 01:00:23] Processing part: a
+[DEBUG][2025-10-03 01:00:23] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:00:23] Processing part: c
+[DEBUG][2025-10-03 01:00:23] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] Processing part: me
+[DEBUG][2025-10-03 01:00:23] Processing part: mg
+[DEBUG][2025-10-03 01:00:23] Processing part: a
+[DEBUG][2025-10-03 01:00:23] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:00:23] generateForNotes output: o [me] [mg] I o [me] [mg] I
+[DEBUG][2025-10-03 01:00:23] generateForNotes input: c G mg sa c G mg sa
+[DEBUG][2025-10-03 01:00:23] Processing part: c
+[DEBUG][2025-10-03 01:00:23] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] Processing part: G
+[DEBUG][2025-10-03 01:00:23] Matched token: G -> Cannt: em
+[DEBUG][2025-10-03 01:00:23] Processing part: mg
+[DEBUG][2025-10-03 01:00:23] Processing part: sa
+[DEBUG][2025-10-03 01:00:23] Processing part: c
+[DEBUG][2025-10-03 01:00:23] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:00:23] Processing part: G
+[DEBUG][2025-10-03 01:00:23] Matched token: G -> Cannt: em
+[DEBUG][2025-10-03 01:00:23] Processing part: mg
+[DEBUG][2025-10-03 01:00:23] Processing part: sa
+[DEBUG][2025-10-03 01:00:23] generateForNotes output: o em [mg] [sa] o em [mg] [sa]
+[DEBUG][2025-10-03 01:09:12] generateForNotes input: A B C D A B C D
+[DEBUG][2025-10-03 01:09:12] Processing part: A
+[DEBUG][2025-10-03 01:09:12] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:09:12] Processing part: B
+[DEBUG][2025-10-03 01:09:12] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:09:12] Processing part: C
+[DEBUG][2025-10-03 01:09:12] Processing part: D
+[DEBUG][2025-10-03 01:09:12] Processing part: A
+[DEBUG][2025-10-03 01:09:12] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:09:12] Processing part: B
+[DEBUG][2025-10-03 01:09:12] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:09:12] Processing part: C
+[DEBUG][2025-10-03 01:09:12] Processing part: D
+[DEBUG][2025-10-03 01:09:12] generateForNotes output: en o [C] [D] en o [C] [D]
+[DEBUG][2025-10-03 01:09:12] generateForNotes input: A2 B2 A2 B2
+[DEBUG][2025-10-03 01:09:12] Processing part: A2
+[DEBUG][2025-10-03 01:09:12] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:09:12] Processing part: B2
+[DEBUG][2025-10-03 01:09:12] Matched token: B2 -> Cannt: o
+[DEBUG][2025-10-03 01:09:12] Processing part: A2
+[DEBUG][2025-10-03 01:09:12] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:09:12] Processing part: B2
+[DEBUG][2025-10-03 01:09:12] Matched token: B2 -> Cannt: o
+[DEBUG][2025-10-03 01:09:12] generateForNotes output: en o en o
+[DEBUG][2025-10-03 01:09:12] generateForNotes input: A B A B
+[DEBUG][2025-10-03 01:09:12] Processing part: A
+[DEBUG][2025-10-03 01:09:12] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:09:12] Processing part: B
+[DEBUG][2025-10-03 01:09:12] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:09:12] Processing part: A
+[DEBUG][2025-10-03 01:09:12] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:09:12] Processing part: B
+[DEBUG][2025-10-03 01:09:12] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:09:12] generateForNotes output: en o en o
+[DEBUG][2025-10-03 01:09:12] generateForNotes input: g  e  g  e
+[DEBUG][2025-10-03 01:09:12] Processing part: g
+[DEBUG][2025-10-03 01:09:12] Matched token: g -> Cannt: di
+[DEBUG][2025-10-03 01:09:12] Processing part: e
+[DEBUG][2025-10-03 01:09:12] Matched token: e -> Cannt: e 
+[DEBUG][2025-10-03 01:09:12] Processing part: g
+[DEBUG][2025-10-03 01:09:12] Matched token: g -> Cannt: di
+[DEBUG][2025-10-03 01:09:12] Processing part: e
+[DEBUG][2025-10-03 01:09:12] Matched token: e -> Cannt: e 
+[DEBUG][2025-10-03 01:09:12] generateForNotes output: di e  di e 
+[DEBUG][2025-10-03 01:09:12] generateForNotes input: c B mg a a sa  c B mg a a sa
+[DEBUG][2025-10-03 01:09:12] Processing part: c
+[DEBUG][2025-10-03 01:09:12] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:09:12] Processing part: B
+[DEBUG][2025-10-03 01:09:12] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:09:12] Processing part: mg
+[DEBUG][2025-10-03 01:09:12] Processing part: a
+[DEBUG][2025-10-03 01:09:12] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:09:12] Processing part: a
+[DEBUG][2025-10-03 01:09:12] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:09:12] Processing part: sa
+[DEBUG][2025-10-03 01:09:12] Processing part: c
+[DEBUG][2025-10-03 01:09:12] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:09:12] Processing part: B
+[DEBUG][2025-10-03 01:09:12] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:09:12] Processing part: mg
+[DEBUG][2025-10-03 01:09:12] Processing part: a
+[DEBUG][2025-10-03 01:09:12] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:09:12] Processing part: a
+[DEBUG][2025-10-03 01:09:12] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:09:12] Processing part: sa
+[DEBUG][2025-10-03 01:09:12] generateForNotes output: o o [mg] I I [sa] o o [mg] I I [sa]
+[DEBUG][2025-10-03 01:09:13] generateForNotes input: A B A B
+[DEBUG][2025-10-03 01:09:13] Processing part: A
+[DEBUG][2025-10-03 01:09:13] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:09:13] Processing part: B
+[DEBUG][2025-10-03 01:09:13] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:09:13] Processing part: A
+[DEBUG][2025-10-03 01:09:13] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:09:13] Processing part: B
+[DEBUG][2025-10-03 01:09:13] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:09:13] generateForNotes output: en o en o
+[DEBUG][2025-10-03 01:09:13] generateForNotes input: A2 A2
+[DEBUG][2025-10-03 01:09:13] Processing part: A2
+[DEBUG][2025-10-03 01:09:13] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:09:13] Processing part: A2
+[DEBUG][2025-10-03 01:09:13] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:09:13] generateForNotes output: en en
+[DEBUG][2025-10-03 01:09:13] generateForNotes input: A A
+[DEBUG][2025-10-03 01:09:13] Processing part: A
+[DEBUG][2025-10-03 01:09:13] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:09:13] Processing part: A
+[DEBUG][2025-10-03 01:09:13] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:09:13] generateForNotes output: en en
+[DEBUG][2025-10-03 01:09:13] generateForNotes input: c B mg a a sa  c B mg a a sa
+[DEBUG][2025-10-03 01:09:13] Processing part: c
+[DEBUG][2025-10-03 01:09:13] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:09:13] Processing part: B
+[DEBUG][2025-10-03 01:09:13] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:09:13] Processing part: mg
+[DEBUG][2025-10-03 01:09:13] Processing part: a
+[DEBUG][2025-10-03 01:09:13] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:09:13] Processing part: a
+[DEBUG][2025-10-03 01:09:13] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:09:13] Processing part: sa
+[DEBUG][2025-10-03 01:09:13] Processing part: c
+[DEBUG][2025-10-03 01:09:13] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:09:13] Processing part: B
+[DEBUG][2025-10-03 01:09:13] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:09:13] Processing part: mg
+[DEBUG][2025-10-03 01:09:13] Processing part: a
+[DEBUG][2025-10-03 01:09:13] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:09:13] Processing part: a
+[DEBUG][2025-10-03 01:09:13] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:09:13] Processing part: sa
+[DEBUG][2025-10-03 01:09:13] generateForNotes output: o o [mg] I I [sa] o o [mg] I I [sa]
+[DEBUG][2025-10-03 01:09:13] generateForNotes input: c e mg sa  c e mg sa
+[DEBUG][2025-10-03 01:09:13] Processing part: c
+[DEBUG][2025-10-03 01:09:13] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:09:13] Processing part: e
+[DEBUG][2025-10-03 01:09:13] Matched token: e -> Cannt: e 
+[DEBUG][2025-10-03 01:09:13] Processing part: mg
+[DEBUG][2025-10-03 01:09:13] Processing part: sa
+[DEBUG][2025-10-03 01:09:13] Processing part: c
+[DEBUG][2025-10-03 01:09:13] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:09:13] Processing part: e
+[DEBUG][2025-10-03 01:09:13] Matched token: e -> Cannt: e 
+[DEBUG][2025-10-03 01:09:13] Processing part: mg
+[DEBUG][2025-10-03 01:09:13] Processing part: sa
+[DEBUG][2025-10-03 01:09:13] generateForNotes output: o e  [mg] [sa] o e  [mg] [sa]
+[DEBUG][2025-10-03 01:09:13] generateForNotes input: A B A B
+[DEBUG][2025-10-03 01:09:13] Processing part: A
+[DEBUG][2025-10-03 01:09:13] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:09:13] Processing part: B
+[DEBUG][2025-10-03 01:09:13] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:09:13] Processing part: A
+[DEBUG][2025-10-03 01:09:13] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:09:13] Processing part: B
+[DEBUG][2025-10-03 01:09:13] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:09:13] generateForNotes output: en o en o
+[DEBUG][2025-10-03 01:09:13] generateForNotes input: A2 A2
+[DEBUG][2025-10-03 01:09:13] Processing part: A2
+[DEBUG][2025-10-03 01:09:13] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:09:13] Processing part: A2
+[DEBUG][2025-10-03 01:09:13] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:09:13] generateForNotes output: en en
+[DEBUG][2025-10-03 01:09:13] generateForNotes input: A A
+[DEBUG][2025-10-03 01:09:13] Processing part: A
+[DEBUG][2025-10-03 01:09:13] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:09:13] Processing part: A
+[DEBUG][2025-10-03 01:09:13] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:09:13] generateForNotes output: en en
+[DEBUG][2025-10-03 01:09:13] generateForNotes input: A B A B
+[DEBUG][2025-10-03 01:09:13] Processing part: A
+[DEBUG][2025-10-03 01:09:13] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:09:13] Processing part: B
+[DEBUG][2025-10-03 01:09:13] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:09:13] Processing part: A
+[DEBUG][2025-10-03 01:09:13] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:09:13] Processing part: B
+[DEBUG][2025-10-03 01:09:13] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:09:13] generateForNotes output: en o en o
+[DEBUG][2025-10-03 01:09:13] generateForNotes input: A2 A2
+[DEBUG][2025-10-03 01:09:13] Processing part: A2
+[DEBUG][2025-10-03 01:09:13] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:09:13] Processing part: A2
+[DEBUG][2025-10-03 01:09:13] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:09:13] generateForNotes output: en en
+[DEBUG][2025-10-03 01:09:13] generateForNotes input: A A
+[DEBUG][2025-10-03 01:09:13] Processing part: A
+[DEBUG][2025-10-03 01:09:13] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:09:13] Processing part: A
+[DEBUG][2025-10-03 01:09:13] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:09:13] generateForNotes output: en en
+[DEBUG][2025-10-03 01:09:13] generateForNotes input: A B A B
+[DEBUG][2025-10-03 01:09:13] Processing part: A
+[DEBUG][2025-10-03 01:09:13] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:09:13] Processing part: B
+[DEBUG][2025-10-03 01:09:13] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:09:13] Processing part: A
+[DEBUG][2025-10-03 01:09:13] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:09:13] Processing part: B
+[DEBUG][2025-10-03 01:09:13] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:09:13] generateForNotes output: en o en o
+[DEBUG][2025-10-03 01:09:13] generateForNotes input: A2 A2
+[DEBUG][2025-10-03 01:09:13] Processing part: A2
+[DEBUG][2025-10-03 01:09:13] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:09:13] Processing part: A2
+[DEBUG][2025-10-03 01:09:13] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:09:13] generateForNotes output: en en
+[DEBUG][2025-10-03 01:09:13] generateForNotes input: A A
+[DEBUG][2025-10-03 01:09:13] Processing part: A
+[DEBUG][2025-10-03 01:09:13] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:09:13] Processing part: A
+[DEBUG][2025-10-03 01:09:13] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:09:13] generateForNotes output: en en
+[DEBUG][2025-10-03 01:09:13] generateForNotes input: c me mg a c me mg a
+[DEBUG][2025-10-03 01:09:13] Processing part: c
+[DEBUG][2025-10-03 01:09:13] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:09:13] Processing part: me
+[DEBUG][2025-10-03 01:09:13] Processing part: mg
+[DEBUG][2025-10-03 01:09:13] Processing part: a
+[DEBUG][2025-10-03 01:09:13] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:09:13] Processing part: c
+[DEBUG][2025-10-03 01:09:13] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:09:13] Processing part: me
+[DEBUG][2025-10-03 01:09:13] Processing part: mg
+[DEBUG][2025-10-03 01:09:13] Processing part: a
+[DEBUG][2025-10-03 01:09:13] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:09:13] generateForNotes output: o [me] [mg] I o [me] [mg] I
+[DEBUG][2025-10-03 01:09:13] generateForNotes input: c G mg sa c G mg sa
+[DEBUG][2025-10-03 01:09:13] Processing part: c
+[DEBUG][2025-10-03 01:09:13] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:09:13] Processing part: G
+[DEBUG][2025-10-03 01:09:13] Matched token: G -> Cannt: em
+[DEBUG][2025-10-03 01:09:13] Processing part: mg
+[DEBUG][2025-10-03 01:09:13] Processing part: sa
+[DEBUG][2025-10-03 01:09:13] Processing part: c
+[DEBUG][2025-10-03 01:09:13] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:09:13] Processing part: G
+[DEBUG][2025-10-03 01:09:13] Matched token: G -> Cannt: em
+[DEBUG][2025-10-03 01:09:13] Processing part: mg
+[DEBUG][2025-10-03 01:09:13] Processing part: sa
+[DEBUG][2025-10-03 01:09:13] generateForNotes output: o em [mg] [sa] o em [mg] [sa]
+[DEBUG][2025-10-03 01:20:44] generateForNotes input: A B C D A B C D
+[DEBUG][2025-10-03 01:20:44] Processing part: A
+[DEBUG][2025-10-03 01:20:44] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:20:44] Processing part: B
+[DEBUG][2025-10-03 01:20:44] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:20:44] Processing part: C
+[DEBUG][2025-10-03 01:20:44] Processing part: D
+[DEBUG][2025-10-03 01:20:44] Processing part: A
+[DEBUG][2025-10-03 01:20:44] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:20:44] Processing part: B
+[DEBUG][2025-10-03 01:20:44] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:20:44] Processing part: C
+[DEBUG][2025-10-03 01:20:44] Processing part: D
+[DEBUG][2025-10-03 01:20:44] generateForNotes output: en o [C] [D] en o [C] [D]
+[DEBUG][2025-10-03 01:20:44] generateForNotes input: A2 B2 A2 B2
+[DEBUG][2025-10-03 01:20:44] Processing part: A2
+[DEBUG][2025-10-03 01:20:44] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:20:44] Processing part: B2
+[DEBUG][2025-10-03 01:20:44] Matched token: B2 -> Cannt: o
+[DEBUG][2025-10-03 01:20:44] Processing part: A2
+[DEBUG][2025-10-03 01:20:44] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:20:44] Processing part: B2
+[DEBUG][2025-10-03 01:20:44] Matched token: B2 -> Cannt: o
+[DEBUG][2025-10-03 01:20:44] generateForNotes output: en o en o
+[DEBUG][2025-10-03 01:20:44] generateForNotes input: A B A B
+[DEBUG][2025-10-03 01:20:44] Processing part: A
+[DEBUG][2025-10-03 01:20:44] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:20:44] Processing part: B
+[DEBUG][2025-10-03 01:20:44] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:20:44] Processing part: A
+[DEBUG][2025-10-03 01:20:44] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:20:44] Processing part: B
+[DEBUG][2025-10-03 01:20:44] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:20:44] generateForNotes output: en o en o
+[DEBUG][2025-10-03 01:20:44] generateForNotes input: g  e  g  e
+[DEBUG][2025-10-03 01:20:44] Processing part: g
+[DEBUG][2025-10-03 01:20:44] Matched token: g -> Cannt: di
+[DEBUG][2025-10-03 01:20:44] Processing part: e
+[DEBUG][2025-10-03 01:20:44] Matched token: e -> Cannt: e 
+[DEBUG][2025-10-03 01:20:44] Processing part: g
+[DEBUG][2025-10-03 01:20:44] Matched token: g -> Cannt: di
+[DEBUG][2025-10-03 01:20:44] Processing part: e
+[DEBUG][2025-10-03 01:20:44] Matched token: e -> Cannt: e 
+[DEBUG][2025-10-03 01:20:44] generateForNotes output: di e  di e 
+[DEBUG][2025-10-03 01:20:44] generateForNotes input: c B mg a a sa  c B mg a a sa
+[DEBUG][2025-10-03 01:20:44] Processing part: c
+[DEBUG][2025-10-03 01:20:44] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:20:44] Processing part: B
+[DEBUG][2025-10-03 01:20:44] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:20:44] Processing part: mg
+[DEBUG][2025-10-03 01:20:44] Processing part: a
+[DEBUG][2025-10-03 01:20:44] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:20:44] Processing part: a
+[DEBUG][2025-10-03 01:20:44] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:20:44] Processing part: sa
+[DEBUG][2025-10-03 01:20:44] Processing part: c
+[DEBUG][2025-10-03 01:20:44] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:20:44] Processing part: B
+[DEBUG][2025-10-03 01:20:44] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:20:44] Processing part: mg
+[DEBUG][2025-10-03 01:20:44] Processing part: a
+[DEBUG][2025-10-03 01:20:44] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:20:44] Processing part: a
+[DEBUG][2025-10-03 01:20:44] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:20:44] Processing part: sa
+[DEBUG][2025-10-03 01:20:44] generateForNotes output: o o [mg] I I [sa] o o [mg] I I [sa]
+[DEBUG][2025-10-03 01:20:44] generateForNotes input: A B A B
+[DEBUG][2025-10-03 01:20:44] Processing part: A
+[DEBUG][2025-10-03 01:20:44] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:20:44] Processing part: B
+[DEBUG][2025-10-03 01:20:44] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:20:44] Processing part: A
+[DEBUG][2025-10-03 01:20:44] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:20:44] Processing part: B
+[DEBUG][2025-10-03 01:20:44] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:20:44] generateForNotes output: en o en o
+[DEBUG][2025-10-03 01:20:44] generateForNotes input: A2 A2
+[DEBUG][2025-10-03 01:20:44] Processing part: A2
+[DEBUG][2025-10-03 01:20:44] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:20:44] Processing part: A2
+[DEBUG][2025-10-03 01:20:44] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:20:44] generateForNotes output: en en
+[DEBUG][2025-10-03 01:20:44] generateForNotes input: A A
+[DEBUG][2025-10-03 01:20:44] Processing part: A
+[DEBUG][2025-10-03 01:20:44] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:20:44] Processing part: A
+[DEBUG][2025-10-03 01:20:44] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:20:44] generateForNotes output: en en
+[DEBUG][2025-10-03 01:20:44] generateForNotes input: c B mg a a sa  c B mg a a sa
+[DEBUG][2025-10-03 01:20:44] Processing part: c
+[DEBUG][2025-10-03 01:20:44] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:20:44] Processing part: B
+[DEBUG][2025-10-03 01:20:44] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:20:44] Processing part: mg
+[DEBUG][2025-10-03 01:20:44] Processing part: a
+[DEBUG][2025-10-03 01:20:44] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:20:44] Processing part: a
+[DEBUG][2025-10-03 01:20:44] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:20:44] Processing part: sa
+[DEBUG][2025-10-03 01:20:44] Processing part: c
+[DEBUG][2025-10-03 01:20:44] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:20:44] Processing part: B
+[DEBUG][2025-10-03 01:20:44] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:20:44] Processing part: mg
+[DEBUG][2025-10-03 01:20:44] Processing part: a
+[DEBUG][2025-10-03 01:20:44] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:20:44] Processing part: a
+[DEBUG][2025-10-03 01:20:44] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:20:44] Processing part: sa
+[DEBUG][2025-10-03 01:20:44] generateForNotes output: o o [mg] I I [sa] o o [mg] I I [sa]
+[DEBUG][2025-10-03 01:20:44] generateForNotes input: c e mg sa  c e mg sa
+[DEBUG][2025-10-03 01:20:44] Processing part: c
+[DEBUG][2025-10-03 01:20:44] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:20:44] Processing part: e
+[DEBUG][2025-10-03 01:20:44] Matched token: e -> Cannt: e 
+[DEBUG][2025-10-03 01:20:44] Processing part: mg
+[DEBUG][2025-10-03 01:20:44] Processing part: sa
+[DEBUG][2025-10-03 01:20:44] Processing part: c
+[DEBUG][2025-10-03 01:20:44] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:20:44] Processing part: e
+[DEBUG][2025-10-03 01:20:44] Matched token: e -> Cannt: e 
+[DEBUG][2025-10-03 01:20:44] Processing part: mg
+[DEBUG][2025-10-03 01:20:44] Processing part: sa
+[DEBUG][2025-10-03 01:20:44] generateForNotes output: o e  [mg] [sa] o e  [mg] [sa]
+[DEBUG][2025-10-03 01:20:44] generateForNotes input: A B A B
+[DEBUG][2025-10-03 01:20:44] Processing part: A
+[DEBUG][2025-10-03 01:20:44] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:20:44] Processing part: B
+[DEBUG][2025-10-03 01:20:44] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:20:44] Processing part: A
+[DEBUG][2025-10-03 01:20:44] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:20:44] Processing part: B
+[DEBUG][2025-10-03 01:20:44] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:20:44] generateForNotes output: en o en o
+[DEBUG][2025-10-03 01:20:44] generateForNotes input: A2 A2
+[DEBUG][2025-10-03 01:20:44] Processing part: A2
+[DEBUG][2025-10-03 01:20:44] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:20:44] Processing part: A2
+[DEBUG][2025-10-03 01:20:44] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:20:44] generateForNotes output: en en
+[DEBUG][2025-10-03 01:20:44] generateForNotes input: A A
+[DEBUG][2025-10-03 01:20:44] Processing part: A
+[DEBUG][2025-10-03 01:20:44] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:20:44] Processing part: A
+[DEBUG][2025-10-03 01:20:44] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:20:44] generateForNotes output: en en
+[DEBUG][2025-10-03 01:20:44] generateForNotes input: A B A B
+[DEBUG][2025-10-03 01:20:44] Processing part: A
+[DEBUG][2025-10-03 01:20:44] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:20:44] Processing part: B
+[DEBUG][2025-10-03 01:20:44] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:20:44] Processing part: A
+[DEBUG][2025-10-03 01:20:44] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:20:44] Processing part: B
+[DEBUG][2025-10-03 01:20:44] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:20:44] generateForNotes output: en o en o
+[DEBUG][2025-10-03 01:20:44] generateForNotes input: A2 A2
+[DEBUG][2025-10-03 01:20:44] Processing part: A2
+[DEBUG][2025-10-03 01:20:44] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:20:44] Processing part: A2
+[DEBUG][2025-10-03 01:20:44] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:20:44] generateForNotes output: en en
+[DEBUG][2025-10-03 01:20:44] generateForNotes input: A A
+[DEBUG][2025-10-03 01:20:44] Processing part: A
+[DEBUG][2025-10-03 01:20:44] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:20:44] Processing part: A
+[DEBUG][2025-10-03 01:20:45] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:20:45] generateForNotes output: en en
+[DEBUG][2025-10-03 01:20:45] generateForNotes input: A B A B
+[DEBUG][2025-10-03 01:20:45] Processing part: A
+[DEBUG][2025-10-03 01:20:45] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:20:45] Processing part: B
+[DEBUG][2025-10-03 01:20:45] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:20:45] Processing part: A
+[DEBUG][2025-10-03 01:20:45] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:20:45] Processing part: B
+[DEBUG][2025-10-03 01:20:45] Matched token: B -> Cannt: o
+[DEBUG][2025-10-03 01:20:45] generateForNotes output: en o en o
+[DEBUG][2025-10-03 01:20:45] generateForNotes input: A2 A2
+[DEBUG][2025-10-03 01:20:45] Processing part: A2
+[DEBUG][2025-10-03 01:20:45] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:20:45] Processing part: A2
+[DEBUG][2025-10-03 01:20:45] Matched token: A2 -> Cannt: en
+[DEBUG][2025-10-03 01:20:45] generateForNotes output: en en
+[DEBUG][2025-10-03 01:20:45] generateForNotes input: A A
+[DEBUG][2025-10-03 01:20:45] Processing part: A
+[DEBUG][2025-10-03 01:20:45] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:20:45] Processing part: A
+[DEBUG][2025-10-03 01:20:45] Matched token: A -> Cannt: en
+[DEBUG][2025-10-03 01:20:45] generateForNotes output: en en
+[DEBUG][2025-10-03 01:20:45] generateForNotes input: c me mg a c me mg a
+[DEBUG][2025-10-03 01:20:45] Processing part: c
+[DEBUG][2025-10-03 01:20:45] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:20:45] Processing part: me
+[DEBUG][2025-10-03 01:20:45] Processing part: mg
+[DEBUG][2025-10-03 01:20:45] Processing part: a
+[DEBUG][2025-10-03 01:20:45] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:20:45] Processing part: c
+[DEBUG][2025-10-03 01:20:45] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:20:45] Processing part: me
+[DEBUG][2025-10-03 01:20:45] Processing part: mg
+[DEBUG][2025-10-03 01:20:45] Processing part: a
+[DEBUG][2025-10-03 01:20:45] Matched token: a -> Cannt: I
+[DEBUG][2025-10-03 01:20:45] generateForNotes output: o [me] [mg] I o [me] [mg] I
+[DEBUG][2025-10-03 01:20:45] generateForNotes input: c G mg sa c G mg sa
+[DEBUG][2025-10-03 01:20:45] Processing part: c
+[DEBUG][2025-10-03 01:20:45] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:20:45] Processing part: G
+[DEBUG][2025-10-03 01:20:45] Matched token: G -> Cannt: em
+[DEBUG][2025-10-03 01:20:45] Processing part: mg
+[DEBUG][2025-10-03 01:20:45] Processing part: sa
+[DEBUG][2025-10-03 01:20:45] Processing part: c
+[DEBUG][2025-10-03 01:20:45] Matched token: c -> Cannt: o
+[DEBUG][2025-10-03 01:20:45] Processing part: G
+[DEBUG][2025-10-03 01:20:45] Matched token: G -> Cannt: em
+[DEBUG][2025-10-03 01:20:45] Processing part: mg
+[DEBUG][2025-10-03 01:20:45] Processing part: sa
+[DEBUG][2025-10-03 01:20:45] generateForNotes output: o em [mg] [sa] o em [mg] [sa]
