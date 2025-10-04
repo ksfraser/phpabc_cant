@@ -30,6 +30,10 @@ namespace Ksfraser\PhpabcCanntaireachd\Voices;
 class AbcVoice
 {
     /**
+     * @var array Bars assigned to this voice
+     */
+    public $bars = [];
+    /**
      * Get the voice indicator (V: field)
      * @return string
      */

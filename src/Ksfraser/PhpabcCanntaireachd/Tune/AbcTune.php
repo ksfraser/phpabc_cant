@@ -1,34 +1,51 @@
-    /**
-     * Get all Voice objects, keyed by voice ID.
-     * @return array<string, \Ksfraser\PhpabcCanntaireachd\Voices\AbcVoice>
-     */
-    public function getVoices(): array {
-        // If $this->voiceObjs exists, return it; otherwise, build from voiceBars
-        if (property_exists($this, 'voiceObjs') && is_array($this->voiceObjs)) {
-            return $this->voiceObjs;
-        }
-        $result = [];
-        // If voiceBars contains objects with getVoiceIndicator, use those
-        if (isset($this->voiceBars) && is_array($this->voiceBars)) {
-            foreach ($this->voiceBars as $voiceId => $bars) {
-                if (is_array($bars) && count($bars) > 0 && method_exists($bars[0], 'getVoiceIndicator')) {
-                    // Try to get the voice object from the first bar (if it stores a reference)
-                    if (property_exists($bars[0], 'voice') && $bars[0]->voice instanceof \Ksfraser\PhpabcCanntaireachd\Voices\AbcVoice) {
-                        $result[$voiceId] = $bars[0]->voice;
-                    }
-                }
-            }
-        }
-        // Fallback: if $this->voices is an array of metadata, create AbcVoice objects
-        if (empty($result) && isset($this->voices) && is_array($this->voices)) {
-            foreach ($this->voices as $voiceId => $meta) {
-                $result[$voiceId] = new \Ksfraser\PhpabcCanntaireachd\Voices\AbcVoice($voiceId, $meta['name'] ?? '', $meta['sname'] ?? '');
-            }
-        }
-        return $result;
-    }
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Tune;
+
+// Exception to signal a line was handled by a handler
+class LineHandledException extends \Exception {}
+
+// Example handler class for header lines
+class HeaderLineHandler {
+    public function matches($line) {
+        $trimmed = trim($line);
+        return ($trimmed === '' || $trimmed[0] === '%' || preg_match('/^(X:|T:|M:|K:|V:)/', $trimmed));
+    }
+    public function parse($line, &$context) {
+        $context['headerLines'][] = $line;
+        // If K: header, mark header as done
+        if (preg_match('/^K:/', trim($line))) {
+            $context['inHeader'] = false;
+        }
+        throw new LineHandledException();
+    }
+    }
+// Example handler class for body/music lines (simplified)
+class BarLineHandler {
+    public function matches($line) {
+        $trimmed = trim($line);
+        return ($trimmed !== '' && $trimmed[0] !== '%' && !preg_match('/^(X:|T:|M:|K:|V:|%%|I:|Q:|L:)/', $trimmed));
+    }
+    public function parse($line, &$context) {
+        $currentVoice = $context['currentVoice'];
+        if ($currentVoice === null) {
+            // Create Bagpipes by default if not set
+            $currentVoice = 'Bagpipes';
+            if (!isset($context['voices'][$currentVoice])) {
+                $context['voices'][$currentVoice] = new \Ksfraser\PhpabcCanntaireachd\Voices\BagpipeVoice($currentVoice, 'Bagpipes', '');
+            }
+            $context['currentVoice'] = $currentVoice;
+        }
+        $barTexts = preg_split('/\|/', $line);
+        foreach ($barTexts as $barText) {
+            $barText = trim($barText);
+            if ($barText !== '') {
+                $bar = new \Ksfraser\PhpabcCanntaireachd\AbcBar($barText, '|');
+                $context['voices'][$currentVoice]->bars[] = $bar;
+            }
+        }
+        throw new LineHandledException();
+    }
+}
 /**
  * Class AbcTune
  *
@@ -98,6 +115,7 @@ namespace Ksfraser\PhpabcCanntaireachd\Tune;
  */
 
 use Ksfraser\PhpabcCanntaireachd\AbcItem;
+use Ksfraser\PhpabcCanntaireachd\Tune\AbcBar;
 use Ksfraser\PhpabcCanntaireachd\Midi\MidiInstrumentMapper;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderX;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderT;
@@ -109,6 +127,7 @@ use Ksfraser\PhpabcCanntaireachd\Header\AbcFixVoiceHeader;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderGeneric;
 
 class AbcTune extends AbcItem {
+
 
     /**
      * Get all Voice objects, keyed by voice ID.
@@ -131,10 +150,14 @@ class AbcTune extends AbcItem {
                 }
             }
         }
-        // Fallback: if $this->voices is an array of metadata, create AbcVoice objects
+        // Fallback: if $this->voices is an array of metadata or AbcVoice objects
         if (empty($result) && isset($this->voices) && is_array($this->voices)) {
             foreach ($this->voices as $voiceId => $meta) {
-                $result[$voiceId] = new \Ksfraser\PhpabcCanntaireachd\Voices\AbcVoice($voiceId, $meta['name'] ?? '', $meta['sname'] ?? '');
+                if ($meta instanceof \Ksfraser\PhpabcCanntaireachd\Voices\AbcVoice) {
+                    $result[$voiceId] = $meta;
+                } else {
+                    $result[$voiceId] = new \Ksfraser\PhpabcCanntaireachd\Voices\AbcVoice($voiceId, $meta['name'] ?? '', $meta['sname'] ?? '');
+                }
             }
         }
         return $result;
@@ -146,131 +169,117 @@ class AbcTune extends AbcItem {
      */
     public static function parse($abcText)
     {
-                $lines = preg_split('/\r?\n/', $abcText);
-                $tune = new self();
-                $headerDone = false;
-                $headerLines = [];
-                $bodyLines = [];
-                // Split header and body
-                foreach ($lines as $line) {
-                    $trimmed = trim($line);
-                    if (!$headerDone && ($trimmed === '' || preg_match('/^[A-Z]:/', $trimmed))) {
-                        $headerLines[] = $line;
-                        if ($trimmed !== '' && preg_match('/^K:/', $trimmed)) {
-                            $headerDone = true;
-                        }
-                    } else {
-                        $bodyLines[] = $line;
+        $lines = preg_split('/\r?\n/', $abcText);
+        $tune = new self();
+        // Context for handlers
+        $context = [
+            'headerLines' => [],
+            'formattingLines' => [],
+            'voices' => [],
+            'currentVoice' => null,
+            'inHeader' => true
+        ];
+        // Handler chain (add more as needed)
+        $handlers = [
+            new \Ksfraser\PhpabcCanntaireachd\Tune\HeaderLineHandler(),
+            new \Ksfraser\PhpabcCanntaireachd\Tune\BarLineHandler(),
+            // Add: InstructionHandler, InfoFieldHandler, VoiceLineHandler, etc.
+        ];
+        foreach ($lines as $line) {
+            foreach ($handlers as $handler) {
+                try {
+                    if ($handler->matches($line)) {
+                        $handler->parse($line, $context);
                     }
+                } catch (\Ksfraser\PhpabcCanntaireachd\Tune\LineHandledException $e) {
+                    // Line was handled, move to next line
+                    break;
                 }
-                // Parse header fields
-                foreach ($headerLines as $line) {
-                    if (preg_match('/^([A-Z]):(.*)$/', trim($line), $m)) {
-                        $key = $m[1];
-                        $value = $m[2];
-                        $tune->addHeader($key, $value);
-                    }
-                }
-                // Initial context from headers
-                $initialContext = [
-                    'voice' => null,
-                    'key' => (isset($tune->headers['K']) && $tune->headers['K']) ? $tune->headers['K']->get() : "HP",
-                    'meter' => (isset($tune->headers['M']) && $tune->headers['M']) ? $tune->headers['M']->get() : "4/4",
-                    'length' => (isset($tune->headers['L']) && $tune->headers['L']) ? $tune->headers['L']->get() : "1/8",
-                ];
-                $ctxMgr = new \Ksfraser\PhpabcCanntaireachd\ContextManager($initialContext);
-                $voiceBlocks = [];
-                $currentVoiceId = null;
-                $currentVoiceLines = [];
-                foreach ($bodyLines as $line) {
-                    $trimmed = trim($line);
-                    // Apply context changes
-                    $ctxMgr->applyToken($trimmed);
-                    // Voice change
-                    if (preg_match('/^(?:\[)?V:([^\s\]]+)(?:\])?/', $trimmed, $m)) {
-                        if ($currentVoiceId && count($currentVoiceLines) > 0) {
-                            $voiceBlocks[$currentVoiceId] = $currentVoiceLines;
-                        }
-                        $currentVoiceId = $m[1];
-                        $currentVoiceLines = [$line];
-                        continue;
-                    }
-                    if ($currentVoiceId) {
-                        $currentVoiceLines[] = $line;
-                    }
-                }
-                if ($currentVoiceId && count($currentVoiceLines) > 0) {
-                    $voiceBlocks[$currentVoiceId] = $currentVoiceLines;
-                }
-                // If no V: lines, treat as single default voice
-                if (empty($voiceBlocks)) {
-                    $voiceBlocks['default'] = $bodyLines;
-                }
-                $tune->voiceBars = [];
-                foreach ($voiceBlocks as $voiceId => $voiceLines) {
-                    // AbcVoice::parse does not exist; create AbcVoice and parse bars directly
-                    $bars = [];
-                    foreach ($voiceLines as $line) {
-                        $line = trim($line);
-                        if ($line === '' || preg_match('/^[A-Z]:/', $line)) continue;
-                        // Split line into bars
-                        $barTexts = preg_split('/\|/', $line);
-                        foreach ($barTexts as $barText) {
-                            $barText = trim($barText);
-                            if ($barText !== '') {
-                                $bar = new AbcBar($barText, '|');
-                                $bar->parseBarRecursive($barText, $ctxMgr);
-                                $bars[] = $bar;
-                            }
-                        }
-                    }
-                    $tune->voiceBars[$voiceId] = $bars;
-                }
-                return $tune;
             }
-    protected $currentVoice = null;
-    /**
-     * Recursively parse a line into voices and bars.
-     * @param string $line
-     */
-    public function parseLineRecursive($line) {
-        // Voice change
-        if (preg_match('/^(?:\[)?V:([^\s\]]+)(?:\])?/', trim($line), $m)) {
+        }
+        // Assign context to tune properties
+        $tune->headerLines = $context['headerLines'];
+        $tune->formattingLines = $context['formattingLines'];
+        $tune->voices = $context['voices'];
+        return $tune;
+
+    }
+
+    // Helper: is this a header line?
+    private static function isHeaderLine($trimmed) {
+        return ($trimmed === '' || $trimmed[0] === '%' || preg_match('/^(X:|T:|M:|K:|V:)/', $trimmed));
+    }
+    // Helper: is this an instruction line (%% or I:)?
+    private static function isInstructionLine($trimmed) {
+        return (preg_match('/^(%%|I:)/', $trimmed));
+    }
+    // Helper: is this an info field (M:, L:, Q:)?
+    private static function isInfoField($trimmed) {
+        return (preg_match('/^(M:|L:|Q:)/', $trimmed));
+    }
+    // Helper: is this a voice line?
+    private static function isVoiceLine($trimmed) {
+        return (preg_match('/^V:([\w\-]+)/', $trimmed));
+    }
+    // Helper: is this a bar/music line?
+    private static function isBarLine($trimmed) {
+        // Not a header, instruction, info, or voice line, and not empty/comment
+        return ($trimmed !== '' && $trimmed[0] !== '%' && !preg_match('/^(X:|T:|M:|K:|V:|%%|I:|Q:|L:)/', $trimmed));
+    }
+    // Helper: handle instruction line
+    private static function handleInstructionLine($trimmed, &$currentVoice, &$voices, &$formattingLines) {
+        // For now, just add to formattingLines. TODO: handle %%MIDI and attach to voice.
+        $formattingLines[] = $trimmed;
+    }
+    // Helper: handle info field (M, L, Q)
+    private static function handleInfoField($trimmed, $currentVoice, &$voices, $currentM, $currentL, $currentQ) {
+        if (preg_match('/^M:(.*)/', $trimmed, $m)) {
+            $currentM = trim($m[1]);
+        }
+        if (preg_match('/^L:(.*)/', $trimmed, $m)) {
+            $currentL = trim($m[1]);
+        }
+        if (preg_match('/^Q:(.*)/', $trimmed, $m)) {
+            $currentQ = trim($m[1]);
+        }
+        // TODO: Attach to currentVoice if needed
+        return [$currentM, $currentL, $currentQ];
+    }
+    // Helper: handle voice line
+    private static function handleVoiceLine($trimmed, &$voices) {
+        if (preg_match('/^V:([\w\-]+)/', $trimmed, $m)) {
             $voiceId = $m[1];
-            if (!isset($this->voiceBars[$voiceId])) {
-                $this->voiceBars[$voiceId] = [];
+            if (!isset($voices[$voiceId])) {
+                if (strcasecmp($voiceId, 'Bagpipes') === 0) {
+                    $voices[$voiceId] = new \Ksfraser\PhpabcCanntaireachd\Voices\BagpipeVoice($voiceId, 'Bagpipes', '');
+                } else {
+                    $voices[$voiceId] = new \Ksfraser\PhpabcCanntaireachd\Voices\AbcVoice($voiceId, $voiceId, '');
+                }
             }
-            $this->currentVoice = $voiceId;
-            return;
+            return $voiceId;
         }
-        // If no voice, create default
-        if (!isset($this->currentVoice)) {
-            $this->currentVoice = 'default';
-            if (!isset($this->voiceBars[$this->currentVoice])) {
-                $this->voiceBars[$this->currentVoice] = [];
-            }
+        return null;
+    }
+    // Helper: parse bars from a line
+    private static function parseBarsFromLine($line, $currentM, $currentL, $currentQ, $currentVoice, &$voices, &$softErrors) {
+        if ($currentVoice === null) {
+            $softErrors[] = 'No voice defined for bar line: ' . $line;
+            return [];
         }
-        // Split line into bars
-        $bars = preg_split('/\|/', $line);
-        // Ensure $ctxMgr is available
-        static $ctxMgrInstance = null;
-        if ($ctxMgrInstance === null) {
-            $initialContext = [
-                'voice' => null,
-                'key' => $this->headers['K']->get() ?? null,
-                'meter' => $this->headers['M']->get() ?? null,
-                'length' => $this->headers['L']->get() ?? null,
-            ];
-            $ctxMgrInstance = new \Ksfraser\PhpabcCanntaireachd\ContextManager($initialContext);
-        }
-        foreach ($bars as $barText) {
+        $barTexts = preg_split('/\|/', $line);
+        $bars = [];
+        foreach ($barTexts as $barText) {
             $barText = trim($barText);
             if ($barText !== '') {
-                $bar = new AbcBar($barText);
-                $bar->parseBarRecursive($barText, $ctxMgrInstance);
-                $this->voiceBars[$this->currentVoice][] = $bar;
+                $bar = new AbcBar($barText, '|');
+                $bar->meter = $currentM;
+                $bar->length = $currentL;
+                $bar->tempo = $currentQ;
+                $voices[$currentVoice]->bars[] = $bar;
+                $bars[] = $bar;
             }
         }
+        return $bars;
     }
     /**
      * Render this tune as an ABC string (stub implementation)
