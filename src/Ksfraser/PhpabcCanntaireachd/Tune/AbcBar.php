@@ -75,6 +75,16 @@ use Ksfraser\PhpabcCanntaireachd\Log\DebugLog;
 
 class AbcBar extends \Ksfraser\PhpabcCanntaireachd\AbcItem implements RenderableCanntaireachdInterface
 {
+    /** @var AbcNote[] $notes Notes in this bar */
+    public $notes = [];
+    /** @var string|null $canntaireachd Canntaireachd for this bar */
+    public $canntaireachd = null;
+    /** @var string|null $lyrics Lyrics for this bar */
+    public $lyrics = null;
+    /** @var string|null $solfege Solfege for this bar */
+    public $solfege = null;
+    /** @var string|null $contentText Raw content string when created from parser without parsing notes */
+    public $contentText = null;
     /** @var AbcBarline|null $barLine The barline object for this bar */
     public $barLine = null;
 
@@ -215,7 +225,23 @@ class AbcBar extends \Ksfraser\PhpabcCanntaireachd\AbcItem implements Renderable
      * @return array
      */
     public function getContent(): array
+
+
     {
         return $this->notes;
     }
+
+    /**
+     * Translate all notes in this bar using the provided translator.
+     * @param object $translator
+     */
+    public function translateNotes($translator)
+    {
+        foreach ($this->notes as $note) {
+            if (method_exists($note, 'translate')) {
+                $note->translate($translator);
+            }
+        }
+    }
+}
 

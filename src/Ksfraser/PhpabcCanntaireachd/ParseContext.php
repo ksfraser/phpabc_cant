@@ -3,8 +3,13 @@ namespace Ksfraser\PhpabcCanntaireachd;
 
 class ParseContext implements \ArrayAccess {
     public $currentVoice = null;
-    public $currentBar = 0;
+    // Track current bar number per voice
+    public $currentBar = [];
     public $voiceBars;
+    // Add these for handler-based parsing context
+    public $headerLines = [];
+    public $formattingLines = [];
+    public $voices = [];
 
     public function __construct(array &$voiceBars) {
         $this->voiceBars = &$voiceBars;
@@ -18,9 +23,21 @@ class ParseContext implements \ArrayAccess {
         return $this->voiceBars[$voiceId];
     }
 
-    public function incrementBar(): int {
-        $this->currentBar++;
-        return $this->currentBar;
+    // Increment and return the current bar number for a given voice
+    public function incrementBar($voiceId = null): int {
+        $voice = $voiceId ?? $this->currentVoice;
+        if (!isset($this->currentBar[$voice])) {
+            $this->currentBar[$voice] = 1;
+        } else {
+            $this->currentBar[$voice]++;
+        }
+        return $this->currentBar[$voice];
+    }
+
+    // Get the current bar number for a given voice
+    public function getCurrentBar($voiceId = null): int {
+        $voice = $voiceId ?? $this->currentVoice;
+        return $this->currentBar[$voice] ?? 1;
     }
 
     // ArrayAccess methods for compatibility with handlers using array syntax

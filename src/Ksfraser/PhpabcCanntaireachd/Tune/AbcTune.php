@@ -171,14 +171,13 @@ class AbcTune extends AbcItem {
     {
         $lines = preg_split('/\r?\n/', $abcText);
         $tune = new self();
-        // Context for handlers
-        $context = [
-            'headerLines' => [],
-            'formattingLines' => [],
-            'voices' => [],
-            'currentVoice' => null,
-            'inHeader' => true
-        ];
+        // Use ParseContext object for handler-based parsing
+        $context = new \Ksfraser\PhpabcCanntaireachd\ParseContext($tune->voiceBars);
+        $context->headerLines = [];
+        $context->formattingLines = [];
+        $context->voices = [];
+        $context->currentVoice = null;
+        $context->inHeader = true;
         // Handler chain (add more as needed)
         $handlers = [
             new \Ksfraser\PhpabcCanntaireachd\Tune\HeaderLineHandler(),
@@ -198,9 +197,10 @@ class AbcTune extends AbcItem {
             }
         }
         // Assign context to tune properties
-        $tune->headerLines = $context['headerLines'];
-        $tune->formattingLines = $context['formattingLines'];
-        $tune->voices = $context['voices'];
+        $tune->headerLines = $context->headerLines;
+        $tune->formattingLines = $context->formattingLines;
+        $tune->voices = $context->voices;
+        // voiceBars is already updated by reference
         return $tune;
 
     }
