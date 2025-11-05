@@ -32,6 +32,25 @@ class TokenDictionary
 
     public function __construct() {
         $this->trie = new Trie();
+        // Auto-load the dictionary
+        $this->loadDefaultDictionary();
+    }
+
+    /**
+     * Load the default ABC dictionary
+     */
+    private function loadDefaultDictionary() {
+        $dictPath = __DIR__ . '/abc_dict.php';
+        if (file_exists($dictPath)) {
+            try {
+                $abc = require $dictPath; // returns the array
+                if (is_array($abc)) {
+                    $this->prepopulate($abc);
+                }
+            } catch (\Throwable $e) {
+                // ignore
+            }
+        }
     }
 
     /**
@@ -41,6 +60,10 @@ class TokenDictionary
     public function prepopulate(array $dict)
     {
         foreach ($dict as $abc => $row) {
+            if (!is_array($row)) {
+                error_log("Warning: TokenDictionary prepopulate received non-array row for key '$abc': " . var_export($row, true));
+                continue;
+            }
             $this->tokens[$abc] = [
                 'abc_token' => $abc,
                 'cannt_token' => $row['cannt_token'] ?? null,

@@ -14,5 +14,5 @@ if (!file_exists($abcFile)) {
 $abc = file_get_contents($abcFile);
 echo "Input:\n$abc\n\n";
 
-$result = Ksfraser\PhpabcCanntaireachd\AbcProcessor::process($abc, ['cannt' => 1]);
+$result = Ksfraser\PhpabcCanntaireachd\AbcProcessor::process($abc, new Ksfraser\PhpabcCanntaireachd\TokenDictionary());
 echo "Output:\n" . implode("\n", $result['lines']) . "\n";

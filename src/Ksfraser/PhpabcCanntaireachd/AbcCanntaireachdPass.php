@@ -156,24 +156,10 @@ class AbcCanntaireachdPass {
 }
 
 class CanntGenerator {
-    private $trie;
     private $dict;
 
     public function __construct($dictionary) {
         $this->dict = $dictionary;
-        $this->trie = new Trie();
-        if ($dictionary instanceof TokenDictionary) {
-            $allTokens = $dictionary->getAllTokens();
-            foreach ($allTokens as $abc => $row) {
-                if ($row['cannt_token']) {
-                    $this->trie->addToken($abc, $row['cannt_token']);
-                }
-            }
-        } else {
-            foreach ($dictionary as $pattern => $replacement) {
-                $this->trie->insert($pattern, $replacement);
-            }
-        }
     }
 
     public function generateForNotes(string $noteBody): string {
@@ -187,10 +173,72 @@ class CanntGenerator {
         $noteBody = preg_replace('/^\[V:[^\]]*\]/', '', $noteBody);
         $noteBody = trim($noteBody);
         
-        // Use Trie to process the entire line
-        $result = $this->trie->search($noteBody);
+        // Use proper ABC tokenization instead of flawed Trie search
+        $result = $this->tokenizeAndConvert($noteBody);
         error_log("generateForNotes output: $result"); // Log output
         file_put_contents($logFile, "generateForNotes output: $result\n", FILE_APPEND); // Log output to file
         return $result ?: '[?]';
+    }
+
+    /**
+     * Tokenize ABC input and convert to canntaireachd using longest-match-first logic.
+     * @param string $input The ABC music line.
+     * @return string The canntaireachd text.
+     */
+    private function tokenizeAndConvert(string $input): string {
+        $result = '';
+        $dictKeys = array_keys($this->dict->getAllTokens());
+        // Sort keys by length descending for longest-match-first
+        usort($dictKeys, function($a, $b) { return strlen($b) - strlen($a); });
+        
+        while (strlen($input) > 0) {
+            $matched = false;
+            
+            // First try regex parsing for complex ABC notes
+            if (preg_match("/^([_=^]?)([a-gA-GzZ])([,']*)([0-9]+\/?[0-9]*|\/{1,}|)/", $input, $m)) {
+                $noteStr = $m[0];
+                $baseNote = $m[2]; // The actual note letter (A-G, a-g, z, Z)
+                // Look up the base note in the dictionary
+                $canntToken = $this->dict->convertAbcToCannt($baseNote);
+                if ($canntToken !== null) {
+                    $result .= $canntToken;
+                    $input = substr($input, strlen($noteStr));
+                    $matched = true;
+                    error_log("Regex matched '$noteStr', base note '$baseNote' -> '$canntToken'");
+                }
+            }
+            
+            // If regex didn't match, try dictionary keys
+            if (!$matched) {
+                foreach ($dictKeys as $key) {
+                    if ($key === '') continue;
+                    if (strpos($input, $key) === 0) {
+                        // Found a match, convert to canntaireachd
+                        $canntToken = $this->dict->convertAbcToCannt($key);
+                        if ($canntToken !== null) {
+                            $result .= $canntToken;
+                            error_log("Matched '$key' -> '$canntToken'");
+                        } else {
+                            $result .= '[' . $key . ']'; // Unknown token
+                            error_log("Matched '$key' but no cannt_token");
+                        }
+                        $input = substr($input, strlen($key));
+                        $matched = true;
+                        break;
+                    }
+                }
+            }
+            
+            if (!$matched) {
+                // Skip unknown character
+                $char = substr($input, 0, 1);
+                $result .= '[' . $char . ']';
+                $input = substr($input, 1);
+                error_log("Unknown char '$char'");
+            }
+            // Trim leading whitespace
+            $input = ltrim($input);
+        }
+        return $result;
     }
 }

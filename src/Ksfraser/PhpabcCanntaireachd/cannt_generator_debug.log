@@ -552,3 +552,31 @@ generateForNotes input: A B C
 generateForNotes output: dar dod hid
 generateForNotes input: A B C |TIMING ERROR|
 generateForNotes output: dar dod hid [|TIMING] [ERROR|]
+generateForNotes input: |A B C D|A2 B2|A B|
+generateForNotes output: | dod hid dar dod dod
+generateForNotes input: |A B|A2|A|
+generateForNotes output: | dod
+generateForNotes input: |A B C D|A2 B2|A B|
+generateForNotes output: | dod hid dar dod dod
+generateForNotes input: |A B|A2|A|
+generateForNotes output: | dod
+generateForNotes input: |A B C D|A2 B2|A B|
+generateForNotes output: | dod hid dar dod dod
+generateForNotes input: |A B|A2|A|
+generateForNotes output: | dod
+generateForNotes input: A B C D|A2 B2|A B|
+generateForNotes output: [A][B][C][D|A2][B2|A][B|]
+generateForNotes input: A B C D|A2 B2|A B|
+generateForNotes output: [A][B][C][D|A2][B2|A][B|]
+generateForNotes input: A B C D|A2 B2|A B|
+generateForNotes output: dardodhiddar|dar[2]dod[2]|dardod|
+generateForNotes input: A B C D|A2 B2|A B|
+generateForNotes output: dardodhiddar|dar[2]dod[2]|dardod|
+generateForNotes input: A B C D|A2 B2|A B|
+generateForNotes output: dardodhiddardoddod
+generateForNotes input: A B C D|A2 B2|A B|
+generateForNotes output: dardodhiddar|dardod|dardod|
+generateForNotes input: |A B C D|A2 B2|A B|
+generateForNotes output: |dardodhiddar|dardod|dardod|
+generateForNotes input: |A B|A2|A|
+generateForNotes output: |dardod|dar|dar|

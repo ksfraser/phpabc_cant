@@ -47,35 +47,13 @@ class CanntGenerator {
             $this->dict = $dict;
             return;
         }
-        $td = new TokenDictionary();
-        // Try to load legacy abc_dict.php if available
-        $legacyPath = __DIR__ . '/../phpabc_canntaireachd/abc_dict.php';
-        if (file_exists($legacyPath)) {
-            // include inside isolated scope to avoid leaking symbols
-            $abc = [];
-            try {
-                include $legacyPath; // populates $abc in many legacy files
-            } catch (\Throwable $e) {
-                // ignore
-            }
-            if (!empty($abc) && is_array($abc)) {
-                $pre = [];
-                foreach ($abc as $k => $v) {
-                    $pre[$k] = [
-                        'cannt_token' => $v['cannt'] ?? ($v['cannt_token'] ?? null),
-                        'bmw_token' => $v['bmw'] ?? null,
-                        'description' => $v['desc'] ?? null,
-                    ];
-                }
-                $td->prepopulate($pre);
-            }
-        }
-        $this->dict = $td;
+        // Use TokenDictionary constructor which automatically loads abc_dict.php
+        $this->dict = new TokenDictionary();
     }
 
     /**
      * Generates canntaireachd lyrics for the given ABC note body.
-     * Uses Trie for efficient pattern matching.
+     * Uses proper ABC tokenization with longest-match-first logic.
      *
      * @param string $noteBody The ABC music line.
      * @return string The canntaireachd text.
@@ -92,10 +70,57 @@ class CanntGenerator {
         $noteBody = preg_replace('/^\[V:[^\]]*\]/', '', $noteBody);
         $noteBody = trim($noteBody);
         
-        // Use Trie to process the entire line
-        $result = $this->dict->searchCannt($noteBody);
+        // Use proper ABC tokenization instead of flawed Trie search
+        $result = $this->tokenizeAndConvert($noteBody);
         error_log("generateForNotes output: $result"); // Log output
         file_put_contents($logFile, "generateForNotes output: $result\n", FILE_APPEND); // Log output to file
         return $result ?: '[?]';
+    }
+
+    /**
+     * Tokenize ABC input and convert to canntaireachd using longest-match-first logic.
+     * @param string $input The ABC music line.
+     * @return string The canntaireachd text.
+     */
+    private function tokenizeAndConvert(string $input): string {
+        $result = '';
+        $dictKeys = array_keys($this->dict->getAllTokens());
+        // Sort keys by length descending for longest-match-first
+        usort($dictKeys, function($a, $b) { return strlen($b) - strlen($a); });
+        
+        while (strlen($input) > 0) {
+            $matched = false;
+            foreach ($dictKeys as $key) {
+                if ($key === '') continue;
+                if (strpos($input, $key) === 0) {
+                    // Found a match, convert to canntaireachd
+                    $canntToken = $this->dict->convertAbcToCannt($key);
+                    if ($canntToken !== null) {
+                        $result .= $canntToken;
+                    } else {
+                        $result .= '[' . $key . ']'; // Unknown token
+                    }
+                    $input = substr($input, strlen($key));
+                    $matched = true;
+                    break;
+                }
+            }
+            if (!$matched) {
+                // Fallback: try to parse a single note using regex (like AbcNoteTokenizer)
+                if (preg_match("/^([_=^]?)([a-gA-GzZ])([,']*)([0-9]+\/?[0-9]*|\/{1,}|)([^\s]*)/", $input, $m)) {
+                    $noteStr = $m[0];
+                    // For complex notes not in dictionary, wrap in brackets
+                    $result .= '[' . $noteStr . ']';
+                    $input = substr($input, strlen($noteStr));
+                } else {
+                    // Skip unknown character
+                    $result .= '[' . substr($input, 0, 1) . ']';
+                    $input = substr($input, 1);
+                }
+            }
+            // Trim leading whitespace
+            $input = ltrim($input);
+        }
+        return $result;
     }
 }
