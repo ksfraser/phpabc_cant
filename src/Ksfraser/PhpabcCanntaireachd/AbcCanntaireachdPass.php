@@ -5,28 +5,37 @@ namespace Ksfraser\PhpabcCanntaireachd;
  * Class AbcCanntaireachdPass
  *
  * Processes ABC lines and generates canntaireachd lyrics using the translation pipeline.
+ * Follows SRP by handling only canntaireachd generation in the processing pipeline.
+ * Uses DI for TokenDictionary injection.
  *
+ * @requirement FR2, FR8
  * @uml
  * @startuml
  * class AbcCanntaireachdPass {
  *   - dict: TokenDictionary
+ *   + __construct(dict: TokenDictionary)
  *   + process(lines: array): array
+ *   + isMusicLine(line: string): bool
  * }
- * AbcCanntaireachdPass --> BagpipeAbcToCanntTranslator : uses
- * BagpipeAbcToCanntTranslator --> TokenDictionary : uses
+ * AbcCanntaireachdPass --> CanntGenerator : uses
+ * CanntGenerator --> TokenDictionary : uses
+ * TokenDictionary --> Trie : uses
  * @enduml
  *
  * @sequence
  * @startuml
  * participant User
  * participant AbcCanntaireachdPass
- * participant BagpipeAbcToCanntTranslator
+ * participant CanntGenerator
  * participant TokenDictionary
+ * participant Trie
  * User -> AbcCanntaireachdPass: process(lines)
- * AbcCanntaireachdPass -> BagpipeAbcToCanntTranslator: translate(note)
- * BagpipeAbcToCanntTranslator -> TokenDictionary: convertAbcToCannt(token)
- * TokenDictionary --> BagpipeAbcToCanntTranslator: canntToken
- * BagpipeAbcToCanntTranslator --> AbcCanntaireachdPass: canntToken
+ * AbcCanntaireachdPass -> CanntGenerator: generateForNotes(line)
+ * CanntGenerator -> TokenDictionary: searchCannt(noteBody)
+ * TokenDictionary -> Trie: search(input)
+ * Trie --> TokenDictionary: result
+ * TokenDictionary --> CanntGenerator: canntText
+ * CanntGenerator --> AbcCanntaireachdPass: canntText
  * AbcCanntaireachdPass --> User: output
  * @enduml
  *
@@ -35,17 +44,23 @@ namespace Ksfraser\PhpabcCanntaireachd;
  * start
  * :Receive ABC lines;
  * :Validate lines;
- * :For each music line, split into tokens;
- * :For each token, create AbcNote and translate;
- * :Collect canntaireachd tokens;
- * :Output original and w: lines;
+ * :For each music line in Bagpipes voice;
+ * :Generate canntaireachd using Trie;
+ * :Add w: line below music line;
+ * :Output processed lines;
  * stop
  * @enduml
  */
+require_once __DIR__ . '/Trie.php';
+
 class AbcCanntaireachdPass {
     private $dict;
     /**
-     * @param array|TokenDictionary $dict
+     * Constructor for AbcCanntaireachdPass.
+     * Uses DI to inject TokenDictionary.
+     *
+     * @param TokenDictionary $dict The token dictionary for translations.
+     * @requirement FR7
      */
     public function __construct($dict) {
         if ($dict instanceof TokenDictionary) {
@@ -57,28 +72,35 @@ class AbcCanntaireachdPass {
         }
     }
     /**
-     * @param array $lines
-     * @return array
+     * Processes the array of ABC lines to generate canntaireachd for Bagpipes voices.
+     * Follows OCP by allowing extension without modification.
+     *
+     * @param array $lines The input ABC lines.
+     * @return array The processed lines with canntaireachd added, and diff log.
+     * @requirement FR2, FR8
      */
     public function process(array $lines): array {
         $canntDiff = [];
-        $output = AbcProcessor::validateCanntaireachd($lines, $canntDiff);
+        $output = $lines;
 
-        // Use BagpipeAbcToCanntTranslator for translation
-        $translator = new \Ksfraser\PhpabcCanntaireachd\BagpipeAbcToCanntTranslator($this->dict);
+        // Use CanntGenerator for translation
+        $generator = new CanntGenerator($this->dict);
         $translatedOutput = [];
+        $currentVoice = null;
         foreach ($output as $line) {
-            // Only translate music lines (not headers/comments)
-            if ($this->isMusicLine($line)) {
-                $musicTokens = preg_split('/\s+/', trim($line));
-                $canntTokens = array_map(function($token) use ($translator) {
-                    $note = new \Ksfraser\PhpabcCanntaireachd\AbcNote($token);
-                    return $translator->translate($note);
-                }, $musicTokens);
-                $canntTextAligned = trim(implode(' ', $canntTokens));
+            // Check for voice definition
+            if (preg_match('/^V:([^\s]+)/', trim($line), $matches)) {
+                $currentVoice = $matches[1];
                 $translatedOutput[] = $line;
-                if ($canntTextAligned && $canntTextAligned !== '[?]') {
-                    $translatedOutput[] = 'w: ' . $canntTextAligned;
+            } elseif ($this->isMusicLine($line) && $currentVoice === 'Bagpipes') {
+                $translatedOutput[] = $line;
+                $canntText = $generator->generateForNotes($line);
+                if ($canntText && $canntText !== '[?]') {
+                    $translatedOutput[] = 'w: ' . $canntText;
+                    $canntDiff[] = [
+                        'line' => $line,
+                        'generated' => $canntText
+                    ];
                 }
             } else {
                 $translatedOutput[] = $line;
@@ -96,6 +118,13 @@ class AbcCanntaireachdPass {
     
     // Lyrics generation now handled by LyricsGenerator class
 
+    /**
+     * Determines if a line is a music line (contains notes or bars).
+     * Follows SRP by handling only line type detection.
+     *
+     * @param string $line The line to check.
+     * @return bool True if it's a music line.
+     */
     private function isMusicLine($line) {
         $trimmed = trim($line);
         // Exclude empty lines and comments
@@ -110,12 +139,16 @@ class AbcCanntaireachdPass {
         if (preg_match('/^V:/', $trimmed)) {
             return false;
         }
+        // Exclude lyrics lines (w: at start)
+        if (preg_match('/^w:/', $trimmed)) {
+            return false;
+        }
         // Accept lines starting with [V:...] as music lines
         if (preg_match('/^\[V:[^\]]+\]/', $trimmed)) {
             return true;
         }
-        // Accept lines with music notation (notes, bars, etc.)
-        if (preg_match('/[A-Ga-gzZ\|\[\]\{\}]/', $trimmed)) {
+        // Accept lines with actual notes (letters A-G, a-g, or rests z Z)
+        if (preg_match('/[A-Ga-gzZ]/', $trimmed)) {
             return true;
         }
         return false;
@@ -124,101 +157,40 @@ class AbcCanntaireachdPass {
 
 class CanntGenerator {
     private $trie;
+    private $dict;
 
     public function __construct($dictionary) {
+        $this->dict = $dictionary;
         $this->trie = new Trie();
-        foreach ($dictionary as $pattern => $replacement) {
-            $this->trie->insert($pattern, $replacement);
-        }
-    }
-
-    public function generateForNotes($line) {
-        return $this->trie->search($line);
-    }
-}
-
-class TrieNode {
-    public $children = [];
-    public $isEndOfWord = false;
-    public $replacement = null;
-}
-
-class Trie {
-    private $root;
-
-    public function __construct() {
-        $this->root = new TrieNode();
-    }
-
-    public function insert($pattern, $replacement) {
-        $node = $this->root;
-        for ($i = 0; $i < strlen($pattern); $i++) {
-            $char = $pattern[$i];
-            if (!isset($node->children[$char])) {
-                $node->children[$char] = new TrieNode();
-            }
-            $node = $node->children[$char];
-        }
-        $node->isEndOfWord = true;
-        $node->replacement = $replacement;
-    }
-
-    public function search($input) {
-        $logFile = __DIR__ . '/trie_debug.log'; // Define log file path
-        $result = '';
-        $node = $this->root;
-        $buffer = '';
-
-        for ($i = 0; $i < strlen($input); $i++) {
-            $char = $input[$i];
-            error_log("Processing character: $char"); // Log each character being processed
-            file_put_contents($logFile, "Processing character: $char\n", FILE_APPEND); // Log each character being processed to file
-
-            if (isset($node->children[$char])) {
-                $buffer .= $char;
-                $node = $node->children[$char];
-                error_log("Current buffer: $buffer"); // Log the current buffer
-                file_put_contents($logFile, "Current buffer: $buffer\n", FILE_APPEND); // Log the current buffer to file
-
-                if ($node->isEndOfWord) {
-                    error_log("Match found for buffer: $buffer -> Replacement: {$node->replacement}"); // Log the match
-                    file_put_contents($logFile, "Match found for buffer: $buffer -> Replacement: {$node->replacement}\n", FILE_APPEND); // Log the match to file
-                    $result .= $node->replacement;
-                    $node = $this->root;
-                    $buffer = '';
+        if ($dictionary instanceof TokenDictionary) {
+            $allTokens = $dictionary->getAllTokens();
+            foreach ($allTokens as $abc => $row) {
+                if ($row['cannt_token']) {
+                    $this->trie->addToken($abc, $row['cannt_token']);
                 }
-            } else {
-                if ($buffer !== '') {
-                    error_log("No match for buffer: $buffer"); // Log no match
-                    file_put_contents($logFile, "No match for buffer: $buffer\n", FILE_APPEND); // Log no match to file
-                }
-                $result .= $buffer . $char;
-                $node = $this->root;
-                $buffer = '';
+            }
+        } else {
+            foreach ($dictionary as $pattern => $replacement) {
+                $this->trie->insert($pattern, $replacement);
             }
         }
-
-        if ($buffer !== '') {
-            error_log("Remaining buffer not matched: $buffer"); // Log remaining buffer
-            file_put_contents($logFile, "Remaining buffer not matched: $buffer\n", FILE_APPEND); // Log remaining buffer to file
-        }
-
-        return $result . $buffer;
     }
 
-    public function addToken($token, $replacement) {
-        $logFile = __DIR__ . '/trie_debug.log'; // Define log file path
-        $node = $this->root;
-        for ($i = 0; $i < strlen($token); $i++) {
-            $char = $token[$i];
-            if (!isset($node->children[$char])) {
-                $node->children[$char] = new TrieNode();
-            }
-            $node = $node->children[$char];
-        }
-        $node->isEndOfWord = true;
-        $node->replacement = $replacement;
-        error_log("Added token: $token -> Replacement: $replacement"); // Log token addition
-        file_put_contents($logFile, "Added token: $token -> Replacement: $replacement\n", FILE_APPEND); // Log token addition to file
+    public function generateForNotes(string $noteBody): string {
+        $logFile = __DIR__ . '/cannt_generator_debug.log'; // Define log file path
+        $noteBody = trim($noteBody);
+        error_log("generateForNotes input: $noteBody"); // Log input
+        file_put_contents($logFile, "generateForNotes input: $noteBody\n", FILE_APPEND); // Log input to file
+        if ($noteBody === '') return '[?]';
+        
+        // Strip voice prefixes like [V:Bagpipes] from the beginning of the line
+        $noteBody = preg_replace('/^\[V:[^\]]*\]/', '', $noteBody);
+        $noteBody = trim($noteBody);
+        
+        // Use Trie to process the entire line
+        $result = $this->trie->search($noteBody);
+        error_log("generateForNotes output: $result"); // Log output
+        file_put_contents($logFile, "generateForNotes output: $result\n", FILE_APPEND); // Log output to file
+        return $result ?: '[?]';
     }
 }

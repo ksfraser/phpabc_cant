@@ -6,15 +6,18 @@ use Ksfraser\PhpabcCanntaireachd\AbcLineParser;
 
 /**
  * Parser for %%MIDI channel directives
+ * Extends MidiDirectiveParser for common MIDI functionality.
+ *
+ * @requirement FR10 (MIDI directive parsing)
  */
-class MidiChannelParser implements AbcLineParser
+class MidiChannelParser extends MidiDirectiveParser implements AbcLineParser
 {
     /**
      * @param mixed $line
      * @return bool
      */
     public function canParse($line) {
-        return preg_match('/^%%MIDI\s+channel\s+/i', trim($line));
+        return $this->isMidiDirective($line) && $this->getDirectiveType($line) === 'channel';
     }
 
     /**

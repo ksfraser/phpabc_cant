@@ -23,11 +23,11 @@ class AbcProcessor {
         $lines = preg_split('/\r?\n/', $abcContent);
         $passes = [
             new \Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass(),
-            new \Ksfraser\PhpabcCanntaireachd\AbcVoicePass(),
             new \Ksfraser\PhpabcCanntaireachd\AbcLyricsPass($dictObj),
             new \Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass($dictObj),
             new \Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass(),
-            new \Ksfraser\PhpabcCanntaireachd\AbcTimingValidator()
+            new \Ksfraser\PhpabcCanntaireachd\AbcTimingValidator(),
+            new \Ksfraser\PhpabcCanntaireachd\AbcFormattingPass()
         ];
         $pipeline = new \Ksfraser\PhpabcCanntaireachd\AbcProcessingPipeline($passes);
         $headerFields = $headerTable ?? [];
@@ -112,8 +112,16 @@ class AbcProcessor {
     }
     
     // (removed broken copyMelodyToBagpipesInTune implementation)
-    public static function handleLyrics($output, $dict, &$lyricsWords) {
-        // (Body already restored in previous patch)
+    public static function reorderVoices($lines) {
+        // Simple implementation: return lines unchanged
+        // TODO: Implement proper voice reordering
+        return $lines;
+    }
+    
+    public static function handleLyrics($lines, $dict, &$lyricsWords) {
+        // Simple implementation: just return the lines unchanged
+        // TODO: Implement proper lyrics processing
+        return $lines;
     }
     
     private static function reorderVoicesInTune($lines) {

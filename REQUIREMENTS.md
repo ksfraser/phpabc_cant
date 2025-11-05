@@ -36,6 +36,11 @@
 ---
 # Project Requirements: PHPABC Canntaireachd
 
+## Official ABC Specification Reference
+- **ABC Standard v2.1**: https://abcnotation.com/wiki/abc:standard:v2.1
+- All parsing and processing must comply with the official ABC notation standard
+- Token parsing must cover all valid ABC directives and information fields as defined in the standard
+
 - Must be compatible with PHP 7.3 and later (no typed properties, no PHP 7.4+ syntax).
 - All public APIs must be documented.
 - The project must include a UML diagram of class relationships and message flow.
@@ -337,3 +342,105 @@ Uses both tables and config/db_config.php for DSN
 - Bagpipe style checks: bar count, repeats, volta/2nd endings
 - All output files (ABC, diff, errors) are saved and listed per input file
 - Unit tests cover multi-song parsing, timing validation, style checks
+
+# BABOK Work Products
+
+## Business Requirements
+- **BR1**: The system must process ABC notation files to generate canntaireachd lyrics for bagpipe tunes.
+- **BR2**: Support automatic detection of bagpipe tunes based on key signatures (e.g., D major, A major).
+- **BR3**: Enable melody copying from primary voices to Bagpipes voices when Bagpipes voice is missing.
+- **BR4**: Validate time signatures and ensure complete bars in ABC files.
+- **BR5**: Log exceptions for out-of-spec bars/voices for correction.
+- **BR6**: Provide CLI and WordPress interfaces for processing ABC files.
+- **BR7**: Store settings, translations, and header fields in a database.
+- **BR8**: Translate between ABC, canntaireachd, and BMW representations.
+
+## Functional Requirements
+- **FR1**: Parse ABC files and detect tunes, voices, and music lines.
+- **FR2**: For Bagpipes voices, generate canntaireachd w: lines using token dictionary.
+- **FR3**: Copy melody from primary voice to Bagpipes voice if needed.
+- **FR4**: Validate timing and bar completeness, marking errors.
+- **FR5**: Output processed ABC, diff, and error logs.
+- **FR6**: Support interleaved/grouped voice output styles.
+- **FR7**: Preserve voice headers and lyrics in output.
+- **FR8**: Use Trie for efficient token matching in canntaireachd generation.
+- **FR9**: Load dictionary from file or database.
+- **FR10**: CLI options for conversion, output, and validation.
+- **FR11**: Provide CLI interface (abc-cannt-cli.php) for ABC file processing with options like --convert and --output.
+
+## CLI Interfaces
+### ABC Processing CLI (abc-cannt-cli.php)
+- **Options**:
+  - `--convert`: Enable canntaireachd generation for ABC files.
+  - `--output=<filename>`: Specify output file for processed ABC.
+  - Supports multiple ABC files via wildcards for batch processing.
+- **Functionality**: Processes ABC files through multi-pass pipeline, generates canntaireachd, validates timing, and outputs results.
+- **Output**: Lists processed files, diff logs, and error logs.
+
+### Database Management CLI
+- **Options**: --midi_channel, --midi_program, --list, --add, --edit, --delete, --validate, --save.
+- **Functionality**: Manages MIDI defaults, token dictionaries, and header fields in the database.
+
+## Use Cases
+- **UC1**: User uploads ABC file via WordPress; system processes and generates canntaireachd.
+- **UC2**: CLI user runs command to convert ABC file with canntaireachd generation.
+- **UC3**: System detects missing Bagpipes voice and copies melody.
+- **UC4**: System validates timing and logs errors for manual correction.
+- **UC5**: User queries translations between ABC, canntaireachd, and BMW.
+
+## Test Plan
+## 6. Voice Output Style Testing
+- Add/expand tests to assert correct output for both grouped and interleaved voice layouts.
+## 5. Voice Header Output Testing
+- Add/expand tests to assert that output files contain all expected V: lines for multi-tune and multi-voice cases.
+
+## 1. Unit Testing
+- Use PHPUnit for all unit tests.
+- Each class must have a test verifying:
+  - Instantiation
+  - Basic method behavior (where applicable)
+- Edge cases and error handling must be tested for core logic classes (e.g., AbcParser, Dict2php).
+- All CLI output is tested via `CliOutputWriterTest`.
+- Voice order pass is tested via `AbcVoiceOrderPassTest`.
+
+## 2. Integration Testing
+- Test that Composer autoloading works for all classes.
+- Test that ABC parsing and simplification work end-to-end.
+- Test file operations using ksf-file integration.
+
+## 3. Documentation Testing
+- Verify that all classes have PHPDoc blocks.
+- Verify that UML diagram is up to date and matches codebase.
+
+## 4. Coverage Reporting
+- Use PHPUnit's coverage tools to ensure all classes and methods are covered.
+- Target: 100% class instantiation coverage, 80%+ method coverage for core logic.
+
+## QA (Quality Assurance)
+- **Code Review Checklist**:
+  - Ensure all classes follow SRP (Single Responsibility Principle).
+  - Verify SOLID principles: S (SRP), O (Open/Closed), L (Liskov Substitution), I (Interface Segregation), D (Dependency Inversion).
+  - Check for DRY (Don't Repeat Yourself) violations.
+  - Confirm Dependency Injection (DI) is used where appropriate.
+  - Validate PHPDoc blocks are present and complete for all classes, methods, and functions.
+  - Ensure UML diagrams are included in PHPDoc blocks.
+  - Check that unit tests exist for all classes and methods.
+  - Verify traceability to requirements in code comments and PHPDoc.
+- **Automated QA**:
+  - Run PHPUnit tests with coverage reporting.
+  - Use static analysis tools (e.g., PHPStan) for code quality.
+  - Generate documentation with phpDocumentor and verify completeness.
+- **Manual QA**:
+  - Test CLI and WordPress interfaces for correct output.
+  - Validate canntaireachd generation against known examples.
+  - Check error logging and exception handling.
+
+## Traceability Matrix
+- Map requirements to classes/functions (e.g., BR1 -> AbcCanntaireachdPass::process).
+- Ensure all requirements are covered by code and tests.
+
+## Project Direction from LLM.md
+- Follow guidelines in LLM.md for PHPDoc, UML, unit tests, SRP/SOLID/DRY/DI.
+- Maintain architectural documents and update with code changes.
+- Use automated documentation generation scripts.
+- Ensure all code references requirements and is traceable.

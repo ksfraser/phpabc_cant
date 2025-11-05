@@ -69,10 +69,10 @@ class AbcCanntaireachdPassTest extends TestCase
         $result = $this->pass->process($lines);
 
         // Should preserve existing lyrics and not generate new ones
-        $this->assertCount(5, $result['lines']);
+        $this->assertCount(6, $result['lines']);
         $this->assertEquals('w: existing lyrics', $result['lines'][3]);
-    $this->assertEquals('A B C D', $result['lines'][4]); // Music line
-    $this->assertEquals('w: dar dod hid dar', $result['lines'][5]); // Canntaireachd line
+        $this->assertEquals('A B C D', $result['lines'][4]);
+        $this->assertEquals('w: dar dod hid dar', $result['lines'][5]);
     }
 
     public function testProcessBagpipeVoiceWithoutLyrics()
@@ -86,11 +86,11 @@ class AbcCanntaireachdPassTest extends TestCase
 
         $result = $this->pass->process($lines);
 
-    // Should add w: line with generated canntaireachd
-    $this->assertCount(6, $result['lines']);
-    $this->assertEquals('V:Bagpipes', $result['lines'][2]);
-    $this->assertEquals('A B C D', $result['lines'][3]);
-    $this->assertEquals('w: dar dod hid dar', $result['lines'][4]);
+        // Should add w: line with generated canntaireachd
+        $this->assertCount(5, $result['lines']);
+        $this->assertEquals('V:Bagpipes', $result['lines'][2]);
+        $this->assertEquals('A B C D', $result['lines'][3]);
+        $this->assertEquals('w: dar dod hid dar', $result['lines'][4]);
     }
 
     public function testProcessMultipleVoicesWithBagpipes()
@@ -178,11 +178,11 @@ class AbcCanntaireachdPassTest extends TestCase
     // Should add w: lines for both tunes
     $this->assertCount(11, $result['lines']);
     // First tune
-    $this->assertEquals('A B C D', $result['lines'][4]);
-    $this->assertEquals('w: dar dod hid dar', $result['lines'][5]);
+    $this->assertEquals('A B C D', $result['lines'][3]);
+    $this->assertEquals('w: dar dod hid dar', $result['lines'][4]);
     // Second tune
-    $this->assertEquals('D C B A', $result['lines'][10]);
-    $this->assertEquals('w: dar hid dod dar', $result['lines'][11]);
+    $this->assertEquals('D C B A', $result['lines'][9]);
+    $this->assertEquals('w: dar hid dod dar', $result['lines'][10]);
     }
 
     public function testCanntaireachdGenerationWithTokenDictionary()
@@ -245,5 +245,130 @@ class AbcCanntaireachdPassTest extends TestCase
     $this->assertCount(3, $result['lines']);
     $this->assertEquals('{g}A B {e}C', $result['lines'][1]);
     $this->assertStringStartsWith('w: ', $result['lines'][2]);
+    }
+
+    public function testInvalidAbcTokensFallback()
+    {
+        $lines = [
+            'V:Bagpipes',
+            'A X B'  // X is not in dictionary
+        ];
+
+        $result = $this->pass->process($lines);
+
+        // Should fallback to [X] for unmappable token
+        $this->assertCount(3, $result['lines']);
+        $this->assertEquals('A X B', $result['lines'][1]);
+        $this->assertEquals('w: dar [X] dod', $result['lines'][2]);
+    }
+
+    public function testEmptyMusicLine()
+    {
+        $lines = [
+            'V:Bagpipes',
+            ''  // Empty line
+        ];
+
+        $result = $this->pass->process($lines);
+
+        // Should not add w: for empty line
+        $this->assertCount(2, $result['lines']);
+        $this->assertEquals('V:Bagpipes', $result['lines'][0]);
+        $this->assertEquals('', $result['lines'][1]);
+    }
+
+    public function testMalformedMusicLine()
+    {
+        $lines = [
+            'V:Bagpipes',
+            '|||'  // Only bars, no notes
+        ];
+
+        $result = $this->pass->process($lines);
+
+        // Should not add w: for line with no notes
+        $this->assertCount(2, $result['lines']);
+        $this->assertEquals('V:Bagpipes', $result['lines'][0]);
+        $this->assertEquals('|||', $result['lines'][1]);
+    }
+
+    public function testLineWithOnlyRests()
+    {
+        $lines = [
+            'V:Bagpipes',
+            'z Z'  // Rests
+        ];
+
+        $result = $this->pass->process($lines);
+
+        // Should handle rests if in dictionary, else fallback
+        $this->assertCount(3, $result['lines']);
+        $this->assertEquals('z Z', $result['lines'][1]);
+        $this->assertStringStartsWith('w: ', $result['lines'][2]);
+    }
+
+    public function testMultiVoiceWithoutBagpipes()
+    {
+        $lines = [
+            'V:Flute',
+            'A B C',
+            'V:Drums',
+            'D E F'
+        ];
+
+        $result = $this->pass->process($lines);
+
+        // Should not add any w: lines
+        $this->assertCount(4, $result['lines']);
+        foreach ($result['lines'] as $line) {
+            $this->assertStringStartsNotWith('w:', trim($line));
+        }
+    }
+
+    public function testBagpipesWithComplexTokens()
+    {
+        $lines = [
+            'V:Bagpipes',
+            'A, A B\' C##'  // Accidentals and octaves
+        ];
+
+        $result = $this->pass->process($lines);
+
+        // Should handle accidentals/octaves, fallback if not exact match
+        $this->assertCount(3, $result['lines']);
+        $this->assertEquals('A, A B\' C##', $result['lines'][1]);
+        $this->assertStringStartsWith('w: ', $result['lines'][2]);
+    }
+
+    public function testNonMusicLineInBagpipes()
+    {
+        $lines = [
+            'V:Bagpipes',
+            'M:4/4',  // Header line
+            'A B C'
+        ];
+
+        $result = $this->pass->process($lines);
+
+        // Should not treat header as music, add w: only for music line
+        $this->assertCount(4, $result['lines']);
+        $this->assertEquals('M:4/4', $result['lines'][1]);
+        $this->assertEquals('A B C', $result['lines'][2]);
+        $this->assertEquals('w: dar dod hid', $result['lines'][3]);
+    }
+
+    public function testBagpipesWithTimingErrors()
+    {
+        $lines = [
+            'V:Bagpipes',
+            'A B C |TIMING ERROR|'
+        ];
+
+        $result = $this->pass->process($lines);
+
+        // Should still add w: but log timing issues
+        $this->assertCount(3, $result['lines']);
+        $this->assertEquals('A B C |TIMING ERROR|', $result['lines'][1]);
+        $this->assertStringStartsWith('w: ', $result['lines'][2]);
     }
 }

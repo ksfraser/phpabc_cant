@@ -72,6 +72,9 @@ class AbcProcessingPipeline {
                     if (!empty($result['errors'])) {
                         $errors = array_map(function($e){return 'TIMING: '.$e;}, $result['errors']);
                     }
+                } elseif ($pass instanceof AbcFormattingPass) {
+                    $result = $pass->process($lines);
+                    $lines = $result['lines'];
                 } else {
                     $lines = $pass->process($lines);
                 }

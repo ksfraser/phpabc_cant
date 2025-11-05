@@ -1,0 +1,554 @@
+generateForNotes input: A B C D
+Processing part: A
+Matched token: A -> Cannt: dar
+Processing part: B
+Matched token: B -> Cannt: dod
+Processing part: C
+Matched token: C -> Cannt: hid
+Processing part: D
+Matched token: D -> Cannt: dar
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: w: existing lyrics
+generateForNotes output: w: existing lyrics
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D | A B |TIMING ERROR|
+generateForNotes output: dar dod hid dar | dar dod |TIMING ERROR|
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: D C B A
+generateForNotes output: dar hid dod dar
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A2 B3 C D/2
+generateForNotes output: dar2 dod3 hid dar/2
+generateForNotes input: {g}A B {e}C
+generateForNotes output: {g}dar dod {e}hid
+generateForNotes input: A X B
+generateForNotes output: dar X dod
+generateForNotes input: |||
+generateForNotes output: |||
+generateForNotes input: z Z
+generateForNotes output: z Z
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: D E F
+generateForNotes output: dar E F
+generateForNotes input: A, A B' C##
+generateForNotes output: dar, dar dod' hid##
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C |TIMING ERROR|
+generateForNotes output: dar dod hid |TIMING ERROR|
+generateForNotes input: w: existing lyrics
+generateForNotes output: w: existing lyrics
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D | A B |TIMING ERROR|
+generateForNotes output: dar dod hid dar | dar dod |TIMING ERROR|
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: D C B A
+generateForNotes output: dar hid dod dar
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A2 B3 C D/2
+generateForNotes output: dar2 dod3 hid dar/2
+generateForNotes input: {g}A B {e}C
+generateForNotes output: {g}dar dod {e}hid
+generateForNotes input: A X B
+generateForNotes output: dar X dod
+generateForNotes input: |||
+generateForNotes output: |||
+generateForNotes input: z Z
+generateForNotes output: z Z
+generateForNotes input: A, A B' C##
+generateForNotes output: dar, dar dod' hid##
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C |TIMING ERROR|
+generateForNotes output: dar dod hid |TIMING ERROR|
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D | A B |TIMING ERROR|
+generateForNotes output: dar dod hid dar [|] dar dod [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: D C B A
+generateForNotes output: dar hid dod dar
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A2 B3 C D/2
+generateForNotes output: dar dod hid dar
+generateForNotes input: {g}A B {e}C
+generateForNotes output: [{g}A] dod [{e}C]
+generateForNotes input: A X B
+generateForNotes output: dar [X] dod
+generateForNotes input: A, A B' C##
+generateForNotes output: dar dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C |TIMING ERROR|
+generateForNotes output: dar dod hid [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D | A B |TIMING ERROR|
+generateForNotes output: dar dod hid dar [|] dar dod [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: D C B A
+generateForNotes output: dar hid dod dar
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A2 B3 C D/2
+generateForNotes output: dar dod hid dar
+generateForNotes input: {g}A B {e}C
+generateForNotes output: [{g}A] dod [{e}C]
+generateForNotes input: A X B
+generateForNotes output: dar [X] dod
+generateForNotes input: A, A B' C##
+generateForNotes output: dar dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C |TIMING ERROR|
+generateForNotes output: dar dod hid [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D | A B |TIMING ERROR|
+generateForNotes output: dar dod hid dar [|] dar dod [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: D C B A
+generateForNotes output: dar hid dod dar
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A2 B3 C D/2
+generateForNotes output: dar dod hid dar
+generateForNotes input: {g}A B {e}C
+generateForNotes output: [{g}A] dod [{e}C]
+generateForNotes input: A X B
+generateForNotes output: dar [X] dod
+generateForNotes input: A, A B' C##
+generateForNotes output: dar dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C |TIMING ERROR|
+generateForNotes output: dar dod hid [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D | A B |TIMING ERROR|
+generateForNotes output: dar dod hid dar [|] dar dod [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: D C B A
+generateForNotes output: dar hid dod dar
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A2 B3 C D/2
+generateForNotes output: dar dod hid dar
+generateForNotes input: {g}A B {e}C
+generateForNotes output: [{g}A] dod [{e}C]
+generateForNotes input: A X B
+generateForNotes output: dar [X] dod
+generateForNotes input: A, A B' C##
+generateForNotes output: dar dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C |TIMING ERROR|
+generateForNotes output: dar dod hid [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D | A B |TIMING ERROR|
+generateForNotes output: dar dod hid dar [|] dar dod [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: D C B A
+generateForNotes output: dar hid dod dar
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A2 B3 C D/2
+generateForNotes output: dar dod hid dar
+generateForNotes input: {g}A B {e}C
+generateForNotes output: [{g}A] dod [{e}C]
+generateForNotes input: A X B
+generateForNotes output: dar [X] dod
+generateForNotes input: A, A B' C##
+generateForNotes output: dar dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C |TIMING ERROR|
+generateForNotes output: dar dod hid [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D | A B |TIMING ERROR|
+generateForNotes output: dar dod hid dar [|] dar dod [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: D C B A
+generateForNotes output: dar hid dod dar
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A2 B3 C D/2
+generateForNotes output: dar dod hid dar
+generateForNotes input: {g}A B {e}C
+generateForNotes output: [{g}A] dod [{e}C]
+generateForNotes input: A X B
+generateForNotes output: dar [X] dod
+generateForNotes input: A, A B' C##
+generateForNotes output: dar dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C |TIMING ERROR|
+generateForNotes output: dar dod hid [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D | A B |TIMING ERROR|
+generateForNotes output: dar dod hid dar [|] dar dod [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: D C B A
+generateForNotes output: dar hid dod dar
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A2 B3 C D/2
+generateForNotes output: dar dod hid dar
+generateForNotes input: {g}A B {e}C
+generateForNotes output: [{g}A] dod [{e}C]
+generateForNotes input: A X B
+generateForNotes output: dar [X] dod
+generateForNotes input: A, A B' C##
+generateForNotes output: dar dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C |TIMING ERROR|
+generateForNotes output: dar dod hid [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D | A B |TIMING ERROR|
+generateForNotes output: dar dod hid dar [|] dar dod [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: D C B A
+generateForNotes output: dar hid dod dar
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A2 B3 C D/2
+generateForNotes output: dar dod hid dar
+generateForNotes input: {g}A B {e}C
+generateForNotes output: [{g}A] dod [{e}C]
+generateForNotes input: A X B
+generateForNotes output: dar [X] dod
+generateForNotes input: A, A B' C##
+generateForNotes output: dar dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C |TIMING ERROR|
+generateForNotes output: dar dod hid [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D | A B |TIMING ERROR|
+generateForNotes output: dar dod hid dar [|] dar dod [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: D C B A
+generateForNotes output: dar hid dod dar
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A2 B3 C D/2
+generateForNotes output: dar dod hid dar
+generateForNotes input: {g}A B {e}C
+generateForNotes output: [{g}A] dod [{e}C]
+generateForNotes input: A X B
+generateForNotes output: dar [X] dod
+generateForNotes input: A, A B' C##
+generateForNotes output: dar dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C |TIMING ERROR|
+generateForNotes output: dar dod hid [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D | A B |TIMING ERROR|
+generateForNotes output: dar dod hid dar [|] dar dod [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: D C B A
+generateForNotes output: dar hid dod dar
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A2 B3 C D/2
+generateForNotes output: dar dod hid dar
+generateForNotes input: {g}A B {e}C
+generateForNotes output: [{g}A] dod [{e}C]
+generateForNotes input: A X B
+generateForNotes output: dar [X] dod
+generateForNotes input: A, A B' C##
+generateForNotes output: dar dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C |TIMING ERROR|
+generateForNotes output: dar dod hid [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D | A B |TIMING ERROR|
+generateForNotes output: dar dod hid dar [|] dar dod [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: D C B A
+generateForNotes output: dar hid dod dar
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A2 B3 C D/2
+generateForNotes output: dar dod hid dar
+generateForNotes input: {g}A B {e}C
+generateForNotes output: [{g}A] dod [{e}C]
+generateForNotes input: A X B
+generateForNotes output: dar [X] dod
+generateForNotes input: A, A B' C##
+generateForNotes output: dar dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C |TIMING ERROR|
+generateForNotes output: dar dod hid [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D | A B |TIMING ERROR|
+generateForNotes output: dar dod hid dar [|] dar dod [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: D C B A
+generateForNotes output: dar hid dod dar
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A2 B3 C D/2
+generateForNotes output: dar dod hid dar
+generateForNotes input: {g}A B {e}C
+generateForNotes output: [{g}A] dod [{e}C]
+generateForNotes input: A X B
+generateForNotes output: dar [X] dod
+generateForNotes input: A, A B' C##
+generateForNotes output: dar dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C |TIMING ERROR|
+generateForNotes output: dar dod hid [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D | A B |TIMING ERROR|
+generateForNotes output: dar dod hid dar [|] dar dod [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: D C B A
+generateForNotes output: dar hid dod dar
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A2 B3 C D/2
+generateForNotes output: dar dod hid dar
+generateForNotes input: {g}A B {e}C
+generateForNotes output: [{g}A] dod [{e}C]
+generateForNotes input: A X B
+generateForNotes output: dar [X] dod
+generateForNotes input: z Z
+generateForNotes output: [z] [Z]
+generateForNotes input: A, A B' C##
+generateForNotes output: dar dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C |TIMING ERROR|
+generateForNotes output: dar dod hid [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D | A B |TIMING ERROR|
+generateForNotes output: dar dod hid dar [|] dar dod [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: D C B A
+generateForNotes output: dar hid dod dar
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A2 B3 C D/2
+generateForNotes output: dar dod hid dar
+generateForNotes input: {g}A B {e}C
+generateForNotes output: [{g}A] dod [{e}C]
+generateForNotes input: A X B
+generateForNotes output: dar [X] dod
+generateForNotes input: z Z
+generateForNotes output: [z] [Z]
+generateForNotes input: A, A B' C##
+generateForNotes output: dar dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C |TIMING ERROR|
+generateForNotes output: dar dod hid [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D | A B |TIMING ERROR|
+generateForNotes output: dar dod hid dar [|] dar dod [|TIMING] [ERROR|]
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: A B C D
+generateForNotes output: dar dod hid dar
+generateForNotes input: D C B A
+generateForNotes output: dar hid dod dar
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A2 B3 C D/2
+generateForNotes output: dar dod hid dar
+generateForNotes input: {g}A B {e}C
+generateForNotes output: [{g}A] dod [{e}C]
+generateForNotes input: A X B
+generateForNotes output: dar [X] dod
+generateForNotes input: z Z
+generateForNotes output: [z] [Z]
+generateForNotes input: A, A B' C##
+generateForNotes output: dar dar dod hid
+generateForNotes input: A B C
+generateForNotes output: dar dod hid
+generateForNotes input: A B C |TIMING ERROR|
+generateForNotes output: dar dod hid [|TIMING] [ERROR|]

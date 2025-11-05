@@ -36,7 +36,7 @@ namespace Ksfraser\PhpabcCanntaireachd;
 use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderAll;
 use Ksfraser\PhpabcCanntaireachd\Tune\AbcTune;
 use Ksfraser\PhpabcCanntaireachd\Tune\AbcBar;
-use Ksfraser\PhpabcCanntaireachd\Midi\MidiParser;
+use Ksfraser\PhpabcCanntaireachd\Formatting\FormattingParser;
 
 class AbcFileParser {
     /**

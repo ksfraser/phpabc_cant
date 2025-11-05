@@ -6,15 +6,18 @@ use Ksfraser\PhpabcCanntaireachd\AbcLineParser;
 
 /**
  * Parser for %%MIDI beat directive (basic velocity control)
+ * Extends MidiDirectiveParser for common MIDI functionality.
+ *
+ * @requirement FR10 (MIDI directive parsing)
  */
-class MidiBeatParser implements AbcLineParser
+class MidiBeatParser extends MidiDirectiveParser implements AbcLineParser
 {
     /**
      * @param mixed $line
      * @return bool
      */
     public function canParse($line) {
-        return preg_match('/^%%MIDI\s+beat\s+/i', trim($line));
+        return $this->isMidiDirective($line) && $this->getDirectiveType($line) === 'beat';
     }
 
     /**

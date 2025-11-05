@@ -5,16 +5,10 @@ namespace Ksfraser\PhpabcCanntaireachd;
  *
  * Generates canntaireachd lyrics for ABC note bodies using a token dictionary.
  * Supports legacy dictionary loading and robust token matching for bagpipe voice conversion.
+ * Follows SRP by focusing solely on canntaireachd generation.
+ * Uses DI for TokenDictionary.
  *
- * SOLID: Single Responsibility (canntaireachd generation), DI (dictionary injection), DRY (token matching logic).
- *
- * @package Ksfraser\PhpabcCanntaireachd
- *
- * @property TokenDictionary $dict Token dictionary for ABC-to-canntaireachd conversion
- *
- * @method __construct(TokenDictionary|null $dict) Inject or load token dictionary
- * @method generateForNotes(string $noteBody): string Generate canntaireachd lyrics for ABC note body
- *
+ * @requirement FR2, FR8
  * @uml
  * @startuml
  * class CanntGenerator {
@@ -22,13 +16,32 @@ namespace Ksfraser\PhpabcCanntaireachd;
  *   + __construct(dict: TokenDictionary)
  *   + generateForNotes(noteBody: string): string
  * }
- * CanntGenerator --> TokenDictionary
+ * CanntGenerator --> TokenDictionary : uses
+ * @enduml
+ *
+ * @sequence
+ * @startuml
+ * participant User
+ * participant CanntGenerator
+ * participant TokenDictionary
+ * User -> CanntGenerator: generateForNotes(noteBody)
+ * CanntGenerator -> TokenDictionary: searchCannt(noteBody)
+ * TokenDictionary --> CanntGenerator: canntText
+ * CanntGenerator --> User: canntText
  * @enduml
  */
 
 class CanntGenerator {
     protected $dict;
 
+    /**
+     * Constructor for CanntGenerator.
+     * Loads dictionary from file if not provided.
+     * Uses DI for TokenDictionary.
+     *
+     * @param TokenDictionary|null $dict The token dictionary.
+     * @requirement FR7
+     */
     public function __construct(?TokenDictionary $dict = null) {
         if ($dict !== null) {
             $this->dict = $dict;
@@ -60,6 +73,14 @@ class CanntGenerator {
         $this->dict = $td;
     }
 
+    /**
+     * Generates canntaireachd lyrics for the given ABC note body.
+     * Uses Trie for efficient pattern matching.
+     *
+     * @param string $noteBody The ABC music line.
+     * @return string The canntaireachd text.
+     * @requirement FR2, FR8
+     */
     public function generateForNotes(string $noteBody): string {
         $logFile = __DIR__ . '/cannt_generator_debug.log'; // Define log file path
         $noteBody = trim($noteBody);
@@ -71,34 +92,10 @@ class CanntGenerator {
         $noteBody = preg_replace('/^\[V:[^\]]*\]/', '', $noteBody);
         $noteBody = trim($noteBody);
         
-        // Attempt to split on whitespace first
-        $parts = preg_split('/\s+/', $noteBody);
-        $out = [];
-        foreach ($parts as $part) {
-            $part = trim($part);
-            if ($part === '' || $part === '|') continue;
-            error_log("Processing part: $part");
-            file_put_contents($logFile, "Processing part: $part\n", FILE_APPEND);
-            $norm = preg_replace('/\d+/', '', $part);
-            $cannt = $this->dict->convertAbcToCannt($part);
-            if ($cannt === null) $cannt = $this->dict->convertAbcToCannt($norm);
-            if ($cannt !== null) {
-                error_log("Matched token: $part -> Cannt: $cannt");
-                file_put_contents($logFile, "Matched token: $part -> Cannt: $cannt\n", FILE_APPEND);
-                $out[] = $cannt;
-            } else {
-                $out[] = '[' . ($norm === '' ? $part : $norm) . ']';
-            }
-        }
-        // Ensure we always return a non-empty string
-        if (empty($out)) {
-            $safe = trim(preg_replace('/\s+/', ' ', $noteBody));
-            if ($safe === '') return '[?]';
-            return '[' . $safe . ']';
-        }
-        $result = implode(' ', $out);
+        // Use Trie to process the entire line
+        $result = $this->dict->searchCannt($noteBody);
         error_log("generateForNotes output: $result"); // Log output
         file_put_contents($logFile, "generateForNotes output: $result\n", FILE_APPEND); // Log output to file
-        return $result;
+        return $result ?: '[?]';
     }
 }

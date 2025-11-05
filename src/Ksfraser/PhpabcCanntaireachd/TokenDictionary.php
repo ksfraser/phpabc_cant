@@ -1,48 +1,38 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd;
 
+require_once __DIR__ . '/Trie.php';
+
 /**
  * TokenDictionary manages ABC/canntaireachd/BMW token mappings and CRUD operations.
+ * Follows SRP by handling only token management.
+ * Uses Trie for efficient lookups.
  *
+ * @requirement FR7, FR8
  * @uml
  * @startuml
  * class TokenDictionary {
  *   - tokens: array
+ *   - trie: Trie
+ *   + __construct()
  *   + prepopulate(dict: array)
- *   + addOrUpdateToken(abc, cannt, bmw, desc)
- *   + getToken(abc)
- *   + deleteToken(abc)
- *   + convertAbcToCannt(abc)
- *   + convertBmwToAbc(bmw)
- *   + convertCanntToBmw(cannt)
- *   + ...
+ *   + convertAbcToCannt(abc: string): string|null
+ *   + searchCannt(input: string): string
+ *   + getAllTokens(): array
  * }
- * @enduml
- *
- * @sequence
- * @startuml
- * participant Translator
- * participant TokenDictionary
- * Translator -> TokenDictionary: convertAbcToCannt(abc)
- * TokenDictionary --> Translator: canntToken|null
- * @enduml
- *
- * @flowchart
- * @startuml
- * start
- * :Receive mapping request (e.g. convertAbcToCannt);
- * if (token exists) then (yes)
- *   :return mapped value;
- * else (no)
- *   :return null;
- * endif
- * stop
+ * TokenDictionary --> Trie : uses
  * @enduml
  */
 class TokenDictionary
 {
     /** @var array */
     protected $tokens = [];
+    /** @var Trie */
+    protected $trie;
+
+    public function __construct() {
+        $this->trie = new Trie();
+    }
 
     /**
      * Prepopulate from abc_dict.php
@@ -57,6 +47,9 @@ class TokenDictionary
                 'bmw_token' => $row['bmw_token'] ?? null,
                 'description' => $row['description'] ?? null,
             ];
+            if ($row['cannt_token']) {
+                $this->trie->addToken($abc, $row['cannt_token']);
+            }
         }
     }
 
@@ -195,5 +188,12 @@ class TokenDictionary
     public function convertAbcToBmw($abc)
     {
         return $this->tokens[$abc]['bmw_token'] ?? null;
+    }
+
+    /**
+     * Search for patterns in input using Trie
+     */
+    public function searchCannt($input) {
+        return $this->trie->search($input);
     }
 }

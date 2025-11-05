@@ -1,0 +1,11 @@
+﻿X:1
+T:Test Tune
+M:4/4
+L:1/8
+K:D
+V:Bagpipes
+A B C D
+%%pagewidth 8.5in
+%%landscape
+%%MIDI program 1
+w:existing lyrics
