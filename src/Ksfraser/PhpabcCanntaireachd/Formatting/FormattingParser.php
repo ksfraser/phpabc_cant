@@ -31,11 +31,19 @@ class FormattingParser implements AbcLineParser
         // Try specialized formatting parsers in order of specificity
         $formattingParsers = [
             new PageWidthParser(),
+            new PageHeightParser(),
             new PageOrientationParser(),
             new MarginParser(),
             new ScaleParser(),
             new StaffWidthParser(),
             new FontParser(),
+            new StaffSeparationParser(),
+            new PageControlParser(),
+            new ScoreParser(),
+            new BarsPerStaffParser(),
+            new TextParser(),
+            new SpacingParser(),
+            new BreakParser(),
         ];
 
         foreach ($formattingParsers as $parser) {
@@ -61,10 +69,19 @@ class FormattingParser implements AbcLineParser
         // Try specialized formatting parsers for validation
         $formattingParsers = [
             new PageWidthParser(),
+            new PageHeightParser(),
             new PageOrientationParser(),
             new MarginParser(),
             new ScaleParser(),
             new StaffWidthParser(),
+            new FontParser(),
+            new StaffSeparationParser(),
+            new PageControlParser(),
+            new ScoreParser(),
+            new BarsPerStaffParser(),
+            new TextParser(),
+            new SpacingParser(),
+            new BreakParser(),
         ];
 
         foreach ($formattingParsers as $parser) {
