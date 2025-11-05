@@ -1,5 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd;
+
+use Ksfraser\PhpabcCanntaireachd\Log\DebugLog;
 /**
  * Class AbcLine
  *
@@ -51,20 +53,20 @@ class AbcLine extends AbcItem {
      * @param object $translator Any AbcTokenTranslator subclass
      */
     public function translateBars($translator) {
-        file_put_contents('debug.log', "AbcLine::translateBars: called\n", FILE_APPEND);
+        DebugLog::log('AbcLine::translateBars: called', true);
         foreach ($this->bars as $i => $bar) {
             $barClass = get_class($bar);
             $hasTranslateNotes = method_exists($bar, 'translateNotes') ? 'yes' : 'no';
-            file_put_contents('debug.log', "AbcLine::translateBars: bar $i class=$barClass method_exists(translateNotes)=$hasTranslateNotes\n", FILE_APPEND);
+            DebugLog::log('AbcLine::translateBars: bar ' . $i . ' class=' . $barClass . ' method_exists(translateNotes)=' . $hasTranslateNotes, true);
             if (!($bar instanceof \Ksfraser\PhpabcCanntaireachd\Contract\RenderableCanntaireachdInterface)) {
-                file_put_contents('debug.log', "AbcLine::translateBars: bar $i does not implement RenderableCanntaireachdInterface\n", FILE_APPEND);
+                DebugLog::log('AbcLine::translateBars: bar ' . $i . ' does not implement RenderableCanntaireachdInterface', true);
                 throw new \LogicException('Bar does not implement RenderableCanntaireachdInterface');
             }
             if (!method_exists($bar, 'translateNotes')) {
-                file_put_contents('debug.log', "AbcLine::translateBars: bar $i does not implement translateNotes\n", FILE_APPEND);
+                DebugLog::log('AbcLine::translateBars: bar ' . $i . ' does not implement translateNotes', true);
                 throw new \LogicException('Bar does not implement translateNotes');
             }
-            file_put_contents('debug.log', "AbcLine::translateBars: calling translateNotes on bar $i\n", FILE_APPEND);
+            DebugLog::log('AbcLine::translateBars: calling translateNotes on bar ' . $i, true);
             $bar->translateNotes($translator);
         }
     }

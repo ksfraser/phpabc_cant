@@ -2,6 +2,7 @@
 namespace Ksfraser\PhpabcCanntaireachd;
 
 use Ksfraser\PhpabcCanntaireachd\Exceptions\AbcProcessingException;
+use Ksfraser\PhpabcCanntaireachd\Log\FlowLog;
 
 /**
  * Class AbcProcessingPipeline
@@ -43,11 +44,13 @@ class AbcProcessingPipeline {
      * @return array
      * @throws AbcProcessingException
      */
-    public function run(array $lines, array $headerFields, array $suggestions = []) {
+    public function run(array $lines, array $headerFields, array $suggestions = [], $logFlow = false) {
+        if ($logFlow) FlowLog::log('AbcProcessingPipeline::run ENTRY', true);
         $canntDiff = [];
         $errors = [];
         foreach ($this->passes as $pass) {
             try {
+                if ($logFlow) FlowLog::log('Pipeline pass: '.get_class($pass).' ENTRY', true);
                 if ($pass instanceof AbcTuneNumberValidatorPass) {
                     $result = $pass->validate($lines);
                     $lines = $result['lines'];
@@ -78,10 +81,28 @@ class AbcProcessingPipeline {
                 } else {
                     $lines = $pass->process($lines);
                 }
+                if ($logFlow) FlowLog::log('Pipeline pass: '.get_class($pass).' EXIT', true);
             } catch (\Throwable $ex) {
-                throw new AbcProcessingException('Error in pipeline: ' . $ex->getMessage(), 0, $ex);
+                $file = $ex->getFile();
+                $line = $ex->getLine();
+                $trace = $ex->getTrace();
+                $function = '';
+                $class = '';
+                if (isset($trace[0])) {
+                    if (isset($trace[0]['function'])) {
+                        $function = $trace[0]['function'];
+                    }
+                    if (isset($trace[0]['class'])) {
+                        $class = $trace[0]['class'];
+                    }
+                }
+                $where = ($class ? $class.'::':'').$function.'()';
+                $msg = 'Pipeline pass: '.get_class($pass).' EXCEPTION: '.$ex->getMessage()." at $file:$line in $where";
+                if ($logFlow) FlowLog::log($msg, true);
+                throw new AbcProcessingException('Error in pipeline: ' . $ex->getMessage()." at $file:$line in $where", 0, $ex);
             }
         }
+        if ($logFlow) FlowLog::log('AbcProcessingPipeline::run EXIT', true);
         foreach ($suggestions as $s) {
             $lines[] = "% Suggested: {$s['field']} '{$s['value']}' ~ '{$s['bestMatch']}' (score: {$s['score']})";
         }

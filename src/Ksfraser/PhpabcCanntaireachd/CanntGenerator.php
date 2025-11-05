@@ -1,5 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd;
+
+use Ksfraser\PhpabcCanntaireachd\Log\CanntLog;
 /**
  * Class CanntGenerator
  *
@@ -35,6 +37,7 @@ class CanntGenerator {
     protected $dict;
 
     /**
+<<<<<<< HEAD
      * Constructor for CanntGenerator.
      * Loads dictionary from file if not provided.
      * Uses DI for TokenDictionary.
@@ -43,6 +46,13 @@ class CanntGenerator {
      * @requirement FR7
      */
     public function __construct(?TokenDictionary $dict = null) {
+=======
+     * Summary of __construct
+     * @param TokenDictionary $dict
+     * @return void
+     */
+    public function __construct($dict = null) {
+>>>>>>> 4113fb97ff103f0af8d41462ff6994831d290ccf
         if ($dict !== null) {
             $this->dict = $dict;
             return;
@@ -60,16 +70,15 @@ class CanntGenerator {
      * @requirement FR2, FR8
      */
     public function generateForNotes(string $noteBody): string {
-        $logFile = __DIR__ . '/cannt_generator_debug.log'; // Define log file path
         $noteBody = trim($noteBody);
-        error_log("generateForNotes input: $noteBody"); // Log input
-        file_put_contents($logFile, "generateForNotes input: $noteBody\n", FILE_APPEND); // Log input to file
+    CanntLog::log("generateForNotes input: $noteBody", true);
         if ($noteBody === '') return '[?]';
         
         // Strip voice prefixes like [V:Bagpipes] from the beginning of the line
         $noteBody = preg_replace('/^\[V:[^\]]*\]/', '', $noteBody);
         $noteBody = trim($noteBody);
         
+<<<<<<< HEAD
         // Use proper ABC tokenization instead of flawed Trie search
         $result = $this->tokenizeAndConvert($noteBody);
         error_log("generateForNotes output: $result"); // Log output
@@ -121,6 +130,33 @@ class CanntGenerator {
             // Trim leading whitespace
             $input = ltrim($input);
         }
+=======
+        // Attempt to split on whitespace first
+        $parts = preg_split('/\s+/', $noteBody);
+        $out = [];
+        foreach ($parts as $part) {
+            $part = trim($part);
+            if ($part === '' || $part === '|') continue;
+            CanntLog::log("Processing part: $part", true);
+            $norm = preg_replace('/\d+/', '', $part);
+            $cannt = $this->dict->convertAbcToCannt($part);
+            if ($cannt === null) $cannt = $this->dict->convertAbcToCannt($norm);
+            if ($cannt !== null) {
+                CanntLog::log("Matched token: $part -> Cannt: $cannt", true);
+                $out[] = $cannt;
+            } else {
+                $out[] = '[' . ($norm === '' ? $part : $norm) . ']';
+            }
+        }
+        // Ensure we always return a non-empty string
+        if (empty($out)) {
+            $safe = trim(preg_replace('/\s+/', ' ', $noteBody));
+            if ($safe === '') return '[?]';
+            return '[' . $safe . ']';
+        }
+        $result = implode(' ', $out);
+    CanntLog::log("generateForNotes output: $result", true);
+>>>>>>> 4113fb97ff103f0af8d41462ff6994831d290ccf
         return $result;
     }
 }

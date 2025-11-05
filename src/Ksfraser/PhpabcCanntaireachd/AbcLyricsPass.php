@@ -1,5 +1,7 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd;
+
+use Ksfraser\PhpabcCanntaireachd\Log\FlowLog;
 /**
  * Class AbcLyricsPass
  *
@@ -28,9 +30,12 @@ namespace Ksfraser\PhpabcCanntaireachd;
 class AbcLyricsPass {
     private $dict;
     public function __construct($dict) { $this->dict = $dict; }
-    public function process(array $lines): array {
+    public function process(array $lines, $logFlow = false): array {
+        FlowLog::log('AbcLyricsPass::process ENTRY', true);
         $lyricsWords = [];
         $output = AbcProcessor::handleLyrics($lines, $this->dict, $lyricsWords);
-        return ['lines' => $output, 'lyricsWords' => $lyricsWords];
+        $result = ['lines' => $output, 'lyricsWords' => $lyricsWords];
+        FlowLog::log('AbcLyricsPass::process EXIT', true);
+        return $result;
     }
 }

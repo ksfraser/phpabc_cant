@@ -1,6 +1,8 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd;
 
+use Ksfraser\PhpabcCanntaireachd\Log\DebugLog;
+
 /**
  * Class BagpipeAbcToCanntTranslator
  *
@@ -78,14 +80,14 @@ class BagpipeAbcToCanntTranslator extends AbcTokenTranslator {
             throw new \InvalidArgumentException('Expected AbcNote');
         }
         $abcToken = $note->get_body_out();
-        file_put_contents('debug.log', "BagpipeAbcToCanntTranslator::translate: abcToken={$abcToken}\n", FILE_APPEND);
+        DebugLog::log('BagpipeAbcToCanntTranslator::translate: abcToken=' . $abcToken, true);
         // Try exact match, then normalized (strip digits)
         $cannt = $this->dictionary->convertAbcToCannt($abcToken);
-        file_put_contents('debug.log', "BagpipeAbcToCanntTranslator::translate: cannt (exact)=".var_export($cannt, true)."\n", FILE_APPEND);
+        DebugLog::log('BagpipeAbcToCanntTranslator::translate: cannt (exact)=' . var_export($cannt, true), true);
         if ($cannt === null) {
             $norm = preg_replace('/\d+/', '', $abcToken);
             $cannt = $this->dictionary->convertAbcToCannt($norm);
-            file_put_contents('debug.log', "BagpipeAbcToCanntTranslator::translate: cannt (norm)=".var_export($cannt, true)."\n", FILE_APPEND);
+            DebugLog::log('BagpipeAbcToCanntTranslator::translate: cannt (norm)=' . var_export($cannt, true), true);
         }
         return $cannt;
     }

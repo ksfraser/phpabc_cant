@@ -19,6 +19,10 @@ namespace Ksfraser\PhpabcCanntaireachd\Tune;
  * @enduml
  */
 class AbcBarline {
+	// Dummy canntaireachd function for compatibility with AbcNote
+	public function renderCanntaireachd(): string {
+		return '';
+	}
 	/**
 	 * @var string Barline type (e.g., '|', '||', '[|', etc.)
 	 */

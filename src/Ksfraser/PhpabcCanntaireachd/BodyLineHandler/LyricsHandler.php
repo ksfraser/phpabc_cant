@@ -1,6 +1,6 @@
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\BodyLineHandler;
-use Ksfraser\PhpabcCanntaireachd\AbcBar;
+use Ksfraser\PhpabcCanntaireachd\Tune\AbcBar;
 
 class LyricsHandler implements AbcBodyLineHandlerInterface {
     protected $forceBarLinesInLyrics;

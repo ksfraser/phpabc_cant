@@ -3,8 +3,21 @@ namespace Ksfraser\PhpabcCanntaireachd;
 
 use Ksfraser\PhpabcCanntaireachd\HeaderExtractorTrait;
 use Ksfraser\PhpabcCanntaireachd\Voices\InstrumentVoiceFactory;
+use Ksfraser\PhpabcCanntaireachd\Log\FlowLog;
 
 class AbcProcessor {
+    /**
+     * Stub for detectVoices to prevent pipeline errors.
+     * @param array $lines
+     * @return array
+     */
+    public static function detectVoices($lines) {
+        // TODO: Implement real voice detection logic if needed
+        if (is_array($lines)) {
+            return $lines;
+        }
+        return [];
+    }
     /**
      * Public static process method for integration and edge-case tests.
      * Accepts ABC string and a dictionary (array or TokenDictionary), returns result array.
@@ -13,7 +26,7 @@ class AbcProcessor {
      * @param array|null $headerTable
      * @return array
      */
-    public static function process($abcContent, $dict, $headerTable = null) {
+    public static function process($abcContent, $dict, $headerTable = null, $convert = false, $logFlow = false) {
         if (is_array($dict)) {
             $dictObj = new TokenDictionary();
             $dictObj->prepopulate($dict);
@@ -21,6 +34,10 @@ class AbcProcessor {
             $dictObj = $dict;
         }
         $lines = preg_split('/\r?\n/', $abcContent);
+        $tunes = self::splitTunes($lines);
+        $allLines = [];
+        $allCanntDiff = [];
+        $allErrors = [];
         $passes = [
             new \Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass(),
             new \Ksfraser\PhpabcCanntaireachd\AbcLyricsPass($dictObj),
@@ -33,15 +50,39 @@ class AbcProcessor {
         $headerFields = $headerTable ?? [];
         $suggestions = [];
         try {
-            $result = $pipeline->run($lines, $headerFields, $suggestions);
+            if ($logFlow) {
+                FlowLog::log('AbcProcessor::process ENTRY', true);
+            }
+            foreach ($tunes as $tuneLines) {
+                $result = $pipeline->run($tuneLines, $headerFields, $suggestions, $logFlow);
+                if (!empty($result['lines'])) {
+                    // Ensure a blank line between tunes except before the first
+                    if (!empty($allLines)) {
+                        $allLines[] = '';
+                    }
+                    $allLines = array_merge($allLines, $result['lines']);
+                }
+                if (!empty($result['canntDiff'])) {
+                    $allCanntDiff = array_merge($allCanntDiff, $result['canntDiff']);
+                }
+                if (!empty($result['errors'])) {
+                    $allErrors = array_merge($allErrors, $result['errors']);
+                }
+            }
+            if ($logFlow) {
+                FlowLog::log('AbcProcessor::process EXIT', true);
+            }
         } catch (\Exception $ex) {
-            $result = [
-                'lines' => [],
-                'canntDiff' => [],
-                'errors' => [$ex->getMessage()]
-            ];
+            if ($logFlow) {
+                FlowLog::log('AbcProcessor::process EXCEPTION: ' . $ex->getMessage(), true);
+            }
+            $allErrors[] = $ex->getMessage();
         }
-        return $result;
+        return [
+            'lines' => $allLines,
+            'canntDiff' => $allCanntDiff,
+            'errors' => $allErrors
+        ];
     }
     use HeaderExtractorTrait;
     /**
@@ -61,9 +102,70 @@ class AbcProcessor {
     /**
      * Refactored: Copy melody to bagpipes using context class for SRP.
      */
-    // ...existing code...
-    private static function copyMelodyToBagpipesInTune($lines) {
-        // Stub: intentionally left blank for now to fix syntax errors.
+    /**
+     * Stub for copyMelodyToBagpipes to prevent pipeline errors.
+     * @param array $lines
+     * @param mixed $hasMelody
+     * @param mixed $hasBagpipes
+     * @return array
+     */
+    public static function copyMelodyToBagpipes($lines, $hasMelody, $hasBagpipes) {
+        FlowLog::log('AbcProcessor::copyMelodyToBagpipes called', true);
+        $abcText = is_array($lines) ? implode("\n", $lines) : (string)$lines;
+        // Convert lines to AbcTune, ensure Bagpipes voice, and return updated lines
+        $tune = \Ksfraser\PhpabcCanntaireachd\Tune\AbcTune::parse($abcText);
+        if ($tune === null) {
+            FlowLog::log('AbcProcessor::copyMelodyToBagpipes: failed to parse AbcTune', true);
+            return $lines;
+        }
+    $svc = new \Ksfraser\PhpabcCanntaireachd\TuneService(new \Ksfraser\PhpabcCanntaireachd\CanntGenerator());
+        $svc->ensureBagpipeVoice($tune);
+        // Return the tune as lines, but fallback to original if output is empty
+        $rendered = $tune->renderSelf();
+        if (empty(trim($rendered))) {
+            FlowLog::log('AbcProcessor::copyMelodyToBagpipes: renderSelf() produced empty output, returning original lines', true);
+            return $lines;
+        }
+        $out = preg_split('/\r?\n/', $rendered);
+        FlowLog::log('AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated', true);
+        return $out;
+    }
+
+    /**
+     * Stub for validateCanntaireachd to prevent pipeline errors.
+     * @param array $lines
+     * @param array &$canntDiff
+     * @return array
+     */
+    public static function validateCanntaireachd($lines, &$canntDiff) {
+        FlowLog::log('AbcProcessor::validateCanntaireachd called', true);
+        // TODO: Implement real logic
+        $canntDiff = [];
+        return $lines;
+    }
+
+    /**
+     * Stub for reorderVoices to prevent pipeline errors.
+     * @param array $lines
+     * @return array
+     */
+    public static function reorderVoices($lines) {
+        FlowLog::log('AbcProcessor::reorderVoices called', true);
+        // TODO: Implement real logic
+        return $lines;
+    }
+
+    /**
+     * Stub for handleLyrics to prevent pipeline errors.
+     * @param array $lines
+     * @param mixed $dict
+     * @param array &$lyricsWords
+     * @return array
+     */
+    public static function handleLyrics($lines, $dict, &$lyricsWords) {
+        FlowLog::log('AbcProcessor::handleLyrics called', true);
+        // TODO: Implement real logic
+        $lyricsWords = [];
         return $lines;
     }
     
@@ -112,6 +214,7 @@ class AbcProcessor {
     }
     
     // (removed broken copyMelodyToBagpipesInTune implementation)
+<<<<<<< HEAD
     public static function reorderVoices($lines) {
         // Simple implementation: return lines unchanged
         // TODO: Implement proper voice reordering
@@ -123,6 +226,8 @@ class AbcProcessor {
         // TODO: Implement proper lyrics processing
         return $lines;
     }
+=======
+>>>>>>> 4113fb97ff103f0af8d41462ff6994831d290ccf
     
     private static function reorderVoicesInTune($lines) {
         $headers = [];

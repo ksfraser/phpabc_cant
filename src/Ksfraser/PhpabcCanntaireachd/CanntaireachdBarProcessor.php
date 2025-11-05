@@ -17,7 +17,18 @@ class CanntaireachdBarProcessor
     {
         $canntArr = [];
         $normalizedTokens = \Ksfraser\PhpabcCanntaireachd\TokenNormalizerForBar::normalizeTokens($tokens);
+        // Flatten normalized tokens (TokenNormalizer::normalize can return array)
+        $flatTokens = [];
         foreach ($normalizedTokens as $token) {
+            if (is_array($token)) {
+                foreach ($token as $t) {
+                    $flatTokens[] = $t;
+                }
+            } else {
+                $flatTokens[] = $token;
+            }
+        }
+        foreach ($flatTokens as $token) {
             if (trim($token) === '' || $token === '|' || $token === '||' || $token === '|:' || $token === ':') {
                 continue;
             }

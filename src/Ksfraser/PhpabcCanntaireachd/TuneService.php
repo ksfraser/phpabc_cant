@@ -8,8 +8,8 @@ class TuneService {
     protected $bagpipeAliases = ['P', 'pipes', 'pipe', 'bagpipe', 'BAGPIPES', 'Bagpipes'];
     protected $canntGenerator;
 
-    public function __construct(?CanntGenerator $gen = null) {
-        $this->canntGenerator = $gen ?? new CanntGenerator();
+    public function __construct($gen) {
+        $this->canntGenerator = $gen;
     }
 
     /**
@@ -103,12 +103,15 @@ class TuneService {
             // Build note sequence string from bar's notes
             $noteBody = $barObj->renderNotes();
             $cannt = $this->canntGenerator->generateForNotes($noteBody);
-            if (!is_string($cannt) || trim($cannt) === '') {
+            if (!is_string($cannt) || trim((string)$cannt) === '') {
                 $cannt = '[?]';
             }
             $barObj->setCanntaireachd($cannt);
-            // Ensure bar-level cannt is readable
-            if (method_exists($barObj, 'getCanntaireachd') && trim($barObj->getCanntaireachd()) === '') {
+            $canntVal = $barObj->getCanntaireachd();
+            if (!is_string($canntVal)) {
+                $canntVal = (string)$canntVal;
+            }
+            if (trim($canntVal) === '') {
                 $barObj->setCanntaireachd($cannt);
             }
         }

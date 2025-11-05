@@ -29,6 +29,7 @@ use Ksfraser\PhpabcCanntaireachd\Voices\AbcVoice;
  * */
 class abc_tunebase extends origin
 {
+	protected $discography; //D
 	protected $headers_anglo_arr;
 	protected $index; //X
 	protected $key; //K
@@ -39,10 +40,10 @@ class abc_tunebase extends origin
 	protected $composer;	//C
 	protected $history_arr;	//H
 	protected $books_arr;	//B
-	protected $voice_arr;	//V
-	protected $discography;	//D
-	protected $file_url;	//F
-	protected $group;	//G  e.g. G:Flute
+	// REMOVED: protected $voice_arr; //V
+	// REMOVED: protected $body_voice_arr;   //The list of voices for the [V:1] line headers
+	// REMOVED: protected $voice_name_arr;   //The list of voices Names for searching
+	// REMOVED: protected $body_arr;
 	protected $instruction_arr;	//I
 	protected $macro_arr;	//m
 	protected $notes;	//N  i.e. referrences to other similar tunes.
@@ -101,12 +102,10 @@ class abc_tunebase extends origin
 		$this->headers_anglo_arr['W'] = "words_bottom_arr";
 		$this->line_count = 0;
 		/**/
-		$this->body_arr = array();
-		$this->words_bottom_arr = array();
-		$this->words_arr = array();
-		$this->instructions_arr = array();
-		$this->body_voice_arr = array();
-		$this->title_arr = array();
+	$this->words_bottom_arr = array();
+	$this->words_arr = array();
+	$this->instructions_arr = array();
+	$this->title_arr = array();
 		/**/
 		$this->body = "";
 		$this->complete_tune = "";
@@ -262,17 +261,7 @@ class abc_tunebase extends origin
 					//$this->var_dump( __FUNCTION__  . ":" . __LINE__ );
 		$this->voice_name_arr[] = $voice;
 	}
-	/**//**
-	* Add HEADER line.  TODO: REFACTOR.  Set will do this...
-	*/
-	/**//**
-	 * Voices listed in the HEADER (V: ...)
-	 */
-	function add_voice_arr( $line )
-	{
-					//$this->var_dump( __FUNCTION__  . ":" . __LINE__ );
-		$this->voice_arr[] = $line;
-	}
+	// REMOVED: function add_voice_arr( $line )
 	/**//**
 	* Add HEADER line.  TODO: REFACTOR.  Set will do this...
 	*/
@@ -476,10 +465,6 @@ class abc_tunebase extends origin
 	function add_voice_obj( AbcVoice $voice )
 	{
 		$this->voices_obj_arr[] = $voice;
-	// Use public getters for voiceIndicator and name
-	$this->add_voice( $voice->getVoiceIndicator() );
-	$this->add_voice_name( $voice->getName() );
-		$this->add_voice_arr( $voice->getHeaderOut() );
 	}
 
 	/**//**
@@ -518,39 +503,14 @@ class abc_tunebase extends origin
 	/**//**
 	* TODO: REfactor to use array key search like above
 	*/
-	function get_voice_number( $val )
-	{
-					$this->var_dump( __FUNCTION__  . ":" . __LINE__ );
-		return array_search( $val, $this->body_voice_arr );
-	}
+	// REMOVED: function get_voice_number( $val )
 	/**//**
 	* TODO: REfactor to use array key search like above
 	*/
-	function get_voice_number_by_name( $name )
-	{
-					$this->var_dump( __FUNCTION__  . ":" . __LINE__ );
-		//$this->var_dump( $this->voice_name_arr );
-		return array_search( $name, $this->voice_name_arr );
-	}
-	function add_voice_line( string $name, string $bar, int $linenum, int $barnum )
-	{
-					$this->var_dump( __FUNCTION__  . ":" . __LINE__ . "::" . $name );
-		//$v = $this->search_voices_by_name( $indicator );
-		//$i = $v->get( 'voice_name' );
-		//$vnum = $this->get_voice_number( $i );
-		$vnum = $this->get_voice_number_by_name( $name );
-		$this->add_body( $bar, $vnum, $linenum, $barnum );
-	}
-	function add_melody( $bar,  $linenum = 1, $barnum = 1 )
-	{
-					$this->var_dump( __FUNCTION__  . ":" . __LINE__ );
-		$this->add_voice_line( "Melody", $bar,  $linenum, $barnum );
-	}
-	function add_lyrics( $bar,  $linenum = 1, $barnum = 1 )
-	{
-					$this->var_dump( __FUNCTION__  . ":" . __LINE__ );
-		$this->add_voice_line( "Lyrics", $bar,  $linenum, $barnum );
-	}
+	// REMOVED: function get_voice_number_by_name( $name )
+	// REMOVED: function add_voice_line( string $name, string $bar, int $linenum, int $barnum )
+	// REMOVED: function add_melody( $bar,  $linenum = 1, $barnum = 1 )
+	// REMOVED: function add_lyrics( $bar,  $linenum = 1, $barnum = 1 )
 	/**//************************************************
 	* How long (beats) is the bar?
 	*

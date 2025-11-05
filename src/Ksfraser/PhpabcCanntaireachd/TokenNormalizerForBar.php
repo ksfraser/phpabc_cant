@@ -2,6 +2,8 @@
 namespace Ksfraser\PhpabcCanntaireachd;
 
 use Ksfraser\PhpabcCanntaireachd\Exceptions\TokenMappingException;
+
+use Ksfraser\PhpabcCanntaireachd\Log\CanntLog;
 require_once __DIR__ . '/TokenMappingHelpers.php';
 
 class TokenNormalizerForBar {
@@ -16,8 +18,8 @@ class TokenNormalizerForBar {
                 $norms[] = TokenNormalizer::normalize($token);
             } catch (TokenMappingException $e) {
                 // Log the exception and fallback
-                $msg = sprintf("TokenNormalizerForBar: Exception for token='%s': %s\n", $token, $e->getMessage());
-                file_put_contents(__DIR__ . '/../../cannt_debug.log', $msg, FILE_APPEND);
+                $msg = sprintf("TokenNormalizerForBar: Exception for token='%s': %s", $token, $e->getMessage());
+                CanntLog::log($msg, true);
                 $norms[] = $token; // fallback to raw token
             }
         }

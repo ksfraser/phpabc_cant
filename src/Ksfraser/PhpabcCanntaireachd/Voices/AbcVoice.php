@@ -1,20 +1,3 @@
-    /**
-     * Get the voice indicator (V: field)
-     * @return string
-     */
-    public function getVoiceIndicator()
-    {
-        return $this->voiceIndicator;
-    }
-
-    /**
-     * Get the name of the voice
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
 <?php
 namespace Ksfraser\PhpabcCanntaireachd\Voices;
 
@@ -47,6 +30,10 @@ namespace Ksfraser\PhpabcCanntaireachd\Voices;
 class AbcVoice
 {
     /**
+     * @var array Bars assigned to this voice
+     */
+    public $bars = [];
+    /**
      * Get the voice indicator (V: field)
      * @return string
      */
@@ -72,6 +59,28 @@ class AbcVoice
     private int $transpose;
     private $callback;
     private ?string $clef;
+    protected array $lyricsLines = [];
+    /**
+     * Add a lyrics line to this voice.
+     * @param string $lyrics
+     */
+    public function addLyricsLine(string $lyrics): void
+    {
+        $this->lyricsLines[] = $lyrics;
+    }
+
+    /**
+     * Render all lyrics lines for this voice.
+     * @return array of strings (each a w: line)
+     */
+    public function renderLyrics(): array
+    {
+        $out = [];
+        foreach ($this->lyricsLines as $lyrics) {
+            $out[] = 'w: ' . $lyrics;
+        }
+        return $out;
+    }
 
     public function __construct(
         string $voiceIndicator,

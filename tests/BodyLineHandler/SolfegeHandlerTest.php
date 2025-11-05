@@ -21,6 +21,6 @@ class SolfegeHandlerTest extends TestCase {
             'voiceBars' => ['V1' => []]
         ];
         $handler->handle($context, 'S:do re mi');
-        $this->assertEquals('do re mi', $context['voiceBars']['V1'][1]->getSolfege());
+        $this->assertEquals('do re mi', $context['voiceBars']['V1'][1]->solfege);
     }
 }
