@@ -41,14 +41,14 @@ $abc['{g}f']['cannt'] = 'che';
 //D Gracenotes
 $abc['{d}G']['cannt'] = 'dam';
 $abc['{d}A']['cannt'] = 'dan';
-$abc['{d}B']['cannt'] = 'to';
+$abc['{d}B']['cannt'] = 'do';
 $abc['{d}c']['cannt'] = 'do';
 //E Gracenotes
 $abc['{e}G']['cannt'] = 'um';
 $abc['{e}A']['cannt'] = 'un';
-$abc['{e}B']['cannt'] = 'eo';
-$abc['{e}c']['cannt'] = 'eo';
-$abc['{e}d']['cannt'] = 'ea';
+$abc['{e}B']['cannt'] = 'uo';
+$abc['{e}c']['cannt'] = 'uo';
+$abc['{e}d']['cannt'] = 'ua';
 //A Gracenotes
 $abc['{a}G']['cannt'] = 'him';
 $abc['{a}A']['cannt'] = 'hin';
@@ -59,21 +59,21 @@ $abc['{a}e']['cannt'] = 'he';
 $abc['{a}f']['cannt'] = 'che';
 $abc['{a}g']['cannt'] = 'chi';
 //Strikes
-$abc['{G}A']['cannt'] = 'den';
-$abc['{AG}A']['cannt'] = 'den';
-$abc['{G}B']['cannt'] = 'do';
-$abc['{BG}B']['cannt'] = 'do';
-$abc['{G}c']['cannt'] = 'do';
-$abc['{cG}c']['cannt'] = 'do';
-$abc['{G}d']['cannt'] = 'emda';
-$abc['{dG}d']['cannt'] = 'emda';
-$abc['{c}d']['cannt'] = 'oda';
-$abc['{dc}d']['cannt'] = 'adoa';
-$abc['{A}e']['cannt'] = 'ende';
-$abc['{eA}e']['cannt'] = 'ende';
-$abc['{e}f']['cannt'] = 'eve';
-$abc['{fe}f']['cannt'] = 'eve';
-$abc['{f}g']['cannt'] = 'vedi';
+$abc['{G}A']['cannt'] = 'men';
+$abc['{AG}A']['cannt'] = 'men';
+$abc['{G}B']['cannt'] = 'mo';
+$abc['{BG}B']['cannt'] = 'omo';
+$abc['{G}c']['cannt'] = 'mo';
+$abc['{cG}c']['cannt'] = 'omo';
+$abc['{G}d']['cannt'] = 'ma';
+$abc['{dG}d']['cannt'] = 'ama';
+$abc['{c}d']['cannt'] = 'ora';
+$abc['{dc}d']['cannt'] = 'ara';
+$abc['{A}e']['cannt'] = 'ene';
+$abc['{eA}e']['cannt'] = 'ene';
+$abc['{e}f']['cannt'] = 'ere';
+$abc['{fe}f']['cannt'] = 'ere';
+$abc['{f}g']['cannt'] = 'redi';
 $abc['{gf}g']['cannt'] = 'chedi';
 $abc['{g}a']['cannt'] = 'li';		//strike
 $abc['{ag}a']['cannt'] = 'dili';
@@ -359,7 +359,10 @@ $abc["{ege}f"]['cannt'] = 'hedale';
 $abc["g{eae}g"]['cannt'] = 'chedere';  
 $abc["d{GeG}d"]['cannt'] = 'deda';  
 
-
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
 $abc["{aAGdG}A"]['cannt'] = 'henbain';  
 $abc["{gAGdG}A"]['cannt'] = 'henbain';  
 $abc["B{AGdG}A"]['cannt'] = 'enbain';  
