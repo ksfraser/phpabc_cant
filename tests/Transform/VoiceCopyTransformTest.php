@@ -153,7 +153,8 @@ ABC;
         $this->assertArrayHasKey('Bagpipes', $voices, 'Bagpipes voice should exist in voices array');
         
         $bagpipesVoice = $voices['Bagpipes'];
-        $this->assertEquals('Bagpipes', $bagpipesVoice->voiceIndicator ?? $bagpipesVoice->name ?? null, 'Voice indicator should be Bagpipes');
+        $this->assertTrue(method_exists($bagpipesVoice, 'getVoiceIndicator'), 'Voice should have getVoiceIndicator method');
+        $this->assertEquals('Bagpipes', $bagpipesVoice->getVoiceIndicator(), 'Voice indicator should be Bagpipes');
     }
 
     /**

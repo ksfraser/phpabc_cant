@@ -11,9 +11,26 @@ class HeaderLineHandler {
         return ($trimmed === '' || $trimmed[0] === '%' || preg_match('/^(X:|T:|M:|K:|V:)/', $trimmed));
     }
     public function parse($line, &$context) {
+        $trimmed = trim($line);
         $context['headerLines'][] = $line;
+        
+        // Handle V: voice definition lines
+        if (preg_match('/^V:([\w\-]+)/', $trimmed, $m)) {
+            $voiceId = $m[1];
+            if (!isset($context['voices'][$voiceId])) {
+                // Create appropriate voice object
+                if (strcasecmp($voiceId, 'Bagpipes') === 0 || strcasecmp($voiceId, 'Pipes') === 0 || strcasecmp($voiceId, 'P') === 0) {
+                    $context['voices'][$voiceId] = new \Ksfraser\PhpabcCanntaireachd\Voices\BagpipeVoice($voiceId, $voiceId, '');
+                } else {
+                    $context['voices'][$voiceId] = new \Ksfraser\PhpabcCanntaireachd\Voices\AbcVoice($voiceId, $voiceId, '');
+                }
+            }
+            // Set as current voice
+            $context['currentVoice'] = $voiceId;
+        }
+        
         // If K: header, mark header as done
-        if (preg_match('/^K:/', trim($line))) {
+        if (preg_match('/^K:/', $trimmed)) {
             $context['inHeader'] = false;
         }
         throw new LineHandledException();
@@ -26,20 +43,36 @@ class BarLineHandler {
         return ($trimmed !== '' && $trimmed[0] !== '%' && !preg_match('/^(X:|T:|M:|K:|V:|%%|I:|Q:|L:)/', $trimmed));
     }
     public function parse($line, &$context) {
+        $trimmed = trim($line);
+        
+        // Check for inline voice marker [V:id] at start of line
+        if (preg_match('/^\[V:([\w\-]+)\]/', $trimmed, $m)) {
+            $voiceId = $m[1];
+            if (!isset($context['voices'][$voiceId])) {
+                // Create appropriate voice object
+                if (strcasecmp($voiceId, 'Bagpipes') === 0 || strcasecmp($voiceId, 'Pipes') === 0 || strcasecmp($voiceId, 'P') === 0) {
+                    $context['voices'][$voiceId] = new \Ksfraser\PhpabcCanntaireachd\Voices\BagpipeVoice($voiceId, $voiceId, '');
+                } else {
+                    $context['voices'][$voiceId] = new \Ksfraser\PhpabcCanntaireachd\Voices\AbcVoice($voiceId, $voiceId, '');
+                }
+            }
+            $context['currentVoice'] = $voiceId;
+            // Remove the inline marker from the line for bar parsing
+            $trimmed = preg_replace('/^\[V:[\w\-]+\]\s*/', '', $trimmed);
+        }
+        
         $currentVoice = $context['currentVoice'];
         if ($currentVoice === null) {
-            // Create Bagpipes by default if not set
-            $currentVoice = 'Bagpipes';
-            if (!isset($context['voices'][$currentVoice])) {
-                $context['voices'][$currentVoice] = new \Ksfraser\PhpabcCanntaireachd\Voices\BagpipeVoice($currentVoice, 'Bagpipes', '');
-            }
-            $context['currentVoice'] = $currentVoice;
+            // Skip bars if no voice is set (shouldn't happen with proper ABC files)
+            return;
         }
-        $barTexts = preg_split('/\|/', $line);
+        
+        // Parse bars from the line
+        $barTexts = preg_split('/\|/', $trimmed);
         foreach ($barTexts as $barText) {
             $barText = trim($barText);
-            if ($barText !== '') {
-                $bar = new \Ksfraser\PhpabcCanntaireachd\AbcBar($barText, '|');
+            if ($barText !== '' && isset($context['voices'][$currentVoice])) {
+                $bar = new \Ksfraser\PhpabcCanntaireachd\Tune\AbcBar($barText, '|');
                 $context['voices'][$currentVoice]->bars[] = $bar;
             }
         }
