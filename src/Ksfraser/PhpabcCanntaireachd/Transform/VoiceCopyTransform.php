@@ -153,6 +153,10 @@ class VoiceCopyTransform implements AbcTransform
             return;
         }
 
+        // CRITICAL: Deep copy bars so Melody and Bagpipes have separate note objects
+        // This ensures canntaireachd added to Bagpipes doesn't affect Melody
+        $copiedBars = $this->deepCopyBars($melodyBars);
+
         // Create Bagpipes voice metadata
         $metadata = [
             'name' => 'Bagpipes',
@@ -162,6 +166,33 @@ class VoiceCopyTransform implements AbcTransform
         ];
 
         // Add Bagpipes voice with copied bars
-        $tune->addVoice('Bagpipes', $metadata, $melodyBars);
+        $tune->addVoice('Bagpipes', $metadata, $copiedBars);
+    }
+
+    /**
+     * Deep copy bars and their notes
+     * 
+     * @param array $bars Array of bar objects
+     * @return array Deep copied bars
+     */
+    private function deepCopyBars(array $bars): array
+    {
+        $copiedBars = [];
+        foreach ($bars as $bar) {
+            // Use clone to create a shallow copy of the bar object
+            $copiedBar = clone $bar;
+            
+            // Deep copy the notes array
+            if (isset($bar->notes) && is_array($bar->notes)) {
+                $copiedBar->notes = [];
+                foreach ($bar->notes as $note) {
+                    // Clone each note to create separate object
+                    $copiedBar->notes[] = clone $note;
+                }
+            }
+            
+            $copiedBars[] = $copiedBar;
+        }
+        return $copiedBars;
     }
 }
