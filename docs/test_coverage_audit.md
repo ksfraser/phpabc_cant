@@ -1,15 +1,25 @@
 # Unit Test Coverage Audit Report
 
+**Updated**: 2025-11-16  
+**Previous Audit**: (earlier date)  
+**Purpose**: Pre-refactor test coverage assessment for object-based architecture migration  
+
 ## Executive Summary
-This audit examines the test coverage for the PHPABC Canntaireachd system. The analysis reveals good coverage for core functionality but identifies several gaps, particularly for newer classes and complex subsystems.
+
+This audit examines the test coverage for the PHPABC Canntaireachd system prior to the major refactor from text-based to object-based pipeline architecture. The analysis reveals extensive test coverage (125 test files) for parsers, renderers, and formatters, but identifies critical gaps for the new transform architecture.
 
 ## Coverage Statistics
 
 ### Overall Coverage
 - **Total Source Classes**: ~120+ PHP classes across the codebase
-- **Test Files**: 30 test files in `/tests` directory
-- **Estimated Coverage**: 70-75% of classes have corresponding tests
-- **Critical Gaps**: Several key classes lack dedicated unit tests
+- **Test Files**: **125** test files in `/tests` directory (significant increase!)
+- **Estimated Coverage**: **~60%** of critical path (unable to generate actual report - see blocker below)
+- **Critical Gaps**: Transform interface, object-based pipeline, voice copying, integration tests
+
+### Coverage Blocker
+❌ **CRITICAL**: Cannot generate code coverage report  
+**Issue**: PHPUnit requires mbstring extension, but mbstring is not enabled  
+**Resolution**: Enable in `php.ini`: `extension=mbstring`
 
 ## Detailed Coverage Analysis
 

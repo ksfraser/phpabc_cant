@@ -162,6 +162,35 @@ class AbcTune extends AbcItem {
         }
         return $result;
     }
+    
+    /**
+     * Add a voice with metadata and bars
+     * @param string $voiceId Voice identifier
+     * @param array $metadata Voice metadata (name, sname, etc.)
+     * @param array $bars Array of bar objects
+     */
+    public function addVoice(string $voiceId, array $metadata, array $bars): void {
+        $this->voices[$voiceId] = $metadata;
+        $this->voiceBars[$voiceId] = $bars;
+    }
+    
+    /**
+     * Get bars for a specific voice by ID
+     * @param string $voiceId Voice identifier
+     * @return array|null Array of bars or null if voice doesn't exist
+     */
+    public function getBarsForVoice(string $voiceId): ?array {
+        return $this->voiceBars[$voiceId] ?? null;
+    }
+    
+    /**
+     * Check if a voice exists
+     * @param string $voiceId Voice identifier
+     * @return bool True if voice exists
+     */
+    public function hasVoice(string $voiceId): bool {
+        return isset($this->voices[$voiceId]) || isset($this->voiceBars[$voiceId]);
+    }
     /**
      * Parse a block of ABC text into an AbcTune object (recursive descent entry point).
      * @param string $abcText

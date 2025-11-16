@@ -26,120 +26,6 @@ class AbcCanntaireachdPassTest extends TestCase
         $this->assertInstanceOf(AbcCanntaireachdPass::class, $this->pass);
     }
 
-<<<<<<< HEAD
-    public function testProcessEmptyLines()
-    {
-        $result = $this->pass->process([]);
-        $this->assertIsArray($result);
-        $this->assertArrayHasKey('lines', $result);
-        $this->assertArrayHasKey('canntDiff', $result);
-        $this->assertEmpty($result['lines']);
-        $this->assertIsArray($result['canntDiff']);
-    }
-
-    public function testProcessNonBagpipeVoices()
-    {
-        $lines = [
-            'X:1',
-            'T:Test Tune',
-            'V:Flute',
-            'A B C D',
-            'V:Drums',
-            'A B C D'
-        ];
-
-        $result = $this->pass->process($lines);
-
-        // Should not add any w: lines since no Bagpipes voice
-        $this->assertCount(6, $result['lines']);
-        foreach ($result['lines'] as $line) {
-            $this->assertStringStartsNotWith('w:', trim($line));
-        }
-    }
-
-    public function testProcessBagpipeVoiceWithExistingLyrics()
-    {
-        $lines = [
-            'X:1',
-            'T:Test Tune',
-            'V:Bagpipes',
-            'w: existing lyrics',
-            'A B C D'
-        ];
-
-        $result = $this->pass->process($lines);
-
-        // Should preserve existing lyrics and not generate new ones
-        $this->assertCount(6, $result['lines']);
-        $this->assertEquals('w: existing lyrics', $result['lines'][3]);
-        $this->assertEquals('A B C D', $result['lines'][4]);
-        $this->assertEquals('w: dar dod hid dar', $result['lines'][5]);
-    }
-
-    public function testProcessBagpipeVoiceWithoutLyrics()
-    {
-        $lines = [
-            'X:1',
-            'T:Test Tune',
-            'V:Bagpipes',
-            'A B C D'
-        ];
-
-        $result = $this->pass->process($lines);
-
-        // Should add w: line with generated canntaireachd
-        $this->assertCount(5, $result['lines']);
-        $this->assertEquals('V:Bagpipes', $result['lines'][2]);
-        $this->assertEquals('A B C D', $result['lines'][3]);
-        $this->assertEquals('w: dar dod hid dar', $result['lines'][4]);
-    }
-
-    public function testProcessMultipleVoicesWithBagpipes()
-    {
-        $lines = [
-            'X:1',
-            'T:Test Tune',
-            'V:Flute',
-            'A B C D',
-            'V:Bagpipes',
-            'A B C D',
-            'V:Drums',
-            'A B C D'
-        ];
-
-        $result = $this->pass->process($lines);
-
-    // Should add w: line only for Bagpipes voice
-    $this->assertCount(9, $result['lines']);
-    $this->assertEquals('V:Flute', $result['lines'][2]);
-    $this->assertEquals('A B C D', $result['lines'][3]);
-    $this->assertEquals('V:Bagpipes', $result['lines'][4]);
-    $this->assertEquals('A B C D', $result['lines'][5]);
-    $this->assertEquals('w: dar dod hid dar', $result['lines'][6]);
-    $this->assertEquals('V:Drums', $result['lines'][7]);
-    $this->assertEquals('A B C D', $result['lines'][8]);
-    }
-
-    public function testProcessBagpipeVoiceWithTimingErrors()
-    {
-        $lines = [
-            'X:1',
-            'T:Test Tune',
-            'V:Bagpipes',
-            'A B C D | A B |TIMING ERROR|'
-        ];
-
-        $result = $this->pass->process($lines);
-
-    // Should not add w: line for timing error lines
-    $this->assertCount(5, $result['lines']);
-    $this->assertEquals('V:Bagpipes', $result['lines'][2]);
-    $this->assertEquals('A B C D | A B |TIMING ERROR|', $result['lines'][3]);
-    $this->assertStringStartsWith('w: ', $result['lines'][4]);
-    }
-
-=======
->>>>>>> 4113fb97ff103f0af8d41462ff6994831d290ccf
     public function testProcessCommentsAndEmptyLines()
     {
     $abcText = "X:1\nT:Test Tune\nV:Bagpipes\nK:HP\n% This is a comment\n\nA B C D";
@@ -170,30 +56,6 @@ class AbcCanntaireachdPassTest extends TestCase
 
     public function testProcessMultipleTunes()
     {
-<<<<<<< HEAD
-        $lines = [
-            'X:1',
-            'T:First Tune',
-            'V:Bagpipes',
-            'A B C D',
-            '',
-            'X:2',
-            'T:Second Tune',
-            'V:Bagpipes',
-            'D C B A'
-        ];
-
-        $result = $this->pass->process($lines);
-
-    // Should add w: lines for both tunes
-    $this->assertCount(11, $result['lines']);
-    // First tune
-    $this->assertEquals('A B C D', $result['lines'][3]);
-    $this->assertEquals('w: dar dod hid dar', $result['lines'][4]);
-    // Second tune
-    $this->assertEquals('D C B A', $result['lines'][9]);
-    $this->assertEquals('w: dar hid dod dar', $result['lines'][10]);
-=======
     $abcText = "X:1\nT:First Tune\nV:Bagpipes\nK:HP\nA B C D\n\nX:2\nT:Second Tune\nV:Bagpipes\nK:HP\nD C B A";
         $tuneClass = \Ksfraser\PhpabcCanntaireachd\Tune\AbcTune::class;
         $tune = $tuneClass::parse($abcText);
@@ -216,7 +78,6 @@ class AbcCanntaireachdPassTest extends TestCase
         fwrite(STDERR, "Found canntaireachd: ".print_r($canntaireachd, true));
         // First tune: A B C D, Second tune: D C B A
         $this->assertEquals(['dar','dod','hid','dar','dar','hid','dod','dar'], $canntaireachd);
->>>>>>> 4113fb97ff103f0af8d41462ff6994831d290ccf
     }
 
 

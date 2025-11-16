@@ -10903,3 +10903,10 @@ TEST DEBUG
 TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd START
 Decorator value: '!trill!'
 >>>>>>> 4113fb97ff103f0af8d41462ff6994831d290ccf
+TEST DEBUG
+TEST DEBUG
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd START
+Decorator value: '!trill!'
+TEST DEBUG
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd START
+Decorator value: '!trill!'

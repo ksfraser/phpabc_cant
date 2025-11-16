@@ -98,9 +98,12 @@ class AbcCanntaireachdPass {
             } elseif (preg_match('/^\[V:([^\]]+)\]/', $trimmed, $matches)) {
                 // Handle inline voice markers like [V:M]
                 $currentVoice = $matches[1];
+                error_log("AbcCanntaireachdPass: Found inline voice marker [V:$currentVoice]");
                 $translatedOutput[] = $line;
                 if ($this->shouldAddCanntaireachd($currentVoice)) {
+                    error_log("AbcCanntaireachdPass: shouldAddCanntaireachd returned TRUE for $currentVoice");
                     $canntText = $generator->generateForNotes($line);
+                    error_log("AbcCanntaireachdPass: generated canntText: '$canntText'");
                     if ($canntText && $canntText !== '[?]') {
                         $translatedOutput[] = 'w: ' . $canntText;
                         $canntDiff[] = [
@@ -108,6 +111,8 @@ class AbcCanntaireachdPass {
                             'generated' => $canntText
                         ];
                     }
+                } else {
+                    error_log("AbcCanntaireachdPass: shouldAddCanntaireachd returned FALSE for $currentVoice");
                 }
             } elseif ($this->isMusicLine($line) && $this->shouldAddCanntaireachd($currentVoice)) {
                 $translatedOutput[] = $line;
@@ -139,8 +144,9 @@ class AbcCanntaireachdPass {
             return false;
         }
         $voiceLower = strtolower($voice);
-        // Check for bagpipe/melody voices: Bagpipes, Pipes, P, M, Melody
-        return in_array($voiceLower, ['bagpipes', 'pipes', 'bagpipe', 'p', 'm', 'melody']);
+        // Only add canntaireachd to Bagpipes voices, not Melody
+        // Match "Bagpipes", "Bagpipe", "Pipes", or "Pipe" but not just "P"
+        return in_array($voiceLower, ['bagpipes', 'pipes', 'bagpipe', 'pipe']);
     }
     
     // Lyrics generation now handled by LyricsGenerator class

@@ -802,3 +802,53 @@ generateForNotes input: [V:M]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag
 generateForNotes output: ho a he o | che a he o | ho a he o | dili ve hete |
 generateForNotes input: [V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |]
 generateForNotes output: hen o ho e  | ho en ho do | hen o ho e  | ho do men |
+generateForNotes input: [V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: hen o ho e  | ho en ho do | hen o ho e  | ho do men |
+generateForNotes input: [V:M]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: ho a he o | che a he o | ho a he o | dili ve hete |
+generateForNotes input: [V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |]
+generateForNotes output: hen o ho e  | ho en ho do | hen o ho e  | ho do men |
+generateForNotes input: {g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: hen o ho e  | ho en ho do | hen o ho e  | ho do men |
+generateForNotes input: {g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: ho a he o | che a he o | ho a he o | dili ve hete |
+generateForNotes input: {g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |]
+generateForNotes output: hen o ho e  | ho en ho do | hen o ho e  | ho do men |
+generateForNotes input: {g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: hen o ho e  | ho en ho do | hen o ho e  | ho do men |
+generateForNotes input: {g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: ho a he o | che a he o | ho a he o | dili ve hete |
+generateForNotes input: {g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |]
+generateForNotes output: hen o ho e  | ho en ho do | hen o ho e  | ho do men |
+generateForNotes input: A X B
+generateForNotes output: en o
+generateForNotes input: z Z
+generateForNotes output: 
+generateForNotes input: A, A B' C##
+generateForNotes output: en en o o
+generateForNotes input: A B C
+generateForNotes output: en o o
+generateForNotes input: A B C |TIMING ERROR|
+generateForNotes output: en o o | em |
+generateForNotes input: [V:Bagpipes]A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B C DA2 B2A B
+generateForNotes output: en o en o en o
+generateForNotes input: A B C DA2 B2A B
+generateForNotes output: en o en o en o
+generateForNotes input: A X B
+generateForNotes output: en o
+generateForNotes input: z Z
+generateForNotes output: 
+generateForNotes input: A, A B' C##
+generateForNotes output: en en o o
+generateForNotes input: A B C
+generateForNotes output: en o o
+generateForNotes input: A B C |TIMING ERROR|
+generateForNotes output: en o o | em |
+generateForNotes input: [V:Bagpipes]A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B C DA2 B2A B
+generateForNotes output: en o en o en o
+generateForNotes input: A B C DA2 B2A B
+generateForNotes output: en o en o en o

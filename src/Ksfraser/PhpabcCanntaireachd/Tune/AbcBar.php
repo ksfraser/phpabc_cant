@@ -218,4 +218,4 @@ class AbcBar extends \Ksfraser\PhpabcCanntaireachd\AbcItem implements Renderable
     {
         return $this->notes;
     }
-
+}

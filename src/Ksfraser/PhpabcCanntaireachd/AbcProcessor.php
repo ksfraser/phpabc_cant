@@ -12,11 +12,26 @@ class AbcProcessor {
      * @return array
      */
     public static function detectVoices($lines) {
-        // TODO: Implement real voice detection logic if needed
-        if (is_array($lines)) {
-            return $lines;
+        $hasMelody = false;
+        $hasBagpipes = false;
+        
+        foreach ($lines as $line) {
+            $trimmed = trim($line);
+            // Check for standalone V: headers
+            if (preg_match('/^V:\s*([Mm]|[Mm]elody)\b/i', $trimmed)) {
+                $hasMelody = true;
+            } elseif (preg_match('/^V:\s*([Bb]agpipes?|[Pp]ipes?|[Pp])\b/i', $trimmed)) {
+                $hasBagpipes = true;
+            }
+            // Check for inline voice markers
+            if (preg_match('/^\[V:([Mm]|[Mm]elody)\]/i', $trimmed)) {
+                $hasMelody = true;
+            } elseif (preg_match('/^\[V:([Bb]agpipes?|[Pp]ipes?|[Pp])\]/i', $trimmed)) {
+                $hasBagpipes = true;
+            }
         }
-        return [];
+        
+        return [$hasMelody, $hasBagpipes];
     }
     /**
      * Public static process method for integration and edge-case tests.
@@ -112,41 +127,68 @@ class AbcProcessor {
      */
     public static function copyMelodyToBagpipes($lines, $hasMelody, $hasBagpipes) {
         FlowLog::log('AbcProcessor::copyMelodyToBagpipes called', true);
-        // Simple line-based melody copying
+        // Create a separate Bagpipes voice with copied melody
         if (!$hasMelody || $hasBagpipes) {
             // No melody to copy, or bagpipes already exists
             return $lines;
         }
         
-        $output = [];
-        $melodyLines = [];
+        $melodyMusicLines = [];
+        $insertBeforeIndex = -1;
         $inMelodyVoice = false;
         
-        foreach ($lines as $line) {
+        // Find melody lines and position to insert Bagpipes
+        foreach ($lines as $idx => $line) {
             $trimmed = trim($line);
             
-            // Detect voice changes
-            if (preg_match('/^V:\s*([Mm]|[Mm]elody)/i', $trimmed)) {
+            // Track V:M or V:Melody headers
+            if (preg_match('/^V:\s*([Mm]|[Mm]elody)\b/i', $trimmed)) {
                 $inMelodyVoice = true;
-                $output[] = $line;
-                // Add Bagpipes voice header after Melody
-                $output[] = 'V:Bagpipes name="Bagpipes" sname="Bagpipes"';
                 continue;
             } elseif (preg_match('/^V:/i', $trimmed)) {
                 $inMelodyVoice = false;
+                continue;
             }
             
-            // Copy melody music lines to bagpipes
+            // Handle inline [V:M] markers with music
+            if (preg_match('/^\[V:([Mm]|[Mm]elody)\](.*)/i', $trimmed, $matches)) {
+                $inMelodyVoice = true;
+                if ($insertBeforeIndex === -1) {
+                    $insertBeforeIndex = $idx; // Insert Bagpipes section before first [V:M] line
+                }
+                // Extract music (everything after the marker)
+                if (!empty($matches[2])) {
+                    $melodyMusicLines[] = $matches[2];
+                }
+                continue;
+            } elseif (preg_match('/^\[V:/i', $trimmed)) {
+                $inMelodyVoice = false;
+                continue;
+            }
+            
+            // Collect music lines that belong to melody voice
             if ($inMelodyVoice && $trimmed !== '' && !preg_match('/^[A-Z%]:/i', $trimmed)) {
-                $melodyLines[] = $line;
-                $output[] = $line; // Add to bagpipes voice
-            } else {
-                $output[] = $line;
+                if ($insertBeforeIndex === -1) {
+                    $insertBeforeIndex = $idx;
+                }
+                $melodyMusicLines[] = $line;
             }
         }
         
+        // If we found melody music, insert V:Bagpipes section
+        if (!empty($melodyMusicLines) && $insertBeforeIndex >= 0) {
+            $bagpipesSection = [];
+            $bagpipesSection[] = 'V:Bagpipes name="Bagpipes" sname="Bagpipes"';
+            foreach ($melodyMusicLines as $musicLine) {
+                $bagpipesSection[] = $musicLine;
+            }
+            
+            // Insert before the first melody music line
+            array_splice($lines, $insertBeforeIndex, 0, $bagpipesSection);
+        }
+        
         FlowLog::log('AbcProcessor::copyMelodyToBagpipes: copied melody to Bagpipes voice', true);
-        return $output;
+        return $lines;
     }
 
     /**
