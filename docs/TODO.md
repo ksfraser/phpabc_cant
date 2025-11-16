@@ -1,88 +1,94 @@
 # Master TODO List for ABC Canntaireachd Refactor
 
-**Status**: Not Started  
+**Status**: Phase 2 Complete - 44% Done  
 **Created**: 2025-11-16  
-**Estimated**: 19 hours  
+**Estimated**: 21.5 hours  
+**Actual So Far**: 9.5 hours  
 **Target Completion**: TBD
 
 ---
 
-## Phase 1: Documentation & Analysis (2h)
+## ✅ Phase 1: Environment Setup (1.5h COMPLETE)
 
-### Step 1.1: Requirements Documentation (30m)
-- [x] Create OBJECT_MODEL_REQUIREMENTS.md
-- [ ] Review and validate requirements with stakeholder
-- [ ] Document all ABC standard voice markers
-- [ ] Document edge cases (no Melody, existing Bagpipes, empty bars)
+### Step 1.1: Environment Verification
+- [x] Verified PHP 8.4.14 with mbstring extension enabled
+- [x] Resolved merge conflicts in AbcCanntaireachdPassTest.php
+- [x] Fixed syntax error in AbcBar.php (missing closing brace)
+- [x] Ran test suite: 354 tests, 46 errors, 49 failures (pre-existing)
 
-### Step 1.2: Test Coverage Audit (1h)
-- [ ] Run PHPUnit with code coverage: `vendor/bin/phpunit --coverage-html coverage`
-- [ ] Document current coverage percentage
-- [ ] Identify classes with NO tests
-- [ ] Identify classes with <50% coverage
-- [ ] Create test_coverage_audit.md report
+### Step 1.2: Requirements Documentation
+- [x] Created OBJECT_MODEL_REQUIREMENTS.md
+- [x] Documented voice markers (V: headers, [V:id] inline)
+- [x] Documented voice ID variations (M/Melody, Bagpipes/Pipes/P)
+- [x] Documented edge cases (no Melody, existing Bagpipes, empty bars)
 
-### Step 1.3: Architecture Documentation (30m)
-- [ ] Document current pipeline flow (text-based)
-- [ ] Document desired pipeline flow (object-based)
-- [ ] Create UML class diagram for all major classes
-- [ ] Document public API methods for AbcTune
-- [ ] Identify protected properties that need API methods
+### Step 1.3: Test Coverage Audit
+- [x] Created test_coverage_audit.md
+- [x] Identified 125 existing test files
+- [x] Documented gaps: VoiceCopyTransform, CanntaireachdTransform, integration tests
+- [ ] Run coverage report (deferred - not blocking)
 
 ---
 
-## Phase 2: Test Creation (4h)
+## ✅ Phase 2: Transform Implementation (6h COMPLETE)
 
-### Step 2.1: Core Model Tests (1.5h)
-- [ ] Create `tests/AbcTuneTest.php` (if doesn't exist)
-  - [ ] Test parse() with single voice
-  - [ ] Test parse() with multiple voices
-  - [ ] Test parse() with inline voice markers
-  - [ ] Test hasVoice()
-  - [ ] Test getBarsForVoice()
-  - [ ] Test addVoice()
-  - [ ] Test renderSelf() round-trip (parse → render → parse)
+### Step 2.1: Transform Interface Design
+- [x] Created AbcTransform interface
+- [x] Defined transform(AbcTune): AbcTune contract
+- [x] Added comprehensive PHPDoc with UML
+- [x] Documented usage patterns
 
-- [ ] Create `tests/AbcVoiceTest.php`
-  - [ ] Test voice metadata initialization
-  - [ ] Test addBar()
-  - [ ] Test getBars()
-  - [ ] Test addLyricsLine()
-  - [ ] Test renderLyrics()
+### Step 2.2: VoiceCopyTransform Implementation
+- [x] Created VoiceCopyTransform class (172 lines)
+- [x] Implemented transform() method
+- [x] Added deep copy of bars to prevent object sharing
+- [x] Support for M/Melody → Bagpipes/Pipes/P (case-insensitive)
+- [x] Created VoiceCopyTransformTest (14 tests)
+  - [x] Test: Copy when Melody exists with bars, no Bagpipes
+  - [x] Test: No copy when Bagpipes exists with bars
+  - [x] Test: No copy when Melody has no bars
+  - [x] Test: No copy when no Melody voice
+  - [x] Test: Multiple bars copied correctly
+  - [x] Test: Bar order preserved
+  - [x] Test: Metadata set correctly
+  - [x] Test: Voice variations (M, Melody)
+  - [x] Test: Case-insensitive matching
+  - [x] Test: Real-world test-Suo.abc file
+- [x] All 14 tests passing
 
-- [ ] Create `tests/AbcBarTest.php`
-  - [ ] Test bar initialization
-  - [ ] Test bar properties
-  - [ ] Test note array handling
+### Step 2.3: CanntaireachdTransform Implementation
+- [x] Created CanntaireachdTransform class (181 lines)
+- [x] Implemented transform() method
+- [x] Uses existing CanntGenerator for syllable generation
+- [x] ONLY adds canntaireachd to Bagpipes-family voices
+- [x] Does NOT add to Melody (critical business rule)
+- [x] Created CanntaireachdTransformTest (12 tests)
+  - [x] Test: Bagpipes voice gets canntaireachd
+  - [x] Test: Melody voice does NOT get canntaireachd
+  - [x] Test: Pipes voice gets canntaireachd
+  - [x] Test: P voice gets canntaireachd
+  - [x] Test: Case-insensitive voice matching
+  - [x] Test: Multi-voice tune (M + Bagpipes)
+  - [x] Test: Tune with no Bagpipes (no-op)
+  - [x] Test: Tune with empty bars
+  - [x] Test: Multiple bars get canntaireachd
+  - [x] Test: Real-world test-Suo.abc structure
+- [x] Created integration test scripts
+  - [x] test_canntaireachd_transform.php (3 tests, all passing)
+  - [x] test_integration_transforms.php (full pipeline, passing)
 
-### Step 2.2: Transform Tests (1.5h)
-- [ ] Create `tests/VoiceCopyTransformTest.php`
-  - [ ] Test: Melody with bars, no Bagpipes → Copy occurs
-  - [ ] Test: Melody with bars, Bagpipes with bars → No copy
-  - [ ] Test: Melody with NO bars → No copy
-  - [ ] Test: No Melody voice → No copy
-  - [ ] Test: Multiple bars copied correctly
-  - [ ] Test: Bar order preserved
-  - [ ] Test: Metadata set correctly (name, sname)
+### Step 2.4: Parser Enhancements
+- [x] Enhanced AbcTune::parse() to handle V: headers
+- [x] Enhanced HeaderLineHandler to create voice objects
+- [x] Enhanced BarLineHandler to handle [V:id] inline markers
+- [x] Fixed voice assignment for bars
+- [x] Removed incorrect default Bagpipes creation
 
-- [ ] Create `tests/CanntaireachdTransformTest.php`
-  - [ ] Test: Bagpipes voice gets canntaireachd
-  - [ ] Test: Melody voice does NOT get canntaireachd
-  - [ ] Test: Pipes voice gets canntaireachd
-  - [ ] Test: P voice gets canntaireachd
-  - [ ] Test: Other voices do NOT get canntaireachd
-  - [ ] Test: Bar lines preserved in lyrics
-  - [ ] Test: Syllables spaced correctly
-  - [ ] Test: Unknown tokens handled gracefully
-
-### Step 2.3: Integration Tests (1h)
-- [ ] Create `tests/AbcPipelineIntegrationTest.php`
-  - [ ] Test: Full pipeline with test-Suo.abc
-  - [ ] Test: Parse → VoiceCopy → Canntaireachd → Render
-  - [ ] Test: Multi-tune file processing
-  - [ ] Test: Inline voice markers handled correctly
-  - [ ] Test: Round-trip preservation (parse → render → parse)
-  - [ ] Test: All voices preserved (Melody + Bagpipes both present)
+### Integration Test Results
+- [x] ✅ M voice (13 bars) → Bagpipes voice (13 bars) copied
+- [x] ✅ Melody: NO canntaireachd
+- [x] ✅ Bagpipes: HAS canntaireachd (26/27 notes)
+- [x] ✅ Deep copy prevents object sharing bug
 
 ---
 

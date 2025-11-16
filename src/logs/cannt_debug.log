@@ -4125,3 +4125,29 @@
 [DEBUG][2025-11-16 22:47:52] generateForNotes input: {g}A3B {g}ce3
 [DEBUG][2025-11-16 22:47:52] generateForNotes input: {g}B2 {d}c {G}A4
 [DEBUG][2025-11-16 22:47:52] generateForNotes input: ]
+[DEBUG][2025-11-16 22:54:43] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-16 22:54:43] generateForNotes input: {g}B3A {g}c{d}B3
+[DEBUG][2025-11-16 22:54:43] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-16 22:54:43] generateForNotes input: {g}B2 {d}c {G}A4
+[DEBUG][2025-11-16 22:54:43] generateForNotes input: {g}c3d {g}ec3
+[DEBUG][2025-11-16 22:54:43] generateForNotes input: {g}f3d {g}ec3
+[DEBUG][2025-11-16 22:54:43] generateForNotes input: {g}c3d {g}ec3
+[DEBUG][2025-11-16 22:54:43] generateForNotes input: {ag}a2f2 {gef}e4
+[DEBUG][2025-11-16 22:54:43] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-16 22:54:43] generateForNotes input: {g}B3A {g}c{d}B3
+[DEBUG][2025-11-16 22:54:43] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-16 22:54:43] generateForNotes input: {g}B2 {d}c {G}A4
+[DEBUG][2025-11-16 22:54:43] generateForNotes input: ]
+[DEBUG][2025-11-16 22:54:59] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-16 22:54:59] generateForNotes input: {g}B3A {g}c{d}B3
+[DEBUG][2025-11-16 22:54:59] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-16 22:54:59] generateForNotes input: {g}B2 {d}c {G}A4
+[DEBUG][2025-11-16 22:54:59] generateForNotes input: {g}c3d {g}ec3
+[DEBUG][2025-11-16 22:54:59] generateForNotes input: {g}f3d {g}ec3
+[DEBUG][2025-11-16 22:54:59] generateForNotes input: {g}c3d {g}ec3
+[DEBUG][2025-11-16 22:54:59] generateForNotes input: {ag}a2f2 {gef}e4
+[DEBUG][2025-11-16 22:54:59] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-16 22:54:59] generateForNotes input: {g}B3A {g}c{d}B3
+[DEBUG][2025-11-16 22:54:59] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-16 22:54:59] generateForNotes input: {g}B2 {d}c {G}A4
+[DEBUG][2025-11-16 22:54:59] generateForNotes input: ]
