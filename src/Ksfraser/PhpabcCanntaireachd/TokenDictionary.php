@@ -83,14 +83,15 @@ class TokenDictionary
                 error_log("Warning: TokenDictionary prepopulate received non-array row for key '$abc': " . var_export($row, true));
                 continue;
             }
+            $canntToken = $row['cannt'] ?? ($row['cannt_token'] ?? null);
             $this->tokens[$abc] = [
                 'abc_token' => $abc,
-                'cannt_token' => $row['cannt'] ?? null,
-                'bmw_token' => $row['bmw'] ?? null,
-                'description' => $row['description'] ?? null,
+                'cannt_token' => $canntToken,
+                'bmw_token' => $row['bmw'] ?? ($row['bmw_token'] ?? null),
+                'description' => $row['desc'] ?? ($row['description'] ?? null),
             ];
-            if ($row['cannt_token']) {
-                $this->trie->addToken($abc, $row['cannt_token']);
+            if ($canntToken) {
+                $this->trie->addToken($abc, $canntToken);
             }
         }
     }

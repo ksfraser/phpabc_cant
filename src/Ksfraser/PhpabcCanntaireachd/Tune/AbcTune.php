@@ -294,8 +294,18 @@ class AbcTune extends AbcItem {
         }
         // Render voice headers (V: lines)
         foreach ($this->voices as $voiceId => $meta) {
-            $name = $meta['name'] ?? $voiceId;
-            $sname = $meta['sname'] ?? $name;
+            // Handle both array format and Voice object format
+            if (is_array($meta)) {
+                $name = $meta['name'] ?? $voiceId;
+                $sname = $meta['sname'] ?? $name;
+            } elseif (is_object($meta) && method_exists($meta, 'getName')) {
+                $name = $meta->getName() ?? $voiceId;
+                // Voice objects don't expose sname via getter, use name as fallback
+                $sname = $name;
+            } else {
+                $name = $voiceId;
+                $sname = $voiceId;
+            }
             $out .= "V:$voiceId name=\"$name\" sname=\"$sname\"\n";
         }
         // Render any other headers not in headerOrder

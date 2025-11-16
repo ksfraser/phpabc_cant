@@ -41,6 +41,7 @@ class AbcProcessor {
         $passes = [
             new \Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass(),
             new \Ksfraser\PhpabcCanntaireachd\AbcLyricsPass($dictObj),
+            new \Ksfraser\PhpabcCanntaireachd\AbcVoicePass(), // Copy melody to Bagpipes if needed
             new \Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass($dictObj),
             new \Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass(),
             new \Ksfraser\PhpabcCanntaireachd\AbcTimingValidator(),
@@ -118,7 +119,7 @@ class AbcProcessor {
             FlowLog::log('AbcProcessor::copyMelodyToBagpipes: failed to parse AbcTune', true);
             return $lines;
         }
-    $svc = new \Ksfraser\PhpabcCanntaireachd\TuneService(new \Ksfraser\PhpabcCanntaireachd\CanntGenerator());
+        $svc = new \Ksfraser\PhpabcCanntaireachd\TuneService(new \Ksfraser\PhpabcCanntaireachd\CanntGenerator(null));
         $svc->ensureBagpipeVoice($tune);
         // Return the tune as lines, but fallback to original if output is empty
         $rendered = $tune->renderSelf();

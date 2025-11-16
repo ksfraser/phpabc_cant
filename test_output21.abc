@@ -1,0 +1,16 @@
+X: 744060
+T: Suo Gan (Bagpipe Test)
+M: 4/4
+L: 1/8
+K: HP
+V: Bagpipes
+[V:Bagpipes]{g}A3B {g}ce3| {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+w: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+[V:Bagpipes]{g}c3d {g}ec3| {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+w: [{g}c][3][d][{g}e][c][3][|][{g}f][3][d][{g}e][c][3][|][{g}c][3][d][{g}e][c][3][|][{ag}a][2][f][2][{gef}e][4][|]
+[V:Bagpipes]{g}A3B {g}ce3| {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+w: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+%expected cannt:
+%hen o ho e | ho en ho do | hen o ho e | ho do den |
+%ho a he o | che a he o | ho a he o | dili ve hete |
+%hen o ho e | ho en ho do | hen o ho e | ho do den |

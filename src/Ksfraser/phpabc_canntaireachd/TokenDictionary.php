@@ -18,9 +18,9 @@ class TokenDictionary
         foreach ($dict as $abc => $row) {
             $this->tokens[$abc] = [
                 'abc_token' => $abc,
-                'cannt_token' => $row['cannt_token'] ?? null,
-                'bmw_token' => $row['bmw_token'] ?? null,
-                'description' => $row['description'] ?? null,
+                'cannt_token' => $row['cannt'] ?? ($row['cannt_token'] ?? null),
+                'bmw_token' => $row['bmw'] ?? ($row['bmw_token'] ?? null),
+                'description' => $row['desc'] ?? ($row['description'] ?? null),
             ];
         }
     }

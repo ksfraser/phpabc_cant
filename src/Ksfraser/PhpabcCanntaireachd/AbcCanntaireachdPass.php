@@ -94,7 +94,7 @@ class AbcCanntaireachdPass {
             if (preg_match('/^V:([^\s]+)/', trim($line), $matches)) {
                 $currentVoice = $matches[1];
                 $translatedOutput[] = $line;
-            } elseif ($this->isMusicLine($line) && $currentVoice === 'Bagpipes') {
+            } elseif ($this->isMusicLine($line) && $this->shouldAddCanntaireachd($currentVoice)) {
                 $translatedOutput[] = $line;
                 error_log("AbcCanntaireachdPass processing line: '$line'");
                 $canntText = $generator->generateForNotes($line);
@@ -112,6 +112,20 @@ class AbcCanntaireachdPass {
         }
         
         return ['lines' => $translatedOutput, 'canntDiff' => $canntDiff];
+    }
+    
+    /**
+     * Determines if canntaireachd should be added for this voice.
+     * @param string|null $voice The voice ID
+     * @return bool True if canntaireachd should be added
+     */
+    private function shouldAddCanntaireachd($voice): bool {
+        if (!$voice) {
+            return false;
+        }
+        $voiceLower = strtolower($voice);
+        // Check for bagpipe/melody voices: Bagpipes, Pipes, P, M, Melody
+        return in_array($voiceLower, ['bagpipes', 'pipes', 'bagpipe', 'p', 'm', 'melody']);
     }
     
     // Lyrics generation now handled by LyricsGenerator class
@@ -192,6 +206,15 @@ class CanntGenerator {
         while (strlen($input) > 0) {
             $matched = false;
             
+            // Skip bar lines and whitespace
+            if (preg_match("/^[\s|]+/", $input, $m)) {
+                if (strpos($m[0], '|') !== false) {
+                    $result .= ' | '; // Add bar line with spaces
+                }
+                $input = substr($input, strlen($m[0]));
+                continue;
+            }
+            
             // First try regex parsing for complex ABC notes
             if (preg_match("/^([_=^]?)([a-gA-GzZ])([,']*)([0-9]+\/?[0-9]*|\/{1,}|)/", $input, $m)) {
                 $noteStr = $m[0];
@@ -199,6 +222,9 @@ class CanntGenerator {
                 // Look up the base note in the dictionary
                 $canntToken = $this->dict->convertAbcToCannt($baseNote);
                 if ($canntToken !== null) {
+                    if ($result !== '' && !preg_match('/[\s|]$/', $result)) {
+                        $result .= ' '; // Add space before syllable
+                    }
                     $result .= $canntToken;
                     $input = substr($input, strlen($noteStr));
                     $matched = true;
@@ -214,6 +240,9 @@ class CanntGenerator {
                         // Found a match, convert to canntaireachd
                         $canntToken = $this->dict->convertAbcToCannt($key);
                         if ($canntToken !== null) {
+                            if ($result !== '' && !preg_match('/[\s|]$/', $result)) {
+                                $result .= ' '; // Add space before syllable
+                            }
                             $result .= $canntToken;
                             error_log("Matched '$key' -> '$canntToken'");
                         } else {
@@ -228,15 +257,10 @@ class CanntGenerator {
             }
             
             if (!$matched) {
-                // Skip unknown character
-                $char = substr($input, 0, 1);
-                $result .= '[' . $char . ']';
+                // Skip unknown character (numbers, punctuation, etc.)
                 $input = substr($input, 1);
-                error_log("Unknown char '$char'");
             }
-            // Trim leading whitespace
-            $input = ltrim($input);
         }
-        return $result;
+        return trim($result);
     }
 }
