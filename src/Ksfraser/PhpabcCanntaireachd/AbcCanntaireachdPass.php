@@ -81,7 +81,6 @@ class AbcCanntaireachdPass {
      * @return array The processed lines with canntaireachd added, and diff log.
      * @requirement FR2, FR8
      */
-<<<<<<< HEAD
     public function process(array $lines): array {
         $canntDiff = [];
         $output = $lines;
@@ -97,55 +96,26 @@ class AbcCanntaireachdPass {
                 $translatedOutput[] = $line;
             } elseif ($this->isMusicLine($line) && $currentVoice === 'Bagpipes') {
                 $translatedOutput[] = $line;
+                error_log("AbcCanntaireachdPass processing line: '$line'");
                 $canntText = $generator->generateForNotes($line);
+                error_log("AbcCanntaireachdPass generated cannt: '$canntText'");
                 if ($canntText && $canntText !== '[?]') {
                     $translatedOutput[] = 'w: ' . $canntText;
                     $canntDiff[] = [
                         'line' => $line,
                         'generated' => $canntText
                     ];
-=======
-    /**
-     * Process a parsed AbcTune, generating canntaireachd for Bagpipe voices only.
-     * @param \Ksfraser\PhpabcCanntaireachd\Tune\AbcTune $tune
-     * @param bool $logFlow
-     * @return void
-     */
-    public function process($tune, $logFlow = false): void {
-        FlowLog::log('AbcCanntaireachdPass::process ENTRY', true);
-        $translator = new \Ksfraser\PhpabcCanntaireachd\BagpipeAbcToCanntTranslator($this->dict);
-        foreach ($tune->getVoices() as $voiceId => $voice) {
-            if ($voice instanceof \Ksfraser\PhpabcCanntaireachd\Voices\BagpipeVoice) {
-                $bars = $tune->getVoiceBars()[$voiceId] ?? [];
-                foreach ($bars as $bar) {
-                    if (!isset($bar->notes) || !is_array($bar->notes)) continue;
-                    foreach ($bar->notes as $note) {
-                        if ($note instanceof \Ksfraser\PhpabcCanntaireachd\AbcNote) {
-                            $cannt = $translator->translate($note);
-                            $note->setCanntaireachd($cannt);
-                        }
-                    }
->>>>>>> 4113fb97ff103f0af8d41462ff6994831d290ccf
                 }
             } else {
-                // For non-bagpipe voices, ensure canntaireachd is null on all notes
-                $bars = $tune->getVoiceBars()[$voiceId] ?? [];
-                foreach ($bars as $bar) {
-                    if (!isset($bar->notes) || !is_array($bar->notes)) continue;
-                    foreach ($bar->notes as $note) {
-                        if ($note instanceof \Ksfraser\PhpabcCanntaireachd\AbcNote) {
-                            $note->setCanntaireachd(null);
-                        }
-                    }
-                }
+                $translatedOutput[] = $line;
             }
         }
-        FlowLog::log('AbcCanntaireachdPass::process EXIT', true);
+        
+        return ['lines' => $translatedOutput, 'canntDiff' => $canntDiff];
     }
     
     // Lyrics generation now handled by LyricsGenerator class
 
-<<<<<<< HEAD
     /**
      * Determines if a line is a music line (contains notes or bars).
      * Follows SRP by handling only line type detection.
@@ -269,7 +239,4 @@ class CanntGenerator {
         }
         return $result;
     }
-=======
-    // (Legacy line-oriented code removed; now fully object-based)
->>>>>>> 4113fb97ff103f0af8d41462ff6994831d290ccf
 }

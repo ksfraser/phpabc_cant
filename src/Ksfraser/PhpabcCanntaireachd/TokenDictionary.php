@@ -40,15 +40,34 @@ class TokenDictionary
      * Load the default ABC dictionary
      */
     private function loadDefaultDictionary() {
-        $dictPath = __DIR__ . '/abc_dict.php';
+        $dictPath = dirname(__DIR__) . '/phpabc_canntaireachd/abc_dict.php';
         if (file_exists($dictPath)) {
+            $abc = [];
             try {
-                $abc = require $dictPath; // returns the array
-                if (is_array($abc)) {
-                    $this->prepopulate($abc);
-                }
+                include $dictPath; // populates $abc in many legacy files
             } catch (\Throwable $e) {
                 // ignore
+            }
+            if (!empty($abc) && is_array($abc)) {
+                // Transform legacy format to expected format
+                $pre = [];
+                foreach ($abc as $k => $v) {
+                    if (is_array($v)) {
+                        $pre[$k] = [
+                            'cannt_token' => $v['cannt'] ?? ($v['cannt_token'] ?? null),
+                            'bmw_token' => $v['bmw'] ?? ($v['bmw_token'] ?? null),
+                            'description' => $v['desc'] ?? ($v['description'] ?? null),
+                        ];
+                    } else {
+                        // Handle old format where $abc['key'] = 'value'
+                        $pre[$k] = [
+                            'cannt_token' => $v,
+                            'bmw_token' => null,
+                            'description' => null,
+                        ];
+                    }
+                }
+                $this->prepopulate($pre);
             }
         }
     }
@@ -66,8 +85,8 @@ class TokenDictionary
             }
             $this->tokens[$abc] = [
                 'abc_token' => $abc,
-                'cannt_token' => $row['cannt_token'] ?? null,
-                'bmw_token' => $row['bmw_token'] ?? null,
+                'cannt_token' => $row['cannt'] ?? null,
+                'bmw_token' => $row['bmw'] ?? null,
                 'description' => $row['description'] ?? null,
             ];
             if ($row['cannt_token']) {

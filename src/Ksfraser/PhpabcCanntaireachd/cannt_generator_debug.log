@@ -584,3 +584,129 @@ generateForNotes input: |A B C D|A2 B2|A B|
 generateForNotes output: |dardodhiddar|dardod|dardod|
 generateForNotes input: |A B|A2|A|
 generateForNotes output: |dardod|dar|dar|
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}][A][3][B][{g}][c][e][3][|][{g}][B][3][A][{g}][c][{][d][}][B][3][|][{g}][A][3][B][{g}][c][e][3][|][{g}][B][2][{][d][}][c][{][G][}][A][4][|]
+generateForNotes input: [V:Bagpipes]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: [{g}][c][3][d][{g}][e][c][3][|][{g}][f][3][d][{g}][e][c][3][|][{g}][c][3][d][{g}][e][c][3][|][{][a][g][}][a][2][f][2][{][g][e][f][}][e][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}][A][3][B][{g}][c][e][3][|][{g}][B][3][A][{g}][c][{][d][}][B][3][|][{g}][A][3][B][{g}][c][e][3][|][{g}][B][2][{][d][}][c][{][G][}][A][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{][g][}][A][3][B][{][g][}][c][e][3][|][{][g][}][B][3][A][{][g][}][c][{][d][}][B][3][|][{][g][}][A][3][B][{][g][}][c][e][3][|][{][g][}][B][2][{][d][}][c][{][G][}][A][4][|]
+generateForNotes input: [V:Bagpipes]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: [{][g][}][c][3][d][{][g][}][e][c][3][|][{][g][}][f][3][d][{][g][}][e][c][3][|][{][g][}][c][3][d][{][g][}][e][c][3][|][{][a][g][}][a][2][f][2][{][g][e][f][}][e][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{][g][}][A][3][B][{][g][}][c][e][3][|][{][g][}][B][3][A][{][g][}][c][{][d][}][B][3][|][{][g][}][A][3][B][{][g][}][c][e][3][|][{][g][}][B][2][{][d][}][c][{][G][}][A][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{][g][}][A][3][B][{][g][}][c][e][3][|][{][g][}][B][3][A][{][g][}][c][{][d][}][B][3][|][{][g][}][A][3][B][{][g][}][c][e][3][|][{][g][}][B][2][{][d][}][c][{][G][}][A][4][|]
+generateForNotes input: [V:Bagpipes]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: [{][g][}][c][3][d][{][g][}][e][c][3][|][{][g][}][f][3][d][{][g][}][e][c][3][|][{][g][}][c][3][d][{][g][}][e][c][3][|][{][a][g][}][a][2][f][2][{][g][e][f][}][e][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{][g][}][A][3][B][{][g][}][c][e][3][|][{][g][}][B][3][A][{][g][}][c][{][d][}][B][3][|][{][g][}][A][3][B][{][g][}][c][e][3][|][{][g][}][B][2][{][d][}][c][{][G][}][A][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{][g][}][A][3][B][{][g][}][c][e][3][|][{][g][}][B][3][A][{][g][}][c][{][d][}][B][3][|][{][g][}][A][3][B][{][g][}][c][e][3][|][{][g][}][B][2][{][d][}][c][{][G][}][A][4][|]
+generateForNotes input: [V:Bagpipes]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: [{][g][}][c][3][d][{][g][}][e][c][3][|][{][g][}][f][3][d][{][g][}][e][c][3][|][{][g][}][c][3][d][{][g][}][e][c][3][|][{][a][g][}][a][2][f][2][{][g][e][f][}][e][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{][g][}][A][3][B][{][g][}][c][e][3][|][{][g][}][B][3][A][{][g][}][c][{][d][}][B][3][|][{][g][}][A][3][B][{][g][}][c][e][3][|][{][g][}][B][2][{][d][}][c][{][G][}][A][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{][g][}][A][3][B][{][g][}][c][e][3][|][{][g][}][B][3][A][{][g][}][c][{][d][}][B][3][|][{][g][}][A][3][B][{][g][}][c][e][3][|][{][g][}][B][2][{][d][}][c][{][G][}][A][4][|]
+generateForNotes input: [V:Bagpipes]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: [{][g][}][c][3][d][{][g][}][e][c][3][|][{][g][}][f][3][d][{][g][}][e][c][3][|][{][g][}][c][3][d][{][g][}][e][c][3][|][{][a][g][}][a][2][f][2][{][g][e][f][}][e][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{][g][}][A][3][B][{][g][}][c][e][3][|][{][g][}][B][3][A][{][g][}][c][{][d][}][B][3][|][{][g][}][A][3][B][{][g][}][c][e][3][|][{][g][}][B][2][{][d][}][c][{][G][}][A][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: [{g}c][3][d][{g}e][c][3][|][{g}f][3][d][{g}e][c][3][|][{g}c][3][d][{g}e][c][3][|][{ag}a][2][f][2][{gef}e][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: [{g}c][3][d][{g}e][c][3][|][{g}f][3][d][{g}e][c][3][|][{g}c][3][d][{g}e][c][3][|][{ag}a][2][f][2][{gef}e][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: [{g}c][3][d][{g}e][c][3][|][{g}f][3][d][{g}e][c][3][|][{g}c][3][d][{g}e][c][3][|][{ag}a][2][f][2][{gef}e][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: [{g}c][3][d][{g}e][c][3][|][{g}f][3][d][{g}e][c][3][|][{g}c][3][d][{g}e][c][3][|][{ag}a][2][f][2][{gef}e][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: [{g}c][3][d][{g}e][c][3][|][{g}f][3][d][{g}e][c][3][|][{g}c][3][d][{g}e][c][3][|][{ag}a][2][f][2][{gef}e][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: [{g}c][3][d][{g}e][c][3][|][{g}f][3][d][{g}e][c][3][|][{g}c][3][d][{g}e][c][3][|][{ag}a][2][f][2][{gef}e][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: [{g}c][3][d][{g}e][c][3][|][{g}f][3][d][{g}e][c][3][|][{g}c][3][d][{g}e][c][3][|][{ag}a][2][f][2][{gef}e][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: [{g}c][3][d][{g}e][c][3][|][{g}f][3][d][{g}e][c][3][|][{g}c][3][d][{g}e][c][3][|][{ag}a][2][f][2][{gef}e][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: [{g}c][3][d][{g}e][c][3][|][{g}f][3][d][{g}e][c][3][|][{g}c][3][d][{g}e][c][3][|][{ag}a][2][f][2][{gef}e][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: [{g}c][3][d][{g}e][c][3][|][{g}f][3][d][{g}e][c][3][|][{g}c][3][d][{g}e][c][3][|][{ag}a][2][f][2][{gef}e][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: [{g}c][3][d][{g}e][c][3][|][{g}f][3][d][{g}e][c][3][|][{g}c][3][d][{g}e][c][3][|][{ag}a][2][f][2][{gef}e][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: [{g}c][3][d][{g}e][c][3][|][{g}f][3][d][{g}e][c][3][|][{g}c][3][d][{g}e][c][3][|][{ag}a][2][f][2][{gef}e][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: [{g}c][3][d][{g}e][c][3][|][{g}f][3][d][{g}e][c][3][|][{g}c][3][d][{g}e][c][3][|][{ag}a][2][f][2][{gef}e][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: [{g}c][3][d][{g}e][c][3][|][{g}f][3][d][{g}e][c][3][|][{g}c][3][d][{g}e][c][3][|][{ag}a][2][f][2][{gef}e][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: [{g}c][3][d][{g}e][c][3][|][{g}f][3][d][{g}e][c][3][|][{g}c][3][d][{g}e][c][3][|][{ag}a][2][f][2][{gef}e][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]
+generateForNotes input: [V:Bagpipes]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: [{g}c][3][d][{g}e][c][3][|][{g}f][3][d][{g}e][c][3][|][{g}c][3][d][{g}e][c][3][|][{ag}a][2][f][2][{gef}e][4][|]
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: [{g}A][3][B][{g}c][e][3][|][{g}B][3][A][{g}c][{d}B][3][|][{g}A][3][B][{g}c][e][3][|][{g}B][2][{d}c][{G}A][4][|]

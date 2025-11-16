@@ -252,6 +252,11 @@ class AbcTimingValidator {
             return false;
         }
         
+        // Skip lyrics lines
+        if (preg_match('/^w:/', $trimmed)) {
+            return false;
+        }
+        
         // Skip MIDI and other directive lines
         if (preg_match('/^%%/', $trimmed) || preg_match('/^I:/', $trimmed)) {
             return false;

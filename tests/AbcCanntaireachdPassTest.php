@@ -13,10 +13,10 @@ class AbcCanntaireachdPassTest extends TestCase
         $this->dict = new TokenDictionary();
         // Add some test mappings
         $this->dict->prepopulate([
-            'A' => ['cannt_token' => 'dar', 'bmw_token' => null, 'description' => 'Test A'],
-            'B' => ['cannt_token' => 'dod', 'bmw_token' => null, 'description' => 'Test B'],
-            'C' => ['cannt_token' => 'hid', 'bmw_token' => null, 'description' => 'Test C'],
-            'D' => ['cannt_token' => 'dar', 'bmw_token' => null, 'description' => 'Test D']
+            'A' => ['cannt_token' => 'en', 'bmw_token' => null, 'description' => 'Test A'],
+            'B' => ['cannt_token' => 'o', 'bmw_token' => null, 'description' => 'Test B'],
+            'C' => ['cannt_token' => 'o', 'bmw_token' => null, 'description' => 'Test C'],
+            'D' => ['cannt_token' => 'a', 'bmw_token' => null, 'description' => 'Test D']
         ]);
         $this->pass = new AbcCanntaireachdPass($this->dict);
     }

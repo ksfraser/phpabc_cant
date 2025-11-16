@@ -256,7 +256,6 @@ $abc["{dedc}d"]['cannt'] = 'adala';
 /*
 $abc["hpele"]['cannt'] = '{efeA}';
 $abc["hpelf"]['cannt'] = '{fgfe}';
-
 $abc["st3la"]['cannt'] = '{AGGAG}';
 $abc["st3b"]['cannt'] = '{GBGBG}';
 $abc["st3c"]['cannt'] = '{GcGcG}';
@@ -266,7 +265,6 @@ $abc["st3e"]['cannt'] = '{AeAeA}';
 $abc["st3f"]['cannt'] = '{efefe}';
 $abc["st3hg"]['cannt'] = '{fgfgf}';
 $abc["st3ha"]['cannt'] = '{gagag}';
-
 $abc["gst3la"]['cannt'] = '{gAGAGAG}';
 $abc["gst3b"]['cannt'] = '{gBGBGBG}';
 $abc["gst3c"]['cannt'] = '{gcGcGcG}';
@@ -274,7 +272,6 @@ $abc["gst3d"]['cannt'] = '{gdGdGdG}';
 $abc["lgst3d"]['cannt'] = '{gdcdcdc}';
 $abc["gst3e"]['cannt'] = '{geAeAeA}';
 $abc["gst3f"]['cannt'] = '{gfefefe}';
-
 $abc["tst3la"]['cannt'] = '{aAGAGAG}';
 $abc["tst3b"]['cannt'] = '{aBGBGBG}';
 $abc["tst3c"]['cannt'] = '{acGcGcG}';
@@ -283,7 +280,6 @@ $abc["ltst3d"]['cannt'] = '{adcdcdc}';
 $abc["tst3e"]['cannt'] = '{aeAeAeA}';
 $abc["tst3f"]['cannt'] = '{afefefe}';
 $abc["tst3hg"]['cannt'] = '{agfgfgf}';
-
 $abc["hst3la"]['cannt'] = '{AGAGAG}';
 $abc["hst3b"]['cannt'] = '{BGBGBG}';
 $abc["hst3c"]['cannt'] = '{cGcGcG}';
@@ -300,21 +296,17 @@ $abc[" dlg"]['cannt'] = '{dG}';
 $abc[" dla"]['cannt'] = '{dA}';
 $abc[" db"]['cannt'] = '{dB}';
 $abc[" dc"]['cannt'] = '{dc}';
-
 $abc[" elg"]['cannt'] = '{eG}';
 $abc[" ela"]['cannt'] = '{eA}';
 $abc[" eb"]['cannt'] = '{eB}';
 $abc[" ec"]['cannt'] = '{ec}';
 $abc[" ed"]['cannt'] = '{ed}';
-
 $abc[" flg"]['cannt'] = '{fG}';
 $abc[" fla"]['cannt'] = '{fA}';
 $abc[" fb"]['cannt'] = '{fB}';
 $abc[" fc"]['cannt'] = '{fc}';
 $abc[" fd"]['cannt'] = '{fd}';
 $abc[" fe"]['cannt'] = '{fe}';
-
-
 $abc[" glg "]['cannt'] = '{gG}';
 $abc[" gla "]['cannt'] = '{gA}';
 $abc[" gb "]['cannt'] = '{gB}';
@@ -322,7 +314,6 @@ $abc[" gc "]['cannt'] = '{gc}';
 $abc[" gd "]['cannt'] = '{gd}';
 $abc[" ge "]['cannt'] = '{ge}';
 $abc[" gf "]['cannt'] = '{gf}';
-
 $abc[" tlg"]['cannt'] = '{aG}';
 $abc[" tla"]['cannt'] = '{aA}';
 $abc[" tb"]['cannt'] = '{aB}';
@@ -332,37 +323,26 @@ $abc[" te"]['cannt'] = '{ae}';
 $abc[" tf"]['cannt'] = '{af}';
 $abc[" thg"]['cannt'] = '{ag}';
 */
-
-
 $abc["A{ag}a"]['cannt'] = 'dili';  
 $abc["A{G2dc}d"]['cannt'] = 'tra';  
 $abc["G{dc}d"]['cannt'] = 'htra';  
 $abc["d{G2dc}d"]['cannt'] = 'tra';  
-
 $abc["A{ag}a"]['cannt'] = 'dili';  //with "tr" over the note instead of gracenotes
 $abc["'tr'a"]['cannt'] = 'dili';  //with "tr" over the note instead of gracenotes
-
 $abc["F{geAfA}e"]['cannt'] = 'edre';  
 $abc["{geAfA}e"]['cannt'] = 'edre';  
 $abc["{aeAfA}e"]['cannt'] = 'edre';  
 $abc["e{gfege}f"]['cannt'] = 'dare';  
 $abc["{gfege}"]['cannt'] = 'dare';  
 $abc["{afege}"]['cannt'] = 'dare';  
-
 $abc["e{ageae}g"]['cannt'] = 'chechere';  
 $abc["{ageae}"]['cannt'] = 'chechere';  
-
 $abc["e{AfA}e"]['cannt'] = 'dre';  
 $abc["{AfA}e"]['cannt'] = 'dre';  
 $abc["f{ege}f"]['cannt'] = 'hedale';  
 $abc["{ege}f"]['cannt'] = 'hedale';  
 $abc["g{eae}g"]['cannt'] = 'chedere';  
 $abc["d{GeG}d"]['cannt'] = 'deda';  
-
-git config --global user.name "Your Name"
-git config --global user.email "your.email@example.com"git config --global user.name "Your Name"
-git config --global user.email "your.email@example.com"git config --global user.name "Your Name"
-git config --global user.email "your.email@example.com"
 $abc["{aAGdG}A"]['cannt'] = 'henbain';  
 $abc["{gAGdG}A"]['cannt'] = 'henbain';  
 $abc["B{AGdG}A"]['cannt'] = 'enbain';  
@@ -379,14 +359,6 @@ $abc["e{dGdG}d"]['cannt'] = 'adeda';
 $abc["{dGdG}d"]['cannt'] = 'deda';  
 $abc["{gdGdG}d"]['cannt'] = 'hadeda';  
 $abc["{adGdG}d"]['cannt'] = 'hadeda';  
-
-
-
-
-
-
-
-
 $abc["hiharin"]['cannt'] = 'e{dAGAG}A';  
 $abc["hiharin"]['cannt'] = 'e{dAGAG}A';  
 $abc["phiharin"]['cannt'] = 'e{dAGAG}A';  //tilde

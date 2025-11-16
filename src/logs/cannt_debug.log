@@ -4018,3 +4018,4 @@
 [DEBUG][2025-10-04 05:47:53] TokenNormalizer: token='A4' part='A4' normalized='A'
 [DEBUG][2025-10-04 05:47:53] TokenNormalizer: token='{g}A3' part='{g}A3' normalized='{g}A'
 [DEBUG][2025-10-04 05:47:53] TokenNormalizer: token='B' part='B' normalized='B'
+[DEBUG][2025-11-16 18:38:32] generateForNotes input: {g}A3B {g}ce3

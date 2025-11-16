@@ -89,7 +89,7 @@ $errors = $validator->validate($abcContent);
 // Load token dictionary for canntaireachd processing
 $dict = new TokenDictionary();
 // Try to load legacy abc_dict.php if available
-$legacyPath = __DIR__ . '/../src/Ksfraser/PhpabcCanntaireachd/abc_dict.php';
+$legacyPath = 'src/Ksfraser/phpabc_canntaireachd/abc_dict.php';
 if (file_exists($legacyPath)) {
     // include inside isolated scope to avoid leaking symbols
     $abc = [];

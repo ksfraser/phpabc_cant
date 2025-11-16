@@ -16,23 +16,23 @@ class BagpipeAbcToCanntTranslatorTest extends TestCase
     {
         $dict = new TokenDictionary();
         $dict->prepopulate([
-            'A' => ['cannt_token' => 'dare'],
+            'G' => ['cannt_token' => 'em'],
         ]);
         $translator = new BagpipeAbcToCanntTranslator($dict);
-        $note = new AbcNote('A');
+        $note = new AbcNote('G');
         $cannt = $translator->translate($note);
         $note->setCanntaireachd($cannt);
-        $this->assertEquals('dare', $note->getCanntaireachd());
+        $this->assertEquals('em', $note->getCanntaireachd());
     }
 
     public function testTranslatesUnknownTokenToNull()
     {
         $dict = new TokenDictionary();
         $dict->prepopulate([
-            'A' => ['cannt_token' => 'dare'],
+            'G' => ['cannt_token' => 'em'],
         ]);
         $translator = new BagpipeAbcToCanntTranslator($dict);
-        $note = new AbcNote('B');
+        $note = new AbcNote('Z');
         $cannt = $translator->translate($note);
         $note->setCanntaireachd($cannt);
         $this->assertNull($note->getCanntaireachd());
@@ -42,12 +42,12 @@ class BagpipeAbcToCanntTranslatorTest extends TestCase
     {
         $dict = new TokenDictionary();
         $dict->prepopulate([
-            'C' => ['cannt_token' => 'tum'],
+            'A' => ['cannt_token' => 'en'],
         ]);
         $translator = new BagpipeAbcToCanntTranslator($dict);
-        $note = new AbcNote('C');
+        $note = new AbcNote('A');
         $cannt = $translator->translate($note);
         $note->setCanntaireachd($cannt);
-        $this->assertEquals('tum', $note->getCanntaireachd());
+        $this->assertEquals('en', $note->getCanntaireachd());
     }
 }

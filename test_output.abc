@@ -1,100 +1,16 @@
-X:1
-T:First Tune
-M:4/4
-L:1/4
-V:Bagpipes
-w: | dar dod hid dar TIMING| dar dod | dar dod |
-|A B C D|A2 B2|A B|
-% Missing K Header
-% Voice Bagpipe missing name and sname
-
-
-
-
-X:2
-T:Second Tune
-M:2/4
-L:1/8
-K:HP
-V:Bagpipes
-w: | dar dod | dar | dar |
-|A B|A2|A|
-% Voice Bagpipe missing name and sname
-
-
-
-
-X:3
-T: Melody Voice
-M:2/4
-L:1/8
-V:Melody name=Melody
-% Voice Melody missing sname
-K:c
-|A B|A2|A|
-
-
-
-
-X:4
-T: Multi Voice
-M:2/4
-L:1/8
-V:Guitar name="Guit"
-|A B|A2|A|
-%Voice melody missing name
-%Voice Guitar missing sname
-
-
-V:Melody sname=Melody
-|A B|A2|A|
-
-
-X:744060
-T:Suo Gan
-H: 
-C: TBC
-B: 
-O:Kevin Fraser
-Z:Kevin Fraser
-Q:3/8=60
-K:HP
-M:4/4
-L:1/8
-R:March
-U: R = ///
-U: r = //
-U: V = !accent!
-V:Bagpipes name="Bagpipes" sname="Bagpipes"
-%canntaireachd: <add your canntaireachd here>
-w: {g} dar dod {g} hid dod {g} dod dar {g} hid [{d}B] {g} dar dod {g} hid dod {g} dod [{d}c] [{G}A] TIMING
-[V:Bagpipes]{g}A3B {g}ce3 TIMING| {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING|
-w: {g} hid dar {g} dod hid {g} hid dar {g} dod hid {g} hid dar {g} dod hid [{ag}af] [{gef}e] TIMING
-[V:Bagpipes]{g}c3d {g}ec3 TIMING| {g}f3d {g}ec3 TIMING| {g}c3d {g}ec3 TIMING| {ag}a2f2 {gef}e4 TIMING|
-w: {g} dar dod {g} hid dod {g} dod dar {g} hid [{d}B] {g} dar dod {g} hid dod {g} dod [{d}c] [{G}A] TIMING|]
-[V:Bagpipes]{g}A3B {g}ce3 TIMING| {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING|]
-V:M gstem=up stem=down name="Melody" sname="Melody"
-V:H gstem=up stem=down name="Harmony" sname="Harmony"
-V:C gstem=up stem=down name="C-Harmony"
-V:S gstem=up stem=down dyn=up stafflines=1 clef=perc middle=G name="Snare" sname="Snare"
-V:B gstem=up stem=down clef=none dyn=up name="Bass"
-V:T gstem=up stem=down clef=none dyn=up name="Tenor"
-V:BB gstem=up stem=down name="Brass Bass" sname="ABCD-C" transpose=-1  octave=-1 clef=bass
-V:BC gstem=up stem=down name="Brass Chord" sname="ABCD-D" transpose=-1
-V:BD gstem=up stem=down name="Brass Chord 2" sname="ABCD-B" transpose=-1
-V:P gstem=up stem=down name="Piano" octave=-1
-V:BassG name="Bass Guitar" sname="Bass Guitar"  octave=-2
-I:MIDI=program 110
-%%MIDI gracedivider 4
-%%MIDI gchord
-%%MIDI beatstring 
-%%score {M }
-%%MIDI program 109 #bagpipes
-%%MIDI vol 100
-%%landscape
-% %score M
-% %scale 0.6
-[V:M]{g}A3B {g}ce3 TIMING| {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING|
-[V:M]{g}c3d {g}ec3 TIMING| {g}f3d {g}ec3 TIMING| {g}c3d {g}ec3 TIMING| {ag}a2f2 {gef}e4 TIMING|
-[V:M]{g}A3B {g}ce3 TIMING| {g}B3A {g}c{d}B3 TIMING| {g}A3B {g}ce3 TIMING| {g}B2 {d}c {G}A4 TIMING|]
-
+X: 744060
+T: Suo Gan (Bagpipe Test)
+M: 4/4
+L: 1/8
+K: HP
+V: Bagpipes
+[V:Bagpipes]{g}A3B {g}ce3| {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+w: [{g}][A][3][B][{g}][c][e][3][|][{g}][B][3][A][{g}][c][{][d][}][B][3][|][{g}][A][3][B][{g}][c][e][3][|][{g}][B][2][{][d][}][c][{][G][}][A][4][|]
+[V:Bagpipes]{g}c3d {g}ec3| {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+w: [{g}][c][3][d][{g}][e][c][3][|][{g}][f][3][d][{g}][e][c][3][|][{g}][c][3][d][{g}][e][c][3][|][{][a][g][}][a][2][f][2][{][g][e][f][}][e][4][|]
+[V:Bagpipes]{g}A3B {g}ce3| {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+w: [{g}][A][3][B][{g}][c][e][3][|][{g}][B][3][A][{g}][c][{][d][}][B][3][|][{g}][A][3][B][{g}][c][e][3][|][{g}][B][2][{][d][}][c][{][G][}][A][4][|]
+%expected cannt:
+%hen o ho e | ho en ho do | hen o ho e | ho do den |
+%ho a he o | che a he o | ho a he o | dili ve hete |
+%hen o ho e | ho en ho do | hen o ho e | ho do den |

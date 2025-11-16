@@ -37,7 +37,6 @@ class CanntGenerator {
     protected $dict;
 
     /**
-<<<<<<< HEAD
      * Constructor for CanntGenerator.
      * Loads dictionary from file if not provided.
      * Uses DI for TokenDictionary.
@@ -46,13 +45,6 @@ class CanntGenerator {
      * @requirement FR7
      */
     public function __construct(?TokenDictionary $dict = null) {
-=======
-     * Summary of __construct
-     * @param TokenDictionary $dict
-     * @return void
-     */
-    public function __construct($dict = null) {
->>>>>>> 4113fb97ff103f0af8d41462ff6994831d290ccf
         if ($dict !== null) {
             $this->dict = $dict;
             return;
@@ -78,11 +70,17 @@ class CanntGenerator {
         $noteBody = preg_replace('/^\[V:[^\]]*\]/', '', $noteBody);
         $noteBody = trim($noteBody);
         
-<<<<<<< HEAD
+        // Debug: check if dictionary has tokens
+        $allTokens = $this->dict->getAllTokens();
+        error_log("CanntGenerator dict has " . count($allTokens) . " tokens");
+        if (count($allTokens) > 0) {
+            $sample = array_slice($allTokens, 0, 3, true);
+            error_log("Sample tokens: " . json_encode($sample));
+        }
+        
         // Use proper ABC tokenization instead of flawed Trie search
         $result = $this->tokenizeAndConvert($noteBody);
         error_log("generateForNotes output: $result"); // Log output
-        file_put_contents($logFile, "generateForNotes output: $result\n", FILE_APPEND); // Log output to file
         return $result ?: '[?]';
     }
 
@@ -92,71 +90,78 @@ class CanntGenerator {
      * @return string The canntaireachd text.
      */
     private function tokenizeAndConvert(string $input): string {
+        error_log("tokenizeAndConvert called with input: '$input'");
         $result = '';
-        $dictKeys = array_keys($this->dict->getAllTokens());
-        // Sort keys by length descending for longest-match-first
-        usort($dictKeys, function($a, $b) { return strlen($b) - strlen($a); });
         
-        while (strlen($input) > 0) {
-            $matched = false;
-            foreach ($dictKeys as $key) {
-                if ($key === '') continue;
-                if (strpos($input, $key) === 0) {
-                    // Found a match, convert to canntaireachd
-                    $canntToken = $this->dict->convertAbcToCannt($key);
-                    if ($canntToken !== null) {
-                        $result .= $canntToken;
-                    } else {
-                        $result .= '[' . $key . ']'; // Unknown token
+        // Use regex to tokenize ABC notation properly
+        // This regex matches: grace notes, accidentals, notes, octaves, lengths, rests, barlines, spaces
+        $pattern = '/(\{[^{}]+\})|([_=^])|([a-gA-GzZ])|([,\']*)|(\d+\/?\d*)|(\|)|(\s+)/';
+        
+        if (preg_match_all($pattern, $input, $matches, PREG_SET_ORDER | PREG_OFFSET_CAPTURE)) {
+            $tokens = [];
+            $currentToken = '';
+            $i = 0;
+            
+            while ($i < count($matches)) {
+                $match = $matches[$i];
+                $token = $match[0][0];
+                
+                // Handle grace notes
+                if (preg_match('/^\{/', $token)) {
+                    $currentToken .= $token;
+                    $i++;
+                    continue;
+                }
+                
+                // Handle accidentals
+                if (in_array($token, ['_', '=', '^'])) {
+                    $currentToken .= $token;
+                    $i++;
+                    continue;
+                }
+                
+                // Handle notes
+                if (preg_match('/^[a-gA-GzZ]$/', $token)) {
+                    $currentToken .= $token;
+                    $i++;
+                    
+                    // Look ahead for octave marks
+                    while ($i < count($matches) && preg_match('/^[,|\']+$/', $matches[$i][0][0])) {
+                        $currentToken .= $matches[$i][0][0];
+                        $i++;
                     }
-                    $input = substr($input, strlen($key));
-                    $matched = true;
-                    break;
+                    
+                    // Look ahead for length
+                    if ($i < count($matches) && preg_match('/^\d+\/?\d*$/', $matches[$i][0][0])) {
+                        // Skip length - don't add to token
+                        $i++;
+                    }
+                    
+                    // Now we have a complete note token, look it up
+                    error_log("tokenizeAndConvert: looking up token '$currentToken'");
+                    $cannt = $this->dict->convertAbcToCannt($currentToken);
+                    error_log("tokenizeAndConvert: cannt result: " . var_export($cannt, true));
+                    if ($cannt !== null) {
+                        $result .= $cannt . ' ';
+                    } else {
+                        $result .= '[' . $currentToken . '] ';
+                    }
+                    $currentToken = '';
+                    continue;
                 }
-            }
-            if (!$matched) {
-                // Fallback: try to parse a single note using regex (like AbcNoteTokenizer)
-                if (preg_match("/^([_=^]?)([a-gA-GzZ])([,']*)([0-9]+\/?[0-9]*|\/{1,}|)([^\s]*)/", $input, $m)) {
-                    $noteStr = $m[0];
-                    // For complex notes not in dictionary, wrap in brackets
-                    $result .= '[' . $noteStr . ']';
-                    $input = substr($input, strlen($noteStr));
-                } else {
-                    // Skip unknown character
-                    $result .= '[' . substr($input, 0, 1) . ']';
-                    $input = substr($input, 1);
+                
+                // Handle barlines
+                if ($token === '|') {
+                    $result .= '| ';
+                    $i++;
+                    continue;
                 }
-            }
-            // Trim leading whitespace
-            $input = ltrim($input);
-        }
-=======
-        // Attempt to split on whitespace first
-        $parts = preg_split('/\s+/', $noteBody);
-        $out = [];
-        foreach ($parts as $part) {
-            $part = trim($part);
-            if ($part === '' || $part === '|') continue;
-            CanntLog::log("Processing part: $part", true);
-            $norm = preg_replace('/\d+/', '', $part);
-            $cannt = $this->dict->convertAbcToCannt($part);
-            if ($cannt === null) $cannt = $this->dict->convertAbcToCannt($norm);
-            if ($cannt !== null) {
-                CanntLog::log("Matched token: $part -> Cannt: $cannt", true);
-                $out[] = $cannt;
-            } else {
-                $out[] = '[' . ($norm === '' ? $part : $norm) . ']';
+                
+                // Skip lengths (already handled above), spaces, and other elements
+                $i++;
             }
         }
-        // Ensure we always return a non-empty string
-        if (empty($out)) {
-            $safe = trim(preg_replace('/\s+/', ' ', $noteBody));
-            if ($safe === '') return '[?]';
-            return '[' . $safe . ']';
-        }
-        $result = implode(' ', $out);
-    CanntLog::log("generateForNotes output: $result", true);
->>>>>>> 4113fb97ff103f0af8d41462ff6994831d290ccf
-        return $result;
+        
+        return rtrim($result, ' ');
     }
 }

@@ -214,21 +214,7 @@ class AbcProcessor {
     }
     
     // (removed broken copyMelodyToBagpipesInTune implementation)
-<<<<<<< HEAD
-    public static function reorderVoices($lines) {
-        // Simple implementation: return lines unchanged
-        // TODO: Implement proper voice reordering
-        return $lines;
-    }
-    
-    public static function handleLyrics($lines, $dict, &$lyricsWords) {
-        // Simple implementation: just return the lines unchanged
-        // TODO: Implement proper lyrics processing
-        return $lines;
-    }
-=======
->>>>>>> 4113fb97ff103f0af8d41462ff6994831d290ccf
-    
+
     private static function reorderVoicesInTune($lines) {
         $headers = [];
         $voiceBlocks = [];
