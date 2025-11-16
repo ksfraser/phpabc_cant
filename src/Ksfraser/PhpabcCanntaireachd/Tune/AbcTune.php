@@ -200,7 +200,24 @@ class AbcTune extends AbcItem {
         // Assign context to tune properties
         $tune->headerLines = $context['headerLines'];
         $tune->formattingLines = $context['formattingLines'];
-        $tune->voices = $context['voices'];
+        
+        // Convert Voice objects to metadata arrays and populate voiceBars
+        $voiceMetadata = [];
+        foreach ($context['voices'] as $voiceId => $voiceObj) {
+            if (is_object($voiceObj)) {
+                // Store metadata as array for renderSelf compatibility
+                $voiceMetadata[$voiceId] = [
+                    'name' => method_exists($voiceObj, 'getName') ? $voiceObj->getName() : $voiceId,
+                    'sname' => $voiceId
+                ];
+                // Populate voiceBars from Voice objects' bars for rendering
+                if (isset($voiceObj->bars) && is_array($voiceObj->bars)) {
+                    $tune->voiceBars[$voiceId] = $voiceObj->bars;
+                }
+            }
+        }
+        $tune->voices = $voiceMetadata;
+        
         return $tune;
 
     }

@@ -71,14 +71,15 @@ class AbcFormattingPass {
 
     /**
      * Standardizes formatting directive spacing.
-     * Converts "%%directive value" to "%%directive value" (single space after %%)
+     * Preserves %%directive format (no space after %%)
      *
      * @param string $line The directive line.
      * @return string The standardized directive line.
      */
     private function standardizeDirectiveSpacing(string $line): string {
-        // Ensure single space after %%
-        $line = preg_replace('/^%%+\s*/', '%% ', $line);
+        // Ensure no extra spaces after %% - directive name should follow immediately
+        // Change %%  score to %%score, but preserve %%score as-is
+        $line = preg_replace('/^%%+\s+/', '%%', $line);
         return $line;
     }
 

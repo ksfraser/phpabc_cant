@@ -90,10 +90,25 @@ class AbcCanntaireachdPass {
         $translatedOutput = [];
         $currentVoice = null;
         foreach ($output as $line) {
-            // Check for voice definition
-            if (preg_match('/^V:([^\s]+)/', trim($line), $matches)) {
+            $trimmed = trim($line);
+            // Check for voice definition (both standalone and inline)
+            if (preg_match('/^V:([^\s]+)/', $trimmed, $matches)) {
                 $currentVoice = $matches[1];
                 $translatedOutput[] = $line;
+            } elseif (preg_match('/^\[V:([^\]]+)\]/', $trimmed, $matches)) {
+                // Handle inline voice markers like [V:M]
+                $currentVoice = $matches[1];
+                $translatedOutput[] = $line;
+                if ($this->shouldAddCanntaireachd($currentVoice)) {
+                    $canntText = $generator->generateForNotes($line);
+                    if ($canntText && $canntText !== '[?]') {
+                        $translatedOutput[] = 'w: ' . $canntText;
+                        $canntDiff[] = [
+                            'line' => $line,
+                            'generated' => $canntText
+                        ];
+                    }
+                }
             } elseif ($this->isMusicLine($line) && $this->shouldAddCanntaireachd($currentVoice)) {
                 $translatedOutput[] = $line;
                 error_log("AbcCanntaireachdPass processing line: '$line'");
@@ -171,7 +186,14 @@ class CanntGenerator {
     private $dict;
 
     public function __construct($dictionary) {
-        $this->dict = $dictionary;
+        if ($dictionary instanceof TokenDictionary) {
+            $this->dict = $dictionary;
+        } elseif ($dictionary === null) {
+            // Auto-create TokenDictionary if null
+            $this->dict = new TokenDictionary();
+        } else {
+            $this->dict = $dictionary;
+        }
     }
 
     public function generateForNotes(string $noteBody): string {

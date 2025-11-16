@@ -112,24 +112,41 @@ class AbcProcessor {
      */
     public static function copyMelodyToBagpipes($lines, $hasMelody, $hasBagpipes) {
         FlowLog::log('AbcProcessor::copyMelodyToBagpipes called', true);
-        $abcText = is_array($lines) ? implode("\n", $lines) : (string)$lines;
-        // Convert lines to AbcTune, ensure Bagpipes voice, and return updated lines
-        $tune = \Ksfraser\PhpabcCanntaireachd\Tune\AbcTune::parse($abcText);
-        if ($tune === null) {
-            FlowLog::log('AbcProcessor::copyMelodyToBagpipes: failed to parse AbcTune', true);
+        // Simple line-based melody copying
+        if (!$hasMelody || $hasBagpipes) {
+            // No melody to copy, or bagpipes already exists
             return $lines;
         }
-        $svc = new \Ksfraser\PhpabcCanntaireachd\TuneService(new \Ksfraser\PhpabcCanntaireachd\CanntGenerator(null));
-        $svc->ensureBagpipeVoice($tune);
-        // Return the tune as lines, but fallback to original if output is empty
-        $rendered = $tune->renderSelf();
-        if (empty(trim($rendered))) {
-            FlowLog::log('AbcProcessor::copyMelodyToBagpipes: renderSelf() produced empty output, returning original lines', true);
-            return $lines;
+        
+        $output = [];
+        $melodyLines = [];
+        $inMelodyVoice = false;
+        
+        foreach ($lines as $line) {
+            $trimmed = trim($line);
+            
+            // Detect voice changes
+            if (preg_match('/^V:\s*([Mm]|[Mm]elody)/i', $trimmed)) {
+                $inMelodyVoice = true;
+                $output[] = $line;
+                // Add Bagpipes voice header after Melody
+                $output[] = 'V:Bagpipes name="Bagpipes" sname="Bagpipes"';
+                continue;
+            } elseif (preg_match('/^V:/i', $trimmed)) {
+                $inMelodyVoice = false;
+            }
+            
+            // Copy melody music lines to bagpipes
+            if ($inMelodyVoice && $trimmed !== '' && !preg_match('/^[A-Z%]:/i', $trimmed)) {
+                $melodyLines[] = $line;
+                $output[] = $line; // Add to bagpipes voice
+            } else {
+                $output[] = $line;
+            }
         }
-        $out = preg_split('/\r?\n/', $rendered);
-        FlowLog::log('AbcProcessor::copyMelodyToBagpipes: Bagpipes voice ensured and canntaireachd generated', true);
-        return $out;
+        
+        FlowLog::log('AbcProcessor::copyMelodyToBagpipes: copied melody to Bagpipes voice', true);
+        return $output;
     }
 
     /**

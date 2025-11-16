@@ -728,3 +728,77 @@ generateForNotes input: [V:Bagpipes]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec
 generateForNotes output: ho a he o | che a he o | ho a he o | dili ve hete |
 generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
 generateForNotes output: hen o ho e  | ho en ho do | hen o ho e  | ho do men |
+generateForNotes input: {g}A3 {g}ce3
+generateForNotes input: {g}A3 {g}ce3
+generateForNotes output: hen ho e
+generateForNotes input: {g}B3 {g}cB3
+generateForNotes output: ho ho o
+generateForNotes input: {g}A3B {g}ce3{g}B3A {g}c{d}B3
+generateForNotes output: hen o ho e ho en ho do
+generateForNotes input: 
+generateForNotes input: C B
+generateForNotes output: o
+generateForNotes input: B
+generateForNotes output: o
+generateForNotes input: e F
+generateForNotes output: e
+generateForNotes input: e F
+generateForNotes output: e
+generateForNotes input: a
+generateForNotes output: I
+generateForNotes input: 
+generateForNotes input: r
+generateForNotes output: 
+generateForNotes input: !accent!
+generateForNotes output: I o o e
+generateForNotes input: {g}A3 {g}ce3
+generateForNotes output: hen ho e
+generateForNotes input: {g}B3 {g}cB3
+generateForNotes output: ho ho o
+generateForNotes input: {g}A3 {g}ce3
+generateForNotes output: hen ho e
+generateForNotes input: {g}B2 {d}c {G}A4
+generateForNotes output: ho do men
+generateForNotes input: {g}c3 {g}e
+generateForNotes output: ho he
+generateForNotes input: {g}fd {g}e
+generateForNotes output: che a he
+generateForNotes input: {g}cd {g}e
+generateForNotes output: ho a he
+generateForNotes input: {ag}a2 {gef}e4
+generateForNotes output: dili hete
+generateForNotes input: {g}A3 {g}ce3
+generateForNotes output: hen ho e
+generateForNotes input: {g}B3 {g}cB3
+generateForNotes output: ho ho o
+generateForNotes input: {g}A3 {g}ce3
+generateForNotes output: hen ho e
+generateForNotes input: {g}B2 {d}c {G}A4
+generateForNotes output: ho do men
+generateForNotes input: 
+generateForNotes input: {g}A3B {g}ce3 | {g}B3A {g}c{d}B3 |
+generateForNotes output: hen o ho e  | ho en ho do |
+generateForNotes input: [V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: hen o ho e  | ho en ho do | hen o ho e  | ho do men |
+generateForNotes input: [V:M]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: ho a he o | che a he o | ho a he o | dili ve hete |
+generateForNotes input: [V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |]
+generateForNotes output: hen o ho e  | ho en ho do | hen o ho e  | ho do men |
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: hen o ho e  | ho en ho do | hen o ho e  | ho do men |
+generateForNotes input: [V:Bagpipes]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: ho a he o | che a he o | ho a he o | dili ve hete |
+generateForNotes input: [V:Bagpipes]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: hen o ho e  | ho en ho do | hen o ho e  | ho do men |
+generateForNotes input: [V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: hen o ho e  | ho en ho do | hen o ho e  | ho do men |
+generateForNotes input: [V:M]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: ho a he o | che a he o | ho a he o | dili ve hete |
+generateForNotes input: [V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |]
+generateForNotes output: hen o ho e  | ho en ho do | hen o ho e  | ho do men |
+generateForNotes input: [V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |
+generateForNotes output: hen o ho e  | ho en ho do | hen o ho e  | ho do men |
+generateForNotes input: [V:M]{g}c3d {g}ec3 | {g}f3d {g}ec3 | {g}c3d {g}ec3 | {ag}a2f2 {gef}e4 |
+generateForNotes output: ho a he o | che a he o | ho a he o | dili ve hete |
+generateForNotes input: [V:M]{g}A3B {g}ce3 | {g}B3A {g}c{d}B3 | {g}A3B {g}ce3 | {g}B2 {d}c {G}A4 |]
+generateForNotes output: hen o ho e  | ho en ho do | hen o ho e  | ho do men |
