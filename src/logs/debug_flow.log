@@ -4065,3 +4065,40 @@
 [DEBUG][2025-11-17 13:00:28] Transform complete, voices: 2
 [DEBUG][2025-11-17 13:00:28] Rendered text length: 120
 [DEBUG][2025-11-17 13:00:28] AbcProcessingPipeline::processWithTransforms EXIT
+[DEBUG][2025-11-17 16:14:43] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-11-17 16:14:43] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-11-17 16:14:43] AbcVoicePass::process ENTRY
+[DEBUG][2025-11-17 16:14:43] AbcVoicePass::process EXIT
+[DEBUG][2025-11-17 16:14:43] AbcLyricsPass::process ENTRY
+[DEBUG][2025-11-17 16:14:43] AbcProcessor::handleLyrics called
+[DEBUG][2025-11-17 16:14:43] AbcLyricsPass::process EXIT
+[DEBUG][2025-11-17 16:14:43] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-11-17 16:14:43] AbcTimingValidator::validate EXIT
+[DEBUG][2025-11-17 16:14:48] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-11-17 16:14:48] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-11-17 16:14:48] AbcLyricsPass::process ENTRY
+[DEBUG][2025-11-17 16:14:48] AbcProcessor::handleLyrics called
+[DEBUG][2025-11-17 16:14:48] AbcLyricsPass::process EXIT
+[DEBUG][2025-11-17 16:14:48] AbcVoicePass::process ENTRY
+[DEBUG][2025-11-17 16:14:49] AbcVoicePass::process EXIT
+[DEBUG][2025-11-17 16:14:49] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-11-17 16:14:49] AbcTimingValidator::validate EXIT
+[DEBUG][2025-11-17 16:14:50] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-11-17 16:14:50] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-11-17 16:14:50] AbcLyricsPass::process ENTRY
+[DEBUG][2025-11-17 16:14:50] AbcProcessor::handleLyrics called
+[DEBUG][2025-11-17 16:14:50] AbcLyricsPass::process EXIT
+[DEBUG][2025-11-17 16:14:50] AbcVoicePass::process ENTRY
+[DEBUG][2025-11-17 16:14:50] AbcVoicePass::process EXIT
+[DEBUG][2025-11-17 16:14:50] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-11-17 16:14:50] AbcTimingValidator::validate EXIT
+[DEBUG][2025-11-17 16:15:55] AbcProcessingPipeline::processWithTransforms ENTRY
+[DEBUG][2025-11-17 16:15:55] Input text length: 66
+[DEBUG][2025-11-17 16:15:55] Transforms count: 2
+[DEBUG][2025-11-17 16:15:55] Parsed tune with 1 voices
+[DEBUG][2025-11-17 16:15:55] Applying transform: Ksfraser\PhpabcCanntaireachd\Transform\VoiceCopyTransform
+[DEBUG][2025-11-17 16:15:55] Transform complete, voices: 2
+[DEBUG][2025-11-17 16:15:55] Applying transform: Ksfraser\PhpabcCanntaireachd\Transform\CanntaireachdTransform
+[DEBUG][2025-11-17 16:15:55] Transform complete, voices: 2
+[DEBUG][2025-11-17 16:15:55] Rendered text length: 120
+[DEBUG][2025-11-17 16:15:55] AbcProcessingPipeline::processWithTransforms EXIT
