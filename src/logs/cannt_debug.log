@@ -4206,3 +4206,239 @@
 [DEBUG][2025-11-17 07:03:03] generateForNotes input: ]
 [DEBUG][2025-11-17 07:03:12] generateForNotes input: A B c d
 [DEBUG][2025-11-17 07:03:12] generateForNotes input: E F G A
+[DEBUG][2025-11-17 12:02:29] generateForNotes input: A B c d
+[DEBUG][2025-11-17 12:02:39] generateForNotes input: A B c d
+[DEBUG][2025-11-17 12:02:39] generateForNotes input: E F G A
+[DEBUG][2025-11-17 12:02:40] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 12:02:40] generateForNotes input: {g}B3A {g}c{d}B3
+[DEBUG][2025-11-17 12:02:40] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 12:02:40] generateForNotes input: {g}B2 {d}c {G}A4
+[DEBUG][2025-11-17 12:02:40] generateForNotes input: {g}c3d {g}ec3
+[DEBUG][2025-11-17 12:02:40] generateForNotes input: {g}f3d {g}ec3
+[DEBUG][2025-11-17 12:02:40] generateForNotes input: {g}c3d {g}ec3
+[DEBUG][2025-11-17 12:02:40] generateForNotes input: {ag}a2f2 {gef}e4
+[DEBUG][2025-11-17 12:02:40] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 12:02:40] generateForNotes input: {g}B3A {g}c{d}B3
+[DEBUG][2025-11-17 12:02:40] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 12:02:40] generateForNotes input: {g}B2 {d}c {G}A4
+[DEBUG][2025-11-17 12:02:40] generateForNotes input: ]
+[DEBUG][2025-11-17 12:02:47] generateForNotes input: A B c d
+[DEBUG][2025-11-17 12:02:47] generateForNotes input: E F G A
+[DEBUG][2025-11-17 12:02:47] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 12:02:47] generateForNotes input: {g}B3A {g}c{d}B3
+[DEBUG][2025-11-17 12:02:47] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 12:02:47] generateForNotes input: {g}B2 {d}c {G}A4
+[DEBUG][2025-11-17 12:02:47] generateForNotes input: {g}c3d {g}ec3
+[DEBUG][2025-11-17 12:02:47] generateForNotes input: {g}f3d {g}ec3
+[DEBUG][2025-11-17 12:02:47] generateForNotes input: {g}c3d {g}ec3
+[DEBUG][2025-11-17 12:02:47] generateForNotes input: {ag}a2f2 {gef}e4
+[DEBUG][2025-11-17 12:02:47] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 12:02:47] generateForNotes input: {g}B3A {g}c{d}B3
+[DEBUG][2025-11-17 12:02:47] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 12:02:47] generateForNotes input: {g}B2 {d}c {G}A4
+[DEBUG][2025-11-17 12:02:47] generateForNotes input: ]
+[DEBUG][2025-11-17 12:03:17] generateForNotes input: A B c d
+[DEBUG][2025-11-17 12:03:17] generateForNotes input: E F G A
+[DEBUG][2025-11-17 12:03:17] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 12:03:17] generateForNotes input: {g}B3A {g}c{d}B3
+[DEBUG][2025-11-17 12:03:17] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 12:03:17] generateForNotes input: {g}B2 {d}c {G}A4
+[DEBUG][2025-11-17 12:03:17] generateForNotes input: {g}c3d {g}ec3
+[DEBUG][2025-11-17 12:03:17] generateForNotes input: {g}f3d {g}ec3
+[DEBUG][2025-11-17 12:03:17] generateForNotes input: {g}c3d {g}ec3
+[DEBUG][2025-11-17 12:03:17] generateForNotes input: {ag}a2f2 {gef}e4
+[DEBUG][2025-11-17 12:03:17] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 12:03:17] generateForNotes input: {g}B3A {g}c{d}B3
+[DEBUG][2025-11-17 12:03:17] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 12:03:17] generateForNotes input: {g}B2 {d}c {G}A4
+[DEBUG][2025-11-17 12:03:17] generateForNotes input: ]
+[DEBUG][2025-11-17 12:03:25] generateForNotes input: A B c d
+[DEBUG][2025-11-17 12:03:26] generateForNotes input: E F G A
+[DEBUG][2025-11-17 12:03:34] generateForNotes input: A B c d
+[DEBUG][2025-11-17 12:03:34] generateForNotes input: E F G A
+[DEBUG][2025-11-17 12:03:42] generateForNotes input: A B c d
+[DEBUG][2025-11-17 12:03:42] generateForNotes input: E F G A
+[DEBUG][2025-11-17 12:03:42] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 12:03:42] generateForNotes input: {g}B3A {g}c{d}B3
+[DEBUG][2025-11-17 12:03:42] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 12:03:42] generateForNotes input: {g}B2 {d}c {G}A4
+[DEBUG][2025-11-17 12:03:42] generateForNotes input: {g}c3d {g}ec3
+[DEBUG][2025-11-17 12:03:42] generateForNotes input: {g}f3d {g}ec3
+[DEBUG][2025-11-17 12:03:42] generateForNotes input: {g}c3d {g}ec3
+[DEBUG][2025-11-17 12:03:42] generateForNotes input: {ag}a2f2 {gef}e4
+[DEBUG][2025-11-17 12:03:42] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 12:03:42] generateForNotes input: {g}B3A {g}c{d}B3
+[DEBUG][2025-11-17 12:03:42] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 12:03:42] generateForNotes input: {g}B2 {d}c {G}A4
+[DEBUG][2025-11-17 12:03:42] generateForNotes input: ]
+[DEBUG][2025-11-17 12:04:08] generateForNotes input: A B c d
+[DEBUG][2025-11-17 12:04:09] generateForNotes input: E F G A
+[DEBUG][2025-11-17 12:04:09] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 12:04:09] generateForNotes input: {g}B3A {g}c{d}B3
+[DEBUG][2025-11-17 12:04:09] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 12:04:09] generateForNotes input: {g}B2 {d}c {G}A4
+[DEBUG][2025-11-17 12:04:09] generateForNotes input: {g}c3d {g}ec3
+[DEBUG][2025-11-17 12:04:09] generateForNotes input: {g}f3d {g}ec3
+[DEBUG][2025-11-17 12:04:09] generateForNotes input: {g}c3d {g}ec3
+[DEBUG][2025-11-17 12:04:09] generateForNotes input: {ag}a2f2 {gef}e4
+[DEBUG][2025-11-17 12:04:09] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 12:04:09] generateForNotes input: {g}B3A {g}c{d}B3
+[DEBUG][2025-11-17 12:04:09] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 12:04:09] generateForNotes input: {g}B2 {d}c {G}A4
+[DEBUG][2025-11-17 12:04:09] generateForNotes input: ]
+[DEBUG][2025-11-17 12:11:52] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:11:52] TokenNormalizer: token='B' part='B' normalized='B'
+[DEBUG][2025-11-17 12:11:52] TokenNormalizer: token='C' part='C' normalized='C'
+[DEBUG][2025-11-17 12:11:52] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:11:52] TokenNormalizer: token='B' part='B' normalized='B'
+[DEBUG][2025-11-17 12:11:52] TokenNormalizer: token='C' part='C' normalized='C'
+[DEBUG][2025-11-17 12:11:52] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:11:52] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:11:52] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:11:52] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:11:52] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:11:52] TokenNormalizer: token='B' part='B' normalized='B'
+[DEBUG][2025-11-17 12:11:52] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:11:52] TokenNormalizer: token='B' part='B' normalized='B'
+[DEBUG][2025-11-17 12:11:52] TokenNormalizer: token='{g}A3' part='{g}A3' normalized='{g}A'
+[DEBUG][2025-11-17 12:11:52] TokenNormalizer: token='{g}B2' part='{g}B2' normalized='{g}B'
+[DEBUG][2025-11-17 12:11:52] TokenNormalizer: token='{g}X3' part='g' normalized='g'
+[DEBUG][2025-11-17 12:12:01] TokenNormalizer: token='{g}A3' part='{g}A3' normalized='{g}A'
+[DEBUG][2025-11-17 12:12:01] TokenNormalizer: token='{g}B2' part='{g}B2' normalized='{g}B'
+[DEBUG][2025-11-17 12:12:01] TokenNormalizer: token='{d}c1' part='{d}c1' normalized='{d}c'
+[DEBUG][2025-11-17 12:12:01] TokenNormalizer: token='A4' part='A4' normalized='A'
+[DEBUG][2025-11-17 12:12:01] TokenNormalizer: token='{g}A3' part='{g}A3' normalized='{g}A'
+[DEBUG][2025-11-17 12:12:01] TokenToCanntMapper: token='{g}A3' normalized='{g}A'
+[DEBUG][2025-11-17 12:12:01] TokenToCanntMapper: MAPPED '{g}A' => 'hen'
+[DEBUG][2025-11-17 12:12:01] TokenNormalizer: token='{g}B2' part='{g}B2' normalized='{g}B'
+[DEBUG][2025-11-17 12:12:01] TokenToCanntMapper: token='{g}B2' normalized='{g}B'
+[DEBUG][2025-11-17 12:12:01] TokenToCanntMapper: MAPPED '{g}B' => 'o'
+[DEBUG][2025-11-17 12:12:01] TokenNormalizer: token='{d}c1' part='{d}c1' normalized='{d}c'
+[DEBUG][2025-11-17 12:12:01] TokenToCanntMapper: token='{d}c1' normalized='{d}c'
+[DEBUG][2025-11-17 12:12:01] TokenToCanntMapper: MAPPED '{d}c' => 'do'
+[DEBUG][2025-11-17 12:12:01] TokenNormalizer: token='{g}X3' part='g' normalized='g'
+[DEBUG][2025-11-17 12:12:01] TokenToCanntMapper: token='{g}X3' normalized='g'
+[DEBUG][2025-11-17 12:12:01] TokenToCanntMapper: NO MAPPING for 'g'
+[DEBUG][2025-11-17 12:12:01] TokenNormalizer: token='{g}A3' part='{g}A3' normalized='{g}A'
+[DEBUG][2025-11-17 12:12:01] TokenNormalizer: token='{g}B2' part='{g}B2' normalized='{g}B'
+[DEBUG][2025-11-17 12:12:01] TokenNormalizer: token='{d}c1' part='{d}c1' normalized='{d}c'
+[DEBUG][2025-11-17 12:12:01] TokenNormalizer: token='A4' part='A4' normalized='A'
+[DEBUG][2025-11-17 12:12:01] TokenNormalizer: token='{g}A3' part='{g}A3' normalized='{g}A'
+[DEBUG][2025-11-17 12:12:01] TokenNormalizer: token='B' part='B' normalized='B'
+[DEBUG][2025-11-17 12:12:15] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:12:15] TokenNormalizer: token='B' part='B' normalized='B'
+[DEBUG][2025-11-17 12:12:15] TokenNormalizer: token='C' part='C' normalized='C'
+[DEBUG][2025-11-17 12:12:15] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:12:15] TokenNormalizer: token='B' part='B' normalized='B'
+[DEBUG][2025-11-17 12:12:15] TokenNormalizer: token='C' part='C' normalized='C'
+[DEBUG][2025-11-17 12:12:15] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:12:15] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:12:15] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:12:15] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:12:15] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:12:15] TokenNormalizer: token='B' part='B' normalized='B'
+[DEBUG][2025-11-17 12:12:15] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:12:15] TokenNormalizer: token='B' part='B' normalized='B'
+[DEBUG][2025-11-17 12:12:15] TokenNormalizer: token='{g}A3' part='{g}A3' normalized='{g}A'
+[DEBUG][2025-11-17 12:12:15] TokenNormalizer: token='{g}B2' part='{g}B2' normalized='{g}B'
+[DEBUG][2025-11-17 12:12:15] TokenNormalizer: token='{g}X3' part='g' normalized='g'
+[DEBUG][2025-11-17 12:12:24] TokenNormalizer: token='{g}A3' part='{g}A3' normalized='{g}A'
+[DEBUG][2025-11-17 12:12:24] TokenNormalizer: token='{g}B2' part='{g}B2' normalized='{g}B'
+[DEBUG][2025-11-17 12:12:24] TokenNormalizer: token='{d}c1' part='{d}c1' normalized='{d}c'
+[DEBUG][2025-11-17 12:12:24] TokenNormalizer: token='A4' part='A4' normalized='A'
+[DEBUG][2025-11-17 12:12:24] TokenNormalizer: token='{g}A3' part='{g}A3' normalized='{g}A'
+[DEBUG][2025-11-17 12:12:24] TokenToCanntMapper: token='{g}A3' normalized='{g}A'
+[DEBUG][2025-11-17 12:12:24] TokenToCanntMapper: MAPPED '{g}A' => 'hen'
+[DEBUG][2025-11-17 12:12:24] TokenNormalizer: token='{g}B2' part='{g}B2' normalized='{g}B'
+[DEBUG][2025-11-17 12:12:24] TokenToCanntMapper: token='{g}B2' normalized='{g}B'
+[DEBUG][2025-11-17 12:12:24] TokenToCanntMapper: MAPPED '{g}B' => 'o'
+[DEBUG][2025-11-17 12:12:24] TokenNormalizer: token='{d}c1' part='{d}c1' normalized='{d}c'
+[DEBUG][2025-11-17 12:12:24] TokenToCanntMapper: token='{d}c1' normalized='{d}c'
+[DEBUG][2025-11-17 12:12:24] TokenToCanntMapper: MAPPED '{d}c' => 'do'
+[DEBUG][2025-11-17 12:12:24] TokenNormalizer: token='{g}X3' part='g' normalized='g'
+[DEBUG][2025-11-17 12:12:24] TokenToCanntMapper: token='{g}X3' normalized='g'
+[DEBUG][2025-11-17 12:12:24] TokenToCanntMapper: NO MAPPING for 'g'
+[DEBUG][2025-11-17 12:12:24] TokenNormalizer: token='{g}A3' part='{g}A3' normalized='{g}A'
+[DEBUG][2025-11-17 12:12:24] TokenNormalizer: token='{g}B2' part='{g}B2' normalized='{g}B'
+[DEBUG][2025-11-17 12:12:24] TokenNormalizer: token='{d}c1' part='{d}c1' normalized='{d}c'
+[DEBUG][2025-11-17 12:12:24] TokenNormalizer: token='A4' part='A4' normalized='A'
+[DEBUG][2025-11-17 12:12:24] TokenNormalizer: token='{g}A3' part='{g}A3' normalized='{g}A'
+[DEBUG][2025-11-17 12:12:24] TokenNormalizer: token='B' part='B' normalized='B'
+[DEBUG][2025-11-17 12:12:44] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:12:44] TokenNormalizer: token='B' part='B' normalized='B'
+[DEBUG][2025-11-17 12:12:44] TokenNormalizer: token='C' part='C' normalized='C'
+[DEBUG][2025-11-17 12:12:44] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:12:44] TokenNormalizer: token='B' part='B' normalized='B'
+[DEBUG][2025-11-17 12:12:44] TokenNormalizer: token='C' part='C' normalized='C'
+[DEBUG][2025-11-17 12:12:44] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:12:44] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:12:44] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:12:44] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:12:44] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:12:44] TokenNormalizer: token='B' part='B' normalized='B'
+[DEBUG][2025-11-17 12:12:44] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:12:44] TokenNormalizer: token='B' part='B' normalized='B'
+[DEBUG][2025-11-17 12:12:44] TokenNormalizer: token='{g}A3' part='{g}A3' normalized='{g}A'
+[DEBUG][2025-11-17 12:12:44] TokenNormalizer: token='{g}B2' part='{g}B2' normalized='{g}B'
+[DEBUG][2025-11-17 12:12:44] TokenNormalizer: token='{g}X3' part='g' normalized='g'
+[DEBUG][2025-11-17 12:12:50] TokenNormalizer: token='{g}A3' part='{g}A3' normalized='{g}A'
+[DEBUG][2025-11-17 12:12:50] TokenNormalizer: token='{g}B2' part='{g}B2' normalized='{g}B'
+[DEBUG][2025-11-17 12:12:50] TokenNormalizer: token='{d}c1' part='{d}c1' normalized='{d}c'
+[DEBUG][2025-11-17 12:12:50] TokenNormalizer: token='A4' part='A4' normalized='A'
+[DEBUG][2025-11-17 12:12:50] TokenNormalizer: token='{g}A3' part='{g}A3' normalized='{g}A'
+[DEBUG][2025-11-17 12:12:50] TokenToCanntMapper: token='{g}A3' normalized='{g}A'
+[DEBUG][2025-11-17 12:12:50] TokenToCanntMapper: MAPPED '{g}A' => 'hen'
+[DEBUG][2025-11-17 12:12:50] TokenNormalizer: token='{g}B2' part='{g}B2' normalized='{g}B'
+[DEBUG][2025-11-17 12:12:50] TokenToCanntMapper: token='{g}B2' normalized='{g}B'
+[DEBUG][2025-11-17 12:12:50] TokenToCanntMapper: MAPPED '{g}B' => 'o'
+[DEBUG][2025-11-17 12:12:50] TokenNormalizer: token='{d}c1' part='{d}c1' normalized='{d}c'
+[DEBUG][2025-11-17 12:12:50] TokenToCanntMapper: token='{d}c1' normalized='{d}c'
+[DEBUG][2025-11-17 12:12:50] TokenToCanntMapper: MAPPED '{d}c' => 'do'
+[DEBUG][2025-11-17 12:12:50] TokenNormalizer: token='{g}X3' part='g' normalized='g'
+[DEBUG][2025-11-17 12:12:50] TokenToCanntMapper: token='{g}X3' normalized='g'
+[DEBUG][2025-11-17 12:12:50] TokenToCanntMapper: NO MAPPING for 'g'
+[DEBUG][2025-11-17 12:12:50] TokenNormalizer: token='{g}A3' part='{g}A3' normalized='{g}A'
+[DEBUG][2025-11-17 12:12:50] TokenNormalizer: token='{g}B2' part='{g}B2' normalized='{g}B'
+[DEBUG][2025-11-17 12:12:50] TokenNormalizer: token='{d}c1' part='{d}c1' normalized='{d}c'
+[DEBUG][2025-11-17 12:12:50] TokenNormalizer: token='A4' part='A4' normalized='A'
+[DEBUG][2025-11-17 12:12:50] TokenNormalizer: token='{g}A3' part='{g}A3' normalized='{g}A'
+[DEBUG][2025-11-17 12:12:50] TokenNormalizer: token='B' part='B' normalized='B'
+[DEBUG][2025-11-17 12:13:04] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:13:04] TokenNormalizer: token='B' part='B' normalized='B'
+[DEBUG][2025-11-17 12:13:04] TokenNormalizer: token='C' part='C' normalized='C'
+[DEBUG][2025-11-17 12:13:04] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:13:04] TokenNormalizer: token='B' part='B' normalized='B'
+[DEBUG][2025-11-17 12:13:04] TokenNormalizer: token='C' part='C' normalized='C'
+[DEBUG][2025-11-17 12:13:04] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:13:04] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:13:04] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:13:04] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:13:04] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:13:04] TokenNormalizer: token='B' part='B' normalized='B'
+[DEBUG][2025-11-17 12:13:04] TokenNormalizer: token='A' part='A' normalized='A'
+[DEBUG][2025-11-17 12:13:04] TokenNormalizer: token='B' part='B' normalized='B'
+[DEBUG][2025-11-17 12:13:04] TokenNormalizer: token='{g}A3' part='{g}A3' normalized='{g}A'
+[DEBUG][2025-11-17 12:13:04] TokenNormalizer: token='{g}B2' part='{g}B2' normalized='{g}B'
+[DEBUG][2025-11-17 12:13:04] TokenNormalizer: token='{g}X3' part='g' normalized='g'
+[DEBUG][2025-11-17 12:13:13] TokenNormalizer: token='{g}A3' part='{g}A3' normalized='{g}A'
+[DEBUG][2025-11-17 12:13:13] TokenNormalizer: token='{g}B2' part='{g}B2' normalized='{g}B'
+[DEBUG][2025-11-17 12:13:13] TokenNormalizer: token='{d}c1' part='{d}c1' normalized='{d}c'
+[DEBUG][2025-11-17 12:13:13] TokenNormalizer: token='A4' part='A4' normalized='A'
+[DEBUG][2025-11-17 12:13:13] TokenNormalizer: token='{g}A3' part='{g}A3' normalized='{g}A'
+[DEBUG][2025-11-17 12:13:13] TokenToCanntMapper: token='{g}A3' normalized='{g}A'
+[DEBUG][2025-11-17 12:13:13] TokenToCanntMapper: MAPPED '{g}A' => 'hen'
+[DEBUG][2025-11-17 12:13:13] TokenNormalizer: token='{g}B2' part='{g}B2' normalized='{g}B'
+[DEBUG][2025-11-17 12:13:13] TokenToCanntMapper: token='{g}B2' normalized='{g}B'
+[DEBUG][2025-11-17 12:13:13] TokenToCanntMapper: MAPPED '{g}B' => 'o'
+[DEBUG][2025-11-17 12:13:13] TokenNormalizer: token='{d}c1' part='{d}c1' normalized='{d}c'
+[DEBUG][2025-11-17 12:13:13] TokenToCanntMapper: token='{d}c1' normalized='{d}c'
+[DEBUG][2025-11-17 12:13:13] TokenToCanntMapper: MAPPED '{d}c' => 'do'
+[DEBUG][2025-11-17 12:13:13] TokenNormalizer: token='{g}X3' part='g' normalized='g'
+[DEBUG][2025-11-17 12:13:13] TokenToCanntMapper: token='{g}X3' normalized='g'
+[DEBUG][2025-11-17 12:13:13] TokenToCanntMapper: NO MAPPING for 'g'
+[DEBUG][2025-11-17 12:13:13] TokenNormalizer: token='{g}A3' part='{g}A3' normalized='{g}A'
+[DEBUG][2025-11-17 12:13:13] TokenNormalizer: token='{g}B2' part='{g}B2' normalized='{g}B'
+[DEBUG][2025-11-17 12:13:13] TokenNormalizer: token='{d}c1' part='{d}c1' normalized='{d}c'
+[DEBUG][2025-11-17 12:13:13] TokenNormalizer: token='A4' part='A4' normalized='A'
+[DEBUG][2025-11-17 12:13:13] TokenNormalizer: token='{g}A3' part='{g}A3' normalized='{g}A'
+[DEBUG][2025-11-17 12:13:13] TokenNormalizer: token='B' part='B' normalized='B'

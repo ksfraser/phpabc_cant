@@ -58,8 +58,9 @@ echo "\n";
 // Verify expected behavior
 $hasVoiceM = strpos($result['text'], 'V:M') !== false || strpos($result['text'], 'V:Melody') !== false;
 $hasVoiceBagpipes = strpos($result['text'], 'V:Bagpipes') !== false;
-$hasCanntInMelody = preg_match('/V:M.*?w:.*?(chin|hin|ho|dro)/s', $result['text']);
-$hasCanntInBagpipes = preg_match('/V:Bagpipes.*?w:.*?(chin|hin|ho|dro)/s', $result['text']);
+// Check if w: line appears right after each voice's bars (not crossing voice boundaries)
+$hasCanntInMelody = preg_match('/\[V:M\][^\[]*w:.*?(dar|dod|hid)/s', $result['text']);
+$hasCanntInBagpipes = preg_match('/\[V:Bagpipes\][^\[]*w:.*?(dar|dod|hid)/s', $result['text']);
 
 echo "\n--- Validation ---\n";
 echo "✓ Has V:M voice: " . ($hasVoiceM ? 'YES' : 'NO') . "\n";
@@ -93,7 +94,7 @@ echo $result2['text'];
 
 $melodyHasABcd = strpos($result2['text'], 'A B c d') !== false;
 $bagpipesHasEFGA = strpos($result2['text'], 'E F G A') !== false;
-$bagpipesHasCanntEFGA = preg_match('/V:Bagpipes.*E F G A.*?w:.*?/s', $result2['text']);
+$bagpipesHasCanntEFGA = preg_match('/\[V:Bagpipes\].*E F G A.*?w:.*?/s', $result2['text']);
 
 echo "\n--- Validation ---\n";
 echo "✓ Melody has 'A B c d': " . ($melodyHasABcd ? 'YES' : 'NO') . "\n";
@@ -123,8 +124,8 @@ if (file_exists(__DIR__ . '/test-Suo.abc')) {
     preg_match('/V:Bagpipes.*?((?:\|[^|]*)+)\|/s', $result3['text'], $bagpipesMatch);
     $bagpipesBars = isset($bagpipesMatch[1]) ? substr_count($bagpipesMatch[1], '|') + 1 : 0;
     
-    $melodyHasCannt = preg_match('/V:M.*?w:.*?(chin|hin|ho|dro)/s', $result3['text']);
-    $bagpipesHasCannt = preg_match('/V:Bagpipes.*?w:.*?(chin|hin|ho|dro)/s', $result3['text']);
+    $melodyHasCannt = preg_match('/\[V:M\][^\[]*w:.*?(dar|dod|hid)/s', $result3['text']);
+    $bagpipesHasCannt = preg_match('/\[V:Bagpipes\][^\[]*w:.*?(dar|dod|hid)/s', $result3['text']);
     
     echo "\n--- Validation ---\n";
     echo "✓ Melody bars: $melodyBars\n";

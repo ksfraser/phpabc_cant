@@ -367,6 +367,487 @@ Uses both tables and config/db_config.php for DSN
 - **FR9**: Load dictionary from file or database.
 - **FR10**: CLI options for conversion, output, and validation.
 - **FR11**: Provide CLI interface (abc-cannt-cli.php) for ABC file processing with options like --convert and --output.
+- **FR12**: Support voice ordering with three modes: source file order (default), orchestral score order, and custom user-defined order.
+- **FR13**: Implement instrument family classification and voice name mapping for orchestral ordering.
+- **FR14**: Provide configuration system for custom voice ordering rules (JSON, database, or UI).
+- **FR15**: Support three transpose modes for ABC output: MIDI import (transpose=0), modern bagpipe (transpose=2), and orchestral (written pitch).
+- **FR16**: Manage MIDI channel and program defaults per instrument via database (abc_midi_defaults table).
+- **FR17**: Map percussion/drum parts to MIDI channel 10 with appropriate percussion programs.
+- **FR18**: Load instrument voice defaults (MIDI channel, program, transpose, octave) from configuration or database.
+- **FR19**: Support configuration files (JSON/PHP) with all CLI options having config file equivalents.
+- **FR20**: Implement configuration precedence: CLI options > custom config > user config > global config > defaults.
+- **FR21**: Provide configuration save/load functionality for CLI and WordPress interfaces.
+- **FR22**: Support configuration presets in WordPress with export/import capabilities.
+
+## Voice Ordering Requirements
+### Current Implementation Status
+- **Current Behavior**: Voice order from source ABC file is preserved (no reordering)
+- **Implementation**: `AbcProcessor::reorderVoices()` is currently a stub that returns input unchanged
+- **Status**: Requires implementation to support orchestral and custom ordering modes
+
+### Voice Ordering Options (REQUIRED IMPLEMENTATION)
+1. **Source File Order (Default)** ✓
+   - Preserves the order of V: voice headers as they appear in the input ABC file
+   - No processing required
+   - Recommended for files already organized by composer/arranger
+   - Currently implemented (stub returns unchanged)
+
+2. **Orchestral Score Order (REQUIRED)**
+   - Reorder voices according to standard orchestral score layout
+   - Standard orchestral order:
+     - **Woodwinds**: Piccolo, Flute, Oboe, Clarinet, Bassoon
+     - **Brass**: French Horn, Trumpet, Trombone, Tuba
+     - **Percussion**: Timpani, other percussion
+     - **Strings**: Violin I, Violin II, Viola, Cello, Double Bass
+     - **Keyboard/Harp**: Piano, Organ, Harp (if present)
+     - **Bagpipes**: Highland Bagpipes, Uilleann Pipes (treated as woodwind)
+     - **Vocals**: Soprano, Alto, Tenor, Bass (if present)
+   - Implementation requirements:
+     - Voice family classification system (InstrumentFamily enum)
+     - Instrument name to family mapping (via configuration or database)
+     - Orchestral position ordering rules
+     - Support for voice name variations ("Violin 1", "Vln I", "V1")
+     - Fallback: unrecognized instruments placed at end in source order
+
+3. **Custom Order (REQUIRED)**
+   - User-specified voice ordering via configuration
+   - Support for domain-specific ordering (e.g., bagpipe band: Pipes, Tenor Drums, Bass Drum, Snare)
+   - Configuration format: ordered array of voice name patterns or instrument families
+   - CLI support: `--voice-order-config=filename.json`
+   - WordPress UI: Custom ordering editor with drag-and-drop interface
+   - Fallback: voices not in custom order appear at end in source order
+
+### Configuration Requirements
+- **Config Option**: `voice_ordering` with values: `source` (default), `orchestral`, `custom`
+- **Config Option**: `voice_order_custom` - array or JSON file path for custom ordering rules
+- **CLI Options**: 
+  - `--voice-order=source|orchestral|custom` - select ordering mode
+  - `--voice-order-config=filename.json` - path to custom ordering configuration
+- **WordPress UI**: 
+  - Radio buttons for voice ordering mode (Source/Orchestral/Custom)
+  - Custom ordering editor with drag-and-drop interface
+  - Preview of current voice order before processing
+
+### Implementation Classes
+- **AbcVoiceOrderPass**: Update to implement all three ordering modes (currently stub)
+- **VoiceOrderingStrategy** (new): Interface for ordering strategies
+  - `SourceOrderStrategy`: Returns voices in original order
+  - `OrchestralOrderStrategy`: Implements orchestral score ordering
+  - `CustomOrderStrategy`: Implements user-defined ordering
+- **InstrumentFamily** (new): Enum or class for instrument classification
+- **InstrumentMapper** (new): Maps voice names to instrument families
+- **VoiceOrderConfig** (new): Configuration container for ordering rules
+
+### Test Requirements
+- **VR1**: Test that source order is preserved when `voice_ordering=source`
+- **VR2**: Test orchestral ordering produces correct sequence for standard orchestra
+- **VR3**: Test orchestral ordering handles bagpipe ensembles correctly
+- **VR4**: Test custom ordering follows user-defined rules from configuration
+- **VR5**: Test voice ordering with single-voice tunes (no reordering needed)
+- **VR6**: Test voice ordering with multi-tune files (each tune ordered independently)
+- **VR7**: Test fallback behavior for unrecognized instrument names
+- **VR8**: Test voice name variations ("Violin I", "Vln 1", "V1") map to same position
+- **VR9**: Test configuration validation (invalid custom order, missing instruments)
+- **VR10**: Test orchestral ordering with partial orchestras (some instrument families missing)
+
+### Traceability
+- **Related Classes**: `AbcVoiceOrderPass`, `AbcProcessor::reorderVoices()`, `AbcProcessor::reorderVoicesInTune()`
+- **Related Tests**: `AbcVoiceOrderPassTest`
+- **Related Requirements**: FR7 (Preserve voice headers), BR6 (CLI/WP interfaces)
+
+---
+
+## Transpose Mode Requirements
+### Overview
+Different use cases require different transpose settings for ABC notation output. The system must support three transpose modes to accommodate MIDI imports, modern bagpipe tuning, and orchestral score conventions.
+
+### Transpose Modes (REQUIRED IMPLEMENTATION)
+
+#### 1. MIDI Import Mode (transpose=0 for all voices)
+- **Use Case**: ABC files imported from MIDI files or created from audio
+- **Behavior**: All voices have `transpose=0` and `octave=0`
+- **Rationale**: MIDI uses absolute pitch (C=C, D=D), no transposition needed
+- **Default**: This is the current behavior when importing from MIDI
+- **Output Example**: `V:Trumpet transpose=0 octave=0`
+
+#### 2. Modern Bagpipe Mode (transpose=2 for concert pitch instruments)
+- **Use Case**: Bagpipe ensemble music for modern Highland bagpipes
+- **Behavior**: 
+  - Bagpipe voices: `transpose=0` (written pitch = sounding pitch)
+  - Concert pitch instruments (Piano, Guitar, etc.): `transpose=2` (up one whole step)
+  - Reason: Highland bagpipes sound at approximately Bb major when written in A major
+  - Modern chanters are typically tuned 480Hz (slightly sharp of Bb)
+- **Configuration**: `transpose_mode=bagpipe` or `--transpose-mode=bagpipe`
+- **Example**:
+  - `V:Bagpipes transpose=0` (A on paper sounds Bb)
+  - `V:Piano transpose=2` (written C sounds D, matching bagpipe's written A = sounding Bb)
+  - `V:Guitar transpose=2`
+
+#### 3. Orchestral Score Mode (written pitch for transposing instruments)
+- **Use Case**: Traditional orchestral/concert band scores
+- **Behavior**: Each instrument uses its standard orchestral transpose setting
+- **Transpose Settings by Instrument Family**:
+  - **Concert Pitch** (transpose=0): Piano, Guitar, Flute, Oboe, Bassoon, Trombone, Tuba, Strings, Percussion
+  - **Bb Instruments** (transpose=2): Trumpet, Clarinet, Tenor Sax, Soprano Sax
+  - **Eb Instruments** (transpose=9): Alto Sax, Baritone Sax, Eb Clarinet
+  - **F Instruments** (transpose=7): French Horn, English Horn
+  - **Bagpipes** (transpose=0 or 2 depending on convention)
+- **Configuration**: `transpose_mode=orchestral` or `--transpose-mode=orchestral`
+- **Note**: In orchestral mode, each part shows the notes the musician reads, not concert pitch
+
+### Configuration Requirements
+- **Config Option**: `transpose_mode` with values: `midi` (default), `bagpipe`, `orchestral`
+- **CLI Option**: `--transpose-mode=midi|bagpipe|orchestral`
+- **WordPress UI**: Radio buttons for transpose mode selection
+- **Per-Voice Override**: Allow manual transpose override via configuration or ABC header
+- **Database Storage**: `abc_midi_defaults` table should include default `transpose` column
+
+### Implementation Requirements
+
+#### Database Schema Enhancement
+```sql
+ALTER TABLE abc_midi_defaults 
+ADD COLUMN transpose INT DEFAULT 0,
+ADD COLUMN octave INT DEFAULT 0;
+```
+
+#### New/Modified Classes
+- **TransposeMode** (new): Enum or class for transpose mode types
+- **TransposeStrategy** (new): Interface for transpose calculation strategies
+  - `MidiTransposeStrategy`: Returns transpose=0 for all instruments
+  - `BagpipeTransposeStrategy`: Applies bagpipe ensemble transposition rules
+  - `OrchestralTransposeStrategy`: Applies orchestral transposition by instrument
+- **InstrumentTransposeMapper** (new): Maps instrument names to standard transpose values
+- **AbcVoiceFactory** (enhance): Apply transpose mode when creating voices
+- **InstrumentVoiceFactory** (enhance): Include default transpose values per instrument
+
+#### Existing Infrastructure (COMPLETE ✓)
+- **VoiceFactory**: Already supports `transpose` and `octave` parameters
+- **AbcVoice**: Already stores and renders `transpose=N` in V: headers
+- **MidiInstrumentMapper**: Maps 128 MIDI programs to instrument names
+- **abc_midi_defaults table**: Stores voice_name, midi_channel, midi_program
+- **abc-midi-defaults-cli.php**: CLI tool for managing MIDI defaults
+
+### Percussion/Drum Instrument Mapping
+
+#### MIDI Channel 10 Requirement
+- **Standard**: MIDI channel 10 is reserved for percussion/drums (General MIDI spec)
+- **Database**: `abc_midi_defaults` already maps Drums to channel 10
+- **Current Entries**:
+  ```sql
+  ('Drums', 10, 0),
+  ('Snare', 11, 0),  -- Should be channel 10
+  ('Bass', 11, 0),   -- If this is bass drum, should be channel 10
+  ('Tenor', 11, 0)   -- If this is tenor drum, should be channel 10
+  ```
+- **Fix Required**: Update drum/percussion instruments to use channel 10
+
+#### Percussion Instrument Mapping
+- **Clef**: Percussion uses `clef=perc` in ABC notation
+- **MIDI Programs for Percussion** (channel 10):
+  - Program numbers are ignored on channel 10 (uses note numbers instead)
+  - Different drum sounds mapped to different MIDI note numbers:
+    - Bass Drum: MIDI note 35-36
+    - Snare Drum: MIDI note 38, 40
+    - Tenor Drum: MIDI note 47-48 (low-mid toms)
+    - Hi-Hat: MIDI note 42, 44, 46
+    - Cymbals: MIDI note 49, 51, 52, 55, 57, 59
+- **Implementation**: Create DrumMapper class for note number mapping
+
+#### Percussion Voice Detection
+- **Detection Rules**:
+  - Voice name contains "Drum", "Snare", "Bass" (drum context), "Tenor" (drum context), "Perc", "Cymbal"
+  - Voice has `clef=perc` attribute
+  - Voice mapped to MIDI channel 10 in database
+- **Auto-Configuration**: Percussion voices automatically get:
+  - `midi_channel=10`
+  - `clef=perc`
+  - `transpose=0` (percussion doesn't transpose)
+  - `stafflines=1` (optional, for visual clarity)
+
+### Test Requirements
+- **TR1**: Test MIDI mode sets transpose=0 for all instruments
+- **TR2**: Test bagpipe mode sets transpose=2 for concert pitch instruments, 0 for bagpipes
+- **TR3**: Test orchestral mode applies correct transpose per instrument family
+- **TR4**: Test transpose override via configuration works
+- **TR5**: Test percussion instruments map to MIDI channel 10
+- **TR6**: Test drum voice detection (name, clef, database)
+- **TR7**: Test transpose mode persistence (save/load configurations)
+- **TR8**: Test mixed ensembles (bagpipes + orchestra)
+- **TR9**: Test abc_midi_defaults table loads transpose/octave values
+- **TR10**: Test CLI --transpose-mode flag applies correct settings
+
+### Traceability
+- **Related Classes**: 
+  - Existing: `VoiceFactory`, `AbcVoice`, `InstrumentVoiceFactory`, `MidiInstrumentMapper`
+  - Database: `abc_midi_defaults`, `abc-midi-defaults-cli.php`
+  - New: `TransposeMode`, `TransposeStrategy`, `InstrumentTransposeMapper`, `DrumMapper`
+- **Related Requirements**: FR15-FR18, BR6 (CLI/WP interfaces)
+- **Database Schema**: `sql/abc_midi_defaults_schema.sql` (needs transpose/octave columns)
+
+---
+
+## Configuration File Requirements
+### Overview
+All CLI options must have corresponding default settings in a configuration file to enable reusable processing configurations. Users should be able to save, load, and share processing configurations without repeating CLI arguments.
+
+### Configuration File Support (REQUIRED IMPLEMENTATION)
+
+#### Configuration File Format
+- **Primary Format**: JSON (human-readable, version-controllable, widely supported)
+- **Secondary Formats**: 
+  - YAML (more human-friendly, supports comments)
+  - INI (simple key-value, consistent with header_defaults.txt pattern)
+  - PHP array (for backward compatibility with existing config/db_config.php pattern)
+- **Format Detection**: Automatic based on file extension (.json, .yml/.yaml, .ini, .php)
+- **File Location Options**:
+  1. `config/abc_processor_config.json` (default global config - JSON)
+  2. `config/abc_processor_config.yml` (alternative global config - YAML)
+  3. `config/abc_processor_config.ini` (alternative global config - INI)
+  4. `~/.abc_processor_config.json` (user-specific config)
+  5. Project-specific: `./abc_config.json` or `./abc_config.yml` or `./abc_config.ini` (current directory)
+  6. Custom path via `--config=path/to/config.{json|yml|ini|php}`
+- **Precedence**: CLI options > custom config file > project config > user config > global config > hardcoded defaults
+- **Recommendation**: Use JSON for programmatic generation/parsing, YAML for human editing, INI for simple cases
+
+#### Configuration File Structure (JSON)
+```json
+{
+  "processing": {
+    "voice_output_style": "grouped",
+    "interleave_bars": 1,
+    "bars_per_line": 4,
+    "join_bars_with_backslash": false,
+    "tune_number_width": 5
+  },
+  "transpose": {
+    "mode": "midi",
+    "overrides": {
+      "Bagpipes": 0,
+      "Piano": 2
+    }
+  },
+  "voice_ordering": {
+    "mode": "source",
+    "custom_order": ["Melody", "Bagpipes", "Guitar", "Piano", "Drums"]
+  },
+  "canntaireachd": {
+    "convert": true,
+    "generate_diff": true
+  },
+  "output": {
+    "output_file": null,
+    "error_file": "errors.log",
+    "cannt_diff_file": "cannt_diff.txt"
+  },
+  "database": {
+    "use_midi_defaults": true,
+    "use_voice_order_defaults": true
+  },
+  "validation": {
+    "timing_validation": true,
+    "strict_mode": false
+  }
+}
+```
+
+#### Current State Analysis
+**Existing** ✓:
+- `AbcProcessorConfig` class with 5 properties:
+  - `voiceOutputStyle`, `interleaveBars`, `barsPerLine`, `joinBarsWithBackslash`, `tuneNumberWidth`
+- `CLIOptions` class parses CLI arguments (but doesn't load from config files)
+- `config/db_config.php` for database settings only
+
+**Missing** (REQUIRED):
+- Config file loading (JSON/PHP)
+- Merging CLI options with config file defaults
+- Config precedence chain (CLI > custom > user > global)
+- Save configuration from CLI/WordPress
+- Voice ordering configuration
+- Transpose mode configuration
+- Canntaireachd processing configuration
+- Validation settings configuration
+
+### Enhanced AbcProcessorConfig Requirements
+
+#### Expand AbcProcessorConfig Class
+Add the following properties to `AbcProcessorConfig`:
+
+```php
+class AbcProcessorConfig {
+    // Existing properties
+    public $voiceOutputStyle = 'grouped';
+    public $interleaveBars = 1;
+    public $barsPerLine = 4;
+    public $joinBarsWithBackslash = false;
+    public $tuneNumberWidth = 5;
+    
+    // NEW: Voice ordering
+    public $voiceOrderingMode = 'source'; // 'source'|'orchestral'|'custom'
+    public $customVoiceOrder = []; // array of voice names/patterns
+    
+    // NEW: Transpose settings
+    public $transposeMode = 'midi'; // 'midi'|'bagpipe'|'orchestral'
+    public $transposeOverrides = []; // ['VoiceName' => transposeValue]
+    
+    // NEW: Canntaireachd processing
+    public $convertCanntaireachd = false;
+    public $generateCanntDiff = false;
+    
+    // NEW: Output file paths
+    public $outputFile = null;
+    public $errorFile = null;
+    public $canntDiffFile = null;
+    
+    // NEW: Database usage
+    public $useMidiDefaults = true;
+    public $useVoiceOrderDefaults = true;
+    
+    // NEW: Validation settings
+    public $timingValidation = true;
+    public $strictMode = false;
+    
+    // NEW: Config file management
+    public static function loadFromFile(string $path): self;
+    public static function loadWithPrecedence(array $paths): self;
+    public function saveToFile(string $path): bool;
+    public function mergeFromArray(array $config): void;
+    public function toArray(): array;
+    public function toJSON(): string;
+}
+```
+
+#### Configuration Loading Strategy
+
+**Implementation Pattern**:
+```php
+// 1. Start with defaults
+$config = new AbcProcessorConfig();
+
+// 2. Load from config files (lowest to highest precedence)
+$configPaths = [
+    __DIR__ . '/../config/abc_processor_config.json',  // global
+    $_SERVER['HOME'] . '/.abc_processor_config.json',   // user
+    getcwd() . '/abc_config.json',                      // project
+];
+$config = AbcProcessorConfig::loadWithPrecedence($configPaths);
+
+// 3. Apply custom config if specified
+if ($cli->opts['config'] ?? false) {
+    $customConfig = AbcProcessorConfig::loadFromFile($cli->opts['config']);
+    $config->merge($customConfig);
+}
+
+// 4. Override with CLI options (highest precedence)
+$config->applyFromCLI($cli);
+```
+
+### CLI Configuration Options
+
+#### New CLI Options Required
+- `--config=path/to/config.json` - Load configuration from file
+- `--save-config=path/to/config.json` - Save current settings to config file
+- `--show-config` - Display current configuration (for debugging)
+- `--voice-order=source|orchestral|custom` - Voice ordering mode
+- `--voice-order-config=file.json` - Custom voice ordering configuration
+- `--transpose-mode=midi|bagpipe|orchestral` - Transpose mode
+- `--transpose-override=Voice:N` - Per-voice transpose override (e.g., `--transpose-override=Piano:2`)
+- `--no-midi-defaults` - Don't load MIDI defaults from database
+- `--strict` - Enable strict validation mode
+
+#### Mapping CLI Options to Config Properties
+
+| CLI Option | Config Property | Config Section |
+|------------|-----------------|----------------|
+| `--voice_output_style=X` | `voiceOutputStyle` | `processing.voice_output_style` |
+| `--interleave_bars=N` | `interleaveBars` | `processing.interleave_bars` |
+| `--bars_per_line=N` | `barsPerLine` | `processing.bars_per_line` |
+| `--join_bars_with_backslash` | `joinBarsWithBackslash` | `processing.join_bars_with_backslash` |
+| `--width=N` | `tuneNumberWidth` | `processing.tune_number_width` |
+| `--voice-order=X` | `voiceOrderingMode` | `voice_ordering.mode` |
+| `--voice-order-config=F` | `customVoiceOrder` | `voice_ordering.custom_order` |
+| `--transpose-mode=X` | `transposeMode` | `transpose.mode` |
+| `--transpose-override=V:N` | `transposeOverrides[V]` | `transpose.overrides.V` |
+| `--convert` | `convertCanntaireachd` | `canntaireachd.convert` |
+| `--output=F` | `outputFile` | `output.output_file` |
+| `--errorfile=F` | `errorFile` | `output.error_file` |
+| `--canntdiff=F` | `canntDiffFile` | `output.cannt_diff_file` |
+| `--no-midi-defaults` | `useMidiDefaults=false` | `database.use_midi_defaults` |
+| `--strict` | `strictMode=true` | `validation.strict_mode` |
+
+### WordPress Configuration Support
+
+#### WordPress Settings Storage
+- Store configuration as WordPress options (wp_options table)
+- Key: `abc_processor_config` with serialized JSON value
+- WordPress UI allows editing and saving configuration
+- Export/import configuration as JSON file
+
+#### WordPress Admin UI Requirements
+1. **Processing Settings Tab**
+   - Voice output style (grouped/interleaved)
+   - Bars per line, interleave bars
+   - Tune number width
+
+2. **Voice Ordering Tab**
+   - Mode selector (source/orchestral/custom)
+   - Custom order editor (drag-and-drop)
+   - Preview of current order
+
+3. **Transpose Settings Tab**
+   - Mode selector (MIDI/bagpipe/orchestral)
+   - Per-instrument transpose overrides table
+   - Visual diagram showing transpose relationships
+
+4. **Output Settings Tab**
+   - Default output file patterns
+   - Error logging preferences
+   - Canntaireachd diff generation
+
+5. **Configuration Management**
+   - Save current settings as named preset
+   - Load preset
+   - Export as JSON file
+   - Import from JSON file
+   - Reset to defaults
+
+### Implementation Requirements
+
+#### New Classes/Files
+- **ConfigLoader** (new): Loads configuration from JSON/PHP files
+- **ConfigMerger** (new): Merges configurations with precedence rules
+- **ConfigValidator** (new): Validates configuration structure and values
+- **config/abc_processor_config.json** (new): Default global configuration file
+- **docs/configuration.md** (new): Configuration file documentation
+
+#### Modified Classes
+- **AbcProcessorConfig** (enhance): Add properties, file loading/saving methods
+- **CLIOptions** (enhance): Add config file option, integration with AbcProcessorConfig
+- All CLI scripts in `bin/` (enhance): Load config before CLI parsing
+
+### Test Requirements
+- **CR1**: Test loading configuration from JSON file
+- **CR2**: Test loading configuration from PHP array file
+- **CR3**: Test configuration precedence (CLI > custom > user > global)
+- **CR4**: Test CLI options override config file settings
+- **CR5**: Test saving configuration to JSON file
+- **CR6**: Test invalid configuration file handling (malformed JSON, missing keys)
+- **CR7**: Test configuration validation (invalid values, out-of-range)
+- **CR8**: Test merging multiple configuration sources
+- **CR9**: Test WordPress configuration save/load
+- **CR10**: Test configuration export/import in WordPress
+- **CR11**: Test all CLI options map correctly to config properties
+- **CR12**: Test backward compatibility with existing AbcProcessorConfig usage
+
+### Traceability
+- **Related Classes**: 
+  - Existing: `AbcProcessorConfig`, `CLIOptions`
+  - New: `ConfigLoader`, `ConfigMerger`, `ConfigValidator`
+- **Related Files**: 
+  - Existing: `config/db_config.php`
+  - New: `config/abc_processor_config.json`, `docs/configuration.md`
+- **Related Requirements**: All CLI-based requirements (FR10, BR6, voice ordering, transpose modes)
+- **Related Tests**: `AbcProcessorConfigTest` (needs expansion)
 
 ## CLI Interfaces
 ### ABC Processing CLI (abc-cannt-cli.php)

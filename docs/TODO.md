@@ -1,10 +1,11 @@
 # Master TODO List for ABC Canntaireachd Refactor
 
-**Status**: Phase 2 Complete - 44% Done  
+**Status**: Phase 3 Complete - 75% Done ✅  
 **Created**: 2025-11-16  
+**Updated**: 2025-11-17  
 **Estimated**: 21.5 hours  
-**Actual So Far**: 9.5 hours  
-**Target Completion**: TBD
+**Actual So Far**: 12.5 hours  
+**Target Completion**: Next session (Phase 4)
 
 ---
 
@@ -92,40 +93,38 @@
 
 ---
 
-## Phase 3: Design (3h)
+## ✅ Phase 3: Pipeline Refactoring (3h COMPLETE)
 
-### Step 3.1: Transform Interface Design (1h)
-- [ ] Create `src/Ksfraser/Transform/AbcTransform.php` interface
-  - [ ] Define transform(AbcTune $tune): AbcTune
-  - [ ] Add PHPDoc with usage examples
-  - [ ] Define error handling strategy
+### Step 3.1: Pipeline Enhancement
+- [x] Added `processWithTransforms()` method to AbcProcessingPipeline
+- [x] Implements Parse → Transform* → Render pattern
+- [x] Takes string $abcText and array of AbcTransform objects
+- [x] Returns ['text' => string, 'errors' => array]
+- [x] Maintains backward compatibility with run() method
+- [x] Added comprehensive error handling and FlowLog support
 
-- [ ] Design Transform base class (optional)
-  - [ ] Common validation logic
-  - [ ] Error handling
-  - [ ] Logging/debugging support
+### Step 3.2: Rendering Enhancement
+- [x] Enhanced AbcTune::renderSelf() for proper ABC format
+  - [x] V: headers in tune header section
+  - [x] [V:ID] inline markers in body section
+  - [x] w: lines with canntaireachd after bars
+- [x] Added extractCanntaireachdFromBar() helper method
+- [x] Checks notes for getCanntaireachd() method
+- [x] Only outputs w: lines when canntaireachd present
 
-### Step 3.2: Pipeline Refactor Design (1h)
-- [ ] Design new AbcProcessingPipeline API
-  - [ ] Constructor: `__construct(AbcTransform[] $transforms)`
-  - [ ] Method: `process(string $abcText): string`
-  - [ ] Internal: parse once, apply transforms, render once
+### Step 3.3: Test Suite Creation
+- [x] Created test_pipeline_refactor.php (3 scenarios)
+  - [x] Test 1: Simple Melody → Bagpipes + cannt
+  - [x] Test 2: Existing Bagpipes → add cannt
+  - [x] Test 3: Real-world test-Suo.abc
+- [x] All tests passing: ✅ 3/3
+- [x] Fixed regex patterns for voice boundary checking
 
-- [ ] Design Transform registration
-  - [ ] Transforms as constructor dependencies
-  - [ ] Allow dynamic transform ordering
-  - [ ] Support conditional transforms
-
-### Step 3.3: API Methods Design (1h)
-- [ ] Review AbcTune protected properties
-  - [ ] Identify properties that need public access
-  - [ ] Design getter methods
-  - [ ] Design setter methods (if needed)
-
-- [ ] Design copyVoiceBars() method
-  - [ ] Signature: `copyVoiceBars(string $fromId, string $toId): void`
-  - [ ] Validation: source exists, source has bars
-  - [ ] Behavior: copy vs reference (prefer copy)
+### Integration Results
+- [x] ✅ Proper ABC format (V: in header, [V:ID] in body)
+- [x] ✅ Canntaireachd ONLY on Bagpipes
+- [x] ✅ Melody has NO canntaireachd
+- [x] ✅ w: lines rendered correctly
 
 ---
 

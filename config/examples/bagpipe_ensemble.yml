@@ -1,0 +1,45 @@
+# Bagpipe Ensemble Configuration Example
+# Use this configuration for Highland bagpipe band music with modern chanters
+
+processing:
+  voice_output_style: grouped
+  interleave_bars: 1
+  bars_per_line: 4
+  join_bars_with_backslash: false
+  tune_number_width: 5
+
+transpose:
+  mode: bagpipe                   # Modern bagpipe mode: concert pitch instruments transpose up 2
+  overrides:
+    Bagpipes: 0                   # Bagpipes written pitch = sounding pitch
+    Piano: 2                      # Piano transposes up to match bagpipes
+    Guitar: 2                     # Guitar transposes up to match bagpipes
+    Bass: 2                       # Bass transposes up to match bagpipes
+
+voice_ordering:
+  mode: custom                    # Custom ordering for bagpipe band
+  custom_order:
+    - Bagpipes                    # Lead instrument
+    - Harmony                     # Harmony bagpipes
+    - Tenor                       # Tenor drums
+    - Snare                       # Snare drums
+    - Bass                        # Bass drum
+    - Piano                       # Accompaniment (if present)
+    - Guitar                      # Accompaniment (if present)
+
+canntaireachd:
+  convert: true                   # Generate canntaireachd for bagpipe voices
+  generate_diff: true             # Show what was generated
+
+output:
+  output_file: null               # Auto-generate from input filename
+  error_file: bagpipe_errors.log
+  cannt_diff_file: cannt_diff.txt
+
+database:
+  use_midi_defaults: true
+  use_voice_order_defaults: true
+
+validation:
+  timing_validation: true
+  strict_mode: false

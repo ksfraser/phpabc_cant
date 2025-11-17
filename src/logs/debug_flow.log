@@ -3807,3 +3807,241 @@
 [DEBUG][2025-11-17 07:03:12] Transform complete, voices: 2
 [DEBUG][2025-11-17 07:03:12] Rendered text length: 102
 [DEBUG][2025-11-17 07:03:12] AbcProcessingPipeline::processWithTransforms EXIT
+[DEBUG][2025-11-17 12:02:39] AbcProcessingPipeline::processWithTransforms ENTRY
+[DEBUG][2025-11-17 12:02:39] Input text length: 66
+[DEBUG][2025-11-17 12:02:39] Transforms count: 2
+[DEBUG][2025-11-17 12:02:39] Parsed tune with 1 voices
+[DEBUG][2025-11-17 12:02:39] Applying transform: Ksfraser\PhpabcCanntaireachd\Transform\VoiceCopyTransform
+[DEBUG][2025-11-17 12:02:39] Transform complete, voices: 2
+[DEBUG][2025-11-17 12:02:39] Applying transform: Ksfraser\PhpabcCanntaireachd\Transform\CanntaireachdTransform
+[DEBUG][2025-11-17 12:02:39] Transform complete, voices: 2
+[DEBUG][2025-11-17 12:02:39] Rendered text length: 120
+[DEBUG][2025-11-17 12:02:39] AbcProcessingPipeline::processWithTransforms EXIT
+[DEBUG][2025-11-17 12:02:47] AbcProcessingPipeline::processWithTransforms ENTRY
+[DEBUG][2025-11-17 12:02:47] Input text length: 66
+[DEBUG][2025-11-17 12:02:47] Transforms count: 2
+[DEBUG][2025-11-17 12:02:47] Parsed tune with 1 voices
+[DEBUG][2025-11-17 12:02:47] Applying transform: Ksfraser\PhpabcCanntaireachd\Transform\VoiceCopyTransform
+[DEBUG][2025-11-17 12:02:47] Transform complete, voices: 2
+[DEBUG][2025-11-17 12:02:47] Applying transform: Ksfraser\PhpabcCanntaireachd\Transform\CanntaireachdTransform
+[DEBUG][2025-11-17 12:02:47] Transform complete, voices: 2
+[DEBUG][2025-11-17 12:02:47] Rendered text length: 120
+[DEBUG][2025-11-17 12:02:47] AbcProcessingPipeline::processWithTransforms EXIT
+[DEBUG][2025-11-17 12:03:17] AbcProcessingPipeline::processWithTransforms ENTRY
+[DEBUG][2025-11-17 12:03:17] Input text length: 66
+[DEBUG][2025-11-17 12:03:17] Transforms count: 2
+[DEBUG][2025-11-17 12:03:17] Parsed tune with 1 voices
+[DEBUG][2025-11-17 12:03:17] Applying transform: Ksfraser\PhpabcCanntaireachd\Transform\VoiceCopyTransform
+[DEBUG][2025-11-17 12:03:17] Transform complete, voices: 2
+[DEBUG][2025-11-17 12:03:17] Applying transform: Ksfraser\PhpabcCanntaireachd\Transform\CanntaireachdTransform
+[DEBUG][2025-11-17 12:03:17] Transform complete, voices: 2
+[DEBUG][2025-11-17 12:03:17] Rendered text length: 120
+[DEBUG][2025-11-17 12:03:17] AbcProcessingPipeline::processWithTransforms EXIT
+[DEBUG][2025-11-17 12:03:25] AbcProcessingPipeline::processWithTransforms ENTRY
+[DEBUG][2025-11-17 12:03:25] Input text length: 66
+[DEBUG][2025-11-17 12:03:25] Transforms count: 2
+[DEBUG][2025-11-17 12:03:25] Parsed tune with 1 voices
+[DEBUG][2025-11-17 12:03:25] Applying transform: Ksfraser\PhpabcCanntaireachd\Transform\VoiceCopyTransform
+[DEBUG][2025-11-17 12:03:25] Transform complete, voices: 2
+[DEBUG][2025-11-17 12:03:25] Applying transform: Ksfraser\PhpabcCanntaireachd\Transform\CanntaireachdTransform
+[DEBUG][2025-11-17 12:03:25] Transform complete, voices: 2
+[DEBUG][2025-11-17 12:03:25] Rendered text length: 120
+[DEBUG][2025-11-17 12:03:25] AbcProcessingPipeline::processWithTransforms EXIT
+[DEBUG][2025-11-17 12:03:34] AbcProcessingPipeline::processWithTransforms ENTRY
+[DEBUG][2025-11-17 12:03:34] Input text length: 66
+[DEBUG][2025-11-17 12:03:34] Transforms count: 2
+[DEBUG][2025-11-17 12:03:34] Parsed tune with 1 voices
+[DEBUG][2025-11-17 12:03:34] Applying transform: Ksfraser\PhpabcCanntaireachd\Transform\VoiceCopyTransform
+[DEBUG][2025-11-17 12:03:34] Transform complete, voices: 2
+[DEBUG][2025-11-17 12:03:34] Applying transform: Ksfraser\PhpabcCanntaireachd\Transform\CanntaireachdTransform
+[DEBUG][2025-11-17 12:03:34] Transform complete, voices: 2
+[DEBUG][2025-11-17 12:03:34] Rendered text length: 120
+[DEBUG][2025-11-17 12:03:34] AbcProcessingPipeline::processWithTransforms EXIT
+[DEBUG][2025-11-17 12:03:42] AbcProcessingPipeline::processWithTransforms ENTRY
+[DEBUG][2025-11-17 12:03:42] Input text length: 66
+[DEBUG][2025-11-17 12:03:42] Transforms count: 2
+[DEBUG][2025-11-17 12:03:42] Parsed tune with 1 voices
+[DEBUG][2025-11-17 12:03:42] Applying transform: Ksfraser\PhpabcCanntaireachd\Transform\VoiceCopyTransform
+[DEBUG][2025-11-17 12:03:42] Transform complete, voices: 2
+[DEBUG][2025-11-17 12:03:42] Applying transform: Ksfraser\PhpabcCanntaireachd\Transform\CanntaireachdTransform
+[DEBUG][2025-11-17 12:03:42] Transform complete, voices: 2
+[DEBUG][2025-11-17 12:03:42] Rendered text length: 120
+[DEBUG][2025-11-17 12:03:42] AbcProcessingPipeline::processWithTransforms EXIT
+[DEBUG][2025-11-17 12:04:08] AbcProcessingPipeline::processWithTransforms ENTRY
+[DEBUG][2025-11-17 12:04:08] Input text length: 66
+[DEBUG][2025-11-17 12:04:08] Transforms count: 2
+[DEBUG][2025-11-17 12:04:08] Parsed tune with 1 voices
+[DEBUG][2025-11-17 12:04:08] Applying transform: Ksfraser\PhpabcCanntaireachd\Transform\VoiceCopyTransform
+[DEBUG][2025-11-17 12:04:08] Transform complete, voices: 2
+[DEBUG][2025-11-17 12:04:08] Applying transform: Ksfraser\PhpabcCanntaireachd\Transform\CanntaireachdTransform
+[DEBUG][2025-11-17 12:04:08] Transform complete, voices: 2
+[DEBUG][2025-11-17 12:04:08] Rendered text length: 120
+[DEBUG][2025-11-17 12:04:08] AbcProcessingPipeline::processWithTransforms EXIT
+[DEBUG][2025-11-17 12:11:49] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-11-17 12:11:49] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-11-17 12:11:49] AbcVoicePass::process ENTRY
+[DEBUG][2025-11-17 12:11:49] AbcVoicePass::process EXIT
+[DEBUG][2025-11-17 12:11:49] AbcLyricsPass::process ENTRY
+[DEBUG][2025-11-17 12:11:49] AbcProcessor::handleLyrics called
+[DEBUG][2025-11-17 12:11:49] AbcLyricsPass::process EXIT
+[DEBUG][2025-11-17 12:11:49] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-11-17 12:11:49] AbcProcessor::reorderVoices called
+[DEBUG][2025-11-17 12:11:49] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-11-17 12:11:49] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-11-17 12:11:49] AbcTimingValidator::validate EXIT
+[DEBUG][2025-11-17 12:11:50] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-11-17 12:11:50] AbcProcessor::reorderVoices called
+[DEBUG][2025-11-17 12:11:50] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-11-17 12:11:54] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-11-17 12:11:54] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-11-17 12:11:54] AbcLyricsPass::process ENTRY
+[DEBUG][2025-11-17 12:11:54] AbcProcessor::handleLyrics called
+[DEBUG][2025-11-17 12:11:54] AbcLyricsPass::process EXIT
+[DEBUG][2025-11-17 12:11:54] AbcVoicePass::process ENTRY
+[DEBUG][2025-11-17 12:11:54] AbcVoicePass::process EXIT
+[DEBUG][2025-11-17 12:11:54] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-11-17 12:11:54] AbcProcessor::reorderVoices called
+[DEBUG][2025-11-17 12:11:54] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-11-17 12:11:54] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-11-17 12:11:54] AbcTimingValidator::validate EXIT
+[DEBUG][2025-11-17 12:11:55] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-11-17 12:11:55] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-11-17 12:11:55] AbcLyricsPass::process ENTRY
+[DEBUG][2025-11-17 12:11:55] AbcProcessor::handleLyrics called
+[DEBUG][2025-11-17 12:11:55] AbcLyricsPass::process EXIT
+[DEBUG][2025-11-17 12:11:55] AbcVoicePass::process ENTRY
+[DEBUG][2025-11-17 12:11:55] AbcVoicePass::process EXIT
+[DEBUG][2025-11-17 12:11:55] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-11-17 12:11:55] AbcProcessor::reorderVoices called
+[DEBUG][2025-11-17 12:11:55] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-11-17 12:11:55] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-11-17 12:11:55] AbcTimingValidator::validate EXIT
+[DEBUG][2025-11-17 12:12:13] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-11-17 12:12:13] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-11-17 12:12:13] AbcVoicePass::process ENTRY
+[DEBUG][2025-11-17 12:12:13] AbcVoicePass::process EXIT
+[DEBUG][2025-11-17 12:12:13] AbcLyricsPass::process ENTRY
+[DEBUG][2025-11-17 12:12:13] AbcProcessor::handleLyrics called
+[DEBUG][2025-11-17 12:12:13] AbcLyricsPass::process EXIT
+[DEBUG][2025-11-17 12:12:13] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-11-17 12:12:13] AbcProcessor::reorderVoices called
+[DEBUG][2025-11-17 12:12:13] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-11-17 12:12:13] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-11-17 12:12:13] AbcTimingValidator::validate EXIT
+[DEBUG][2025-11-17 12:12:14] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-11-17 12:12:14] AbcProcessor::reorderVoices called
+[DEBUG][2025-11-17 12:12:14] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-11-17 12:12:16] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-11-17 12:12:16] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-11-17 12:12:16] AbcLyricsPass::process ENTRY
+[DEBUG][2025-11-17 12:12:16] AbcProcessor::handleLyrics called
+[DEBUG][2025-11-17 12:12:16] AbcLyricsPass::process EXIT
+[DEBUG][2025-11-17 12:12:16] AbcVoicePass::process ENTRY
+[DEBUG][2025-11-17 12:12:16] AbcVoicePass::process EXIT
+[DEBUG][2025-11-17 12:12:16] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-11-17 12:12:16] AbcProcessor::reorderVoices called
+[DEBUG][2025-11-17 12:12:16] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-11-17 12:12:16] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-11-17 12:12:16] AbcTimingValidator::validate EXIT
+[DEBUG][2025-11-17 12:12:16] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-11-17 12:12:16] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-11-17 12:12:16] AbcLyricsPass::process ENTRY
+[DEBUG][2025-11-17 12:12:16] AbcProcessor::handleLyrics called
+[DEBUG][2025-11-17 12:12:16] AbcLyricsPass::process EXIT
+[DEBUG][2025-11-17 12:12:16] AbcVoicePass::process ENTRY
+[DEBUG][2025-11-17 12:12:16] AbcVoicePass::process EXIT
+[DEBUG][2025-11-17 12:12:16] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-11-17 12:12:16] AbcProcessor::reorderVoices called
+[DEBUG][2025-11-17 12:12:16] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-11-17 12:12:16] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-11-17 12:12:16] AbcTimingValidator::validate EXIT
+[DEBUG][2025-11-17 12:12:36] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-11-17 12:12:36] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-11-17 12:12:36] AbcVoicePass::process ENTRY
+[DEBUG][2025-11-17 12:12:36] AbcVoicePass::process EXIT
+[DEBUG][2025-11-17 12:12:36] AbcLyricsPass::process ENTRY
+[DEBUG][2025-11-17 12:12:36] AbcProcessor::handleLyrics called
+[DEBUG][2025-11-17 12:12:36] AbcLyricsPass::process EXIT
+[DEBUG][2025-11-17 12:12:36] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-11-17 12:12:36] AbcProcessor::reorderVoices called
+[DEBUG][2025-11-17 12:12:36] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-11-17 12:12:36] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-11-17 12:12:36] AbcTimingValidator::validate EXIT
+[DEBUG][2025-11-17 12:12:42] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-11-17 12:12:42] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-11-17 12:12:42] AbcVoicePass::process ENTRY
+[DEBUG][2025-11-17 12:12:42] AbcVoicePass::process EXIT
+[DEBUG][2025-11-17 12:12:42] AbcLyricsPass::process ENTRY
+[DEBUG][2025-11-17 12:12:42] AbcProcessor::handleLyrics called
+[DEBUG][2025-11-17 12:12:42] AbcLyricsPass::process EXIT
+[DEBUG][2025-11-17 12:12:42] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-11-17 12:12:42] AbcProcessor::reorderVoices called
+[DEBUG][2025-11-17 12:12:42] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-11-17 12:12:42] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-11-17 12:12:42] AbcTimingValidator::validate EXIT
+[DEBUG][2025-11-17 12:12:43] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-11-17 12:12:43] AbcProcessor::reorderVoices called
+[DEBUG][2025-11-17 12:12:43] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-11-17 12:12:44] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-11-17 12:12:44] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-11-17 12:12:44] AbcLyricsPass::process ENTRY
+[DEBUG][2025-11-17 12:12:44] AbcProcessor::handleLyrics called
+[DEBUG][2025-11-17 12:12:44] AbcLyricsPass::process EXIT
+[DEBUG][2025-11-17 12:12:44] AbcVoicePass::process ENTRY
+[DEBUG][2025-11-17 12:12:44] AbcVoicePass::process EXIT
+[DEBUG][2025-11-17 12:12:44] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-11-17 12:12:44] AbcProcessor::reorderVoices called
+[DEBUG][2025-11-17 12:12:44] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-11-17 12:12:44] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-11-17 12:12:44] AbcTimingValidator::validate EXIT
+[DEBUG][2025-11-17 12:12:45] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-11-17 12:12:45] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-11-17 12:12:45] AbcLyricsPass::process ENTRY
+[DEBUG][2025-11-17 12:12:45] AbcProcessor::handleLyrics called
+[DEBUG][2025-11-17 12:12:45] AbcLyricsPass::process EXIT
+[DEBUG][2025-11-17 12:12:45] AbcVoicePass::process ENTRY
+[DEBUG][2025-11-17 12:12:45] AbcVoicePass::process EXIT
+[DEBUG][2025-11-17 12:12:45] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-11-17 12:12:45] AbcProcessor::reorderVoices called
+[DEBUG][2025-11-17 12:12:45] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-11-17 12:12:45] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-11-17 12:12:45] AbcTimingValidator::validate EXIT
+[DEBUG][2025-11-17 12:13:01] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-11-17 12:13:01] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-11-17 12:13:01] AbcVoicePass::process ENTRY
+[DEBUG][2025-11-17 12:13:01] AbcVoicePass::process EXIT
+[DEBUG][2025-11-17 12:13:01] AbcLyricsPass::process ENTRY
+[DEBUG][2025-11-17 12:13:01] AbcProcessor::handleLyrics called
+[DEBUG][2025-11-17 12:13:01] AbcLyricsPass::process EXIT
+[DEBUG][2025-11-17 12:13:01] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-11-17 12:13:01] AbcProcessor::reorderVoices called
+[DEBUG][2025-11-17 12:13:01] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-11-17 12:13:01] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-11-17 12:13:01] AbcTimingValidator::validate EXIT
+[DEBUG][2025-11-17 12:13:03] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-11-17 12:13:03] AbcProcessor::reorderVoices called
+[DEBUG][2025-11-17 12:13:03] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-11-17 12:13:04] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-11-17 12:13:04] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-11-17 12:13:04] AbcLyricsPass::process ENTRY
+[DEBUG][2025-11-17 12:13:04] AbcProcessor::handleLyrics called
+[DEBUG][2025-11-17 12:13:04] AbcLyricsPass::process EXIT
+[DEBUG][2025-11-17 12:13:04] AbcVoicePass::process ENTRY
+[DEBUG][2025-11-17 12:13:04] AbcVoicePass::process EXIT
+[DEBUG][2025-11-17 12:13:04] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-11-17 12:13:04] AbcProcessor::reorderVoices called
+[DEBUG][2025-11-17 12:13:04] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-11-17 12:13:05] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-11-17 12:13:05] AbcTimingValidator::validate EXIT
+[DEBUG][2025-11-17 12:13:05] AbcTuneNumberValidatorPass::validate ENTRY
+[DEBUG][2025-11-17 12:13:05] AbcTuneNumberValidatorPass::validate EXIT
+[DEBUG][2025-11-17 12:13:05] AbcLyricsPass::process ENTRY
+[DEBUG][2025-11-17 12:13:05] AbcProcessor::handleLyrics called
+[DEBUG][2025-11-17 12:13:05] AbcLyricsPass::process EXIT
+[DEBUG][2025-11-17 12:13:05] AbcVoicePass::process ENTRY
+[DEBUG][2025-11-17 12:13:05] AbcVoicePass::process EXIT
+[DEBUG][2025-11-17 12:13:05] AbcVoiceOrderPass::process ENTRY
+[DEBUG][2025-11-17 12:13:05] AbcProcessor::reorderVoices called
+[DEBUG][2025-11-17 12:13:05] AbcVoiceOrderPass::process EXIT
+[DEBUG][2025-11-17 12:13:05] AbcTimingValidator::validate ENTRY
+[DEBUG][2025-11-17 12:13:05] AbcTimingValidator::validate EXIT

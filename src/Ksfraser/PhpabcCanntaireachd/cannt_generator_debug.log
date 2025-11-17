@@ -852,3 +852,295 @@ generateForNotes input: A B C DA2 B2A B
 generateForNotes output: en o en o en o
 generateForNotes input: A B C DA2 B2A B
 generateForNotes output: en o en o en o
+generateForNotes input: A X B
+generateForNotes output: en o
+generateForNotes input: z Z
+generateForNotes output: 
+generateForNotes input: A, A B' C##
+generateForNotes output: en en o o
+generateForNotes input: A B C
+generateForNotes output: en o o
+generateForNotes input: A B C |TIMING ERROR|
+generateForNotes output: en o o | em |
+generateForNotes input: [V:Bagpipes]A B c d|
+generateForNotes output: en o o a |
+generateForNotes input: [V:Bagpipes]A B C D|A2 B2|A B|
+generateForNotes output: en o | en o | en o |
+generateForNotes input: [V:Bagpipes]A B C D|A2 B2|A B|
+generateForNotes output: en o | en o | en o |
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: E F G A
+generateForNotes output: em en
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: [V:M] e f g a
+generateForNotes output: e ve di I
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: e f g a
+generateForNotes output: e ve di I
+generateForNotes input: b a g f
+generateForNotes output: I di ve
+generateForNotes input: e d c B
+generateForNotes output: e a o o
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: e f g a
+generateForNotes output: e ve di I
+generateForNotes input: b a g f
+generateForNotes output: I di ve
+generateForNotes input: e d c B
+generateForNotes output: e a o o
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: e f g a
+generateForNotes output: e ve di I
+generateForNotes input: b a g f
+generateForNotes output: I di ve
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: GABc dedB
+generateForNotes output: em en o o a e a o
+generateForNotes input: cBcd edef
+generateForNotes output: o o o a e a e ve
+generateForNotes input: A X B
+generateForNotes output: en o
+generateForNotes input: z Z
+generateForNotes output: 
+generateForNotes input: A, A B' C##
+generateForNotes output: en en o o
+generateForNotes input: A B C
+generateForNotes output: en o o
+generateForNotes input: A B C |TIMING ERROR|
+generateForNotes output: en o o | em |
+generateForNotes input: [V:Bagpipes]A B c d|
+generateForNotes output: en o o a |
+generateForNotes input: [V:Bagpipes]A B C D|A2 B2|A B|
+generateForNotes output: en o | en o | en o |
+generateForNotes input: [V:Bagpipes]A B C D|A2 B2|A B|
+generateForNotes output: en o | en o | en o |
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: E F G A
+generateForNotes output: em en
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: [V:M] e f g a
+generateForNotes output: e ve di I
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: e f g a
+generateForNotes output: e ve di I
+generateForNotes input: b a g f
+generateForNotes output: I di ve
+generateForNotes input: e d c B
+generateForNotes output: e a o o
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: e f g a
+generateForNotes output: e ve di I
+generateForNotes input: b a g f
+generateForNotes output: I di ve
+generateForNotes input: e d c B
+generateForNotes output: e a o o
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: e f g a
+generateForNotes output: e ve di I
+generateForNotes input: b a g f
+generateForNotes output: I di ve
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: GABc dedB
+generateForNotes output: em en o o a e a o
+generateForNotes input: cBcd edef
+generateForNotes output: o o o a e a e ve
+generateForNotes input: A X B
+generateForNotes output: en o
+generateForNotes input: z Z
+generateForNotes output: 
+generateForNotes input: A, A B' C##
+generateForNotes output: en en o o
+generateForNotes input: A B C
+generateForNotes output: en o o
+generateForNotes input: A B C |TIMING ERROR|
+generateForNotes output: en o o | em |
+generateForNotes input: [V:Bagpipes]A B c d|
+generateForNotes output: en o o a |
+generateForNotes input: A X B
+generateForNotes output: en o
+generateForNotes input: z Z
+generateForNotes output: 
+generateForNotes input: A, A B' C##
+generateForNotes output: en en o o
+generateForNotes input: A B C
+generateForNotes output: en o o
+generateForNotes input: A B C |TIMING ERROR|
+generateForNotes output: en o o | em |
+generateForNotes input: [V:Bagpipes]A B c d|
+generateForNotes output: en o o a |
+generateForNotes input: [V:Bagpipes]A B C D|A2 B2|A B|
+generateForNotes output: en o | en o | en o |
+generateForNotes input: [V:Bagpipes]A B C D|A2 B2|A B|
+generateForNotes output: en o | en o | en o |
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: E F G A
+generateForNotes output: em en
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: [V:M] e f g a
+generateForNotes output: e ve di I
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: e f g a
+generateForNotes output: e ve di I
+generateForNotes input: b a g f
+generateForNotes output: I di ve
+generateForNotes input: e d c B
+generateForNotes output: e a o o
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: e f g a
+generateForNotes output: e ve di I
+generateForNotes input: b a g f
+generateForNotes output: I di ve
+generateForNotes input: e d c B
+generateForNotes output: e a o o
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: e f g a
+generateForNotes output: e ve di I
+generateForNotes input: b a g f
+generateForNotes output: I di ve
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: GABc dedB
+generateForNotes output: em en o o a e a o
+generateForNotes input: cBcd edef
+generateForNotes output: o o o a e a e ve
+generateForNotes input: A X B
+generateForNotes output: en o
+generateForNotes input: z Z
+generateForNotes output: 
+generateForNotes input: A, A B' C##
+generateForNotes output: en en o o
+generateForNotes input: A B C
+generateForNotes output: en o o
+generateForNotes input: A B C |TIMING ERROR|
+generateForNotes output: en o o | em |
+generateForNotes input: [V:Bagpipes]A B c d|
+generateForNotes output: en o o a |
+generateForNotes input: [V:Bagpipes]A B C D|A2 B2|A B|
+generateForNotes output: en o | en o | en o |
+generateForNotes input: [V:Bagpipes]A B C D|A2 B2|A B|
+generateForNotes output: en o | en o | en o |
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: E F G A
+generateForNotes output: em en
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: [V:M] e f g a
+generateForNotes output: e ve di I
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: e f g a
+generateForNotes output: e ve di I
+generateForNotes input: b a g f
+generateForNotes output: I di ve
+generateForNotes input: e d c B
+generateForNotes output: e a o o
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: e f g a
+generateForNotes output: e ve di I
+generateForNotes input: b a g f
+generateForNotes output: I di ve
+generateForNotes input: e d c B
+generateForNotes output: e a o o
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: e f g a
+generateForNotes output: e ve di I
+generateForNotes input: b a g f
+generateForNotes output: I di ve
+generateForNotes input: A B c d
+generateForNotes output: en o o a
+generateForNotes input: GABc dedB
+generateForNotes output: em en o o a e a o
+generateForNotes input: cBcd edef
+generateForNotes output: o o o a e a e ve

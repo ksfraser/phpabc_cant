@@ -1,0 +1,43 @@
+{
+  "_comment": "ABC Processor Default Configuration - JSON Format",
+  "_description": "This file contains default settings for ABC notation processing. CLI options override these settings.",
+  
+  "processing": {
+    "voice_output_style": "grouped",
+    "interleave_bars": 1,
+    "bars_per_line": 4,
+    "join_bars_with_backslash": false,
+    "tune_number_width": 5
+  },
+  
+  "transpose": {
+    "mode": "midi",
+    "overrides": {}
+  },
+  
+  "voice_ordering": {
+    "mode": "source",
+    "custom_order": []
+  },
+  
+  "canntaireachd": {
+    "convert": false,
+    "generate_diff": false
+  },
+  
+  "output": {
+    "output_file": null,
+    "error_file": null,
+    "cannt_diff_file": null
+  },
+  
+  "database": {
+    "use_midi_defaults": true,
+    "use_voice_order_defaults": true
+  },
+  
+  "validation": {
+    "timing_validation": true,
+    "strict_mode": false
+  }
+}

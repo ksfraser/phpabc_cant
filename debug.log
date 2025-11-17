@@ -10910,3 +10910,33 @@ Decorator value: '!trill!'
 TEST DEBUG
 TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd START
 Decorator value: '!trill!'
+TEST DEBUG
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd START
+TEST: bar1 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: bar2 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: calling translateBars
+Decorator value: '!trill!'
+TEST DEBUG
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd START
+TEST: bar1 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: bar2 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: calling translateBars
+Decorator value: '!trill!'
+TEST DEBUG
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd START
+TEST: bar1 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: bar2 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: calling translateBars
+Decorator value: '!trill!'
+TEST DEBUG
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd START
+TEST: bar1 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: bar2 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: calling translateBars
+Decorator value: '!trill!'
+TEST DEBUG
+TEST: testRenderCanntLyricLineAggregatesBarCanntaireachd START
+TEST: bar1 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: bar2 class=Ksfraser\PhpabcCanntaireachd\Tune\AbcBar
+TEST: calling translateBars
+Decorator value: '!trill!'

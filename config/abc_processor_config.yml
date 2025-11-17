@@ -1,0 +1,42 @@
+# ABC Processor Default Configuration - YAML Format
+# This file contains default settings for ABC notation processing
+# CLI options override these settings
+
+# Processing options for ABC output formatting
+processing:
+  voice_output_style: grouped     # 'grouped' or 'interleaved'
+  interleave_bars: 1              # Number of bars per voice before switching (if interleaved)
+  bars_per_line: 4                # How many bars per ABC line
+  join_bars_with_backslash: false # true: use \ to join bars, false: one line per typeset line
+  tune_number_width: 5            # Number of digits for X: tune numbers (left-filled with zeros)
+
+# Transpose mode settings
+transpose:
+  mode: midi                      # 'midi' (transpose=0), 'bagpipe' (concert pitch +2), 'orchestral' (standard transpositions)
+  overrides: {}                   # Per-voice transpose overrides, e.g., { Bagpipes: 0, Piano: 2 }
+
+# Voice ordering configuration
+voice_ordering:
+  mode: source                    # 'source' (preserve file order), 'orchestral' (standard score order), 'custom' (user-defined)
+  custom_order: []                # Array of voice names for custom ordering, e.g., ['Melody', 'Bagpipes', 'Guitar', 'Drums']
+
+# Canntaireachd processing options
+canntaireachd:
+  convert: false                  # Enable canntaireachd generation for Bagpipes voices
+  generate_diff: false            # Generate diff file showing canntaireachd changes
+
+# Output file paths (null = stdout or auto-generated)
+output:
+  output_file: null               # Path to output ABC file
+  error_file: null                # Path to error log file
+  cannt_diff_file: null           # Path to canntaireachd diff file
+
+# Database usage settings
+database:
+  use_midi_defaults: true         # Load MIDI channel/program defaults from database
+  use_voice_order_defaults: true  # Use voice ordering defaults from database
+
+# Validation settings
+validation:
+  timing_validation: true         # Validate bar timing and completeness
+  strict_mode: false              # Enable strict validation (fail on warnings)

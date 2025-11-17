@@ -393,12 +393,14 @@ class AbcTune extends AbcItem {
                 $out .= $h->render();
             }
         }
-        // Render body/music lines for each voice
+        // Render body/music lines for each voice with [V:ID] inline markers
         foreach ($this->voiceBars as $voiceId => $bars) {
-            // Output V: line for each voice (if not already output above)
-            if (!isset($this->voices[$voiceId])) {
-                $out .= "V:$voiceId\n";
+            if (empty($bars)) {
+                continue;
             }
+            
+            // Output [V:ID] marker before this voice's bars
+            $out .= "[V:$voiceId]";
             
             // Render bars and collect canntaireachd syllables
             $barLines = [];
@@ -419,7 +421,7 @@ class AbcTune extends AbcItem {
                 $canntLines[] = $barCannt;
             }
             
-            // Output bars
+            // Output bars on the same line as [V:ID]
             $out .= implode('', $barLines);
             
             // Output w: lines if any bars have canntaireachd
@@ -433,6 +435,9 @@ class AbcTune extends AbcItem {
             
             if ($hasAnyCannt) {
                 $out .= "w: " . implode('|', $canntLines) . "\n";
+            } else {
+                // No canntaireachd, just end the line
+                $out .= "\n";
             }
         }
         return $out;
