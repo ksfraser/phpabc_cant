@@ -1,0 +1,10 @@
+{
+  "voiceOrderingMode": "custom",
+  "customVoiceOrder": [
+    "Bagpipes",
+    "Tenor",
+    "Snare",
+    "Bass",
+    "Piano"
+  ]
+}

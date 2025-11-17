@@ -33,6 +33,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Ksfraser\PhpabcCanntaireachd\AbcFileParser;
 use Ksfraser\PhpabcCanntaireachd\CliOutputWriter;
 use Ksfraser\PhpabcCanntaireachd\CLIOptions;
+use Ksfraser\PhpabcCanntaireachd\AbcProcessorConfig;
 
 // Parse command line arguments
 $cli = CLIOptions::fromArgv($argv);
@@ -41,6 +42,41 @@ $cli = CLIOptions::fromArgv($argv);
 if (isset($cli->opts['h']) || isset($cli->opts['help'])) {
     showUsage();
     exit(0);
+}
+
+// Load configuration with precedence
+$config = AbcProcessorConfig::loadWithPrecedence();
+if ($cli->configFile !== null) {
+    if (!file_exists($cli->configFile)) {
+        fwrite(STDERR, "Error: Configuration file not found: {$cli->configFile}\n");
+        exit(1);
+    }
+    try {
+        $customConfig = AbcProcessorConfig::loadFromFile($cli->configFile);
+        $config->mergeFromArray($customConfig->toArray());
+    } catch (Exception $e) {
+        fwrite(STDERR, "Error loading configuration: " . $e->getMessage() . "\n");
+        exit(1);
+    }
+}
+$cli->applyToConfig($config);
+
+if ($cli->showConfig) {
+    echo "=== Current Configuration ===\n";
+    echo $config->toJSON(true);
+    echo "\n";
+    exit(0);
+}
+
+if ($cli->saveConfigFile !== null) {
+    try {
+        $config->saveToFile($cli->saveConfigFile);
+        echo "Configuration saved to: {$cli->saveConfigFile}\n";
+        exit(0);
+    } catch (Exception $e) {
+        fwrite(STDERR, "Error saving configuration: " . $e->getMessage() . "\n");
+        exit(1);
+    }
 }
 
 // Get positional arguments from CLIOptions
@@ -146,10 +182,15 @@ Arguments:
   abcfile       Path to the ABC file to process
 
 Options:
-  --width <N>           Width for zero-padding tune numbers (default: 5)
-  -e, --errorfile <file> Output file for error messages and logs
-  -h, --help            Show this help message
-  -v, --verbose         Enable verbose output
+  --width <N>              Width for zero-padding tune numbers (default: 5)
+  -e, --errorfile <file>   Output file for error messages and logs
+  -h, --help               Show this help message
+  -v, --verbose            Enable verbose output
+
+Configuration Options:
+  --config <file>          Load configuration from file (JSON/YAML/INI)
+  --show-config            Display current configuration and exit
+  --save-config <file>     Save current configuration to file and exit
 
 Examples:
   php $script tunes.abc

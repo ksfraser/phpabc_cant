@@ -4442,3 +4442,33 @@
 [DEBUG][2025-11-17 12:13:13] TokenNormalizer: token='A4' part='A4' normalized='A'
 [DEBUG][2025-11-17 12:13:13] TokenNormalizer: token='{g}A3' part='{g}A3' normalized='{g}A'
 [DEBUG][2025-11-17 12:13:13] TokenNormalizer: token='B' part='B' normalized='B'
+[DEBUG][2025-11-17 12:59:59] generateForNotes input: A B c d
+[DEBUG][2025-11-17 13:00:00] generateForNotes input: E F G A
+[DEBUG][2025-11-17 13:00:02] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 13:00:02] generateForNotes input: {g}B3A {g}c{d}B3
+[DEBUG][2025-11-17 13:00:02] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 13:00:02] generateForNotes input: {g}B2 {d}c {G}A4
+[DEBUG][2025-11-17 13:00:02] generateForNotes input: {g}c3d {g}ec3
+[DEBUG][2025-11-17 13:00:02] generateForNotes input: {g}f3d {g}ec3
+[DEBUG][2025-11-17 13:00:02] generateForNotes input: {g}c3d {g}ec3
+[DEBUG][2025-11-17 13:00:02] generateForNotes input: {ag}a2f2 {gef}e4
+[DEBUG][2025-11-17 13:00:02] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 13:00:02] generateForNotes input: {g}B3A {g}c{d}B3
+[DEBUG][2025-11-17 13:00:02] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 13:00:02] generateForNotes input: {g}B2 {d}c {G}A4
+[DEBUG][2025-11-17 13:00:03] generateForNotes input: ]
+[DEBUG][2025-11-17 13:00:28] generateForNotes input: A B c d
+[DEBUG][2025-11-17 13:00:29] generateForNotes input: E F G A
+[DEBUG][2025-11-17 13:00:29] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 13:00:29] generateForNotes input: {g}B3A {g}c{d}B3
+[DEBUG][2025-11-17 13:00:29] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 13:00:29] generateForNotes input: {g}B2 {d}c {G}A4
+[DEBUG][2025-11-17 13:00:29] generateForNotes input: {g}c3d {g}ec3
+[DEBUG][2025-11-17 13:00:29] generateForNotes input: {g}f3d {g}ec3
+[DEBUG][2025-11-17 13:00:29] generateForNotes input: {g}c3d {g}ec3
+[DEBUG][2025-11-17 13:00:29] generateForNotes input: {ag}a2f2 {gef}e4
+[DEBUG][2025-11-17 13:00:29] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 13:00:29] generateForNotes input: {g}B3A {g}c{d}B3
+[DEBUG][2025-11-17 13:00:29] generateForNotes input: {g}A3B {g}ce3
+[DEBUG][2025-11-17 13:00:29] generateForNotes input: {g}B2 {d}c {G}A4
+[DEBUG][2025-11-17 13:00:29] generateForNotes input: ]

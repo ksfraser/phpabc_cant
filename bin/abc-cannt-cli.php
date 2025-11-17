@@ -39,6 +39,7 @@ require __DIR__ . '/../vendor/autoload.php';
 use Ksfraser\PhpabcCanntaireachd\CliOutputWriter;
 use Ksfraser\PhpabcCanntaireachd\CLIOptions;
 use Ksfraser\PhpabcCanntaireachd\AbcProcessor;
+use Ksfraser\PhpabcCanntaireachd\AbcProcessorConfig;
 use Ksfraser\PhpabcCanntaireachd\TokenDictionary;
 use Ksfraser\PhpabcCanntaireachd\AbcValidator;
 
@@ -57,6 +58,48 @@ $cli = CLIOptions::fromArgv($argv);
 if (isset($cli->opts['h']) || isset($cli->opts['help'])) {
     showUsage();
     exit(0);
+}
+
+// === NEW: Load Configuration ===
+// 1. Start with default config (loads from standard locations with precedence)
+$config = AbcProcessorConfig::loadWithPrecedence();
+
+// 2. If custom config file specified, load and merge it
+if ($cli->configFile !== null) {
+    if (!file_exists($cli->configFile)) {
+        fwrite(STDERR, "Error: Configuration file not found: {$cli->configFile}\n");
+        exit(1);
+    }
+    try {
+        $customConfig = AbcProcessorConfig::loadFromFile($cli->configFile);
+        $config->mergeFromArray($customConfig->toArray());
+    } catch (Exception $e) {
+        fwrite(STDERR, "Error loading configuration: " . $e->getMessage() . "\n");
+        exit(1);
+    }
+}
+
+// 3. Apply CLI options (override config file settings)
+$cli->applyToConfig($config);
+
+// 4. Handle --show-config option
+if ($cli->showConfig) {
+    echo "=== Current Configuration ===\n";
+    echo $config->toJSON(true);
+    echo "\n";
+    exit(0);
+}
+
+// 5. Handle --save-config option
+if ($cli->saveConfigFile !== null) {
+    try {
+        $config->saveToFile($cli->saveConfigFile);
+        echo "Configuration saved to: {$cli->saveConfigFile}\n";
+        exit(0);
+    } catch (Exception $e) {
+        fwrite(STDERR, "Error saving configuration: " . $e->getMessage() . "\n");
+        exit(1);
+    }
 }
 
 $file = $cli->file;
@@ -209,26 +252,63 @@ Usage:
 Required Arguments:
   --file, -f <abcfile>    Path to ABC file to process
 
-Options:
+Processing Options:
   --convert, -c           Add canntaireachd lines to melody/bagpipe voices
   --output, -o <file>     Output file for processed ABC content
   --errorfile, -e <file>  Output file for error messages and logs
   --canntdiff, -d <file>  Output file for canntaireachd differences
   --update_voice_names_from_midi, -u  Update voice names based on MIDI instrument assignments
+
+Configuration Options:
+  --config <file>         Load configuration from file (.json, .yml, .ini)
+  --save-config <file>    Save current configuration to file (JSON format)
+  --show-config           Display current configuration and exit
+
+Voice Ordering Options:
+  --voice-order <mode>    Voice ordering mode: source|orchestral|custom
+  --voice-order-config <file>  Custom voice ordering configuration file
+
+Transpose Options:
+  --transpose-mode <mode> Transpose mode: midi|bagpipe|orchestral
+  --transpose-override <voice:N>  Override transpose for specific voice (e.g., Piano:2)
+                                  Can be specified multiple times
+
+Processing Control:
+  --voice_output_style <style>  Voice output style: grouped|interleaved
+  --interleave_bars <N>    Bars per voice in interleaved mode (default: 1)
+  --bars_per_line <N>      Bars per line in output (default: 4)
+  --width <N>              Tune number width (default: 5)
+
+Database Options:
+  --no-midi-defaults      Don't load MIDI defaults from database
+  --strict                Enable strict validation mode
+
+General Options:
   -h, --help              Show this help message
   -v, --verbose           Enable verbose output
 
 Examples:
+  # Basic processing
   php $script --file tune.abc
-  php $script --file tune.abc --convert --output processed.abc
-  php $script --file tune.abc --canntdiff diff.txt --errorfile log.txt
-  php $script --file tune.abc --update_voice_names_from_midi --verbose
+  
+  # With configuration file
+  php $script --file tune.abc --config config/examples/bagpipe_ensemble.yml
+  
+  # Convert with custom settings
+  php $script --file tune.abc --convert --transpose-mode=bagpipe --output processed.abc
+  
+  # Override specific settings
+  php $script --file tune.abc --config myconfig.json --voice-order=orchestral
+  
+  # Save current settings
+  php $script --save-config my_settings.json --transpose-mode=orchestral --voice-order=custom
+  
+  # Show effective configuration
+  php $script --config myconfig.json --show-config
 
-Processing:
-  - Validates ABC file syntax and structure
-  - Processes canntaireachd tokens if --convert is specified
-  - Updates voice names from MIDI assignments if requested
-  - Outputs processed ABC content to file or stdout
-  - Logs errors, differences, and processing status
+Configuration Precedence:
+  CLI options > --config file > project config > user config > global config > defaults
+
+See config/README.md for configuration file documentation.
 ";
 }

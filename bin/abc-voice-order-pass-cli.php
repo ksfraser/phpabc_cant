@@ -3,9 +3,11 @@
 /**
  * ABC Voice Order Pass CLI Tool
  *
- * Reorders voices in ABC tunes according to predefined voice order preferences.
- * Bagpipes, Melody, and Harmony voices are prioritized, followed by other voices
- * in alphabetical order, then percussion voices (Snare, Tenor, Bass).
+ * Reorders voices in ABC tunes according to voice ordering strategies.
+ * Supports three ordering modes:
+ *   - source: Preserve original voice order (default)
+ *   - orchestral: Order by orchestral score conventions (woodwinds, brass, percussion, strings, etc.)
+ *   - custom: User-defined voice order from configuration file
  *
  * Usage:
  *   php abc-voice-order-pass-cli.php <abcfile> <tune_number> [options]
@@ -15,31 +17,35 @@
  *   tune_number   The X: number of the tune to process
  *
  * Options:
- *   -o, --output <file>   Output file for processed ABC content
- *   -e, --errorfile <file> Output file for error messages and logs
- *   -h, --help            Show this help message
- *   -v, --verbose         Enable verbose output
+ *   -o, --output <file>        Output file for processed ABC content
+ *   -e, --errorfile <file>     Output file for error messages and logs
+ *   --voice-order <mode>       Voice ordering mode: source, orchestral, custom (default: source)
+ *   --config <file>            Configuration file (JSON, YAML, or INI format)
+ *   --show-config              Display current configuration and exit
+ *   --save-config <file>       Save current configuration to file
+ *   -h, --help                 Show this help message
+ *   -v, --verbose              Enable verbose output
  *
  * Examples:
  *   php abc-voice-order-pass-cli.php tunes.abc 1
- *   php abc-voice-order-pass-cli.php tunes.abc 5 --output=reordered.abc
- *   php abc-voice-order-pass-cli.php tunes.abc 10 --verbose --errorfile=voice.log
+ *   php abc-voice-order-pass-cli.php tunes.abc 5 --voice-order=orchestral --output=reordered.abc
+ *   php abc-voice-order-pass-cli.php tunes.abc 10 --voice-order=custom --config=voice_order.json
+ *   php abc-voice-order-pass-cli.php tunes.abc 1 --show-config
+ *   php abc-voice-order-pass-cli.php tunes.abc 1 --save-config=my_config.json
  *
- * Voice Order:
- *   1. Bagpipe voices
- *   2. Melody voices
- *   3. Harmony voices
- *   4. Other voices (alphabetical)
- *   5. Snare voices
- *   6. Tenor voices
- *   7. Bass voices
+ * Voice Ordering Modes:
+ *   source:      Preserve original voice order from ABC file
+ *   orchestral:  Order by orchestral conventions (woodwinds → brass → percussion → strings)
+ *   custom:      User-defined order specified in configuration file
  */
 
 require_once __DIR__ . '/../vendor/autoload.php';
 use Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass;
-use Ksfraser\PhpabcCanntaireachd\AbcFileParser;
+use Ksfraser\PhpabcCanntaireachd\AbcProcessorConfig;
 use Ksfraser\PhpabcCanntaireachd\CliOutputWriter;
 use Ksfraser\PhpabcCanntaireachd\CLIOptions;
+use Ksfraser\PhpabcCanntaireachd\Config\ConfigLoader;
+use Ksfraser\PhpabcCanntaireachd\Config\ConfigMerger;
 
 // Parse command line arguments
 $cli = CLIOptions::fromArgv($argv);
@@ -69,41 +75,130 @@ if (!file_exists($file)) {
     exit(1);
 }
 
-// Load voice order preferences from database
-$voiceOrder = [];
-$exclude = ['Bagpipe', 'Melody', 'Harmony', 'Snare', 'Tenor', 'Bass'];
+// Initialize configuration
+$config = new AbcProcessorConfig();
 
-try {
-    $pdo = new PDO('sqlite:' . __DIR__ . '/../sql/abc_voice_order_defaults_schema.sql');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $stmt = $pdo->query("SELECT voice_name, order_position FROM voice_order_defaults ORDER BY order_position");
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $voiceOrder[$row['voice_name']] = $row['order_position'];
+// Load configuration file if specified
+if ($cli->configFile !== null) {
+    $configFile = $cli->configFile;
+    if (!file_exists($configFile)) {
+        $msg = "Error: Configuration file '$configFile' not found\n";
+        if ($cli->errorFile) {
+            CliOutputWriter::write($msg, $cli->errorFile);
+        } else {
+            fwrite(STDERR, $msg);
+        }
+        exit(1);
     }
-} catch (Exception $e) {
-    $msg = "Warning: Could not load voice order preferences from database: " . $e->getMessage() . "\n";
-    if ($cli->errorFile) {
-        CliOutputWriter::write($msg, $cli->errorFile);
-    } else {
-        fwrite(STDERR, $msg);
+    
+    try {
+        $fileConfig = ConfigLoader::loadFromFile($configFile);
+        
+        // Apply config values to AbcProcessorConfig object
+        if (isset($fileConfig['voiceOrderingMode'])) {
+            $config->voiceOrderingMode = $fileConfig['voiceOrderingMode'];
+        }
+        if (isset($fileConfig['customVoiceOrder'])) {
+            $config->customVoiceOrder = $fileConfig['customVoiceOrder'];
+        }
+    } catch (Exception $e) {
+        $msg = "Error loading configuration: " . $e->getMessage() . "\n";
+        if ($cli->errorFile) {
+            CliOutputWriter::write($msg, $cli->errorFile);
+        } else {
+            fwrite(STDERR, $msg);
+        }
+        exit(1);
     }
 }
 
-$abcContent = file_get_contents($file);
-$parser = new AbcFileParser();
-$tunes = $parser->parse($abcContent);
+// Apply CLI options (override config file)
+if ($cli->voiceOrderMode !== null) {
+    $config->voiceOrderingMode = $cli->voiceOrderMode;
+}
 
-$targetTune = null;
-foreach ($tunes as $tune) {
-    $headers = $tune->getHeaders();
-    if (isset($headers['X']) && $headers['X']->get() == $xnum) {
-        $targetTune = $tune;
+// Show configuration if requested
+if ($cli->showConfig) {
+    echo "Current Configuration:\n";
+    echo str_repeat('=', 50) . "\n";
+    echo "Voice Ordering Mode: " . ($config->voiceOrderingMode ?? 'source') . "\n";
+    if (isset($config->customVoiceOrder) && is_array($config->customVoiceOrder)) {
+        echo "Custom Voice Order: " . implode(', ', $config->customVoiceOrder) . "\n";
+    }
+    echo str_repeat('=', 50) . "\n";
+    exit(0);
+}
+
+// Save configuration if requested
+if ($cli->saveConfigFile !== null) {
+    $saveFile = $cli->saveConfigFile;
+    $configData = [
+        'voiceOrderingMode' => $config->voiceOrderingMode ?? 'source',
+    ];
+    if (isset($config->customVoiceOrder)) {
+        $configData['customVoiceOrder'] = $config->customVoiceOrder;
+    }
+    
+    $format = strtolower(pathinfo($saveFile, PATHINFO_EXTENSION));
+    try {
+        // Write config based on format
+        if ($format === 'json') {
+            $json = json_encode($configData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+            file_put_contents($saveFile, $json);
+        } elseif ($format === 'ini') {
+            $ini = "";
+            foreach ($configData as $key => $value) {
+                if (is_array($value)) {
+                    $ini .= "$key = \"" . implode(',', $value) . "\"\n";
+                } else {
+                    $ini .= "$key = \"$value\"\n";
+                }
+            }
+            file_put_contents($saveFile, $ini);
+        } else {
+            throw new Exception("Unsupported format: $format (use .json or .ini)");
+        }
+        
+        $msg = "Configuration saved to: $saveFile\n";
+        if ($cli->errorFile) {
+            CliOutputWriter::write($msg, $cli->errorFile);
+        } else {
+            echo $msg;
+        }
+        exit(0);
+    } catch (Exception $e) {
+        $msg = "Error saving configuration: " . $e->getMessage() . "\n";
+        if ($cli->errorFile) {
+            CliOutputWriter::write($msg, $cli->errorFile);
+        } else {
+            fwrite(STDERR, $msg);
+        }
+        exit(1);
+    }
+}
+
+// Read ABC file
+$abcContent = file_get_contents($file);
+$lines = explode("\n", $abcContent);
+
+// Find the target tune
+$tuneStart = null;
+$tuneEnd = null;
+$inTune = false;
+
+foreach ($lines as $i => $line) {
+    if (preg_match('/^X:\s*' . preg_quote($xnum, '/') . '\s*$/', $line)) {
+        $tuneStart = $i;
+        $inTune = true;
+        continue;
+    }
+    if ($inTune && preg_match('/^X:\s*\d+\s*$/', $line)) {
+        $tuneEnd = $i - 1;
         break;
     }
 }
 
-if (!$targetTune) {
+if ($tuneStart === null) {
     $msg = "Error: Tune number $xnum not found in file\n";
     if ($cli->errorFile) {
         CliOutputWriter::write($msg, $cli->errorFile);
@@ -113,80 +208,33 @@ if (!$targetTune) {
     exit(1);
 }
 
-// Extract voice lines from the tune
-$lines = [];
-foreach ($targetTune->getLines() as $lineObj) {
-    if (method_exists($lineObj, 'render')) {
-        $line = trim($lineObj->render());
-        if ($line !== '') $lines[] = $line;
-    }
+if ($tuneEnd === null) {
+    $tuneEnd = count($lines) - 1;
 }
 
-// Custom voice order logic
-function reorderVoices($lines, $voiceOrder, $exclude) {
-    $bagpipes = [];
-    $melody = [];
-    $harmony = [];
-    $snare = [];
-    $tenor = [];
-    $bass = [];
-    $other = [];
+// Extract tune lines
+$tuneLines = array_slice($lines, $tuneStart, $tuneEnd - $tuneStart + 1);
 
-    foreach ($lines as $line) {
-        if (preg_match('/^V:.*Bagpipe/i', $line)) {
-            $bagpipes[] = $line;
-        } elseif (preg_match('/^V:.*Melody/i', $line)) {
-            $melody[] = $line;
-        } elseif (preg_match('/^V:.*Harmony/i', $line)) {
-            $harmony[] = $line;
-        } elseif (preg_match('/^V:.*Snare/i', $line)) {
-            $snare[] = $line;
-        } elseif (preg_match('/^V:.*Tenor/i', $line)) {
-            $tenor[] = $line;
-        } elseif (preg_match('/^V:.*Bass/i', $line)) {
-            $bass[] = $line;
-        } else {
-            // Try to extract voice name
-            if (preg_match('/^V:\s*([^\s]+)/', $line, $m)) {
-                $voice = $m[1];
-                $other[] = ['line' => $line, 'voice' => $voice];
-            } else {
-                $other[] = ['line' => $line, 'voice' => null];
-            }
-        }
-    }
+// Process with voice ordering
+$pass = new AbcVoiceOrderPass(null, $config);
+$processedLines = $pass->process($tuneLines);
 
-    // Sort 'other' by voice order, excluding main and percussion voices
-    $other = array_filter($other, function($v) use ($exclude) {
-        return !in_array($v['voice'], $exclude, true);
-    });
-    usort($other, function($a, $b) use ($voiceOrder) {
-        $aOrder = isset($voiceOrder[$a['voice']]) ? $voiceOrder[$a['voice']] : 99;
-        $bOrder = isset($voiceOrder[$b['voice']]) ? $voiceOrder[$b['voice']] : 99;
-        return $aOrder <=> $bOrder;
-    });
-    $otherLines = array_map(function($v) { return $v['line']; }, $other);
+// Reconstruct output
+$output = implode("\n", $processedLines) . "\n";
 
-    return array_merge($bagpipes, $melody, $harmony, $otherLines, $snare, $tenor, $bass);
-}
-
-$reorderedLines = reorderVoices($lines, $voiceOrder, $exclude);
-
-// Reconstruct the tune with reordered voices
-$output = '';
-$headers = $targetTune->getHeaders();
-foreach ($headers as $key => $headerObj) {
-    $val = $headerObj->get();
-    if ($val !== '') $output .= "$key:$val\n";
-}
-$output .= "\n";
-$output .= implode("\n", $reorderedLines) . "\n";
-
-$logMsg = "Voice order reordering completed for tune $xnum\n";
-$logMsg .= "✓ Reordered " . count($reorderedLines) . " voice lines\n";
+$logMsg = "Voice order processing completed for tune $xnum\n";
+$mode = $config->voiceOrderingMode ?? 'source';
+$logMsg .= "✓ Ordering mode: $mode\n";
 
 if (isset($cli->opts['v']) || isset($cli->opts['verbose'])) {
-    $logMsg .= "✓ Voice order applied: Bagpipe → Melody → Harmony → Other → Snare → Tenor → Bass\n";
+    $logMsg .= "✓ Processed " . count($processedLines) . " lines\n";
+    if ($mode === 'orchestral') {
+        $logMsg .= "✓ Order: Woodwinds → Brass → Percussion → Strings → Keyboards → Vocals → Bagpipes\n";
+    } elseif ($mode === 'custom' && isset($config->customVoiceOrder)) {
+        $logMsg .= "✓ Custom order: " . implode(' → ', $config->customVoiceOrder) . "\n";
+    } elseif ($mode === 'source') {
+        $logMsg .= "✓ Preserved original voice order\n";
+    }
 }
 
 if ($cli->outputFile) {
@@ -209,9 +257,11 @@ function showUsage() {
     $script = basename($argv[0]);
     echo "ABC Voice Order Pass CLI Tool
 
-Reorders voices in ABC tunes according to predefined voice order preferences.
-Bagpipes, Melody, and Harmony voices are prioritized, followed by other voices
-in alphabetical order, then percussion voices (Snare, Tenor, Bass).
+Reorders voices in ABC tunes according to voice ordering strategies.
+Supports three ordering modes:
+  - source: Preserve original voice order (default)
+  - orchestral: Order by orchestral score conventions
+  - custom: User-defined voice order from configuration file
 
 Usage:
   php $script <abcfile> <tune_number> [options]
@@ -221,23 +271,32 @@ Arguments:
   tune_number   The X: number of the tune to process
 
 Options:
-  -o, --output <file>   Output file for processed ABC content
-  -e, --errorfile <file> Output file for error messages and logs
-  -h, --help            Show this help message
-  -v, --verbose         Enable verbose output
+  -o, --output <file>        Output file for processed ABC content
+  -e, --errorfile <file>     Output file for error messages and logs
+  --voice-order <mode>       Voice ordering mode: source, orchestral, custom
+  --config <file>            Configuration file (JSON, YAML, or INI)
+  --show-config              Display current configuration and exit
+  --save-config <file>       Save current configuration to file
+  -h, --help                 Show this help message
+  -v, --verbose              Enable verbose output
 
 Examples:
   php $script tunes.abc 1
-  php $script tunes.abc 5 --output=reordered.abc
-  php $script tunes.abc 10 --verbose --errorfile=voice.log
+  php $script tunes.abc 5 --voice-order=orchestral --output=reordered.abc
+  php $script tunes.abc 10 --voice-order=custom --config=voice_order.json
+  php $script tunes.abc 1 --show-config
+  php $script tunes.abc 1 --save-config=my_config.json
 
-Voice Order:
-  1. Bagpipe voices
-  2. Melody voices
-  3. Harmony voices
-  4. Other voices (alphabetical)
-  5. Snare voices
-  6. Tenor voices
-  7. Bass voices
+Voice Ordering Modes:
+  source:      Preserve original voice order from ABC file
+  orchestral:  Order by orchestral conventions (woodwinds → brass → 
+               percussion → strings → keyboards → vocals → bagpipes)
+  custom:      User-defined order specified in configuration file
+
+Configuration File Format (JSON example):
+  {
+    \"voiceOrderingMode\": \"custom\",
+    \"customVoiceOrder\": [\"Bagpipes\", \"Tenor\", \"Snare\", \"Bass\", \"Piano\"]
+  }
 ";
 }

@@ -1,0 +1,11 @@
+V:Flute name="Flute" sname="Flute"
+V:Trumpet name="Trumpet" sname="Trumpet"
+V:Timpani name="Timpani" sname="Timpani"
+V:Cello name="Cello" sname="Cello"
+V:Violin name="Violin" sname="Violin"
+[V:Flute]a b c' d'|
+[V:Trumpet]G A B c|
+[V:Timpani]C, D, E, F,|
+[V:Cello]C D E F|
+[V:Violin]d e f g|
+

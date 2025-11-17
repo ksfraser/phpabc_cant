@@ -656,6 +656,26 @@ class AbcTune extends AbcItem {
         return $this->voiceBars;
     }
 
+    /**
+     * Set voice bars (replaces existing voice bars)
+     *
+     * @param array $voiceBars Array of voice bars keyed by voice ID
+     * @return void
+     */
+    public function setVoiceBars(array $voiceBars): void {
+        $this->voiceBars = $voiceBars;
+    }
+
+    /**
+     * Set voice metadata (replaces existing voices array)
+     *
+     * @param array $voices Array of voice metadata keyed by voice ID
+     * @return void
+     */
+    public function setVoices(array $voices): void {
+        $this->voices = $voices;
+    }
+
     public function copyVoice(string $from, string $to): void {
         if (!isset($this->voiceBars[$from])) return;
         $this->voiceBars[$to] = [];
