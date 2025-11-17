@@ -11,6 +11,10 @@ if (!defined('ABSPATH')) exit;
 require_once __DIR__ . '/../vendor/autoload.php';
 use Ksfraser\PhpabcCanntaireachd\AbcParser;
 
+/* Load admin pages */
+require_once __DIR__ . '/admin-transpose-settings.php';
+require_once __DIR__ . '/admin-voice-order-settings.php';
+
 add_action('admin_menu', function() {
     add_menu_page('ABC Canntaireachd', 'ABC Canntaireachd', 'manage_options', 'abc-canntaireachd', 'abc_canntaireachd_admin');
 });

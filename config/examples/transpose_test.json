@@ -1,0 +1,16 @@
+{
+  "transpose": {
+    "mode": "orchestral",
+    "overrides": {
+      "Piano": 0,
+      "Trumpet": 5
+    }
+  },
+  "voice_ordering": {
+    "mode": "orchestral"
+  },
+  "output": {
+    "bars_per_line": 4,
+    "voice_output_style": "grouped"
+  }
+}
