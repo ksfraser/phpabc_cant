@@ -4,13 +4,48 @@ A PHP library for working with ABC notation and canntaireachd (bagpipe vocal mus
 
 ## Features
 
+### Core Processing
 - **ABC Parsing**: Parse ABC notation files with support for headers, voices, notes, barlines, and lyrics
 - **Canntaireachd Generation**: Automatically generate vocal instructions for bagpipe music from ABC notes
-- **Voice Management**: Handle multi-voice ABC files with automatic bagpipe voice creation and reordering
+- **Voice Management**: Handle multi-voice ABC files with automatic bagpipe voice creation and copying
 - **Header Field Processing**: Support for all ABC header fields (A-Z) with validation and matching
 - **Multi-pass Processing**: Comprehensive validation pipeline with timing checks, voice reordering, and canntaireachd validation
-- **Database Integration**: Token dictionary and header field management with WordPress admin UI
-- **CLI Tools**: Command-line utilities for batch processing and validation
+
+### Voice Ordering (Phase 4A)
+- **Source Order Mode**: Preserve original voice order from ABC file
+- **Orchestral Order Mode**: Reorder voices by standard orchestral sections (woodwinds → brass → percussion → strings)
+- **Custom Order Mode**: Define your own voice ordering rules
+- **Database-driven**: Configurable voice order defaults stored in `abc_voice_order_defaults` table
+- **WordPress Admin UI**: Manage voice ordering settings through admin interface
+
+### Transpose Modes (Phase 4B) 🎵
+- **MIDI Mode**: All instruments at concert pitch (0 semitones) for MIDI/audio imports
+- **Bagpipe Mode**: Bagpipes at written pitch, all other instruments transposed +2 semitones
+- **Orchestral Mode**: Instrument-specific transposition (Bb=+2, Eb=+9, F=+7, concert pitch=0)
+- **80+ Instruments**: Comprehensive instrument mapping including orchestral families
+- **Per-Voice Overrides**: Fine-grained control with voice-specific transpose settings
+- **Strategy Pattern**: Clean, extensible architecture for transpose calculations
+- **Database Integration**: Transpose values stored in `abc_voice_names` table
+- **WordPress Admin UI**: Configure transpose modes and per-voice overrides
+
+### Configuration System (Phase 4C)
+- **JSON/YAML Support**: Save and load processing configurations from files
+- **CLI Override Precedence**: Command-line options override config file settings
+- **Shareable Configurations**: Export settings for team workflows
+- **All CLI Scripts**: Configuration file support across all processing tools
+
+### Database & WordPress Integration
+- **Token Dictionary**: Unified ABC/canntaireachd/BMW token mappings with CRUD admin UI
+- **Header Field Defaults**: Database-backed default values with migration support
+- **Voice Name Management**: Instrument names, transpose values, and abbreviations
+- **Voice Order Defaults**: Configurable orchestral ordering rules
+- **Migration System**: Automated database schema updates with rollback support
+
+### CLI Tools
+- **Comprehensive CLI Suite**: 12+ command-line utilities for batch processing
+- **Consistent Interface**: All scripts support config files, help documentation, and proper error handling
+- **Processing Passes**: Dedicated CLIs for voice ordering, transpose, timing validation, and more
+- **Validation Tools**: Tune number validation, timing checks, header field verification
 
 ## Installation
 
@@ -42,6 +77,61 @@ if (!empty($result['canntDiff'])) {
     }
 }
 ```
+
+## Advanced Features
+
+### Voice Ordering
+
+Organize multi-voice ABC files with intelligent voice ordering:
+
+```bash
+# Use orchestral ordering (woodwinds, brass, percussion, strings)
+php bin/abc-voice-order-pass-cli.php --mode=orchestral input.abc output.abc
+
+# Use custom order
+php bin/abc-voice-order-pass-cli.php --mode=custom --custom-order="Melody,Bagpipes,Drums" input.abc output.abc
+
+# Preserve source order
+php bin/abc-voice-order-pass-cli.php --mode=source input.abc output.abc
+```
+
+**WordPress Admin**: Configure voice ordering in *Settings → Voice Order Settings*
+
+### Transpose Modes
+
+Transpose instruments automatically for different contexts:
+
+```bash
+# MIDI mode (all instruments at concert pitch)
+php bin/abc-cannt-cli.php --transpose-mode=midi input.abc output.abc
+
+# Bagpipe mode (bagpipes=0, others=+2)
+php bin/abc-cannt-cli.php --transpose-mode=bagpipe input.abc output.abc
+
+# Orchestral mode (Bb=+2, Eb=+9, F=+7, concert=0)
+php bin/abc-cannt-cli.php --transpose-mode=orchestral input.abc output.abc
+
+# Per-voice override
+php bin/abc-cannt-cli.php --transpose-mode=orchestral --transpose-override="Clarinet:0" input.abc output.abc
+```
+
+**Supported Instruments**: 80+ including trumpet, clarinet, flute, horn, saxophone, tuba, and more  
+**WordPress Admin**: Configure transpose settings in *Settings → Transpose Settings*
+
+### Configuration Files
+
+Save processing settings to reusable configuration files:
+
+```bash
+# Save configuration
+php bin/abc-cannt-cli.php --save-config=myconfig.json --transpose-mode=orchestral --voice-order=orchestral
+
+# Load configuration (CLI options override file settings)
+php bin/abc-cannt-cli.php --config=myconfig.json input.abc output.abc
+```
+
+**Formats**: JSON, YAML  
+**Precedence**: CLI options > config file > defaults
 
 ## Canntaireachd Generation
 
