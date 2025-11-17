@@ -399,15 +399,76 @@ class AbcTune extends AbcItem {
             if (!isset($this->voices[$voiceId])) {
                 $out .= "V:$voiceId\n";
             }
+            
+            // Render bars and collect canntaireachd syllables
+            $barLines = [];
+            $canntLines = [];
+            
             foreach ($bars as $barObj) {
+                // Render the bar music
                 if (method_exists($barObj, 'render')) {
-                    $out .= $barObj->render();
+                    $barLines[] = $barObj->render();
                 } elseif (is_string($barObj)) {
-                    $out .= $barObj . "\n";
+                    $barLines[] = $barObj;
+                } else {
+                    $barLines[] = '';
                 }
+                
+                // Extract canntaireachd from notes in this bar
+                $barCannt = $this->extractCanntaireachdFromBar($barObj);
+                $canntLines[] = $barCannt;
+            }
+            
+            // Output bars
+            $out .= implode('', $barLines);
+            
+            // Output w: lines if any bars have canntaireachd
+            $hasAnyCannt = false;
+            foreach ($canntLines as $line) {
+                if (!empty($line)) {
+                    $hasAnyCannt = true;
+                    break;
+                }
+            }
+            
+            if ($hasAnyCannt) {
+                $out .= "w: " . implode('|', $canntLines) . "\n";
             }
         }
         return $out;
+    }
+    
+    /**
+     * Extract canntaireachd syllables from a bar's notes
+     * 
+     * @param mixed $barObj Bar object
+     * @return string Space-separated canntaireachd syllables for this bar
+     */
+    private function extractCanntaireachdFromBar($barObj): string
+    {
+        $syllables = [];
+        
+        // Check if bar has notes property
+        if (!isset($barObj->notes) || !is_array($barObj->notes)) {
+            return '';
+        }
+        
+        // Extract canntaireachd from each note
+        foreach ($barObj->notes as $note) {
+            if (method_exists($note, 'getCanntaireachd')) {
+                $cannt = $note->getCanntaireachd();
+                if (!empty($cannt)) {
+                    $syllables[] = $cannt;
+                }
+            } elseif (method_exists($note, 'renderCanntaireachd')) {
+                $cannt = $note->renderCanntaireachd();
+                if (!empty($cannt)) {
+                    $syllables[] = $cannt;
+                }
+            }
+        }
+        
+        return implode(' ', $syllables);
     }
     /**
      * Config option: number of bars per interleave block

@@ -3757,3 +3757,53 @@
 [DEBUG][2025-11-16 22:16:11] AbcVoiceOrderPass::process EXIT
 [DEBUG][2025-11-16 22:16:11] AbcTimingValidator::validate ENTRY
 [DEBUG][2025-11-16 22:16:11] AbcTimingValidator::validate EXIT
+[DEBUG][2025-11-17 06:57:19] AbcProcessingPipeline::processWithTransforms ENTRY
+[DEBUG][2025-11-17 06:57:19] Input text length: 66
+[DEBUG][2025-11-17 06:57:19] Transforms count: 2
+[DEBUG][2025-11-17 06:57:23] Parsed tune with 1 voices
+[DEBUG][2025-11-17 06:57:23] Applying transform: Ksfraser\PhpabcCanntaireachd\Transform\VoiceCopyTransform
+[DEBUG][2025-11-17 06:57:23] Transform complete, voices: 2
+[DEBUG][2025-11-17 06:57:23] Applying transform: Ksfraser\PhpabcCanntaireachd\Transform\CanntaireachdTransform
+[DEBUG][2025-11-17 06:57:23] Transform complete, voices: 2
+[DEBUG][2025-11-17 06:57:23] Rendered text length: 83
+[DEBUG][2025-11-17 06:57:23] AbcProcessingPipeline::processWithTransforms EXIT
+[DEBUG][2025-11-17 06:57:32] AbcProcessingPipeline::processWithTransforms ENTRY
+[DEBUG][2025-11-17 06:57:32] Input text length: 66
+[DEBUG][2025-11-17 06:57:32] Transforms count: 2
+[DEBUG][2025-11-17 06:57:32] Parsed tune with 1 voices
+[DEBUG][2025-11-17 06:57:32] Applying transform: Ksfraser\PhpabcCanntaireachd\Transform\VoiceCopyTransform
+[DEBUG][2025-11-17 06:57:32] Transform complete, voices: 2
+[DEBUG][2025-11-17 06:57:32] Applying transform: Ksfraser\PhpabcCanntaireachd\Transform\CanntaireachdTransform
+[DEBUG][2025-11-17 06:57:32] Transform complete, voices: 2
+[DEBUG][2025-11-17 06:57:32] Rendered text length: 83
+[DEBUG][2025-11-17 06:57:32] AbcProcessingPipeline::processWithTransforms EXIT
+[DEBUG][2025-11-17 07:02:53] AbcProcessingPipeline::processWithTransforms ENTRY
+[DEBUG][2025-11-17 07:02:53] Input text length: 66
+[DEBUG][2025-11-17 07:02:53] Transforms count: 2
+[DEBUG][2025-11-17 07:02:53] Parsed tune with 1 voices
+[DEBUG][2025-11-17 07:02:53] Applying transform: Ksfraser\PhpabcCanntaireachd\Transform\VoiceCopyTransform
+[DEBUG][2025-11-17 07:02:53] Transform complete, voices: 2
+[DEBUG][2025-11-17 07:02:53] Applying transform: Ksfraser\PhpabcCanntaireachd\Transform\CanntaireachdTransform
+[DEBUG][2025-11-17 07:02:54] Transform complete, voices: 2
+[DEBUG][2025-11-17 07:02:54] Rendered text length: 102
+[DEBUG][2025-11-17 07:02:54] AbcProcessingPipeline::processWithTransforms EXIT
+[DEBUG][2025-11-17 07:03:02] AbcProcessingPipeline::processWithTransforms ENTRY
+[DEBUG][2025-11-17 07:03:02] Input text length: 66
+[DEBUG][2025-11-17 07:03:02] Transforms count: 2
+[DEBUG][2025-11-17 07:03:02] Parsed tune with 1 voices
+[DEBUG][2025-11-17 07:03:02] Applying transform: Ksfraser\PhpabcCanntaireachd\Transform\VoiceCopyTransform
+[DEBUG][2025-11-17 07:03:02] Transform complete, voices: 2
+[DEBUG][2025-11-17 07:03:02] Applying transform: Ksfraser\PhpabcCanntaireachd\Transform\CanntaireachdTransform
+[DEBUG][2025-11-17 07:03:02] Transform complete, voices: 2
+[DEBUG][2025-11-17 07:03:02] Rendered text length: 102
+[DEBUG][2025-11-17 07:03:02] AbcProcessingPipeline::processWithTransforms EXIT
+[DEBUG][2025-11-17 07:03:12] AbcProcessingPipeline::processWithTransforms ENTRY
+[DEBUG][2025-11-17 07:03:12] Input text length: 66
+[DEBUG][2025-11-17 07:03:12] Transforms count: 2
+[DEBUG][2025-11-17 07:03:12] Parsed tune with 1 voices
+[DEBUG][2025-11-17 07:03:12] Applying transform: Ksfraser\PhpabcCanntaireachd\Transform\VoiceCopyTransform
+[DEBUG][2025-11-17 07:03:12] Transform complete, voices: 2
+[DEBUG][2025-11-17 07:03:12] Applying transform: Ksfraser\PhpabcCanntaireachd\Transform\CanntaireachdTransform
+[DEBUG][2025-11-17 07:03:12] Transform complete, voices: 2
+[DEBUG][2025-11-17 07:03:12] Rendered text length: 102
+[DEBUG][2025-11-17 07:03:12] AbcProcessingPipeline::processWithTransforms EXIT
