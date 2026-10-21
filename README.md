@@ -46,6 +46,7 @@ A PHP library for working with ABC notation and canntaireachd (bagpipe vocal mus
 - **Consistent Interface**: All scripts support config files, help documentation, and proper error handling
 - **Processing Passes**: Dedicated CLIs for voice ordering, transpose, timing validation, and more
 - **Validation Tools**: Tune number validation, timing checks, header field verification
+- **Voice Canntaireachd**: `bin/abc-voice-canntaireachd-cli.php` writes `w:` canntaireachd lines beneath the Melody, Bagpipes and Pipes voices of an ABC file
 
 ## Installation
 
@@ -135,33 +136,60 @@ php bin/abc-cannt-cli.php --config=myconfig.json input.abc output.abc
 
 ## Canntaireachd Generation
 
-When processing ABC files, the system automatically:
+The conversion is driven by one rule: **a voice is a target when its
+identifier or its declared name is Melody, Bagpipes or Pipes** (matched
+case-insensitively). Every music line of every target voice is converted with
+the token dictionary, and the result is written as a `w:` line directly
+beneath the ABC line it belongs to.
+
+```
+X:1
+T:Test Tune
+V:Melody name="Melody"
+[V:Melody]{g}A3B {g}ce3 |
+w: hen o ho e |
+V:Bagpipes name="Bagpipes"
+[V:Bagpipes]{g}A3B {g}ce3 |
+w: hen o ho e |
+```
+
+A voice matches on either half of its declaration, so all of these are
+recognised:
+
+```
+V:Melody
+V:M name="Melody" sname="Melody"
+V:Pipes
+```
+
+Everything else in the file is left exactly as it was — headers, comments,
+`%%` directives, blank lines and non-target voices are never touched.
+
+### Command line
+
+```bash
+# Convert the target voices of a file, writing the result to stdout
+php bin/abc-voice-canntaireachd-cli.php --file tune.abc
+
+# … to a file, with a log of what was generated
+php bin/abc-voice-canntaireachd-cli.php --file tune.abc --output=cannt.abc --canntdiff=diff.txt
+
+# … for a different set of voices
+php bin/abc-voice-canntaireachd-cli.php --file tune.abc --voice=Chanter
+```
+
+The full requirements are in
+[`requirements/voice-canntaireachd-w-lines.md`](requirements/voice-canntaireachd-w-lines.md).
+
+### The full processing pipeline
+
+When the whole pipeline runs (`php bin/abc-cannt-cli.php --file tune.abc --convert`):
 
 1. **Detects Voices**: Identifies melody and bagpipe voices in the ABC file
 2. **Creates Bagpipe Voice**: If a melody voice exists but no bagpipe voice, automatically creates one
 3. **Copies Content**: Copies ABC notes and lyrics from melody to bagpipe voice
 4. **Generates Canntaireachd**: Converts ABC notes to vocal instructions using the token dictionary
-5. **Adds Lyrics Lines**: Inserts `w:` lines with canntaireachd text below bagpipe music
-
-### Example Input:
-```
-X:1
-T:Test Tune
-V:Melody
-|A B C D|
-```
-
-### Example Output:
-```
-X:1
-T:Test Tune
-V:Bagpipes name="Bagpipes" sname="Bagpipes"
-%canntaireachd: <add your canntaireachd here>
-w: en o [C] [D]
-|A B C D|
-V:Melody
-|A B C D|
-```
+5. **Adds Lyrics Lines**: Inserts `w:` lines with canntaireachd text below the music
 
 ## Processing Pipeline
 

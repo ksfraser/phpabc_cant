@@ -1,188 +1,208 @@
-<?php 
+<?php
+
+declare(strict_types=1);
 
 namespace ksfraser\PhpabcCanntaireachd;
 
 use ksfraser\PhpabcCanntaireachd\Log\FlowLog;
+use ksfraser\PhpabcCanntaireachd\Voices\TargetVoiceResolver;
+
 /**
  * Class AbcCanntaireachdPass
  *
- * Processes ABC lines and generates canntaireachd lyrics using the translation pipeline.
- * Follows SRP by handling only canntaireachd generation in the processing pipeline.
- * Uses DI for TokenDictionary injection.
+ * Generates canntaireachd for the target voices of an ABC tune and emits it as
+ * a `w:` line directly beneath the ABC line it belongs to.
+ *
+ * The pass is line-preserving: every input line is emitted unchanged, in its
+ * original position and with its original spacing. The only additions are the
+ * generated `w:` lines.
+ *
+ * Voice handling:
+ *  - a "V:<id>" header sets the current voice, and declares its name;
+ *  - an inline "[V:<id>]" marker switches the current voice and carries the
+ *    music of that line;
+ *  - a bare music line belongs to the current voice.
+ *
+ * A voice is a target when its identifier or its declared name matches
+ * {@see TargetVoiceResolver::DEFAULT_TARGET_VOICES} ("Melody", "Bagpipes",
+ * "Pipes"), case-insensitively. All lines of every target voice are processed.
+ *
+ * If a target music line already has `w:` lines beneath it they are kept, and
+ * the generated canntaireachd is added after them.
+ *
+ * @package ksfraser\PhpabcCanntaireachd
  *
  * @requirement FR2, FR8
- * @uml
- * @startuml
- * class AbcCanntaireachdPass {
- *   - dict: TokenDictionary
- *   + __construct(dict: TokenDictionary)
- *   + process(lines: array): array
- *   + isMusicLine(line: string): bool
- * }
- * AbcCanntaireachdPass --> CanntGenerator : uses
- * CanntGenerator --> TokenDictionary : uses
- * TokenDictionary --> Trie : uses
- * @enduml
  *
- * @sequence
- * @startuml
- * participant User
- * participant AbcCanntaireachdPass
- * participant CanntGenerator
- * participant TokenDictionary
- * participant Trie
- * User -> AbcCanntaireachdPass: process(lines)
- * AbcCanntaireachdPass -> CanntGenerator: generateForNotes(line)
- * CanntGenerator -> TokenDictionary: searchCannt(noteBody)
- * TokenDictionary -> Trie: search(input)
- * Trie --> TokenDictionary: result
- * TokenDictionary --> CanntGenerator: canntText
- * CanntGenerator --> AbcCanntaireachdPass: canntText
- * AbcCanntaireachdPass --> User: output
- * @enduml
- *
- * @flowchart
- * @startuml
- * start
- * :Receive ABC lines;
- * :Validate lines;
- * :For each music line in Bagpipes voice;
- * :Generate canntaireachd using Trie;
- * :Add w: line below music line;
- * :Output processed lines;
- * stop
- * @enduml
+ * @since 2.1.0
  */
+class AbcCanntaireachdPass
+{
+    /** @var TokenDictionary */
+    private TokenDictionary $dict;
 
-class AbcCanntaireachdPass {
-    private $dict;
+    /** @var TargetVoiceResolver */
+    private TargetVoiceResolver $resolver;
+
     /**
      * Constructor for AbcCanntaireachdPass.
      * Uses DI to inject TokenDictionary.
      *
-     * @param TokenDictionary $dict The token dictionary for translations.
+     * @param TokenDictionary|array $dict The token dictionary for translations.
+     * @param string[]|null $targetVoices Voice names that receive canntaireachd.
      * @requirement FR7
      */
-    public function __construct($dict) {
+    public function __construct($dict, ?array $targetVoices = null)
+    {
         if ($dict instanceof TokenDictionary) {
             $this->dict = $dict;
         } else {
             $td = new TokenDictionary();
-            $td->prepopulate($dict);
+            $td->prepopulate((array) $dict);
             $this->dict = $td;
         }
+        $this->resolver = new TargetVoiceResolver($targetVoices);
     }
+
     /**
-     * Processes the array of ABC lines to generate canntaireachd for Bagpipes voices.
-     * Follows OCP by allowing extension without modification.
+     * Processes the array of ABC lines to generate canntaireachd for the target voices.
      *
-     * @param array $lines The input ABC lines.
-     * @return array The processed lines with canntaireachd added, and diff log.
+     * @param string[] $lines The input ABC lines.
+     * @return array{lines: string[], canntDiff: array<int, array{line: string, generated: string}>}
+     *         The processed lines with canntaireachd added, and a diff log.
      * @requirement FR2, FR8
      */
-    public function process(array $lines): array {
+    public function process(array $lines): array
+    {
         $canntDiff = [];
-        $output = $lines;
+        $output = [];
 
-        // Use CanntGenerator for translation
         $generator = new CanntGenerator($this->dict);
-        $translatedOutput = [];
-        $currentVoice = null;
-        foreach ($output as $line) {
+        $voiceNames = $this->resolver->collectVoiceNames($lines);
+        $currentVoiceId = null;
+        $currentVoiceName = null;
+
+        $count = count($lines);
+        for ($i = 0; $i < $count; $i++) {
+            $line = $lines[$i];
             $trimmed = trim($line);
-            // Check for voice definition (both standalone and inline)
-            if (preg_match('/^V:([^\s]+)/', $trimmed, $matches)) {
-                $currentVoice = $matches[1];
-                $translatedOutput[] = $line;
-            } elseif (preg_match('/^\[V:([^\]]+)\]/', $trimmed, $matches)) {
-                // Handle inline voice markers like [V:M]
-                $currentVoice = $matches[1];
-                error_log("AbcCanntaireachdPass: Found inline voice marker [V:$currentVoice]");
-                $translatedOutput[] = $line;
-                if ($this->shouldAddCanntaireachd($currentVoice)) {
-                    error_log("AbcCanntaireachdPass: shouldAddCanntaireachd returned TRUE for $currentVoice");
-                    $canntText = $generator->generateForNotes($line);
-                    error_log("AbcCanntaireachdPass: generated canntText: '$canntText'");
-                    if ($canntText && $canntText !== '[?]') {
-                        $translatedOutput[] = 'w: ' . $canntText;
-                        $canntDiff[] = [
-                            'line' => $line,
-                            'generated' => $canntText
-                        ];
-                    }
-                } else {
-                    error_log("AbcCanntaireachdPass: shouldAddCanntaireachd returned FALSE for $currentVoice");
+
+            // A new tune starts a new voice context.
+            if (preg_match('/^X:/i', $trimmed) === 1) {
+                $currentVoiceId = null;
+                $currentVoiceName = null;
+                $output[] = $line;
+                continue;
+            }
+
+            // A voice header declares the current voice and, optionally, its name.
+            if (preg_match('/^V:\s*(\S+)(.*)$/', $trimmed, $matches) === 1) {
+                $currentVoiceId = $matches[1];
+                $currentVoiceName = TargetVoiceResolver::extractName($matches[2]);
+                if ($currentVoiceName !== null) {
+                    $voiceNames[$currentVoiceId] = $currentVoiceName;
                 }
-            } elseif ($this->isMusicLine($line) && $this->shouldAddCanntaireachd($currentVoice)) {
-                $translatedOutput[] = $line;
-                error_log("AbcCanntaireachdPass processing line: '$line'");
-                $canntText = $generator->generateForNotes($line);
-                error_log("AbcCanntaireachdPass generated cannt: '$canntText'");
-                if ($canntText && $canntText !== '[?]') {
-                    $translatedOutput[] = 'w: ' . $canntText;
-                    $canntDiff[] = [
-                        'line' => $line,
-                        'generated' => $canntText
-                    ];
-                }
-            } else {
-                $translatedOutput[] = $line;
+                $output[] = $line;
+                continue;
+            }
+
+            // An inline [V:id] marker switches the current voice.
+            if (preg_match('/^\[V:([^\]]+)\]/', $trimmed, $matches) === 1) {
+                $currentVoiceId = $matches[1];
+                $currentVoiceName = $voiceNames[$currentVoiceId] ?? null;
+            }
+
+            $isTarget = $this->resolver->isTarget($currentVoiceId, $currentVoiceName);
+            if (!$isTarget || !$this->isMusicLine($line)) {
+                $output[] = $line;
+                continue;
+            }
+
+            $output[] = $line;
+
+            // Keep any hand-written lyrics that already sit under this line …
+            while ($i + 1 < $count && preg_match('/^w:/i', trim($lines[$i + 1])) === 1) {
+                $output[] = $lines[++$i];
+            }
+
+            // … and add the generated canntaireachd underneath them.
+            $canntText = $this->normaliseCanntaireachd($generator->generateForNotes($line));
+            if ($canntText !== '' && $canntText !== '[?]') {
+                $output[] = 'w: ' . $canntText;
+                $canntDiff[] = [
+                    'line' => $line,
+                    'generated' => $canntText,
+                ];
             }
         }
-        
-        return ['lines' => $translatedOutput, 'canntDiff' => $canntDiff];
+
+        return ['lines' => $output, 'canntDiff' => $canntDiff];
     }
-    
+
+    /**
+     * Normalise generated canntaireachd: single spaces, " | " between bars.
+     *
+     * @param string $cannt
+     * @return string
+     */
+    private function normaliseCanntaireachd(string $cannt): string
+    {
+        $cannt = preg_replace('/\s*\|\s*/', ' | ', $cannt) ?? $cannt;
+        $cannt = preg_replace('/ {2,}/', ' ', $cannt) ?? $cannt;
+        return trim($cannt);
+    }
+
     /**
      * Determines if canntaireachd should be added for this voice.
-     * @param string|null $voice The voice ID
-     * @return bool True if canntaireachd should be added
+     *
+     * @param string|null $voiceId   Voice identifier.
+     * @param string|null $voiceName Declared voice name.
+     * @return bool True if canntaireachd should be added.
      */
-    private function shouldAddCanntaireachd($voice): bool {
-        if (!$voice) {
-            return false;
-        }
-        $voiceLower = strtolower($voice);
-        // Only add canntaireachd to Bagpipes voices, not Melody
-        // Match "Bagpipes", "Bagpipe", "Pipes", or "Pipe" but not just "P"
-        return in_array($voiceLower, ['bagpipes', 'pipes', 'bagpipe', 'pipe']);
+    public function shouldAddCanntaireachd(?string $voiceId, ?string $voiceName = null): bool
+    {
+        return $this->resolver->isTarget($voiceId, $voiceName);
     }
-    
-    // Lyrics generation now handled by LyricsGenerator class
 
     /**
      * Determines if a line is a music line (contains notes or bars).
-     * Follows SRP by handling only line type detection.
      *
      * @param string $line The line to check.
      * @return bool True if it's a music line.
      */
-    private function isMusicLine($line) {
+    private function isMusicLine(string $line): bool
+    {
         $trimmed = trim($line);
-        // Exclude empty lines and comments
-        if ($trimmed === '' || preg_match('/^%/', $trimmed)) {
+        if ($trimmed === '') {
             return false;
         }
-        // Exclude header lines (X:, T:, M:, L:, K:, etc.)
-        if (preg_match('/^[A-Z]:/', $trimmed)) {
+        // Comments and %% directives are not music.
+        if (str_starts_with($trimmed, '%')) {
             return false;
         }
-        // Exclude voice definition lines (V: at start)
-        if (preg_match('/^V:/', $trimmed)) {
+        // Header fields (X:, T:, K:, w:, …) are not music.
+        if (preg_match('/^[A-Za-z]:/', $trimmed) === 1) {
             return false;
         }
-        // Exclude lyrics lines (w: at start)
-        if (preg_match('/^w:/', $trimmed)) {
+        // Strip an inline voice marker before looking for notes.
+        $body = preg_replace('/^\[V:[^\]]*\]/', '', $trimmed) ?? $trimmed;
+        $body = trim($body);
+        if ($body === '') {
             return false;
         }
-        // Accept lines starting with [V:...] as music lines
-        if (preg_match('/^\[V:[^\]]+\]/', $trimmed)) {
-            return true;
-        }
-        // Accept lines with actual notes (letters A-G, a-g, or rests z Z)
-        if (preg_match('/[A-Ga-gzZ]/', $trimmed)) {
-            return true;
-        }
-        return false;
+        // A music line carries at least one note or rest. A line of nothing
+        // but bar lines has no syllables to sing.
+        return preg_match('/[A-Ga-gzZ]/', $body) === 1;
+    }
+
+    /**
+     * Log the pass entry/exit for flow tracing.
+     *
+     * @param string $message
+     * @return void
+     */
+    private function logFlow(string $message): void
+    {
+        FlowLog::log('AbcCanntaireachdPass: ' . $message, true);
     }
 }
