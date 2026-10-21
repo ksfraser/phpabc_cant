@@ -49,6 +49,7 @@ A PHP library for working with ABC notation and canntaireachd (bagpipe vocal mus
 - **Voice Canntaireachd**: `bin/abc-voice-canntaireachd-cli.php` writes `w:` canntaireachd lines beneath the Melody, Bagpipes and Pipes voices of an ABC file
 - **Coverage comparison**: `bin/abc-compare-canntaireachd.php <dir>` compares the generated canntaireachd with the canntaireachd already written in a corpus of ABC files
 - **Tune cleanup**: `bin/abc-tune-cleanup-cli.php --file <abcfile>` tidies up a tune — the header fields in one order, the standard include block, the voice definitions, the pipe band drums on their one line staff, the pipe scale checked, and the bars laid out four to a line
+- **BMW to ABC**: `bin/bmw2abc-cli.php --file <file.bmw>` converts a Bagpipe Music Writer file into ABC, one token at a time
 
 ## Installation
 
@@ -204,6 +205,23 @@ read is never changed either: the cleaned tune is written to a new file.
 
 The full requirements are in
 [`requirements/tune-cleanup.md`](requirements/tune-cleanup.md).
+
+## Bagpipe Music Writer to ABC
+
+Bagpipe Music Writer writes the tune in its own notation. The project has the
+dictionary for it — `src/ksfraser/PhpabcCanntaireachd/bmw_dict.php`, 551 tokens
+— and now a converter that uses it properly:
+
+```bash
+php bin/bmw2abc-cli.php --file "9O_Clock_Walk.bmw" --output walk.abc
+```
+
+The tokens are matched one at a time, longest first, so that a doubling is
+never taken apart by a second pass — the failure the original converter's own
+comment describes. A token that is not in the dictionary is left as it was.
+
+The full requirements are in
+[`requirements/bmw-to-abc.md`](requirements/bmw-to-abc.md).
 
 ### The full processing pipeline
 

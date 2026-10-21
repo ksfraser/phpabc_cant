@@ -156,7 +156,18 @@ through as they were written.
 
 The requirements are in `requirements/tune-cleanup.md`.
 
-## 9. Known traps
+## 9. The BMW converter
+
+`src/ksfraser/PhpabcCanntaireachd/Bmw/` converts a Bagpipe Music Writer file
+into ABC: `Bmw/BmwDictionary` reads the dictionary, and
+`Bmw/BmwToAbcConverter` converts the file. The tokens are matched one at a
+time, longest first — the original converter replaced over the whole line,
+which turned a doubling into `{{d}e}`.
+
+The dictionary is a data file, `src/ksfraser/PhpabcCanntaireachd/bmw_dict.php`,
+next to the ABC one. The requirements are in `requirements/bmw-to-abc.md`.
+
+## 10. Known traps
 
 - **`w:` is a lyrics field, not a line-break.** In this project a `w:` line
   *under* a music line carries the canntaireachd for that line. Do not confuse
