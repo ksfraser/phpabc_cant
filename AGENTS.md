@@ -167,7 +167,18 @@ which turned a doubling into `{{d}e}`.
 The dictionary is a data file, `src/ksfraser/PhpabcCanntaireachd/bmw_dict.php`,
 next to the ABC one. The requirements are in `requirements/bmw-to-abc.md`.
 
-## 10. Known traps
+## 10. The bagpipe fingering
+
+`src/ksfraser/PhpabcCanntaireachd/Bagpipe/` holds the fingering of the Highland
+chanter: `BagpipeFingering` has the table — the scale from the low G to the
+high D, and the holes that are closed for each note — and
+`BagpipeFingeringWriter` writes the abc2ps format file that draws it.
+
+The words for the embellishments come from the token dictionary, so the chart
+and the dictionary cannot disagree. Write the file again with
+`bin/abc-bagpipe-fingering-cli.php` whenever the dictionary changes.
+
+## 11. Known traps
 
 - **`w:` is a lyrics field, not a line-break.** In this project a `w:` line
   *under* a music line carries the canntaireachd for that line. Do not confuse

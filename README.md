@@ -50,6 +50,7 @@ A PHP library for working with ABC notation and canntaireachd (bagpipe vocal mus
 - **Coverage comparison**: `bin/abc-compare-canntaireachd.php <dir>` compares the generated canntaireachd with the canntaireachd already written in a corpus of ABC files
 - **Tune cleanup**: `bin/abc-tune-cleanup-cli.php --file <abcfile>` tidies up a tune — the header fields in one order, the standard include block, the voice definitions, the pipe band drums on their one line staff, the pipe scale checked, and the bars laid out four to a line
 - **BMW to ABC**: `bin/bmw2abc-cli.php --file <file.bmw>` converts a Bagpipe Music Writer file into ABC, one token at a time
+- **Bagpipe fingering**: `bin/abc-bagpipe-fingering-cli.php` writes the abc2ps format file that draws the fingering of the Highland chanter, and the words for the embellishments
 
 ## Installation
 
@@ -222,6 +223,26 @@ comment describes. A token that is not in the dictionary is left as it was.
 
 The full requirements are in
 [`requirements/bmw-to-abc.md`](requirements/bmw-to-abc.md).
+
+## The bagpipe fingering
+
+The whistle file draws the fingering of a tin whistle under the note, the guitar
+file draws a chord diagram, and this one draws the fingering of the Highland
+chanter:
+
+```bash
+php bin/abc-bagpipe-fingering-cli.php --output bagpipe_fingering.fmt
+```
+
+One decoration for each note of the pipe scale — `!pipeG!` is the low G,
+`!pipeg!` the G above it — and each draws the chanter with its holes closed as
+the fingers close them. `!pipeEmbellishments!` draws the reference chart of the
+embellishments and the words they are sung to.
+
+The fingering table and the words come from the project, so the file and the
+token dictionary cannot drift apart. The file is written with
+`abcm2ps -F bagpipe_fingering.fmt tune.abc`, or from a tune with
+`%%abc-include "bagpipe_fingering.fmt"`.
 
 ### The full processing pipeline
 

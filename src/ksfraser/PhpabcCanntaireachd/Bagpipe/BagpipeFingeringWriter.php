@@ -1,0 +1,267 @@
+<?php
+
+declare(strict_types=1);
+
+namespace ksfraser\PhpabcCanntaireachd\Bagpipe;
+
+use ksfraser\PhpabcCanntaireachd\TokenDictionary;
+
+/**
+ * Writes the bagpipe fingering format file for abc2ps.
+ *
+ * The file draws the fingering of the Highland chanter, in the same way that
+ * the whistle file draws the fingering of a tin whistle and the guitar file
+ * draws a chord diagram. There is one decoration for each note of the pipe
+ * scale — "!pipeG!" is the low G, "!pipeg!" the G above it — and each draws
+ * the chanter with its holes closed as the fingers close them.
+ *
+ * The fingering table and the embellishment words come from
+ * {@see BagpipeFingering}, so that the file and the token dictionary cannot
+ * drift apart.
+ *
+ * @package ksfraser\PhpabcCanntaireachd\Bagpipe
+ *
+ * @since 2.2.0
+ */
+class BagpipeFingeringWriter
+{
+    /**
+     * Where each hole is drawn, from the bottom of the chanter up.
+     *
+     * @var array<string, float>
+     */
+    private const HOLE_POSITIONS = [
+        '1' => 0.0,
+        '2' => 7.5,
+        '3' => 15.0,
+        '4' => 30.0,
+        '5' => 37.5,
+        '6' => 45.0,
+        '7' => 57.5,
+        '8' => 65.0,
+    ];
+
+    /** @var BagpipeFingering */
+    private BagpipeFingering $fingering;
+
+    /** @var TokenDictionary */
+    private TokenDictionary $dictionary;
+
+    /**
+     * @param BagpipeFingering|null $fingering
+     * @param TokenDictionary|null $dictionary
+     */
+    public function __construct(?BagpipeFingering $fingering = null, ?TokenDictionary $dictionary = null)
+    {
+        $this->fingering = $fingering ?? new BagpipeFingering();
+        $this->dictionary = $dictionary ?? new TokenDictionary();
+    }
+
+    /**
+     * The name of the decoration that draws the fingering of a note.
+     *
+     * @param string $note
+     * @return string
+     */
+    public function decorationName(string $note): string
+    {
+        return 'pipe' . $note;
+    }
+
+    /**
+     * The format file.
+     *
+     * @return string
+     */
+    public function render(): string
+    {
+        $lines = [];
+        $lines[] = '% bagpipe_fingering.fmt — the Highland bagpipe fingering, for abc2ps';
+        $lines[] = '%';
+        $lines[] = '% Written for the pipe band scores. The fingering of the chanter is';
+        $lines[] = '% drawn under a note of the pipe scale, the way the whistle file draws';
+        $lines[] = '% the fingering of a tin whistle and the guitar file draws a chord';
+        $lines[] = '% diagram.';
+        $lines[] = '%';
+        $lines[] = '% Use it with:';
+        $lines[] = '%   abcm2ps -F bagpipe_fingering.fmt tune.abc';
+        $lines[] = '% or, in a tune that uses the include files:';
+        $lines[] = '%   %%abc-include "bagpipe_fingering.fmt"';
+        $lines[] = '%';
+        $lines[] = '% The chanter has eight holes. One to three are closed by the right';
+        $lines[] = '% hand, four to six by the left hand, seven is the lower back hole';
+        $lines[] = '% (the right little finger) and eight is the upper back hole (the';
+        $lines[] = '% thumb). The scale runs from the low G to the high D.';
+        $lines[] = '%';
+        $lines[] = '% Below the E the holes are closed one at a time from the bottom up.';
+        $lines[] = '% Above the E the chanter is open, with the F as the exception: it';
+        $lines[] = '% is a cross fingering, with the right index finger down.';
+        $lines[] = '%';
+        $lines[] = '% The decorations, one for each note of the scale:';
+        foreach ($this->fingering->getScale() as $note => $holes) {
+            $lines[] = sprintf(
+                '%%   !%s!  the %s — %s',
+                $this->decorationName($note),
+                $this->noteName($note),
+                $holes === [] ? 'all the holes open' : count($holes) . ' holes closed'
+            );
+        }
+        $lines[] = '';
+        $lines[] = 'beginps';
+        $lines = array_merge($lines, $this->renderProcedures());
+        $lines = array_merge($lines, $this->renderEmbellishmentProcedure());
+        $lines[] = 'endps';
+        $lines[] = '';
+        $lines = array_merge($lines, $this->renderDecorations());
+        $lines[] = '';
+        $lines = array_merge($lines, $this->renderEmbellishmentChart());
+
+        return implode("\n", $lines) . "\n";
+    }
+
+    /**
+     * The name of a note, for the chart.
+     *
+     * @param string $note
+     * @return string
+     */
+    private function noteName(string $note): string
+    {
+        if ($note === 'G') {
+            return 'low G';
+        }
+        if (str_starts_with($note, "c'") || str_starts_with($note, "d'")) {
+            return $note . ' (high)';
+        }
+        return $note;
+    }
+
+    /**
+     * The PostScript procedures.
+     *
+     * @return string[]
+     */
+    private function renderProcedures(): array
+    {
+        $lines = [];
+        $lines[] = '% -- the chanter ----------------------------------------------------';
+        $lines[] = '% A tube with the eight holes down it. An open hole is an outline,';
+        $lines[] = '% a closed one is filled.';
+        $lines[] = '% A hole is drawn at the point that is on the stack. The path is';
+        $lines[] = '% started again first, so that the hole is filled on its own and';
+        $lines[] = '% not together with the body of the chanter.';
+        $lines[] = '/pipe_hole_open{';
+        $lines[] = '  gsave newpath moveto 0 0 2.6 0 360 arc stroke grestore';
+        $lines[] = '}!';
+        $lines[] = '/pipe_hole_closed{';
+        $lines[] = '  gsave newpath moveto 0 0 2.6 0 360 arc fill grestore';
+        $lines[] = '}!';
+        $lines[] = '% The body of the chanter, and the line between the hands.';
+        $lines[] = '/pipe_body{';
+        $lines[] = '  gsave';
+        $lines[] = '  0.3 SLW';
+        $lines[] = '  -5 73 M 10 0 RL 0 -80 RL -10 0 RL 0 80 RL stroke';
+        $lines[] = '  -5 22 M 10 0 RL stroke';
+        $lines[] = '  grestore';
+        $lines[] = '}!';
+        foreach ($this->fingering->getScale() as $note => $holes) {
+            $name = $this->decorationName($note);
+            $lines[] = '% The ' . $this->noteName($note) . '.';
+            $lines[] = '/' . $name . '{';
+            $lines[] = '  gsave';
+            $lines[] = '  pipe_body';
+            foreach (self::HOLE_POSITIONS as $hole => $position) {
+                // The array keys are numbers, the hole names are strings.
+                $open = !in_array((string)$hole, $holes, true);
+                $lines[] = sprintf(
+                    '  0 %s %s',
+                    $position,
+                    $open ? 'pipe_hole_open' : 'pipe_hole_closed'
+                );
+            }
+            $lines[] = '  /Helvetica-Bold 9 selectfont 0 -16 M (' . $this->noteName($note) . ') show';
+            $lines[] = '  grestore';
+            $lines[] = '}!';
+        }
+
+        return $lines;
+    }
+
+    /**
+     * The decoration table.
+     *
+     * The layout is the one the guitar file uses: the name, the x offset, the
+     * text, and the anchor.
+     *
+     * @return string[]
+     */
+    private function renderDecorations(): array
+    {
+        $lines = [];
+        $lines[] = '% == Decoration definitions ==';
+        $lines[] = '';
+        foreach ($this->fingering->getScale() as $note => $holes) {
+            $name = $this->decorationName($note);
+            $lines[] = sprintf('deco %-10s 3 %-10s 38 0 0', $name, $name);
+        }
+        $lines[] = sprintf('deco %-10s 3 %-10s 38 0 0', 'pipeEmbellishments', 'pipeEmbellishments');
+        $lines[] = '';
+
+        return $lines;
+    }
+
+    /**
+     * The embellishment chart: the words for the embellishments.
+     *
+     * The words are in the file twice: as comments, which is how they are read,
+     * and as a chart that can be drawn on a page of a tune with the decoration
+     * !pipeEmbellishments!.
+     *
+     * @return string[]
+     */
+    private function renderEmbellishmentChart(): array
+    {
+        $embellishments = $this->fingering->getEmbellishments($this->dictionary);
+
+        $lines = [];
+        $lines[] = '% == The embellishments, and the words they are sung to ==';
+        $lines[] = '%';
+        $lines[] = '% The word is the one in the token dictionary, so the chart and the';
+        $lines[] = '% dictionary cannot disagree.';
+        $lines[] = '%';
+        $lines[] = '% The chart below is drawn by the decoration !pipeEmbellishments!. Put';
+        $lines[] = '% it on a rest of a tune to have the reference page.';
+        $lines[] = '';
+        foreach ($embellishments as $name => $embellishment) {
+            $lines[] = sprintf('%%   %-22s %-10s %s', $name, $embellishment['token'], $embellishment['word']);
+        }
+        $lines[] = '';
+        return $lines;
+    }
+
+    /**
+     * The chart of the embellishments, drawn as PostScript.
+     *
+     * @return string[]
+     */
+    private function renderEmbellishmentProcedure(): array
+    {
+        $embellishments = $this->fingering->getEmbellishments($this->dictionary);
+
+        $lines = [];
+        $lines[] = '% The chart of the embellishments and the words they are sung to.';
+        $lines[] = '/pipeEmbellishments{';
+        $lines[] = '  gsave';
+        $lines[] = '  /Helvetica 7 selectfont';
+        $y = 0;
+        foreach ($embellishments as $name => $embellishment) {
+            $text = sprintf('%-22s %-10s %s', $name, $embellishment['token'], $embellishment['word']);
+            $lines[] = sprintf('  0 %s M (%s) show', $y, $text);
+            $y -= 9;
+        }
+        $lines[] = '  grestore';
+        $lines[] = '}!';
+
+        return $lines;
+    }
+}
