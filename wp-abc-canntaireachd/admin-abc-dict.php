@@ -6,7 +6,7 @@
  * the BMW token is updated in that row. If a new ABC token is added, all values are inserted.
  *
  * @file admin-abc-dict.php
- * @package Ksfraser\PhpabcCanntaireachd
+ * @package ksfraser\PhpabcCanntaireachd
  */
 // Ensure WordPress helper functions are available in admin context
 if (!function_exists('esc_html') || !function_exists('esc_attr') || !function_exists('sanitize_text_field') || !function_exists('sanitize_textarea_field')) {

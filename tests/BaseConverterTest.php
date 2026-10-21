@@ -1,9 +1,9 @@
 <?php
-namespace Ksfraser\PhpabcCanntaireachd\Tests;
-use Ksfraser\PhpabcCanntaireachd\BaseConverter;
+namespace ksfraser\PhpabcCanntaireachd\Tests;
+use ksfraser\PhpabcCanntaireachd\BaseConverter;
 use PHPUnit\Framework\TestCase;
 /**
- * @covers \Ksfraser\PhpabcCanntaireachd\BaseConverter
+ * @covers \ksfraser\PhpabcCanntaireachd\BaseConverter
  */
 class BaseConverterTest extends TestCase {
     public function testCanInstantiate() {

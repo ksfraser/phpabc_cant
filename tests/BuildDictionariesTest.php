@@ -1,9 +1,9 @@
 <?php
-namespace Ksfraser\PhpabcCanntaireachd\Tests;
-use Ksfraser\PhpabcCanntaireachd\BuildDictionaries;
+namespace ksfraser\PhpabcCanntaireachd\Tests;
+use ksfraser\PhpabcCanntaireachd\BuildDictionaries;
 use PHPUnit\Framework\TestCase;
 /**
- * @covers \Ksfraser\PhpabcCanntaireachd\BuildDictionaries
+ * @covers \ksfraser\PhpabcCanntaireachd\BuildDictionaries
  */
 class BuildDictionariesTest extends TestCase {
     public function testCanInstantiate() {

@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Tune\AbcEmbellishment;
+use ksfraser\PhpabcCanntaireachd\Tune\AbcEmbellishment;
 
 class AbcEmbellishmentTest extends TestCase
 {

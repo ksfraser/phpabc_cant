@@ -1,9 +1,9 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Voices\AbcVoice;
-use Ksfraser\PhpabcCanntaireachd\Voices\VoiceFactory;
-use Ksfraser\PhpabcCanntaireachd\Voices\GenericVoiceFactory;
-use Ksfraser\PhpabcCanntaireachd\Voices\BagpipeVoiceFactory;
+use ksfraser\PhpabcCanntaireachd\Voices\AbcVoice;
+use ksfraser\PhpabcCanntaireachd\Voices\VoiceFactory;
+use ksfraser\PhpabcCanntaireachd\Voices\GenericVoiceFactory;
+use ksfraser\PhpabcCanntaireachd\Voices\BagpipeVoiceFactory;
 
 class VoiceFactoryTest extends TestCase
 {

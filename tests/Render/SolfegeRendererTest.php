@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Render\SolfegeRenderer;
+use ksfraser\PhpabcCanntaireachd\Render\SolfegeRenderer;
 
 class SolfegeRendererTest extends TestCase {
     public function testRenderWithSolfege() {

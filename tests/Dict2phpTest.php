@@ -1,9 +1,9 @@
 <?php
-namespace Ksfraser\PhpabcCanntaireachd\Tests;
-use Ksfraser\PhpabcCanntaireachd\Dict2php;
+namespace ksfraser\PhpabcCanntaireachd\Tests;
+use ksfraser\PhpabcCanntaireachd\Dict2php;
 use PHPUnit\Framework\TestCase;
 /**
- * @covers \Ksfraser\PhpabcCanntaireachd\Dict2php
+ * @covers \ksfraser\PhpabcCanntaireachd\Dict2php
  */
 class Dict2phpTest extends TestCase {
     public function testCanInstantiate() {

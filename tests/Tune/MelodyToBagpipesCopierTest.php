@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Tune\MelodyToBagpipesCopier;
+use ksfraser\PhpabcCanntaireachd\Tune\MelodyToBagpipesCopier;
 
 class MelodyToBagpipesCopierTest extends TestCase
 {

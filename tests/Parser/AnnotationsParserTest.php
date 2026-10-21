@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Parser\AnnotationsParser;
+use ksfraser\PhpabcCanntaireachd\Parser\AnnotationsParser;
 
 class AnnotationsParserTest extends TestCase {
     public function testParseAnnotations() {

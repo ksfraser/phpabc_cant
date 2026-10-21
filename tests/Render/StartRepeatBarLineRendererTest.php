@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Render\StartRepeatBarLineRenderer;
+use ksfraser\PhpabcCanntaireachd\Render\StartRepeatBarLineRenderer;
 
 class StartRepeatBarLineRendererTest extends TestCase {
     public function testRenderReturnsStartRepeatBar() {

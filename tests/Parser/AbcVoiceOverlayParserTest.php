@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Parser\AbcVoiceOverlayParser;
+use ksfraser\PhpabcCanntaireachd\Parser\AbcVoiceOverlayParser;
 class AbcVoiceOverlayParserTest extends TestCase {
     public function testParseVoiceOverlay() {
         $parser = new AbcVoiceOverlayParser();

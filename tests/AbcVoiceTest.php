@@ -1,8 +1,8 @@
 <?php
-use Ksfraser\PhpabcCanntaireachd\Voices\AbcVoice;
+use ksfraser\PhpabcCanntaireachd\Voices\AbcVoice;
 use PHPUnit\Framework\TestCase;
 /**
- * @covers \Ksfraser\PhpabcCanntaireachd\AbcVoice
+ * @covers \ksfraser\PhpabcCanntaireachd\AbcVoice
  */
 
 class AbcVoiceTest extends TestCase

@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\AbcFileParser;
+use ksfraser\PhpabcCanntaireachd\AbcFileParser;
 
 class AbcRenumberTunesTest extends TestCase {
     public function testRenumberWidth() {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Ksfraser\PhpabcCanntaireachd\Formatting;
+namespace ksfraser\PhpabcCanntaireachd\Formatting;
 
 use PHPUnit\Framework\TestCase;
 

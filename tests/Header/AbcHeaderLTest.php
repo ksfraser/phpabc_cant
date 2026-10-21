@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderL;
+use ksfraser\PhpabcCanntaireachd\Header\AbcHeaderL;
 
 class AbcHeaderLTest extends TestCase {
     public function testLabelIsL() {

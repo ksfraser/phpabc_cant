@@ -1,9 +1,9 @@
 <?php
-namespace Ksfraser\PhpabcCanntaireachd\Tests;
+namespace ksfraser\PhpabcCanntaireachd\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\AbcHeaderFieldTable;
-use Ksfraser\PhpabcCanntaireachd\AbcHeaderFieldMatcher;
+use ksfraser\PhpabcCanntaireachd\AbcHeaderFieldTable;
+use ksfraser\PhpabcCanntaireachd\AbcHeaderFieldMatcher;
 
 class AbcHeaderFieldTableTest extends TestCase
 {

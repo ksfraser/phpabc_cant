@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Token;
+use ksfraser\PhpabcCanntaireachd\Token;
 
 class TokenTest extends TestCase {
     public function testConstructorAssignsProperties() {

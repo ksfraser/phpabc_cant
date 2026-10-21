@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\BodyLineHandler\LyricsHandler;
+use ksfraser\PhpabcCanntaireachd\BodyLineHandler\LyricsHandler;
 
 class LyricsHandlerTest extends TestCase {
     public function testMatchesReturnsTrueForWLine() {

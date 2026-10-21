@@ -1,9 +1,9 @@
 <?php
-namespace Ksfraser\PhpabcCanntaireachd\Tests;
-use Ksfraser\PhpabcCanntaireachd\LineByLine;
+namespace ksfraser\PhpabcCanntaireachd\Tests;
+use ksfraser\PhpabcCanntaireachd\LineByLine;
 use PHPUnit\Framework\TestCase;
 /**
- * @covers \Ksfraser\PhpabcCanntaireachd\LineByLine
+ * @covers \ksfraser\PhpabcCanntaireachd\LineByLine
  */
 class LineByLineTest extends TestCase {
     public function testCanInstantiate() {

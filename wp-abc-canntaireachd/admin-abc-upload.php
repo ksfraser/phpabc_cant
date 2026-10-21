@@ -21,8 +21,8 @@ function abc_upload_page() {
     $processed = [];
     foreach (glob($target_dir . '*.abc') as $abcFile) {
         $abcContent = file_get_contents($abcFile);
-        $dict = include dirname(__DIR__) . '/src/Ksfraser/PhpabcCanntaireachd/abc_dict.php';
-        $result = Ksfraser\PhpabcCanntaireachd\AbcProcessor::process($abcContent, $dict);
+        $dict = include dirname(__DIR__) . '/src/ksfraser/PhpabcCanntaireachd/abc_dict.php';
+        $result = ksfraser\PhpabcCanntaireachd\AbcProcessor::process($abcContent, $dict);
         $newFile = preg_replace('/\.abc$/', '_1.abc', $abcFile);
         file_put_contents($newFile, implode("\n", $result['lines']));
         $processed[] = $newFile;

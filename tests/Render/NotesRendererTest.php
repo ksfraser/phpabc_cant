@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Render\NotesRenderer;
+use ksfraser\PhpabcCanntaireachd\Render\NotesRenderer;
 
 class NotesRendererTest extends TestCase {
     public function testRenderWithNotes() {

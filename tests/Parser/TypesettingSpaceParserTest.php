@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Parser\TypesettingSpaceParser;
+use ksfraser\PhpabcCanntaireachd\Parser\TypesettingSpaceParser;
 class TypesettingSpaceParserTest extends TestCase {
     public function testParseTypesettingSpace() {
         $parser = new TypesettingSpaceParser();

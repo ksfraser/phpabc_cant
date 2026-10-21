@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Parser\ChordSymbolsParser;
+use ksfraser\PhpabcCanntaireachd\Parser\ChordSymbolsParser;
 
 class ChordSymbolsParserTest extends TestCase {
     public function testParseChordSymbol() {

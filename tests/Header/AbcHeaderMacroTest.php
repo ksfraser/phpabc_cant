@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderMacro;
+use ksfraser\PhpabcCanntaireachd\Header\AbcHeaderMacro;
 
 class AbcHeaderMacroTest extends TestCase {
     public function testLabelIsLowercaseM() {

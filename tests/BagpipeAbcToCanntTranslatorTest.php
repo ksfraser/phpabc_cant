@@ -2,13 +2,13 @@
 /**
  * Unit tests for BagpipeAbcToCanntTranslator and AbcTokenTranslator
  *
- * @covers \Ksfraser\PhpabcCanntaireachd\BagpipeAbcToCanntTranslator
- * @covers \Ksfraser\PhpabcCanntaireachd\AbcTokenTranslator
+ * @covers \ksfraser\PhpabcCanntaireachd\BagpipeAbcToCanntTranslator
+ * @covers \ksfraser\PhpabcCanntaireachd\AbcTokenTranslator
  */
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\BagpipeAbcToCanntTranslator;
-use Ksfraser\PhpabcCanntaireachd\TokenDictionary;
-use Ksfraser\PhpabcCanntaireachd\AbcNote;
+use ksfraser\PhpabcCanntaireachd\BagpipeAbcToCanntTranslator;
+use ksfraser\PhpabcCanntaireachd\TokenDictionary;
+use ksfraser\PhpabcCanntaireachd\AbcNote;
 
 class BagpipeAbcToCanntTranslatorTest extends TestCase
 {

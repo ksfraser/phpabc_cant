@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\CliOutputWriter;
+use ksfraser\PhpabcCanntaireachd\CliOutputWriter;
 
 class CliOutputWriterTest extends TestCase {
     public function testWriteOutputFile() {

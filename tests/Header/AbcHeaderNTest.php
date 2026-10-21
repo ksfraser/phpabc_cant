@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderN;
+use ksfraser\PhpabcCanntaireachd\Header\AbcHeaderN;
 
 class AbcHeaderNTest extends TestCase {
     public function testLabelIsN() {

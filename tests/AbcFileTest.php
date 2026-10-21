@@ -1,14 +1,14 @@
 <?php
-namespace Ksfraser\PhpabcCanntaireachd\Tests;
-use Ksfraser\PhpabcCanntaireachd\AbcFile;
+namespace ksfraser\PhpabcCanntaireachd\Tests;
+use ksfraser\PhpabcCanntaireachd\AbcFile;
 use PHPUnit\Framework\TestCase;
 /**
- * @covers \Ksfraser\PhpabcCanntaireachd\AbcFile
+ * @covers \ksfraser\PhpabcCanntaireachd\AbcFile
  */
 class AbcFileTest extends TestCase {
     public function testAbcTuneBasePhp73Compatible() {
-        $obj = new \Ksfraser\PhpabcCanntaireachd\AbcTuneBase();
-        $this->assertInstanceOf(\Ksfraser\PhpabcCanntaireachd\AbcTuneBase::class, $obj);
+        $obj = new \ksfraser\PhpabcCanntaireachd\AbcTuneBase();
+        $this->assertInstanceOf(\ksfraser\PhpabcCanntaireachd\AbcTuneBase::class, $obj);
         $ref = new \ReflectionClass($obj);
         $titleArrProp = $ref->getProperty('title_arr');
         $titleArrProp->setAccessible(true);

@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Render\BarLineRenderer;
+use ksfraser\PhpabcCanntaireachd\Render\BarLineRenderer;
 
 class BarLineRendererTest extends TestCase {
     public function testRenderReturnsBarLineType() {

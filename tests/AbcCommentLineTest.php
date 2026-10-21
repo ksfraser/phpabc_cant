@@ -1,5 +1,5 @@
 <?php
-use Ksfraser\PhpabcCanntaireachd\AbcCommentLine;
+use ksfraser\PhpabcCanntaireachd\AbcCommentLine;
 use PHPUnit\Framework\TestCase;
 
 class AbcCommentLineTest extends TestCase {

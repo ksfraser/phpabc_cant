@@ -1,9 +1,9 @@
 <?php
-namespace Ksfraser\PhpabcCanntaireachd\Tests;
-use Ksfraser\PhpabcCanntaireachd\BmwFileByToken;
+namespace ksfraser\PhpabcCanntaireachd\Tests;
+use ksfraser\PhpabcCanntaireachd\BmwFileByToken;
 use PHPUnit\Framework\TestCase;
 /**
- * @covers \Ksfraser\PhpabcCanntaireachd\BmwFileByToken
+ * @covers \ksfraser\PhpabcCanntaireachd\BmwFileByToken
  */
 class BmwFileByTokenTest extends TestCase {
     public function testCanInstantiate() {

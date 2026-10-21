@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Parser\AbcMultipleNotesAndChordsParser;
+use ksfraser\PhpabcCanntaireachd\Parser\AbcMultipleNotesAndChordsParser;
 class AbcMultipleNotesAndChordsParserTest extends TestCase {
     public function testParseMultipleNotesAndChords() {
         $parser = new AbcMultipleNotesAndChordsParser();

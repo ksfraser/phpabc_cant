@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\BodyLineHandler\BarLineHandler;
+use ksfraser\PhpabcCanntaireachd\BodyLineHandler\BarLineHandler;
 
 class BarLineHandlerTest extends TestCase {
     public function testMatchesReturnsTrueForValidBarLine() {

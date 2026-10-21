@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Render\LyricsRenderer;
+use ksfraser\PhpabcCanntaireachd\Render\LyricsRenderer;
 
 class LyricsRendererTest extends TestCase {
     public function testRenderWithLyrics() {

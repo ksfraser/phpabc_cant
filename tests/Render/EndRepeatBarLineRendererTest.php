@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Render\EndRepeatBarLineRenderer;
+use ksfraser\PhpabcCanntaireachd\Render\EndRepeatBarLineRenderer;
 
 class EndRepeatBarLineRendererTest extends TestCase {
     public function testRenderReturnsEndRepeatBar() {

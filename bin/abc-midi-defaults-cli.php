@@ -42,10 +42,10 @@
  */
 
 require_once __DIR__ . '/../vendor/autoload.php';
-use Ksfraser\PhpabcCanntaireachd\AbcProcessorConfig;
+use ksfraser\PhpabcCanntaireachd\AbcProcessorConfig;
 
 // Parse command line arguments
-$cli = \Ksfraser\PhpabcCanntaireachd\CLIOptions::fromArgv($argv);
+$cli = \ksfraser\PhpabcCanntaireachd\CLIOptions::fromArgv($argv);
 
 // Show help if requested
 if (isset($cli->opts['h']) || isset($cli->opts['help'])) {
@@ -123,7 +123,7 @@ try {
 } catch (Exception $e) {
     $msg = "Error: Database connection failed: " . $e->getMessage() . "\n";
     if ($cli->errorFile) {
-        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $cli->errorFile);
+        \ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $cli->errorFile);
     } else {
         fwrite(STDERR, $msg);
     }
@@ -152,14 +152,14 @@ if (!$tableExists) {
         }
         $msg = "Created and populated $table from schema.\n";
         if ($errorFile) {
-            \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+            \ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
         } else {
             echo $msg;
         }
     } else {
         $msg = "Error: Schema file $schemaFile not found.\n";
         if ($errorFile) {
-            \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+            \ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
         } else {
             fwrite(STDERR, $msg);
         }
@@ -185,7 +185,7 @@ if (isset($cli->opts['list'])) {
     $msg .= "✓ Listed " . count($rows) . " voice MIDI default(s)\n";
 
     if ($errorFile) {
-        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+        \ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
     } else {
         echo $msg;
     }
@@ -202,7 +202,7 @@ if (isset($cli->opts['list'])) {
     $msg .= "✓ Channel: $channel, Program: $program\n";
 
     if ($errorFile) {
-        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+        \ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
     } else {
         echo $msg;
     }
@@ -228,7 +228,7 @@ if (isset($cli->opts['list'])) {
     $msg .= "✓ Updated: " . implode(', ', $updates) . "\n";
 
     if ($errorFile) {
-        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+        \ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
     } else {
         echo $msg;
     }
@@ -242,13 +242,13 @@ if (isset($cli->opts['list'])) {
     $msg .= "✓ Deleted " . $stmt->rowCount() . " record(s)\n";
 
     if ($errorFile) {
-        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+        \ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
     } else {
         echo $msg;
     }
 
 } elseif (!empty($abcFiles)) {
-    $configObj = new \Ksfraser\PhpabcCanntaireachd\AbcProcessorConfig();
+    $configObj = new \ksfraser\PhpabcCanntaireachd\AbcProcessorConfig();
     if (isset($cli->opts['voice_output_style'])) $configObj->voiceOutputStyle = $cli->opts['voice_output_style'];
     if (isset($cli->opts['interleave_bars'])) $configObj->interleaveBars = (int)$cli->opts['interleave_bars'];
     if (isset($cli->opts['bars_per_line'])) $configObj->barsPerLine = (int)$cli->opts['bars_per_line'];
@@ -259,7 +259,7 @@ if (isset($cli->opts['list'])) {
         if (!file_exists($abcFile)) {
             $msg = "Warning: File '$abcFile' not found, skipping\n";
             if ($errorFile) {
-                \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+                \ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
             } else {
                 echo $msg;
             }
@@ -267,8 +267,8 @@ if (isset($cli->opts['list'])) {
         }
 
         $abcContent = file_get_contents($abcFile);
-        $dict = include __DIR__ . '/../src/Ksfraser/PhpabcCanntaireachd/abc_dict.php';
-        $result = \Ksfraser\PhpabcCanntaireachd\AbcProcessor::process($abcContent, $dict);
+        $dict = include __DIR__ . '/../src/ksfraser/PhpabcCanntaireachd/abc_dict.php';
+        $result = \ksfraser\PhpabcCanntaireachd\AbcProcessor::process($abcContent, $dict);
 
         $output = $result['lines'];
         $canntDiff = $result['canntDiff'];
@@ -296,7 +296,7 @@ if (isset($cli->opts['list'])) {
 
         $processedCount++;
         if ($errorFile) {
-            \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+            \ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
         } else {
             echo $msg;
         }
@@ -306,7 +306,7 @@ if (isset($cli->opts['list'])) {
     $summaryMsg .= "✓ Processed $processedCount file(s)\n";
 
     if ($errorFile) {
-        \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($summaryMsg, $errorFile);
+        \ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($summaryMsg, $errorFile);
     } else {
         echo $summaryMsg;
     }

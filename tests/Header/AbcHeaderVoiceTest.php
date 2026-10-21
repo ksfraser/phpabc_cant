@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderV;
+use ksfraser\PhpabcCanntaireachd\Header\AbcHeaderV;
 
 class AbcHeaderVoiceTest extends TestCase {
     public function testLabelIsV() {

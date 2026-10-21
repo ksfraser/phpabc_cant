@@ -31,14 +31,14 @@
  */
 
 require_once __DIR__ . '/../vendor/autoload.php';
-use Ksfraser\PhpabcCanntaireachd\AbcLyricsPass;
-use Ksfraser\PhpabcCanntaireachd\AbcFileParser;
-use Ksfraser\PhpabcCanntaireachd\Parse\AbcTunesToTune;
-use Ksfraser\PhpabcCanntaireachd\TokenDictionary;
-use Ksfraser\PhpabcCanntaireachd\CliOutputWriter;
-use Ksfraser\PhpabcCanntaireachd\Parse\AbcFileToTunes;
-use Ksfraser\PhpabcCanntaireachd\CLIOptions;
-use Ksfraser\PhpabcCanntaireachd\AbcProcessorConfig;
+use ksfraser\PhpabcCanntaireachd\AbcLyricsPass;
+use ksfraser\PhpabcCanntaireachd\AbcFileParser;
+use ksfraser\PhpabcCanntaireachd\Parse\AbcTunesToTune;
+use ksfraser\PhpabcCanntaireachd\TokenDictionary;
+use ksfraser\PhpabcCanntaireachd\CliOutputWriter;
+use ksfraser\PhpabcCanntaireachd\Parse\AbcFileToTunes;
+use ksfraser\PhpabcCanntaireachd\CLIOptions;
+use ksfraser\PhpabcCanntaireachd\AbcProcessorConfig;
 
 // Parse command line arguments
 $cli = CLIOptions::fromArgv($argv);

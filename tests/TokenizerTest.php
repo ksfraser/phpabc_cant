@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Tokenizer;
+use ksfraser\PhpabcCanntaireachd\Tokenizer;
 
 class TokenizerTest extends TestCase
 {

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Tune\TuneErrorFormatterTrait;
+use ksfraser\PhpabcCanntaireachd\Tune\TuneErrorFormatterTrait;
 
 class TuneErrorFormatterTraitTest extends TestCase
 {

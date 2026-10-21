@@ -80,8 +80,8 @@ function abc_midi_defaults_admin() {
         $abcFile = $_FILES['abc_file']['tmp_name'];
         $abcName = $_FILES['abc_file']['name'];
         $abcContent = file_get_contents($abcFile);
-        $dict = include dirname(__FILE__) . '/../src/Ksfraser/PhpabcCanntaireachd/abc_dict.php';
-        $result = \Ksfraser\PhpabcCanntaireachd\AbcProcessor::process($abcContent, $dict);
+        $dict = include dirname(__FILE__) . '/../src/ksfraser/PhpabcCanntaireachd/abc_dict.php';
+        $result = \ksfraser\PhpabcCanntaireachd\AbcProcessor::process($abcContent, $dict);
         $output = $result['lines'];
         $canntDiff = $result['canntDiff'];
         $newName = preg_replace('/\.abc$/', '_1.abc', $abcName);

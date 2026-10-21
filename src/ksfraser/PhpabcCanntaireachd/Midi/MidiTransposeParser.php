@@ -1,0 +1,59 @@
+<?php
+namespace ksfraser\PhpabcCanntaireachd\Midi;
+
+use ksfraser\PhpabcCanntaireachd\AbcLineParser;
+use ksfraser\PhpabcCanntaireachd\AbcTune;
+use ksfraser\PhpabcCanntaireachd\AbcMidiLine;
+
+/**
+ * Parser for %%MIDI transpose and rtranspose directives
+ */
+class MidiTransposeParser implements AbcLineParser
+{
+    /**
+     * @param mixed $line
+     * @return bool
+     */
+    public function canParse($line) {
+        return preg_match('/^%%MIDI\s+(?:r)?transpose\s+/i', trim($line));
+    }
+
+    /**
+     * @param mixed $line
+     * @param mixed $tune
+     * @return bool
+     */
+    public function parse($line, $tune) {
+        if (!preg_match('/^%%MIDI\s+(r?transpose)\s+(-?\d+)/i', trim($line), $matches)) {
+            return false;
+        }
+
+        $type = $matches[1]; // 'transpose' or 'rtranspose'
+        $semitones = (int)$matches[2];
+
+        // Validate reasonable transposition range (-24 to +24 semitones = 2 octaves)
+        if ($semitones < -24 || $semitones > 24) {
+            // Invalid transposition - add as comment for user awareness
+            $tune->add(new AbcMidiLine("%% Invalid MIDI $type: $semitones semitones (range: -24 to +24)"));
+            return true;
+        }
+
+        // Create corrected MIDI transpose line
+        $correctedLine = "%%MIDI $type $semitones";
+        $tune->add(new AbcMidiLine($correctedLine));
+        return true;
+    }
+
+    /**
+     * @param mixed $line
+     * @return bool
+     */
+    public function validate($line) {
+        if (!preg_match('/^%%MIDI\s+(r?transpose)\s+(-?\d+)$/i', trim($line), $matches)) {
+            return false;
+        }
+
+        $semitones = (int)$matches[2];
+        return $semitones >= -24 && $semitones <= 24;
+    }
+}

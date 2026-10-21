@@ -1,13 +1,13 @@
 <?php
-namespace Ksfraser\PhpabcCanntaireachd\Tests;
+namespace ksfraser\PhpabcCanntaireachd\Tests;
 
 file_put_contents('debug.log', "TEST DEBUG\n", FILE_APPEND);
 
-use Ksfraser\PhpabcCanntaireachd\AbcNote;
+use ksfraser\PhpabcCanntaireachd\AbcNote;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Ksfraser\PhpabcCanntaireachd\AbcNote
+ * @covers \ksfraser\PhpabcCanntaireachd\AbcNote
  */
 class AbcNoteAmbiguityTest extends TestCase {
     public function testDecoratorBeforePitchResolvesAsDecorator() {

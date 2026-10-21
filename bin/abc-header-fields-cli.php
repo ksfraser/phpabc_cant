@@ -31,8 +31,8 @@
  */
 
 require_once __DIR__ . '/../vendor/autoload.php';
-use Ksfraser\PhpabcCanntaireachd\AbcHeaderFieldTable;
-use Ksfraser\PhpabcCanntaireachd\CLIOptions;
+use ksfraser\PhpabcCanntaireachd\AbcHeaderFieldTable;
+use ksfraser\PhpabcCanntaireachd\CLIOptions;
 
 // Parse command line arguments
 $cli = CLIOptions::fromArgv($argv);
@@ -103,7 +103,7 @@ if (isset($cli->opts['add'])) {
 }
 
 if ($errorFile) {
-    \Ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
+    \ksfraser\PhpabcCanntaireachd\CliOutputWriter::write($msg, $errorFile);
 } else {
     echo $msg;
 }

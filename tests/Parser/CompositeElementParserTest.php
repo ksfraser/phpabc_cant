@@ -1,7 +1,7 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Parser\CompositeElementParser;
-use Ksfraser\PhpabcCanntaireachd\NoteElement\CompositeElement;
+use ksfraser\PhpabcCanntaireachd\Parser\CompositeElementParser;
+use ksfraser\PhpabcCanntaireachd\NoteElement\CompositeElement;
 class CompositeElementParserTest extends TestCase {
     public function testParseCompositeElement() {
         // Create mock element classes with getName()

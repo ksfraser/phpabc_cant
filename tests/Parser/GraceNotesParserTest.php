@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Parser\GraceNotesParser;
+use ksfraser\PhpabcCanntaireachd\Parser\GraceNotesParser;
 
 class GraceNotesParserTest extends TestCase {
     public function testParseGraceNotes() {

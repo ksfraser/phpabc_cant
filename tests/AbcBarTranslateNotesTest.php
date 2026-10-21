@@ -1,9 +1,9 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Tune\AbcBar;
-use Ksfraser\PhpabcCanntaireachd\AbcNote;
-use Ksfraser\PhpabcCanntaireachd\BagpipeAbcToCanntTranslator;
-use Ksfraser\PhpabcCanntaireachd\TokenDictionary;
+use ksfraser\PhpabcCanntaireachd\Tune\AbcBar;
+use ksfraser\PhpabcCanntaireachd\AbcNote;
+use ksfraser\PhpabcCanntaireachd\BagpipeAbcToCanntTranslator;
+use ksfraser\PhpabcCanntaireachd\TokenDictionary;
 
 class AbcBarTranslateNotesTest extends TestCase
 {

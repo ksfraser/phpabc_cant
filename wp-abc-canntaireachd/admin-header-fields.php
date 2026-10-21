@@ -3,7 +3,7 @@
  * WordPress Admin CRUD for AbcHeaderFieldTable
  * Allows list/add/edit/delete of header field values (composer, book, etc.)
  */
-use Ksfraser\PhpabcCanntaireachd\AbcHeaderFieldTable;
+use ksfraser\PhpabcCanntaireachd\AbcHeaderFieldTable;
 
 // Assume $headerTable is an instance of AbcHeaderFieldTable
 $headerTable = new AbcHeaderFieldTable();

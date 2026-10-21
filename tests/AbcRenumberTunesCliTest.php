@@ -1,7 +1,7 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\CliOutputWriter;
-use Ksfraser\PhpabcCanntaireachd\AbcFileParser;
+use ksfraser\PhpabcCanntaireachd\CliOutputWriter;
+use ksfraser\PhpabcCanntaireachd\AbcFileParser;
 
 class AbcRenumberTunesCliTest extends TestCase {
     private $testFile;

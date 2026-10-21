@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderGeneric;
+use ksfraser\PhpabcCanntaireachd\Header\AbcHeaderGeneric;
 
 class AbcHeaderGenericTest extends TestCase {
     public function testAddAndGet() {

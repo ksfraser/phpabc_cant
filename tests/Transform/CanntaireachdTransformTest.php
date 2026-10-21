@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\Transform;
 
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Transform\CanntaireachdTransform;
-use Ksfraser\PhpabcCanntaireachd\Tune\AbcTune;
-use Ksfraser\PhpabcCanntaireachd\TokenDictionary;
+use ksfraser\PhpabcCanntaireachd\Transform\CanntaireachdTransform;
+use ksfraser\PhpabcCanntaireachd\Tune\AbcTune;
+use ksfraser\PhpabcCanntaireachd\TokenDictionary;
 
 /**
  * Test suite for CanntaireachdTransform

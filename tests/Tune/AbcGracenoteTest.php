@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Tune\AbcGracenote;
+use ksfraser\PhpabcCanntaireachd\Tune\AbcGracenote;
 
 class AbcGracenoteTest extends TestCase
 {

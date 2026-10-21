@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Render\SimpleBarLineRenderer;
+use ksfraser\PhpabcCanntaireachd\Render\SimpleBarLineRenderer;
 
 class SimpleBarLineRendererTest extends TestCase {
     public function testRenderReturnsSimpleBar() {

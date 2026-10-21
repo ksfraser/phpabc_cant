@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Parser\AbcInvalidCharacterParser;
+use ksfraser\PhpabcCanntaireachd\Parser\AbcInvalidCharacterParser;
 class AbcInvalidCharacterParserTest extends TestCase {
     public function testParseInvalidCharacter() {
         $parser = new AbcInvalidCharacterParser();

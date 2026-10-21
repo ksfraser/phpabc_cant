@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Parser\OctaveParser;
+use ksfraser\PhpabcCanntaireachd\Parser\OctaveParser;
 
 class OctaveParserTest extends TestCase {
     public function testParseOctave() {

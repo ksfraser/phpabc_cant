@@ -30,10 +30,10 @@
  */
 
 require_once __DIR__ . '/../vendor/autoload.php';
-use Ksfraser\PhpabcCanntaireachd\AbcFileParser;
-use Ksfraser\PhpabcCanntaireachd\CliOutputWriter;
-use Ksfraser\PhpabcCanntaireachd\CLIOptions;
-use Ksfraser\PhpabcCanntaireachd\AbcProcessorConfig;
+use ksfraser\PhpabcCanntaireachd\AbcFileParser;
+use ksfraser\PhpabcCanntaireachd\CliOutputWriter;
+use ksfraser\PhpabcCanntaireachd\CLIOptions;
+use ksfraser\PhpabcCanntaireachd\AbcProcessorConfig;
 
 // Parse command line arguments
 $cli = CLIOptions::fromArgv($argv);

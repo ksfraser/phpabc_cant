@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Parser\NoteParser;
+use ksfraser\PhpabcCanntaireachd\Parser\NoteParser;
 
 class NoteParserTest extends TestCase {
     public function testParseNote() {

@@ -1,6 +1,6 @@
 <?php
-use Ksfraser\PhpabcCanntaireachd\AbcComment;
-use Ksfraser\PhpabcCanntaireachd\CommentSyntax;
+use ksfraser\PhpabcCanntaireachd\AbcComment;
+use ksfraser\PhpabcCanntaireachd\CommentSyntax;
 use PHPUnit\Framework\TestCase;
 
 class AbcCommentTest extends TestCase {

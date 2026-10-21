@@ -1,5 +1,5 @@
 <?php
-use Ksfraser\PhpabcCanntaireachd\AbcFileParser;
+use ksfraser\PhpabcCanntaireachd\AbcFileParser;
 use PHPUnit\Framework\TestCase;
 
 class AbcHeaderFieldDefaultsTest extends TestCase {

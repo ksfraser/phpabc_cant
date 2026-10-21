@@ -1,9 +1,9 @@
 <?php
-namespace Ksfraser\PhpabcCanntaireachd\Tests;
-use Ksfraser\PhpabcCanntaireachd\AspdTune;
+namespace ksfraser\PhpabcCanntaireachd\Tests;
+use ksfraser\PhpabcCanntaireachd\AspdTune;
 use PHPUnit\Framework\TestCase;
 /**
- * @covers \Ksfraser\PhpabcCanntaireachd\AspdTune
+ * @covers \ksfraser\PhpabcCanntaireachd\AspdTune
  */
 class AspdTuneTest extends TestCase {
     public function testCanInstantiate() {

@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\CanntaireachdBarProcessor;
+use ksfraser\PhpabcCanntaireachd\CanntaireachdBarProcessor;
 
 class CanntaireachdBarProcessorTest extends TestCase
 {
@@ -12,7 +12,7 @@ class CanntaireachdBarProcessorTest extends TestCase
             'C' => 'ho',
         ];
         $tokens = ['A', 'B', 'C'];
-        $result = \Ksfraser\PhpabcCanntaireachd\CanntaireachdBarProcessor::tokensToCanntaireachd($tokens, $dict);
+        $result = \ksfraser\PhpabcCanntaireachd\CanntaireachdBarProcessor::tokensToCanntaireachd($tokens, $dict);
         $this->assertEquals('dah em ho', $result);
     }
 
@@ -20,7 +20,7 @@ class CanntaireachdBarProcessorTest extends TestCase
     {
         $dict = ['A' => 'dah'];
         $tokens = ['|', 'A', '||', 'A', '|:', ':'];
-        $result = \Ksfraser\PhpabcCanntaireachd\CanntaireachdBarProcessor::tokensToCanntaireachd($tokens, $dict);
+        $result = \ksfraser\PhpabcCanntaireachd\CanntaireachdBarProcessor::tokensToCanntaireachd($tokens, $dict);
         $this->assertEquals('dah dah', $result);
     }
 
@@ -28,7 +28,7 @@ class CanntaireachdBarProcessorTest extends TestCase
     {
         $dict = ['A' => 'dah'];
         $tokens = ['A', 'X', 'B'];
-        $result = \Ksfraser\PhpabcCanntaireachd\CanntaireachdBarProcessor::tokensToCanntaireachd($tokens, $dict);
+        $result = \ksfraser\PhpabcCanntaireachd\CanntaireachdBarProcessor::tokensToCanntaireachd($tokens, $dict);
         $this->assertEquals('dah X B', $result);
     }
 }

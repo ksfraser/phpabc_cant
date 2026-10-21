@@ -1,7 +1,7 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\CanntaireachdSyllableMapper;
-use Ksfraser\PhpabcCanntaireachd\Exceptions\TokenMappingException;
+use ksfraser\PhpabcCanntaireachd\CanntaireachdSyllableMapper;
+use ksfraser\PhpabcCanntaireachd\Exceptions\TokenMappingException;
 
 class CanntaireachdSyllableMapperTest extends TestCase {
     public function testMapTokenReturnsSyllable() {

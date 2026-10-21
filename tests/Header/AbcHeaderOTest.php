@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderO;
+use ksfraser\PhpabcCanntaireachd\Header\AbcHeaderO;
 
 class AbcHeaderOTest extends TestCase {
     public function testLabelIsO() {

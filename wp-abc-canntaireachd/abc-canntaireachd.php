@@ -9,7 +9,7 @@
 if (!defined('ABSPATH')) exit;
 
 require_once __DIR__ . '/../vendor/autoload.php';
-use Ksfraser\PhpabcCanntaireachd\AbcParser;
+use ksfraser\PhpabcCanntaireachd\AbcParser;
 
 /* Load admin pages */
 require_once __DIR__ . '/admin-transpose-settings.php';

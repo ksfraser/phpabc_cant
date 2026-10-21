@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Render\DoubleBarLineRenderer;
+use ksfraser\PhpabcCanntaireachd\Render\DoubleBarLineRenderer;
 
 class DoubleBarLineRendererTest extends TestCase {
     public function testRenderReturnsDoubleBar() {

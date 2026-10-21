@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Parser\AccidentalsParser;
+use ksfraser\PhpabcCanntaireachd\Parser\AccidentalsParser;
 
 class AccidentalsParserTest extends TestCase {
     public function testParseAccidentals() {

@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Parser\NoteLengthParser;
+use ksfraser\PhpabcCanntaireachd\Parser\NoteLengthParser;
 
 class NoteLengthParserTest extends TestCase {
     public function testParseNoteLength() {

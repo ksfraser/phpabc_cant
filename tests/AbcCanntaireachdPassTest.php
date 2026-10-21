@@ -1,6 +1,6 @@
 <?php
-use Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass;
-use Ksfraser\PhpabcCanntaireachd\TokenDictionary;
+use ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass;
+use ksfraser\PhpabcCanntaireachd\TokenDictionary;
 use PHPUnit\Framework\TestCase;
 
 class AbcCanntaireachdPassTest extends TestCase
@@ -29,12 +29,12 @@ class AbcCanntaireachdPassTest extends TestCase
     public function testProcessCommentsAndEmptyLines()
     {
     $abcText = "X:1\nT:Test Tune\nV:Bagpipes\nK:HP\n% This is a comment\n\nA B C D";
-        $tuneClass = \Ksfraser\PhpabcCanntaireachd\Tune\AbcTune::class;
+        $tuneClass = \ksfraser\PhpabcCanntaireachd\Tune\AbcTune::class;
         $tune = $tuneClass::parse($abcText);
         // Force Bagpipes voice to be BagpipeVoice
         $voices = $tune->getVoices();
-        if (!($voices['Bagpipes'] ?? null) instanceof \Ksfraser\PhpabcCanntaireachd\Voices\BagpipeVoice) {
-            $tune->getVoices()['Bagpipes'] = new \Ksfraser\PhpabcCanntaireachd\Voices\BagpipeVoice('Bagpipes', 'Bagpipes', '');
+        if (!($voices['Bagpipes'] ?? null) instanceof \ksfraser\PhpabcCanntaireachd\Voices\BagpipeVoice) {
+            $tune->getVoices()['Bagpipes'] = new \ksfraser\PhpabcCanntaireachd\Voices\BagpipeVoice('Bagpipes', 'Bagpipes', '');
         }
         $this->pass->process($tune);
         $barsBagpipes = $tune->getVoiceBars()['Bagpipes'] ?? [];
@@ -57,12 +57,12 @@ class AbcCanntaireachdPassTest extends TestCase
     public function testProcessMultipleTunes()
     {
     $abcText = "X:1\nT:First Tune\nV:Bagpipes\nK:HP\nA B C D\n\nX:2\nT:Second Tune\nV:Bagpipes\nK:HP\nD C B A";
-        $tuneClass = \Ksfraser\PhpabcCanntaireachd\Tune\AbcTune::class;
+        $tuneClass = \ksfraser\PhpabcCanntaireachd\Tune\AbcTune::class;
         $tune = $tuneClass::parse($abcText);
         // Force Bagpipes voice to be BagpipeVoice
         $voices = $tune->getVoices();
-        if (!($voices['Bagpipes'] ?? null) instanceof \Ksfraser\PhpabcCanntaireachd\Voices\BagpipeVoice) {
-            $tune->getVoices()['Bagpipes'] = new \Ksfraser\PhpabcCanntaireachd\Voices\BagpipeVoice('Bagpipes', 'Bagpipes', '');
+        if (!($voices['Bagpipes'] ?? null) instanceof \ksfraser\PhpabcCanntaireachd\Voices\BagpipeVoice) {
+            $tune->getVoices()['Bagpipes'] = new \ksfraser\PhpabcCanntaireachd\Voices\BagpipeVoice('Bagpipes', 'Bagpipes', '');
         }
         $this->pass->process($tune);
         $bars = $tune->getVoiceBars()['Bagpipes'] ?? [];
@@ -85,12 +85,12 @@ class AbcCanntaireachdPassTest extends TestCase
     {
         // Simulate a parsed tune with Bagpipe and Flute voices
     $abcText = "X:1\nT:Note Level Test\nV:Bagpipes\nK:HP\nA B C D\nV:Flute\nK:HP\nA B C D";
-        $tuneClass = \Ksfraser\PhpabcCanntaireachd\Tune\AbcTune::class;
+        $tuneClass = \ksfraser\PhpabcCanntaireachd\Tune\AbcTune::class;
         $tune = $tuneClass::parse($abcText);
         // Force Bagpipes voice to be BagpipeVoice
         $voices = $tune->getVoices();
-        if (!($voices['Bagpipes'] ?? null) instanceof \Ksfraser\PhpabcCanntaireachd\Voices\BagpipeVoice) {
-            $tune->getVoices()['Bagpipes'] = new \Ksfraser\PhpabcCanntaireachd\Voices\BagpipeVoice('Bagpipes', 'Bagpipes', '');
+        if (!($voices['Bagpipes'] ?? null) instanceof \ksfraser\PhpabcCanntaireachd\Voices\BagpipeVoice) {
+            $tune->getVoices()['Bagpipes'] = new \ksfraser\PhpabcCanntaireachd\Voices\BagpipeVoice('Bagpipes', 'Bagpipes', '');
         }
         $this->pass->process($tune);
         $barsBagpipes = $tune->getVoiceBars()['Bagpipes'] ?? [];

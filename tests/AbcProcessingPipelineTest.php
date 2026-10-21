@@ -1,17 +1,17 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\AbcProcessingPipeline;
-use Ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass;
-use Ksfraser\PhpabcCanntaireachd\AbcVoicePass;
-use Ksfraser\PhpabcCanntaireachd\AbcLyricsPass;
-use Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass;
-use Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass;
-use Ksfraser\PhpabcCanntaireachd\AbcTimingValidator;
-use Ksfraser\PhpabcCanntaireachd\TokenDictionary;
-use Ksfraser\PhpabcCanntaireachd\Exceptions\AbcProcessingException;
+use ksfraser\PhpabcCanntaireachd\AbcProcessingPipeline;
+use ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass;
+use ksfraser\PhpabcCanntaireachd\AbcVoicePass;
+use ksfraser\PhpabcCanntaireachd\AbcLyricsPass;
+use ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass;
+use ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass;
+use ksfraser\PhpabcCanntaireachd\AbcTimingValidator;
+use ksfraser\PhpabcCanntaireachd\TokenDictionary;
+use ksfraser\PhpabcCanntaireachd\Exceptions\AbcProcessingException;
 
 /**
- * @covers \Ksfraser\PhpabcCanntaireachd\AbcProcessingPipeline
+ * @covers \ksfraser\PhpabcCanntaireachd\AbcProcessingPipeline
  * @group pipeline
  * @uml
  * @startuml

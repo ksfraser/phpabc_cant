@@ -1,7 +1,7 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\AbcFileParser;
-use Ksfraser\PhpabcCanntaireachd\AbcProcessor;
+use ksfraser\PhpabcCanntaireachd\AbcFileParser;
+use ksfraser\PhpabcCanntaireachd\AbcProcessor;
 
 class IntegrationEdgeCaseTest extends TestCase {
     public function testParseFullAbcFile() {

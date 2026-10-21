@@ -1,9 +1,9 @@
 <?php
-namespace Ksfraser\PhpabcCanntaireachd\Tests;
-use Ksfraser\PhpabcCanntaireachd\AbcEmbellishment;
+namespace ksfraser\PhpabcCanntaireachd\Tests;
+use ksfraser\PhpabcCanntaireachd\AbcEmbellishment;
 use PHPUnit\Framework\TestCase;
 /**
- * @covers \Ksfraser\PhpabcCanntaireachd\AbcEmbellishment
+ * @covers \ksfraser\PhpabcCanntaireachd\AbcEmbellishment
  */
 class AbcEmbellishmentTest extends TestCase {
     public function testCanInstantiate() {

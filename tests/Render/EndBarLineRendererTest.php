@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Render\EndBarLineRenderer;
+use ksfraser\PhpabcCanntaireachd\Render\EndBarLineRenderer;
 
 class EndBarLineRendererTest extends TestCase {
     public function testRenderReturnsEndBar() {

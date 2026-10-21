@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Render\CanntaireachdRenderer;
+use ksfraser\PhpabcCanntaireachd\Render\CanntaireachdRenderer;
 
 class CanntaireachdRendererTest extends TestCase {
     public function testRenderWithCanntaireachd() {

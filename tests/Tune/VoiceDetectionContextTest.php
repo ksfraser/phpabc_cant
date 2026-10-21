@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Tune\VoiceDetectionContext;
+use ksfraser\PhpabcCanntaireachd\Tune\VoiceDetectionContext;
 
 class VoiceDetectionContextTest extends TestCase
 {

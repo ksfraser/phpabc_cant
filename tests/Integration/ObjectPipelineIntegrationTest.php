@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Tests\Integration;
 
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Transform\VoiceCopyTransform;
-use Ksfraser\PhpabcCanntaireachd\Transform\CanntaireachdTransform;
-use Ksfraser\PhpabcCanntaireachd\Tune\AbcTune;
-use Ksfraser\PhpabcCanntaireachd\TokenDictionary;
+use ksfraser\PhpabcCanntaireachd\Transform\VoiceCopyTransform;
+use ksfraser\PhpabcCanntaireachd\Transform\CanntaireachdTransform;
+use ksfraser\PhpabcCanntaireachd\Tune\AbcTune;
+use ksfraser\PhpabcCanntaireachd\TokenDictionary;
 
 /**
  * Integration test for object-based pipeline:

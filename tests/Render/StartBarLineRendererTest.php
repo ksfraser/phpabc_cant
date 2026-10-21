@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Render\StartBarLineRenderer;
+use ksfraser\PhpabcCanntaireachd\Render\StartBarLineRenderer;
 
 class StartBarLineRendererTest extends TestCase {
     public function testRenderReturnsStartBar() {

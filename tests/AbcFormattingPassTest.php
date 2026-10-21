@@ -1,5 +1,5 @@
 <?php
-namespace Ksfraser\PhpabcCanntaireachd;
+namespace ksfraser\PhpabcCanntaireachd;
 
 use PHPUnit\Framework\TestCase;
 

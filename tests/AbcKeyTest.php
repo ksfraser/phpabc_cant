@@ -1,9 +1,9 @@
 <?php
-namespace Ksfraser\PhpabcCanntaireachd\Tests;
-use Ksfraser\PhpabcCanntaireachd\AbcKey;
+namespace ksfraser\PhpabcCanntaireachd\Tests;
+use ksfraser\PhpabcCanntaireachd\AbcKey;
 use PHPUnit\Framework\TestCase;
 /**
- * @covers \Ksfraser\PhpabcCanntaireachd\AbcKey
+ * @covers \ksfraser\PhpabcCanntaireachd\AbcKey
  */
 class AbcKeyTest extends TestCase {
     public function testCanInstantiate() {

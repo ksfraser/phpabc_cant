@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass;
+use ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass;
 
 class AbcVoiceOrderPassTest extends TestCase {
     public function testVoiceOrderOutput() {

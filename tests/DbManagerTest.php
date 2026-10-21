@@ -1,7 +1,7 @@
 <?php
-namespace Ksfraser\Database\Tests;
+namespace ksfraser\Database\Tests;
 
-use Ksfraser\Database\DbManager;
+use ksfraser\Database\DbManager;
 use PHPUnit\Framework\TestCase;
 
 class DbManagerTest extends TestCase

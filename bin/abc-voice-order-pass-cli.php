@@ -40,12 +40,12 @@
  */
 
 require_once __DIR__ . '/../vendor/autoload.php';
-use Ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass;
-use Ksfraser\PhpabcCanntaireachd\AbcProcessorConfig;
-use Ksfraser\PhpabcCanntaireachd\CliOutputWriter;
-use Ksfraser\PhpabcCanntaireachd\CLIOptions;
-use Ksfraser\PhpabcCanntaireachd\Config\ConfigLoader;
-use Ksfraser\PhpabcCanntaireachd\Config\ConfigMerger;
+use ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass;
+use ksfraser\PhpabcCanntaireachd\AbcProcessorConfig;
+use ksfraser\PhpabcCanntaireachd\CliOutputWriter;
+use ksfraser\PhpabcCanntaireachd\CLIOptions;
+use ksfraser\PhpabcCanntaireachd\Config\ConfigLoader;
+use ksfraser\PhpabcCanntaireachd\Config\ConfigMerger;
 
 // Parse command line arguments
 $cli = CLIOptions::fromArgv($argv);

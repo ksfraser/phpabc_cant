@@ -29,8 +29,8 @@
  */
 
 require_once __DIR__ . '/../vendor/autoload.php';
-use Ksfraser\PhpabcCanntaireachd\ConfigDb;
-use Ksfraser\PhpabcCanntaireachd\CLIOptions;
+use ksfraser\PhpabcCanntaireachd\ConfigDb;
+use ksfraser\PhpabcCanntaireachd\CLIOptions;
 
 // Parse command line arguments
 $cli = CLIOptions::fromArgv($argv);

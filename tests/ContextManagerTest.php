@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\ContextManager;
+use ksfraser\PhpabcCanntaireachd\ContextManager;
 
 class ContextManagerTest extends TestCase {
     public function testSetAndGet() {

@@ -1,7 +1,7 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Parser\RedefinableSymbolParser;
-use Ksfraser\PhpabcCanntaireachd\NoteElement\RedefinableSymbol;
+use ksfraser\PhpabcCanntaireachd\Parser\RedefinableSymbolParser;
+use ksfraser\PhpabcCanntaireachd\NoteElement\RedefinableSymbol;
 class RedefinableSymbolParserTest extends TestCase {
     public function testParseRedefinableSymbol() {
         $parser = new RedefinableSymbolParser(['T' => 'trill']);

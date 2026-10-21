@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\WPABCConverterUI;
+use ksfraser\PhpabcCanntaireachd\WPABCConverterUI;
 
 class WPABCConverterUITest extends TestCase {
     public function testRenderReturnsVoid() {

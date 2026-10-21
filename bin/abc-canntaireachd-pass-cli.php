@@ -3,9 +3,10 @@
 // Pass 3: Canntaireachd validation
 
 require_once __DIR__ . '/../vendor/autoload.php';
-use Ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass;
-use Ksfraser\PhpabcCanntaireachd\AbcFileParser;
-use Ksfraser\PhpabcCanntaireachd\CliOutputWriter;
+use ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass;
+use ksfraser\PhpabcCanntaireachd\AbcFileParser;
+use ksfraser\PhpabcCanntaireachd\CliOutputWriter;
+use ksfraser\PhpabcCanntaireachd\TokenDictionary;
 
 // Support --output and --errorfile options
 $outputFile = null;
@@ -66,7 +67,7 @@ foreach ($tune->getLines() as $lineObj) {
         $lines[] = $lineObj->render();
     }
 }
-$pass = new AbcCanntaireachdPass();
+$pass = new AbcCanntaireachdPass(new TokenDictionary());
 $result = $pass->process($lines);
 
 $output = implode("\n", $result['lines']) . "\n";

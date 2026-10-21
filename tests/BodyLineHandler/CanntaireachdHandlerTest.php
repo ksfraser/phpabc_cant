@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\BodyLineHandler\CanntaireachdHandler;
+use ksfraser\PhpabcCanntaireachd\BodyLineHandler\CanntaireachdHandler;
 
 class CanntaireachdHandlerTest extends TestCase {
     public function testMatchesReturnsTrueForWLine() {

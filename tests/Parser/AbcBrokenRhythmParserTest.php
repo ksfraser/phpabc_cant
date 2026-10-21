@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Parser\AbcBrokenRhythmParser;
+use ksfraser\PhpabcCanntaireachd\Parser\AbcBrokenRhythmParser;
 class AbcBrokenRhythmParserTest extends TestCase {
     public function testParseBrokenRhythm() {
         $parser = new AbcBrokenRhythmParser();

@@ -1,5 +1,5 @@
 <?php
-use Ksfraser\PhpabcCanntaireachd\AbcProcessor;
+use ksfraser\PhpabcCanntaireachd\AbcProcessor;
 use PHPUnit\Framework\TestCase;
 
 class TestAbcProcessor extends TestCase {
@@ -53,7 +53,7 @@ class TestAbcProcessor extends TestCase {
     public function testMultiSongParsingAndValidation() {
         $dict = ['cannt' => 1];
         $abc = "X:1\nT:First Tune\nM:4/4\nL:1/4\nV:Bagpipes\n|A B C D|A2 B2|A B|\n\nX:2\nT:Second Tune\nM:2/4\nL:1/8\nV:Bagpipes\n|A B|A2|A|";
-        $parser = new \Ksfraser\PhpabcCanntaireachd\AbcFileParser();
+        $parser = new \ksfraser\PhpabcCanntaireachd\AbcFileParser();
         $tunes = $parser->parse($abc);
         $this->assertCount(2, $tunes, 'Should parse two tunes');
         $this->assertEquals('First Tune', $tunes[0]->getHeaders()['T']);
@@ -64,7 +64,7 @@ class TestAbcProcessor extends TestCase {
             $this->assertStringContainsString('V:Bagpipes', $out, 'V:Bagpipes header missing in output');
         }
         // Style check: 4/4 tune should have 8 bars (will fail, only 3 here)
-        $checker = new \Ksfraser\PhpabcCanntaireachd\AbcSanityChecker();
+        $checker = new \ksfraser\PhpabcCanntaireachd\AbcSanityChecker();
         $issues = $checker->checkBagpipeStyle($tunes[0]);
         $this->assertNotEmpty($issues, 'Should detect style issues in first tune');
 
@@ -74,24 +74,24 @@ class TestAbcProcessor extends TestCase {
             'Bagpipes' => ['A B C D', 'A2 B2', 'A B', 'B2 A2', 'C D E F', 'G A B C', 'D E F G', 'A B C D'],
             'Drums' => ['z4', 'z4', 'z4', 'z4', 'z4', 'z4', 'z4', 'z4']
         ];
-        $config = new \Ksfraser\PhpabcCanntaireachd\AbcProcessorConfig();
+        $config = new \ksfraser\PhpabcCanntaireachd\AbcProcessorConfig();
         $config->voiceOutputStyle = 'grouped';
         $config->barsPerLine = 4;
-        $grouped = \Ksfraser\PhpabcCanntaireachd\AbcProcessor::renderVoices($voiceBars, $config);
+        $grouped = \ksfraser\PhpabcCanntaireachd\AbcProcessor::renderVoices($voiceBars, $config);
         $this->assertStringContainsString('V:Bagpipes', implode(' ', $grouped));
         $this->assertStringContainsString('V:Drums', implode(' ', $grouped));
         $config->voiceOutputStyle = 'interleaved';
         $config->interleaveBars = 2;
-        $interleaved = \Ksfraser\PhpabcCanntaireachd\AbcProcessor::renderVoices($voiceBars, $config);
+        $interleaved = \ksfraser\PhpabcCanntaireachd\AbcProcessor::renderVoices($voiceBars, $config);
         $this->assertStringContainsString('V:Bagpipes', implode(' ', $interleaved));
         $this->assertStringContainsString('V:Drums', implode(' ', $interleaved));
         $this->assertGreaterThan(1, count($interleaved), 'Should have multiple lines for interleaved output');
     }
     public function testHeaderFieldClasses() {
-        $t = new \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderT('Title');
+        $t = new \ksfraser\PhpabcCanntaireachd\Header\AbcHeaderT('Title');
         $this->assertEquals('Title', $t->get());
         $this->assertEquals("T:Title\n", $t->render());
-        $b = new \Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderB();
+        $b = new \ksfraser\PhpabcCanntaireachd\Header\AbcHeaderB();
         $b->add('Book1');
         $b->add('Book2');
         $this->assertEquals(['Book1','Book2'], $b->get());
@@ -100,8 +100,8 @@ class TestAbcProcessor extends TestCase {
     }
     public function testSingleHeaderPolicyFirstOrLast() {
         $abc = "X:1\nT:First\nT:Second\nM:4/4\nM:2/4\n";
-        $parserFirst = new \Ksfraser\PhpabcCanntaireachd\AbcFileParser(['singleHeaderPolicy'=>'first']);
-        $parserLast = new \Ksfraser\PhpabcCanntaireachd\AbcFileParser(['singleHeaderPolicy'=>'last']);
+        $parserFirst = new \ksfraser\PhpabcCanntaireachd\AbcFileParser(['singleHeaderPolicy'=>'first']);
+        $parserLast = new \ksfraser\PhpabcCanntaireachd\AbcFileParser(['singleHeaderPolicy'=>'last']);
         $tuneFirst = $parserFirst->parse($abc)[0];
         $tuneLast = $parserLast->parse($abc)[0];
         $this->assertEquals('First', $tuneFirst->getHeaders()['T']->get());
@@ -110,7 +110,7 @@ class TestAbcProcessor extends TestCase {
         $this->assertEquals('2/4', $tuneLast->getHeaders()['M']->get());
     }
     public function testMissingHeaderRendersEmpty() {
-        $tune = new \Ksfraser\PhpabcCanntaireachd\AbcTune();
+        $tune = new \ksfraser\PhpabcCanntaireachd\AbcTune();
         $out = $tune->render();
         $this->assertStringContainsString('T:', $out);
         $this->assertStringContainsString('M:', $out);
@@ -118,7 +118,7 @@ class TestAbcProcessor extends TestCase {
     }
     public function testMultiVoiceOutput() {
         $abc = "X:1\nT:Multi Voice\nM:2/4\nL:1/8\nV:Melody\n|A B|A2|A|\nV:Guitar\n|A B|A2|A|";
-        $parser = new \Ksfraser\PhpabcCanntaireachd\AbcFileParser();
+        $parser = new \ksfraser\PhpabcCanntaireachd\AbcFileParser();
         $tunes = $parser->parse($abc);
         $this->assertCount(1, $tunes, 'Should parse one tune');
         // Test grouped output

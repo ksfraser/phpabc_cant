@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\AbcProcessorConfig;
+use ksfraser\PhpabcCanntaireachd\AbcProcessorConfig;
 
 class AbcProcessorConfigTest extends TestCase {
     public function testDefaults() {

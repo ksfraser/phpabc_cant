@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\HeaderDefaults;
+use ksfraser\PhpabcCanntaireachd\HeaderDefaults;
 
 class HeaderDefaultsTest extends TestCase {
     public function testGetDefaultsReturnsArray() {

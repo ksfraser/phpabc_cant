@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Header\AbcHeaderMultiField;
+use ksfraser\PhpabcCanntaireachd\Header\AbcHeaderMultiField;
 
 class AbcHeaderMultiFieldTest extends TestCase {
     public function testSetAndGetStoresMultipleValues() {

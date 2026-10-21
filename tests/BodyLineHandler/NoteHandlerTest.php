@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\BodyLineHandler\NoteHandler;
+use ksfraser\PhpabcCanntaireachd\BodyLineHandler\NoteHandler;
 
 class NoteHandlerTest extends TestCase {
     public function testMatchesReturnsTrueForNoteLine() {

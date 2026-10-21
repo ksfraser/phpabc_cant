@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\BodyLineHandler\SolfegeHandler;
+use ksfraser\PhpabcCanntaireachd\BodyLineHandler\SolfegeHandler;
 
 class SolfegeHandlerTest extends TestCase {
     public function testMatchesReturnsTrueForSLine() {

@@ -1,9 +1,9 @@
 <?php
-namespace Ksfraser\PhpabcCanntaireachd\Tests;
-use Ksfraser\PhpabcCanntaireachd\AbcBarline;
+namespace ksfraser\PhpabcCanntaireachd\Tests;
+use ksfraser\PhpabcCanntaireachd\Tune\AbcBarline;
 use PHPUnit\Framework\TestCase;
 /**
- * @covers \Ksfraser\PhpabcCanntaireachd\AbcBarline
+ * @covers \ksfraser\PhpabcCanntaireachd\Tune\AbcBarline
  */
 class AbcBarlineTest extends TestCase {
     public function testCanInstantiate() {

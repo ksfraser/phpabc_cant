@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\CommentParser;
+use ksfraser\PhpabcCanntaireachd\CommentParser;
 
 class CommentParserTest extends TestCase {
     public function testCanParseReturnsTrueForComment() {

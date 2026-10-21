@@ -1,7 +1,7 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\HeaderDefaults;
-use Ksfraser\Database\DbManager;
+use ksfraser\PhpabcCanntaireachd\HeaderDefaults;
+use ksfraser\Database\DbManager;
 
 class HeaderDefaultsMigrationTest extends TestCase {
     public function testMigrateDoesNotOverwriteExisting() {

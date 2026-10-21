@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\TokenNormalizerForBar;
+use ksfraser\PhpabcCanntaireachd\TokenNormalizerForBar;
 
 class TokenNormalizerForBarTest extends TestCase {
     public function testNormalizeTokensStripsDurations() {

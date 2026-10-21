@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Decorator\DecoratorLoader;
+use ksfraser\PhpabcCanntaireachd\Decorator\DecoratorLoader;
 
 class DecoratorLoaderTest extends TestCase {
     public function testDecoratorMapIsPopulated() {

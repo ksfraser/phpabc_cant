@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Tune\AbcBarline;
+use ksfraser\PhpabcCanntaireachd\Tune\AbcBarline;
 
 class AbcBarlineTest extends TestCase
 {

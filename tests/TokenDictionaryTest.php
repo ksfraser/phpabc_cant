@@ -1,9 +1,9 @@
 <?php
 
-namespace Ksfraser\PhpabcCanntaireachd\Tests;
+namespace ksfraser\PhpabcCanntaireachd\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\TokenDictionary;
+use ksfraser\PhpabcCanntaireachd\TokenDictionary;
 
 class TokenDictionaryTest extends TestCase
 {

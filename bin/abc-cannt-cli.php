@@ -36,12 +36,12 @@
  */
 
 require __DIR__ . '/../vendor/autoload.php';
-use Ksfraser\PhpabcCanntaireachd\CliOutputWriter;
-use Ksfraser\PhpabcCanntaireachd\CLIOptions;
-use Ksfraser\PhpabcCanntaireachd\AbcProcessor;
-use Ksfraser\PhpabcCanntaireachd\AbcProcessorConfig;
-use Ksfraser\PhpabcCanntaireachd\TokenDictionary;
-use Ksfraser\PhpabcCanntaireachd\AbcValidator;
+use ksfraser\PhpabcCanntaireachd\CliOutputWriter;
+use ksfraser\PhpabcCanntaireachd\CLIOptions;
+use ksfraser\PhpabcCanntaireachd\AbcProcessor;
+use ksfraser\PhpabcCanntaireachd\AbcProcessorConfig;
+use ksfraser\PhpabcCanntaireachd\TokenDictionary;
+use ksfraser\PhpabcCanntaireachd\AbcValidator;
 
 // Parse command line arguments
 
@@ -129,30 +129,9 @@ $abcContent = file_get_contents($file);
 $validator = new AbcValidator();
 $errors = $validator->validate($abcContent);
 
-// Load token dictionary for canntaireachd processing
+// Load token dictionary for canntaireachd processing.
+// TokenDictionary auto-loads the canonical dictionary (src/.../abc_dict.php).
 $dict = new TokenDictionary();
-// Try to load legacy abc_dict.php if available
-$legacyPath = 'src/Ksfraser/phpabc_canntaireachd/abc_dict.php';
-if (file_exists($legacyPath)) {
-    // include inside isolated scope to avoid leaking symbols
-    $abc = [];
-    try {
-        include $legacyPath; // populates $abc in many legacy files
-    } catch (\Throwable $e) {
-        // ignore
-    }
-    if (!empty($abc) && is_array($abc)) {
-        $pre = [];
-        foreach ($abc as $k => $v) {
-            $pre[$k] = [
-                'cannt_token' => $v['cannt'] ?? ($v['cannt_token'] ?? null),
-                'bmw_token' => $v['bmw'] ?? null,
-                'description' => $v['desc'] ?? null,
-            ];
-        }
-        $dict->prepopulate($pre);
-    }
-}
 
 $config = [
     'updateVoiceNamesFromMidi' => $updateVoiceNamesFromMidi

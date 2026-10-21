@@ -1,11 +1,11 @@
 <?php
-namespace Ksfraser\PhpabcCanntaireachd\Tests;
-use Ksfraser\PhpabcCanntaireachd\Render\SimpleBarLineRenderer;
-use Ksfraser\PhpabcCanntaireachd\Render\DoubleBarLineRenderer;
-use Ksfraser\PhpabcCanntaireachd\Render\StartRepeatBarLineRenderer;
-use Ksfraser\PhpabcCanntaireachd\Render\EndRepeatBarLineRenderer;
-use Ksfraser\PhpabcCanntaireachd\Render\StartBarLineRenderer;
-use Ksfraser\PhpabcCanntaireachd\Render\EndBarLineRenderer;
+namespace ksfraser\PhpabcCanntaireachd\Tests;
+use ksfraser\PhpabcCanntaireachd\Render\SimpleBarLineRenderer;
+use ksfraser\PhpabcCanntaireachd\Render\DoubleBarLineRenderer;
+use ksfraser\PhpabcCanntaireachd\Render\StartRepeatBarLineRenderer;
+use ksfraser\PhpabcCanntaireachd\Render\EndRepeatBarLineRenderer;
+use ksfraser\PhpabcCanntaireachd\Render\StartBarLineRenderer;
+use ksfraser\PhpabcCanntaireachd\Render\EndBarLineRenderer;
 use PHPUnit\Framework\TestCase;
 
 class BarLineRendererTest extends TestCase {

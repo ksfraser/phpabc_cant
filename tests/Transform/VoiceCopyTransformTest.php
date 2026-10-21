@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\Transform;
 
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Transform\VoiceCopyTransform;
-use Ksfraser\PhpabcCanntaireachd\Tune\AbcTune;
+use ksfraser\PhpabcCanntaireachd\Transform\VoiceCopyTransform;
+use ksfraser\PhpabcCanntaireachd\Tune\AbcTune;
 
 /**
  * Test suite for VoiceCopyTransform

@@ -1,8 +1,8 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\AbcFileParser;
-use Ksfraser\PhpabcCanntaireachd\TuneService;
-use Ksfraser\Database\DbManager;
+use ksfraser\PhpabcCanntaireachd\AbcFileParser;
+use ksfraser\PhpabcCanntaireachd\TuneService;
+use ksfraser\Database\DbManager;
 
 class TuneServiceBagpipeTest extends TestCase {
     public function testEnsureBagpipeVoiceCreatesAndGenerates() {

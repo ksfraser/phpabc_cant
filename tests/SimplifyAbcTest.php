@@ -2,15 +2,15 @@
 /**
  * Unit tests for SimplifyAbc class
  *
- * @package Ksfraser\PhpabcCanntaireachd
+ * @package ksfraser\PhpabcCanntaireachd
  */
-namespace Ksfraser\PhpabcCanntaireachd\Tests;
+namespace ksfraser\PhpabcCanntaireachd\Tests;
 
-use Ksfraser\PhpabcCanntaireachd\SimplifyAbc;
+use ksfraser\PhpabcCanntaireachd\SimplifyAbc;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Ksfraser\PhpabcCanntaireachd\SimplifyAbc
+ * @covers \ksfraser\PhpabcCanntaireachd\SimplifyAbc
  */
 class SimplifyAbcTest extends TestCase
 {

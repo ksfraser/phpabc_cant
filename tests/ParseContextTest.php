@@ -1,5 +1,5 @@
 <?php
-use Ksfraser\PhpabcCanntaireachd\ParseContext;
+use ksfraser\PhpabcCanntaireachd\ParseContext;
 use PHPUnit\Framework\TestCase;
 
 class ParseContextTest extends TestCase

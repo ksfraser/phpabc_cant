@@ -1,5 +1,5 @@
 <?php
-use Ksfraser\PhpabcCanntaireachd\AbcValidator;
+use ksfraser\PhpabcCanntaireachd\AbcValidator;
 use PHPUnit\Framework\TestCase;
 
 class TestAbcValidator extends TestCase {

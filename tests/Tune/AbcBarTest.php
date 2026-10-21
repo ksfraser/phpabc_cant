@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use Ksfraser\PhpabcCanntaireachd\Tune\AbcBar;
+use ksfraser\PhpabcCanntaireachd\Tune\AbcBar;
 
 class AbcBarTest extends TestCase
 {
