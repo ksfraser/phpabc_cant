@@ -116,6 +116,14 @@ the score corpus:
 php bin/abc-compare-canntaireachd.php ~/Bagpipes/Scores
 ```
 
+To tidy up the tunes of a score — the header fields in one order, the include
+block, the voice definitions, the pipe band drums, the pipe scale, and the
+bars four to a line:
+
+```bash
+php bin/abc-tune-cleanup-cli.php --dir ~/Bagpipes/Scores --dry-run
+```
+
 ## 7. Deviation backlog
 
 Ordered by risk. Each item is a deliberate, recorded deviation from the
@@ -133,7 +141,22 @@ shared standards, not an accident.
 | 8 | The package is absent from `MODULE_DIRECTORY.md` / `PACKAGIST.md` (by decision, 2026-10-20 — it is not part of the FA/WP ecosystem). | accepted |
 | 9 | `AbcLyricsPass` / `AbcProcessor::handleLyrics()` are stubs — the lyrics pass does nothing. | open |
 
-## 8. Known traps
+## 8. The clean up
+
+`src/ksfraser/PhpabcCanntaireachd/Cleanup/` holds the clean up of a tune: a
+parser of its own (`Parser/`, `Model/`), and one class per consideration
+(`HeaderOrderNormaliser`, `IncludeBlockWriter`, `VoiceAttributeNormaliser`,
+`DrumVoiceNormaliser`, `BagpipeScaleChecker`, `BarReflower`), all injected
+into `TuneCleanupPipeline`.
+
+The rule the clean up follows: **it never changes the music.** It changes the
+headers, the voice definitions, the include block and the layout. The notes,
+the grace notes, the decorations, the spacing and the lyrics are carried
+through as they were written.
+
+The requirements are in `requirements/tune-cleanup.md`.
+
+## 9. Known traps
 
 - **`w:` is a lyrics field, not a line-break.** In this project a `w:` line
   *under* a music line carries the canntaireachd for that line. Do not confuse

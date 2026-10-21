@@ -48,6 +48,7 @@ A PHP library for working with ABC notation and canntaireachd (bagpipe vocal mus
 - **Validation Tools**: Tune number validation, timing checks, header field verification
 - **Voice Canntaireachd**: `bin/abc-voice-canntaireachd-cli.php` writes `w:` canntaireachd lines beneath the Melody, Bagpipes and Pipes voices of an ABC file
 - **Coverage comparison**: `bin/abc-compare-canntaireachd.php <dir>` compares the generated canntaireachd with the canntaireachd already written in a corpus of ABC files
+- **Tune cleanup**: `bin/abc-tune-cleanup-cli.php --file <abcfile>` tidies up a tune — the header fields in one order, the standard include block, the voice definitions, the pipe band drums on their one line staff, the pipe scale checked, and the bars laid out four to a line
 
 ## Installation
 
@@ -181,6 +182,28 @@ php bin/abc-voice-canntaireachd-cli.php --file tune.abc --voice=Chanter
 
 The full requirements are in
 [`requirements/voice-canntaireachd-w-lines.md`](requirements/voice-canntaireachd-w-lines.md).
+
+## Tune Cleanup
+
+A pipe band score drifts: the header fields end up in a different order in
+every tune, some tunes are missing the include block that holds the shared
+definitions, the voices are missing their name or their clef, and the bars are
+laid out three to a line where the book says four.
+
+```bash
+# Report what would change, write nothing
+php bin/abc-tune-cleanup-cli.php --dir Scores --dry-run
+
+# Clean a tune up; the result is written to <name>_php.abc
+php bin/abc-tune-cleanup-cli.php --file "Scores/Marches/2_4/TheBlackBear.abc"
+```
+
+The clean up never changes the music. It changes the headers, the voice
+definitions, the include block and the layout of the bars. The tune that was
+read is never changed either: the cleaned tune is written to a new file.
+
+The full requirements are in
+[`requirements/tune-cleanup.md`](requirements/tune-cleanup.md).
 
 ### The full processing pipeline
 
