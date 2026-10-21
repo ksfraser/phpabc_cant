@@ -40,8 +40,8 @@ class IncludeBlockWriter
         'voices.abh',
         'bagpipe_chords.abh',
         'midi.abh',
-        'guitar_chords.abh',
-        'gchords.abh',
+        'guitar_chords.fmt',
+        'gchords.fmt',
         'percussion.abh',
         'jazz.fmt',
     ];

@@ -58,8 +58,8 @@ Every tune starts with the standard include block:
     %%abc-include "../../../voices.abh"
     %%abc-include "../../../bagpipe_chords.abh"
     %%abc-include "../../../midi.abh"
-    %%abc-include "../../../guitar_chords.abh"
-    %%abc-include "../../../gchords.abh"
+    %%abc-include "../../../guitar_chords.fmt"
+    %%abc-include "../../../gchords.fmt"
     %%abc-include "../../../percussion.abh"
     %%abc-include "../../../jazz.fmt"
 

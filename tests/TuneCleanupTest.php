@@ -171,6 +171,8 @@ class TuneCleanupTest extends TestCase
             $this->assertStringStartsWith('%%abc-include "', $line);
         }
         $this->assertStringContainsString('format_layout.abh', $block[0]);
+        $this->assertStringContainsString('guitar_chords.fmt', $block[5]);
+        $this->assertStringContainsString('gchords.fmt', $block[6]);
         $this->assertStringContainsString('jazz.fmt', $block[8]);
         $this->assertStringNotContainsString('common.abh', implode("\n", $block));
     }
