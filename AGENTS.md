@@ -98,9 +98,23 @@ php -l <file>                   # lint before commit
 php composer.phar validate      # composer.json + lock sanity
 ```
 
-The suite is currently **red** (see §7). When changing code, capture a
-per-test status baseline before and after and diff it — a green/red count
-alone is not enough, because the suite has known failures.
+The suite is currently **red** (see §7), so a green/red count alone is not
+enough to judge a change: capture a per-test status baseline before and after
+and diff it. The CI does the same thing against a recorded list of known
+failures:
+
+```bash
+vendor/bin/phpunit --log-junit junit.xml
+php bin/check-test-baseline.php junit.xml      # fails on a NEW failure
+php bin/check-test-baseline.php junit.xml --update   # after fixing one
+```
+
+To check the generated canntaireachd against the hand-written canntaireachd in
+the score corpus:
+
+```bash
+php bin/abc-compare-canntaireachd.php ~/Bagpipes/Scores
+```
 
 ## 7. Deviation backlog
 

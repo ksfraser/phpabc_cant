@@ -5,4 +5,13 @@
             <directory>./tests</directory>
         </testsuite>
     </testsuites>
+    <!--
+        Without this, PHPUnit 10 reports "No filter is configured, code coverage
+        will not be processed" and writes an empty coverage report.
+    -->
+    <source>
+        <include>
+            <directory suffix=".php">./src</directory>
+        </include>
+    </source>
 </phpunit>

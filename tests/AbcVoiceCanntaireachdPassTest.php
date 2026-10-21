@@ -215,7 +215,8 @@ class AbcVoiceCanntaireachdPassTest extends TestCase
         $this->assertSame($lines[0], $result[0]);
         $this->assertSame($lines[1], $result[1]);
         $this->assertSame($lines[2], $result[2]);
-        $this->assertSame('w: hen o ho e | ho en ho do |', $result[3]);
+        // A bar line with no notes on one of its sides is not sung.
+        $this->assertSame('w: hen o ho e | ho en ho do', $result[3]);
     }
 
     public function testCanntaireachdIsWrittenBeneathTheAbcLine(): void
@@ -286,6 +287,36 @@ class AbcVoiceCanntaireachdPassTest extends TestCase
             'V:Bagpipes',
             'A B',
         ], $result);
+    }
+
+    public function testBarLineWithoutNotesBeforeItIsNotSung(): void
+    {
+        $result = $this->processLines([
+            'V:Bagpipes',
+            '|A B',
+        ]);
+
+        $this->assertSame('w: en o', $result[2]);
+    }
+
+    public function testBarLineWithoutNotesAfterItIsNotSung(): void
+    {
+        $result = $this->processLines([
+            'V:Bagpipes',
+            'A B|',
+        ]);
+
+        $this->assertSame('w: en o', $result[2]);
+    }
+
+    public function testBarLineBetweenNotesIsSung(): void
+    {
+        $result = $this->processLines([
+            'V:Bagpipes',
+            'A B|C D',
+        ]);
+
+        $this->assertSame('w: en o | [C] [D]', $result[2]);
     }
 
     public function testGraceNotesKeepTheirPrefixInTheDictionaryLookup(): void

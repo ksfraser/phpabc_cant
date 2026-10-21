@@ -47,6 +47,7 @@ A PHP library for working with ABC notation and canntaireachd (bagpipe vocal mus
 - **Processing Passes**: Dedicated CLIs for voice ordering, transpose, timing validation, and more
 - **Validation Tools**: Tune number validation, timing checks, header field verification
 - **Voice Canntaireachd**: `bin/abc-voice-canntaireachd-cli.php` writes `w:` canntaireachd lines beneath the Melody, Bagpipes and Pipes voices of an ABC file
+- **Coverage comparison**: `bin/abc-compare-canntaireachd.php <dir>` compares the generated canntaireachd with the canntaireachd already written in a corpus of ABC files
 
 ## Installation
 
@@ -280,6 +281,15 @@ All ABC header fields (A–Z) are represented by dedicated classes in `src/Ksfra
 - `AbcFileParser` supports a config variable `singleHeaderPolicy` (`first` or `last`) to control which instance of a single-value header is kept when duplicates are encountered.
 
 ## Testing
+
+The suite is red: it has a known set of failing tests, recorded in
+`tests/known-failures.txt`. The CI compares the JUnit report with that list
+and fails only when a test that is not in the list starts failing:
+
+```bash
+vendor/bin/phpunit --log-junit junit.xml
+php bin/check-test-baseline.php junit.xml
+```
 
 Unit tests cover:
 - Parsing ABC files with all header fields

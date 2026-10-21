@@ -83,6 +83,27 @@ class CanntGenerator
     }
 
     /**
+     * The items of a music line: one entry per note or rest, and one per bar
+     * line.
+     *
+     * Each note entry is [type, text] where text is the dictionary key that
+     * was looked up, so a caller can tell which token produced which
+     * syllable.
+     *
+     * @param string $noteBody The ABC music line.
+     * @return array<int, array{0: string, 1: string, 2: string}> Type, syllable, token.
+     */
+    public function getItems(string $noteBody): array
+    {
+        $items = $this->tokenise($noteBody);
+        $out = [];
+        foreach ($items as $item) {
+            $out[] = [$item[0], $item[1], $item[2] ?? ''];
+        }
+        return $out;
+    }
+
+    /**
      * Tokenize ABC input and convert to canntaireachd.
      *
      * A grace-note group is kept attached to its principal note, so "{g}A" is
@@ -93,6 +114,18 @@ class CanntGenerator
      */
     private function tokenizeAndConvert(string $input): string
     {
+        $items = $this->tokenise($input);
+        return $this->renderItems($items);
+    }
+
+    /**
+     * Split a music line into its notes, rests and bar lines.
+     *
+     * @param string $input
+     * @return array<int, array{0: string, 1: string, 2?: string}>
+     */
+    private function tokenise(string $input): array
+    {
         // grace note | accidental | note | octave marks | length | bar | space
         $pattern = '/(\{[^{}]+\})|([_=^])|([a-gA-GzZ])|([,\']*)|(\d+\/?\d*)|(\|)|(\s+)/';
 
@@ -100,7 +133,9 @@ class CanntGenerator
             return '';
         }
 
-        $result = '';
+        // The line is built as a list of items, so that a bar line can be
+        // dropped when it has no notes on one of its sides.
+        $items = [];
         $currentToken = '';
         $count = count($matches);
 
@@ -124,18 +159,55 @@ class CanntGenerator
                     $i++;
                 }
                 $cannt = $this->dict->convertAbcToCannt($currentToken);
-                $result .= $cannt !== null ? $cannt . ' ' : '[' . $currentToken . '] ';
+                $items[] = ['note', $cannt !== null ? $cannt : '[' . $currentToken . ']', $currentToken];
                 $currentToken = '';
                 continue;
             }
 
             // Bar lines become bar lines in the canntaireachd.
             if ($token === '|') {
-                $result .= '| ';
+                $items[] = ['bar', '|', '|'];
                 continue;
             }
 
             // Lengths, spaces and anything else are dropped.
+        }
+
+        return $items;
+    }
+
+    /**
+     * Render the items of a canntaireachd line.
+     *
+     * A bar line is only kept when it separates two groups of notes: a bar
+     * line with no notes before it, or with no notes after it, carries no
+     * singing and is left out.
+     *
+     * @param array<int, array{0: string, 1: string}> $items
+     * @return string
+     */
+    private function renderItems(array $items): string
+    {
+        $firstNoteIndex = -1;
+        $lastNoteIndex = -1;
+        foreach ($items as $index => $item) {
+            if ($item[0] === 'note') {
+                if ($firstNoteIndex === -1) {
+                    $firstNoteIndex = $index;
+                }
+                $lastNoteIndex = $index;
+            }
+        }
+
+        $result = '';
+        foreach ($items as $index => $item) {
+            if ($item[0] === 'bar') {
+                // Keep the bar line only when notes sit on both sides of it.
+                if ($index < $firstNoteIndex || $index > $lastNoteIndex) {
+                    continue;
+                }
+            }
+            $result .= $item[1] . ' ';
         }
 
         return rtrim($result, ' ');

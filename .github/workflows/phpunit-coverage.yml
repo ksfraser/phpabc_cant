@@ -18,13 +18,26 @@ jobs:
           php-version: '8.2'
           coverage: xdebug
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
+        run: composer install --prefer-dist --no-progress --no-interaction
       - name: Run PHPUnit with coverage
+        # The suite has known failures, recorded in tests/known-failures.txt.
+        # The report is always produced; the step below is the gate.
         run: |
           mkdir -p coverage
-          vendor/bin/phpunit --coverage-html coverage
+          vendor/bin/phpunit --coverage-html coverage --log-junit junit.xml || true
+      - name: Check for new test failures
+        # Fails the build when a test that is not in the known failures list
+        # starts failing, or when a known failure starts failing differently.
+        run: php bin/check-test-baseline.php junit.xml
       - name: Upload coverage report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
           path: coverage/
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-report
+          path: junit.xml
