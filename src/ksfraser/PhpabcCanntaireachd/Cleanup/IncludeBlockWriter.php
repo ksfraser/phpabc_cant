@@ -17,8 +17,11 @@ namespace ksfraser\PhpabcCanntaireachd\Cleanup;
  *     % %abc-include "../../../format_fonts.abh"
  *     ...
  *
- * The first include is active; the rest are kept as comments so that they can
- * be switched on again without hunting for the file.
+ * Every one of them is written out. The scores used to include a single
+ * "common.abh", a file that included all the others, but neither abc2midi nor
+ * abc2ps follows an include into another include, so a meta-include would
+ * leave the tunes without their MIDI settings, their fonts and their
+ * percussion maps. The includes are therefore written out in full.
  *
  * @package ksfraser\PhpabcCanntaireachd\Cleanup
  *
@@ -26,15 +29,12 @@ namespace ksfraser\PhpabcCanntaireachd\Cleanup;
  */
 class IncludeBlockWriter
 {
-    /** @var string The include that is always active. */
-    public const ACTIVE_INCLUDE = 'common.abh';
-
     /**
-     * The includes that are kept as comments, in the order they are written.
+     * The includes, in the order they are written.
      *
      * @var string[]
      */
-    public const COMMENTED_INCLUDES = [
+    public const INCLUDES = [
         'format_layout.abh',
         'format_fonts.abh',
         'voices.abh',
@@ -50,16 +50,16 @@ class IncludeBlockWriter
     private string $includeRoot;
 
     /** @var string[] */
-    private array $commentedIncludes;
+    private array $includes;
 
     /**
      * @param string $includeRoot The directory the include files live in.
-     * @param string[]|null $commentedIncludes The includes kept as comments.
+     * @param string[]|null $includes The includes to write.
      */
-    public function __construct(string $includeRoot = '.', ?array $commentedIncludes = null)
+    public function __construct(string $includeRoot = '.', ?array $includes = null)
     {
         $this->includeRoot = rtrim($includeRoot, '/');
-        $this->commentedIncludes = $commentedIncludes ?? self::COMMENTED_INCLUDES;
+        $this->includes = $includes ?? self::INCLUDES;
     }
 
     /**
@@ -72,10 +72,8 @@ class IncludeBlockWriter
     public function build(string $tuneDirectory): array
     {
         $lines = [];
-        $lines[] = sprintf('%%%%abc-include "%s"', self::ACTIVE_INCLUDE);
-        $lines[] = '';
-        foreach ($this->commentedIncludes as $include) {
-            $lines[] = sprintf('%% %%abc-include "%s"', $this->relativePath($tuneDirectory, $include));
+        foreach ($this->includes as $include) {
+            $lines[] = sprintf('%%%%abc-include "%s"', $this->relativePath($tuneDirectory, $include));
         }
         $lines[] = '';
         return $lines;

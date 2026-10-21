@@ -53,15 +53,23 @@ A comment in the header block keeps the place of the field it follows.
 
 Every tune starts with the standard include block:
 
-    %%abc-include "common.abh"
+    %%abc-include "../../../format_layout.abh"
+    %%abc-include "../../../format_fonts.abh"
+    %%abc-include "../../../voices.abh"
+    %%abc-include "../../../bagpipe_chords.abh"
+    %%abc-include "../../../midi.abh"
+    %%abc-include "../../../guitar_chords.abh"
+    %%abc-include "../../../gchords.abh"
+    %%abc-include "../../../percussion.abh"
+    %%abc-include "../../../jazz.fmt"
 
-    % %abc-include "../../../format_layout.abh"
-    % %abc-include "../../../format_fonts.abh"
-    …
+Every include is written out. The scores used to include a single
+`common.abh`, a file that included all the others, but neither abc2midi nor
+abc2ps follows an include into another include, so a meta-include would leave
+the tunes without their MIDI settings, their fonts and their percussion maps.
 
-The first include is active; the rest are kept as comments, so that they can
-be switched on again. The paths are relative to the tune. An include whose
-file does not exist is reported.
+The paths are relative to the tune. An include whose file does not exist is
+reported.
 
 ### FR-TC-4 — The voice definitions
 
@@ -139,8 +147,8 @@ added before the `.abc`. The tune that was read is never changed.
 - The parser reads the headers, the voices, the body and the lyrics, and
   keeps a comment in the header block with the headers.
 - The headers are written in the pipe band order.
-- The include block is written, its targets are found, and a missing include
-  is reported.
+- The include block is written out in full, with every include active and no
+  meta-include, its targets are found, and a missing include is reported.
 - A voice that is missing attributes gets them; one that is complete is left
   alone; an unknown voice is left alone.
 - A drum part on A and c is left alone; one on d and f is transposed; one with

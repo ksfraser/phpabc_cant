@@ -163,8 +163,16 @@ class TuneCleanupTest extends TestCase
         $writer = new IncludeBlockWriter('/tmp');
         $block = $writer->build('/tmp');
 
-        $this->assertSame('%%abc-include "common.abh"', $block[0]);
-        $this->assertStringContainsString('%%abc-include', implode("\n", $block));
+        // Every include is written out: neither abc2midi nor abc2ps follows
+        // an include into another include, so a meta-include would leave the
+        // tune without its MIDI settings, its fonts and its percussion maps.
+        $this->assertCount(10, $block);
+        foreach (array_slice($block, 0, -1) as $line) {
+            $this->assertStringStartsWith('%%abc-include "', $line);
+        }
+        $this->assertStringContainsString('format_layout.abh', $block[0]);
+        $this->assertStringContainsString('jazz.fmt', $block[8]);
+        $this->assertStringNotContainsString('common.abh', implode("\n", $block));
     }
 
     public function testTheIncludeTargetsAreFound(): void
@@ -174,6 +182,10 @@ class TuneCleanupTest extends TestCase
         $this->assertSame(
             ['common.abh', 'format_fonts.abh'],
             $writer->extractTargets(['%%abc-include "common.abh"', '% %abc-include "format_fonts.abh"'])
+        );
+        $this->assertSame(
+            ['midi.abh'],
+            $writer->extractTargets(['%%abc-include "midi.abh"'])
         );
     }
 
