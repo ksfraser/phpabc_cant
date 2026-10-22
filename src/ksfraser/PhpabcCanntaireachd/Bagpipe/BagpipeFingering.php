@@ -32,7 +32,7 @@ use ksfraser\PhpabcCanntaireachd\TokenDictionary;
 class BagpipeFingering
 {
     /**
-     * The holes of the chanter, from the top of the chanter down.
+     * The holes of the chanter, from the top down.
      *
      * @var string[]
      */
@@ -48,76 +48,6 @@ class BagpipeFingering
     ];
 
     /**
-     * The finger that moves for each kind of grace, and the note it sounds.
-     *
-     * A grace is a brief change of the hole that sounds: the finger opens or
-     * closes a hole, and then goes back to where it was.
-     *
-     * The case of the letter says which note it is: {g} is the high G and
-     * {G} the low G, {a} the high A and {A} the low A.
-     *
-     * Whether it is played as a strike or as a gracenote depends on the note
-     * it is played from, not on the case. A grace whose note is lower than
-     * the melody note has to come from a hole below it, and that is a hard
-     * movement: a strike. A grace that is above both the note before and the
-     * note after is a plain gracenote. So {g}a from the a is a strike, {e}f
-     * from the g is a strike, and {f}c from the B is a gracenote.
-     *
-     * @var array<string, array{finger: string, action: string, note: string}>
-     */
-    public const GRACES = [
-        // The case says which note it is: {g} is the high G and {G} the low
-        // G. Whether it is played as a strike or as a gracenote depends on
-        // the note it is played from.
-        // The hole is the one that sounds the note; the low G has no hole of
-        // its own, it is the vent, and every finger has to close for it.
-        'g grace' => ['note' => 'g', 'hole' => 'top index'],
-        'G grace' => ['note' => 'G', 'hole' => null],
-        'd grace' => ['note' => 'd', 'hole' => 'bottom index'],
-        'e grace' => ['note' => 'e', 'hole' => 'top ring'],
-        'f grace' => ['note' => 'f', 'hole' => 'top middle'],
-        'a grace' => ['note' => 'a', 'hole' => 'thumb'],
-        'A grace' => ['note' => 'A', 'hole' => 'pinky'],
-    ];
-
-    /**
-     * The steps of each embellishment.
-     *
-     * A step is the finger that moves, what it does, and the note that
-     * sounds. A step with no finger is the melody note: the fingering of the
-     * note the embellishment belongs to, which depends on that note.
-     *
-     * @var array<string, array<int, array{finger: ?string, action: string, note: string}>>
-     */
-    public const EMBELLISHMENT_STEPS = [
-        // A doubling: the G gracenote, the melody note, the false D, and the
-        // melody note again.
-        'doubling' => [
-            ['finger' => 'top index', 'action' => 'open', 'note' => 'g'],
-            ['finger' => null, 'action' => 'note', 'note' => 'melody'],
-            ['finger' => 'bottom index', 'action' => 'open', 'note' => 'd'],
-            ['finger' => null, 'action' => 'note', 'note' => 'melody'],
-        ],
-        // The D throw: the right index finger beats on the hole, closing to
-        // the G, opening to the false D, closing to the C, and opening to
-        // the melody note.
-        'D throw' => [
-            ['finger' => 'bottom index', 'action' => 'close', 'note' => 'G'],
-            ['finger' => 'bottom index', 'action' => 'open', 'note' => 'd'],
-            ['finger' => 'bottom index', 'action' => 'close', 'note' => 'c'],
-            ['finger' => 'bottom index', 'action' => 'open', 'note' => 'melody'],
-        ],
-        // The grip: close to the G, the false D, close to the G again, and
-        // then the hand moves to the fingering of the melody note.
-        'grip' => [
-            ['finger' => 'bottom index', 'action' => 'close', 'note' => 'G'],
-            ['finger' => 'bottom index', 'action' => 'open', 'note' => 'd'],
-            ['finger' => 'bottom index', 'action' => 'close', 'note' => 'G'],
-            ['finger' => null, 'action' => 'note', 'note' => 'melody'],
-        ],
-    ];
-
-    /**
      * The pipe scale, and the holes that are closed for each note.
      *
      * The note names are the ABC ones: "G" is the low G, "c" the middle C,
@@ -125,20 +55,6 @@ class BagpipeFingering
      *
      * @var array<string, string[]>
      */
-    /**
-     * The graces that are written on their own.
-     *
-     * @var string[]
-     */
-    public const COMMON_GRACES = ['g', 'd', 'e'];
-
-    /**
-     * The notes the doublings, the throws and the half doublings are made of.
-     *
-     * @var string[]
-     */
-    public const EMBELLISHMENT_NOTES = ['a', 'g', 'f', 'e', 'd'];
-
     public const SCALE = [
         // The low G: every hole closed, so the note sounds at the vent.
         'G' => ['thumb', 'top index', 'top middle', 'top ring', 'bottom index', 'bottom middle', 'bottom ring', 'pinky'],
@@ -160,6 +76,28 @@ class BagpipeFingering
         // the left hand on the chanter.
         'a' => ['top ring', 'bottom index', 'bottom middle', 'bottom ring'],
     ];
+
+    /**
+     * The graces, and the note each one sounds.
+     *
+     * The case of the letter says which note it is: {g} is the high G and {G}
+     * the low G. The hole is the one that sounds the note; the low G has no
+     * hole of its own, it is the vent, and every finger has to close for it.
+     *
+     * @var array<string, array{note: string, hole: string|null}>
+     */
+    public const GRACES = [
+        'G grace' => ['note' => 'G', 'hole' => null],
+        'A grace' => ['note' => 'A', 'hole' => 'pinky'],
+        'B grace' => ['note' => 'B', 'hole' => 'bottom ring'],
+        'c grace' => ['note' => 'c', 'hole' => 'bottom middle'],
+        'd grace' => ['note' => 'd', 'hole' => 'bottom index'],
+        'e grace' => ['note' => 'e', 'hole' => 'top ring'],
+        'f grace' => ['note' => 'f', 'hole' => 'top middle'],
+        'g grace' => ['note' => 'g', 'hole' => 'top index'],
+        'a grace' => ['note' => 'a', 'hole' => 'thumb'],
+    ];
+
 
     /**
      * The embellishments, and the ABC token each one is written as.
@@ -210,6 +148,77 @@ class BagpipeFingering
     ];
 
     /**
+     * The graces that are written on their own.
+     *
+     * @var string[]
+     */
+    public const COMMON_GRACES = ['g', 'd', 'e'];
+
+    /**
+     * The notes the doublings, the throws and the half doublings are made of.
+     *
+     * @var string[]
+     */
+    public const EMBELLISHMENT_NOTES = ['a', 'g', 'f', 'e', 'd'];
+
+    /**
+     * The steps of each embellishment.
+     *
+     * A step is the finger that moves, what it does, and the note that
+     * sounds. A step with no finger is the melody note: the fingering of the
+     * note the embellishment belongs to, which depends on that note.
+     *
+     * @var array<string, array<int, array{finger: ?string, action: string, note: string}>>
+     */
+    public const EMBELLISHMENT_STEPS = [
+        // A doubling: the G gracenote, the melody note, the false D, and the
+        // melody note again.
+        'doubling' => [
+            ['finger' => 'top index', 'action' => 'open', 'note' => 'g'],
+            ['finger' => null, 'action' => 'note', 'note' => 'melody'],
+            ['finger' => 'bottom index', 'action' => 'open', 'note' => 'd'],
+            ['finger' => null, 'action' => 'note', 'note' => 'melody'],
+        ],
+        // The D throw: the right index finger beats on the hole, closing to
+        // the G, opening to the false D, closing to the C, and opening to
+        // the melody note.
+        'D throw' => [
+            ['finger' => 'bottom index', 'action' => 'close', 'note' => 'G'],
+            ['finger' => 'bottom index', 'action' => 'open', 'note' => 'd'],
+            ['finger' => 'bottom index', 'action' => 'close', 'note' => 'c'],
+            ['finger' => 'bottom index', 'action' => 'open', 'note' => 'melody'],
+        ],
+        // The grip: close to the G, the false D, close to the G again, and
+        // then the hand moves to the fingering of the melody note.
+        'grip' => [
+            ['finger' => 'bottom index', 'action' => 'close', 'note' => 'G'],
+            ['finger' => 'bottom index', 'action' => 'open', 'note' => 'd'],
+            ['finger' => 'bottom index', 'action' => 'close', 'note' => 'G'],
+            ['finger' => null, 'action' => 'note', 'note' => 'melody'],
+        ],
+    ];
+
+    /** @var TokenDictionary */
+    private TokenDictionary $dictionary;
+
+    /** @var array<string, string> The compound grace groups, and their notes. */
+    private array $compoundGroups = [];
+
+    /**
+     * @param TokenDictionary|null $dictionary The dictionary, for the compound
+     *                                       grace groups it knows.
+     */
+    public function __construct(?TokenDictionary $dictionary = null)
+    {
+        $this->dictionary = $dictionary ?? new TokenDictionary();
+        $this->compoundGroups = $this->buildCompoundGroups();
+    }
+
+    // ------------------------------------------------------------------
+    // The scale
+    // ------------------------------------------------------------------
+
+    /**
      * The pipe scale, and the holes that are closed for each note.
      *
      * @return array<string, string[]>
@@ -252,9 +261,45 @@ class BagpipeFingering
     }
 
     /**
-     * The graces, and the finger that moves for each of them.
+     * Where a note is in the pipe scale, counted from the low G.
      *
-     * @return array<string, array{finger: string, action: string, note: string}>
+     * @param string $note
+     * @return int|null
+     */
+    public function scalePosition(string $note): ?int
+    {
+        if ($note === '') {
+            return null;
+        }
+        // The case matters: "G" is the low G and "g" the high G.
+        $notes = array_keys(self::SCALE);
+        foreach ($notes as $index => $name) {
+            if ($name === $note) {
+                return $index;
+            }
+        }
+        return null;
+    }
+
+    // ------------------------------------------------------------------
+    // The graces
+    // ------------------------------------------------------------------
+
+    /**
+     * The finger that moves for a grace, and the note it sounds.
+     *
+     * @param string $grace
+     * @return array{note: string, hole: string|null}|null
+     */
+    public function getGrace(string $grace): ?array
+    {
+        return self::GRACES[$grace] ?? null;
+    }
+
+    /**
+     * The graces, and the note each one sounds.
+     *
+     * @return array<string, array{note: string, hole: string|null}>
      */
     public function getGraces(): array
     {
@@ -262,20 +307,10 @@ class BagpipeFingering
     }
 
     /**
-     * The steps of the embellishments.
-     *
-     * @return array<string, array<int, array{finger: ?string, action: string, note: string}>>
-     */
-    public function getEmbellishmentSteps(): array
-    {
-        return self::EMBELLISHMENT_STEPS;
-    }
-
-    /**
      * The name of a grace, from the letter it is written with.
      *
-     * A lower case letter is a gracenote and an upper case letter is a
-     * strike: {g} is the G gracenote and {G} the G strike.
+     * A lower case letter is a gracenote and an upper case letter is the
+     * low version of the note: {g} is the high G and {G} the low G.
      *
      * @param string $letter
      * @return string
@@ -288,12 +323,6 @@ class BagpipeFingering
         return $letter . ' grace';
     }
 
-    /**
-     * The finger that moves for a grace.
-     *
-     * @param string $grace
-     * @return array{finger: string, action: string, note: string}|null
-     */
     /**
      * The graces of a grace group, one for each letter of it.
      *
@@ -315,20 +344,138 @@ class BagpipeFingering
         return $letters;
     }
 
-    public function getGrace(string $grace): ?array
+    /**
+     * Is this the low version of the note?
+     *
+     * @param string $grace
+     * @return bool
+     */
+    public function isLowNote(string $grace): bool
     {
-        return self::GRACES[$grace] ?? null;
+        if ($grace === '') {
+            return false;
+        }
+        $letter = $grace[0];
+        return $letter === strtoupper($letter);
     }
 
     /**
-     * The steps of an embellishment.
+     * Does the grace sound the same note as the one it is attached to?
      *
-     * @param string $embellishment
-     * @return array<int, array{finger: ?string, action: string, note: string}>
+     * @param string $graceNote
+     * @param string $melodyNote
+     * @return bool
      */
-    public function getSteps(string $embellishment): array
+    public function soundsSameNote(string $graceNote, string $melodyNote): bool
     {
-        return self::EMBELLISHMENT_STEPS[$embellishment] ?? [];
+        if ($graceNote === '' || $melodyNote === '') {
+            return false;
+        }
+        // The case matters: "G" is the low G and "g" the high G.
+        return $graceNote[0] === $melodyNote[0];
+    }
+
+    /**
+     * Can this grace be played?
+     *
+     * A grace sounds the note it is named after, so a grace on the note it
+     * sounds cannot be heard at all: a G gracenote on a G is out, whatever
+     * the note before it was.
+     *
+     * @param string $grace        The name of the grace, e.g. "g grace".
+     * @param string $previousNote The note the grace is played from.
+     * @param string|null $melodyNote The note the grace is attached to.
+     * @return bool
+     */
+    public function canPlayGrace(string $grace, string $previousNote, ?string $melodyNote = null): bool
+    {
+        $spec = $this->getGrace($grace);
+        if ($spec === null || $this->getClosedHoles($previousNote) === null) {
+            return false;
+        }
+        if ($melodyNote !== null && $this->soundsSameNote($spec['note'], $melodyNote)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * How the grace is played, from the note it is played from.
+     *
+     * A grace is the best approximation of the melody note: to sound it, the
+     * least number of fingers move. A finger that comes up is a gracenote, and
+     * a finger that goes down is a strike.
+     *
+     * The sound comes out at the first hole that is open, so a hole only
+     * sounds when the holes above it are closed.
+     *
+     * @param string $grace       The name of the grace, e.g. "g grace".
+     * @param string $previousNote The note the grace is played from.
+     * @return array{fingers: string[], action: string, note: string}
+     */
+    public function getGraceMovement(string $grace, string $previousNote): array
+    {
+        $base = $this->getClosedHoles($previousNote);
+        $spec = $this->getGrace($grace);
+        if ($spec === null) {
+            return ['fingers' => [], 'action' => '', 'note' => ''];
+        }
+        if ($base === null) {
+            return ['fingers' => [], 'action' => '', 'note' => $spec['note']];
+        }
+        $movement = $this->movementFromState($spec, $base);
+        $movement['note'] = $spec['note'];
+        return $movement;
+    }
+
+    /**
+     * The movement of a whole grace group, note by note.
+     *
+     * Each grace of the group is played from where the one before it left the
+     * hand, so {gdedc} is the G gracenote to the D, the E gracenote back to
+     * the D, and the C strike ending on the D.
+     *
+     * @param string $group       The grace group, e.g. "{gdedc}".
+     * @param string $previousNote The note the group is played from.
+     * @return array{steps: array<int, array{fingers: string[], action: string, note: string}>, closed: string[]}
+     *         The movement of each grace, and the hand at the end of it.
+     */
+    public function getGraceChain(string $group, string $previousNote): array
+    {
+        $closed = $this->getClosedHoles($previousNote);
+        $steps = [];
+        if ($closed === null) {
+            return ['steps' => $steps, 'closed' => []];
+        }
+
+        foreach ($this->getGraceLetters($group) as $letter) {
+            $spec = $this->getGrace($this->getGraceName($letter));
+            if ($spec === null) {
+                continue;
+            }
+            $movement = $this->movementFromState($spec, $closed);
+            $movement['note'] = $spec['note'];
+            $steps[] = $movement;
+            $closed = $this->applyMovement($closed, $movement);
+        }
+
+        return ['steps' => $steps, 'closed' => $closed];
+    }
+
+    /**
+     * Is this grace played as a strike from this note?
+     *
+     * A finger that goes down is a strike, and a finger that comes up is a
+     * gracenote.
+     *
+     * @param string $grace
+     * @param string $previousNote
+     * @return bool
+     */
+    public function isPlayedAsStrikeFrom(string $grace, string $previousNote): bool
+    {
+        $movement = $this->getGraceMovement($grace, $previousNote);
+        return $movement['action'] === 'close' && $movement['fingers'] !== [];
     }
 
     /**
@@ -337,7 +484,7 @@ class BagpipeFingering
      * The grace is a change of one hole, so the fingering is the fingering of
      * the note it is played from with that one hole changed.
      *
-     * @param string $grace   The name of the grace, e.g. "g grace".
+     * @param string $grace        The name of the grace, e.g. "g grace".
      * @param string $previousNote The note the grace is played from.
      * @return string[]|null The holes that are closed, or null when the grace
      *                       cannot be played from that note.
@@ -360,207 +507,89 @@ class BagpipeFingering
     }
 
     /**
-     * Can this grace be played?
+     * The movement of one grace, from a position of the hand.
      *
-     * A grace sounds the note it is named after, so a grace on the note it
-     * sounds cannot be heard at all: a G gracenote on a G is out, whatever
-     * the note before it was, and from the high A the G gracenote is played
-     * as a G strike, because the thumb has to close for the sound to come
-     * out at the top index hole.
-     *
-     * @param string $grace       The name of the grace, e.g. "g grace".
-     * @param string $previousNote The note the grace is played from.
-     * @param string|null $melodyNote The note the grace is attached to.
-     * @return bool
+     * @param array $spec  The grace: the note it sounds and its hole.
+     * @param string[] $closed The holes that are closed.
+     * @return array{fingers: string[], action: string}
      */
-    public function canPlayGrace(string $grace, string $previousNote, ?string $melodyNote = null): bool
+    private function movementFromState(array $spec, array $closed): array
     {
-        $spec = $this->getGrace($grace);
-        $base = $this->getClosedHoles($previousNote);
-        if ($spec === null || $base === null) {
-            return false;
-        }
-        // A grace that sounds the note it is attached to cannot be heard.
-        if ($melodyNote !== null && $this->soundsSameNote($spec['note'], $melodyNote)) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Does the grace sound the same note as the one it is attached to?
-     *
-     * @param string $graceNote
-     * @param string $melodyNote
-     * @return bool
-     */
-    public function soundsSameNote(string $graceNote, string $melodyNote): bool
-    {
-        if ($graceNote === '' || $melodyNote === '') {
-            return false;
-        }
-        // The case matters: "G" is the low G and "g" the high G.
-        return $graceNote[0] === $melodyNote[0];
-    }
-
-    /**
-     * Is this grace played as a strike from this note?
-     *
-     * The G gracenote lifts the top index finger. Where that finger is
-     * already up and the thumb hole is open, the note is played as a G
-     * strike: the thumb closes, and the sound comes out at the top index
-     * hole.
-     *
-     * @param string $grace
-     * @param string $previousNote
-     * @return bool
-     */
-
-    /**
-     * Is this the low version of the note?
-     *
-     * The case of the letter says which note it is: {g} is the high G and {G}
-     * the low G.
-     *
-     * @param string $grace
-     * @return bool
-     */
-    public function isLowNote(string $grace): bool
-    {
-        if ($grace === '') {
-            return false;
-        }
-        $letter = $grace[0];
-        return $letter === strtoupper($letter);
-    }
-
-    /**
-     * Is this grace played as a strike from this note?
-     *
-     * A grace whose note is lower than the melody note it is played from is
-     * a strike: the sound has to come from a hole that is below the note, and
-     * that is a hard movement. A grace that is above both the note before
-     * and the note after is a plain gracenote.
-     *
-     * @param string $grace
-     * @param string $previousNote
-     * @return bool
-     */
-    /**
-     * How the grace is played, from the note it is played from.
-     *
-     * A grace is the best approximation of the melody note: to sound it, the
-     * least number of fingers move. A finger that comes up is a gracenote, and
-     * a finger that goes down is a strike, so {g} is usually a gracenote and
-     * {G} is usually a strike.
-     *
-     * The sound comes out at the first hole that is open, so a hole only
-     * sounds when the holes above it are closed.
-     *
-     * @param string $grace       The name of the grace, e.g. "g grace".
-     * @param string $previousNote The note the grace is played from.
-     * @return array{fingers: string[], action: string, note: string}
-     *         The fingers that move, whether they come up or go down, and the
-     *         note that sounds.
-     */
-    public function getGraceMovement(string $grace, string $previousNote): array
-    {
-        $spec = $this->getGrace($grace);
-        if ($spec === null) {
-            return ['fingers' => [], 'action' => '', 'note' => ''];
-        }
-        $base = $this->getClosedHoles($previousNote);
-        if ($base === null) {
-            return ['fingers' => [], 'action' => '', 'note' => $spec['note']];
-        }
-
         $hole = $spec['hole'];
         if ($hole === null) {
             // The low G is the vent: every finger that is up has to close.
-            $fingers = array_values(array_diff(self::HOLES, $base));
-            return ['fingers' => $fingers, 'action' => 'close', 'note' => $spec['note']];
+            return [
+                'fingers' => array_values(array_diff(self::HOLES, $closed)),
+                'action' => 'close',
+            ];
         }
 
         $position = array_search($hole, self::HOLES, true);
         if ($position === false) {
-            return ['fingers' => [], 'action' => '', 'note' => $spec['note']];
+            return ['fingers' => [], 'action' => ''];
         }
         // The holes above the one that sounds: they have to be closed, or the
         // sound comes out at one of them instead.
         $above = array_slice(self::HOLES, 0, $position);
 
-        if (in_array($hole, $base, true)) {
+        if (in_array($hole, $closed, true)) {
             // The hole is closed: it comes up, and anything open above it goes
             // down, so that the sound comes out here.
             $fingers = [$hole];
             foreach ($above as $open) {
-                if (!in_array($open, $base, true)) {
+                if (!in_array($open, $closed, true)) {
                     $fingers[] = $open;
                 }
             }
-            return ['fingers' => $fingers, 'action' => 'lift', 'note' => $spec['note']];
+            return ['fingers' => $fingers, 'action' => 'lift'];
         }
 
         // The hole is already open: whatever is open above it goes down, so
         // that the sound comes out here.
         $fingers = [];
         foreach ($above as $open) {
-            if (!in_array($open, $base, true)) {
+            if (!in_array($open, $closed, true)) {
                 $fingers[] = $open;
             }
         }
-        return ['fingers' => $fingers, 'action' => 'close', 'note' => $spec['note']];
+        return ['fingers' => $fingers, 'action' => 'close'];
     }
 
     /**
-     * Is this grace played as a strike from this note?
+     * The hand after a movement.
      *
-     * A finger that goes down is a strike, and a finger that comes up is a
-     * gracenote.
-     *
-     * @param string $grace
-     * @param string $previousNote
-     * @return bool
+     * @param string[] $closed The holes that are closed.
+     * @param array $movement The fingers that moved, and how.
+     * @return string[]
      */
-    public function isPlayedAsStrikeFrom(string $grace, string $previousNote): bool
+    private function applyMovement(array $closed, array $movement): array
     {
-        $movement = $this->getGraceMovement($grace, $previousNote);
-        return $movement['action'] === 'close' && $movement['fingers'] !== [];
+        if ($movement['action'] === 'lift') {
+            return array_values(array_diff($closed, $movement['fingers']));
+        }
+        $holes = $closed;
+        foreach ($movement['fingers'] as $finger) {
+            $holes[] = $finger;
+        }
+        return array_values(array_unique($holes));
     }
 
-    /**
-     * Where a note is in the pipe scale, counted from the low G.
-     *
-     * @param string $note
-     * @return int|null
-     */
-    public function scalePosition(string $note): ?int
-    {
-        if ($note === '') {
-            return null;
-        }
-        // The case matters: "G" is the low G and "g" the high G.
-        $notes = array_keys(self::SCALE);
-        foreach ($notes as $index => $name) {
-            if ($name === $note) {
-                return $index;
-            }
-        }
-        return null;
-    }
+    // ------------------------------------------------------------------
+    // The embellishments
+    // ------------------------------------------------------------------
 
     /**
      * The embellishments, and the word each one is sung to.
      *
      * The word is taken from the token dictionary, so that the chart and the
-     * dictionary cannot drift apart.
+     * dictionary cannot disagree.
      *
      * @param TokenDictionary|null $dictionary
      * @return array<string, array{token: string, word: string}>
      */
     public function getEmbellishments(?TokenDictionary $dictionary = null): array
     {
-        $dictionary = $dictionary ?? new TokenDictionary();
+        $dictionary = $dictionary ?? $this->dictionary;
         $out = [];
         foreach (self::EMBELLISHMENTS as $name => $token) {
             $out[$name] = [
@@ -569,5 +598,56 @@ class BagpipeFingering
             ];
         }
         return $out;
+    }
+
+    /**
+     * The steps of an embellishment.
+     *
+     * @param string $embellishment
+     * @return array<int, array{finger: ?string, action: string, note: string}>
+     */
+    public function getSteps(string $embellishment): array
+    {
+        return self::EMBELLISHMENT_STEPS[$embellishment] ?? [];
+    }
+
+    /**
+     * The steps of the embellishments.
+     *
+     * @return array<string, array<int, array{finger: ?string, action: string, note: string}>>
+     */
+    public function getEmbellishmentSteps(): array
+    {
+        return self::EMBELLISHMENT_STEPS;
+    }
+
+    /**
+     * The compound grace groups the dictionary knows: the doublings, the
+     * throws, the shakes and the rest.
+     *
+     * @return array<string, string> The group, and the notes it is made of.
+     */
+    public function getCompoundGroups(): array
+    {
+        return $this->compoundGroups;
+    }
+
+    /**
+     * The compound grace groups, read from the dictionary.
+     *
+     * @return array<string, string>
+     */
+    private function buildCompoundGroups(): array
+    {
+        $groups = [];
+        foreach ($this->dictionary->getAllTokens() as $key => $row) {
+            if (preg_match('/\{([A-Ga-g]{2,})\}/', (string) $key, $matches) === 1) {
+                $group = '{' . $matches[1] . '}';
+                if (!isset($groups[$group])) {
+                    $groups[$group] = $matches[1];
+                }
+            }
+        }
+        return $groups;
     }
 }

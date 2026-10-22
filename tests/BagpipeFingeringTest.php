@@ -282,7 +282,7 @@ class BagpipeFingeringTest extends TestCase
         $problems = $checker->check([$body, $next]);
 
         $this->assertSame(
-            ['a g grace on a g cannot be heard: it sounds the note it is on'],
+            ['a g on a g cannot be heard: it sounds the note it is on'],
             $problems
         );
     }
@@ -296,6 +296,47 @@ class BagpipeFingeringTest extends TestCase
         $next->setBars([new AbcBarModel([['note', new AbcNoteModel('A', '', '', '{g}')]])]);
 
         $this->assertSame([], $checker->check([$body, $next]));
+    }
+
+    public function testAGraceGroupIsPlayedNoteByNote(): void
+    {
+        // {gdedc} is the G gracenote to the D, the E gracenote back to the D,
+        // and the C strike ending on the D.
+        $chain = $this->fingering->getGraceChain('{gdedc}', 'd');
+
+        $this->assertCount(5, $chain['steps']);
+        $this->assertSame(['top index'], $chain['steps'][0]['fingers']);
+        $this->assertSame('lift', $chain['steps'][0]['action']);
+        $this->assertSame('g', $chain['steps'][0]['note']);
+        $this->assertSame('d', $chain['steps'][1]['note']);
+        $this->assertSame('e', $chain['steps'][2]['note']);
+        $this->assertSame('d', $chain['steps'][3]['note']);
+        $this->assertSame('c', $chain['steps'][4]['note']);
+        $this->assertSame('close', $chain['steps'][4]['action']);
+    }
+
+    public function testTheHeavyShakeClosesEverythingAndComesBack(): void
+    {
+        // {GdG} is close all for the G, lift one for the D, and close it back
+        // to the G.
+        $chain = $this->fingering->getGraceChain('{GdG}', 'd');
+
+        $this->assertCount(3, $chain['steps']);
+        $this->assertSame('close', $chain['steps'][0]['action']);
+        $this->assertCount(3, $chain['steps'][0]['fingers']);
+        $this->assertSame('lift', $chain['steps'][1]['action']);
+        $this->assertSame(['bottom index'], $chain['steps'][1]['fingers']);
+        $this->assertSame('close', $chain['steps'][2]['action']);
+    }
+
+    public function testTheCompoundGroupsComeFromTheDictionary(): void
+    {
+        $groups = $this->fingering->getCompoundGroups();
+
+        $this->assertArrayHasKey('{gdedc}', $groups);
+        $this->assertSame('gdedc', $groups['{gdedc}']);
+        $this->assertArrayHasKey('{gdG}', $groups);
+        $this->assertArrayHasKey('{gdc}', $groups);
     }
 
     public function testAGraceGroupIsASequenceOfGraces(): void
@@ -327,7 +368,7 @@ class BagpipeFingeringTest extends TestCase
         $problems = $checker->check([$body, $next]);
 
         $this->assertContains(
-            'a G grace on a G cannot be heard: it sounds the note it is on',
+            'a G on a G cannot be heard: it sounds the note it is on',
             $problems
         );
     }

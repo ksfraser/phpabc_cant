@@ -295,10 +295,20 @@ class BagpipeFingeringWriter
         $lines[] = '';
         $lines[] = '% The common single graces are g, d and e. The doublings, the';
         $lines[] = '% throws and the half doublings are made of a, g, f, e and d.';
-        $lines[] = '% The piobruchds use unusual movements, such as {GdGeAfA}e, which is';
-        $lines[] = '% a sequence of graces: the low G, the D gracenote, the high G, the E';
-        $lines[] = '% gracenote, the low A, the F gracenote and the low A.';
         $lines[] = '%';
+        $lines[] = '% The larger movements are calculated note by note, each grace of';
+        $lines[] = '% the group played from where the one before it left the hand. The';
+        $lines[] = '% groups the dictionary knows are listed below, with the notes they';
+        $lines[] = '% are made of.';
+        $lines[] = '%';
+        foreach ($this->fingering->getCompoundGroups() as $group => $notes) {
+            $lines[] = sprintf('%%   %-12s %s', $group, $notes);
+        }
+        $lines[] = '%';
+        $lines[] = '% For example, {gdedc} is the G gracenote to the D, the E gracenote';
+        $lines[] = '% back to the D, and the C strike ending on the D. That is one form';
+        $lines[] = '% of a hornpipe shake, a doubling and a strike. {gdG} is a heavy';
+        $lines[] = '% shake and {gdc} a light one.';
         $lines[] = '% A grace that sounds the note it is attached to cannot be';
         $lines[] = '% heard at all: a G gracenote on a G is out, whatever the note';
         $lines[] = '% before it was.';

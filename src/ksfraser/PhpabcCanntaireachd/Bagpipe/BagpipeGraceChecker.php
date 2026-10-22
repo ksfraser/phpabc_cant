@@ -68,28 +68,21 @@ class BagpipeGraceChecker
                         && $this->fingering->isInScale($previous)
                         && $this->fingering->isInScale($melody)) {
                         // A grace group is a sequence of graces, and each one
-                        // of them has to work.
-                        foreach ($this->fingering->getGraceLetters($group) as $letter) {
-                            $name = $this->fingering->getGraceName($letter);
-                            if ($this->fingering->getGrace($name) === null) {
-                                continue;
-                            }
-                            if ($this->fingering->canPlayGrace($name, $previous, $melody)) {
-                                continue;
-                            }
-                            if ($this->fingering->soundsSameNote($name, $melody)) {
+                        // is played from where the one before it left the
+                        // hand. The last one of them is the one next to the
+                        // melody note, and that is the one that has to sound
+                        // something else.
+                        $chain = $this->fingering->getGraceChain($group, $previous);
+                        $last = end($chain['steps']);
+                        foreach ($chain['steps'] as $step) {
+                            if ($step === $last && $this->fingering->soundsSameNote($step['note'], $melody)) {
                                 $problems[] = sprintf(
                                     'a %s on a %s cannot be heard: it sounds the note it is on',
-                                    $name,
+                                    $step['note'],
                                     $melody
                                 );
-                                continue;
+                                break;
                             }
-                            $problems[] = sprintf(
-                                'the %s cannot be played from the %s',
-                                $name,
-                                $previous
-                            );
                         }
                     }
                 }
