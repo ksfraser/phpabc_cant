@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace ksfraser\PhpabcCanntaireachd\Tests;
 
 use ksfraser\PhpabcCanntaireachd\Bagpipe\BagpipeFingering;
+use ksfraser\PhpabcCanntaireachd\Bagpipe\BagpipeGraceChecker;
+use ksfraser\PhpabcCanntaireachd\Cleanup\Model\AbcBarModel;
+use ksfraser\PhpabcCanntaireachd\Cleanup\Model\AbcBodyLine;
+use ksfraser\PhpabcCanntaireachd\Cleanup\Model\AbcNoteModel;
 use ksfraser\PhpabcCanntaireachd\Bagpipe\BagpipeFingeringWriter;
 use ksfraser\PhpabcCanntaireachd\TokenDictionary;
 use PHPUnit\Framework\TestCase;
@@ -169,6 +173,35 @@ class BagpipeFingeringTest extends TestCase
 
         $this->assertSame(['G', 'd', 'G', 'melody'], array_column($steps, 'note'));
         $this->assertNull($steps[3]['finger']);
+    }
+
+    public function testTheGraceCheckerFindsAGraceThatCannotBePlayed(): void
+    {
+        $checker = new BagpipeGraceChecker();
+        $lines = [
+            // The high A, then a G gracenote: the top index hole is already
+            // open on the high A, so there is nothing to lift.
+            new AbcBodyLine([], 'M', '2/4', 'HP'),
+        ];
+        $body = new AbcBodyLine([], 'M', '2/4', 'HP');
+        $body->setBars([new AbcBarModel([['note', new AbcNoteModel('a')]])]);
+        $next = new AbcBodyLine([], 'M', '2/4', 'HP');
+        $next->setBars([new AbcBarModel([['note', new AbcNoteModel('A', '', '', '{g}')]])]);
+
+        $problems = $checker->check([$body, $next]);
+
+        $this->assertSame(['the g grace cannot be played from the a'], $problems);
+    }
+
+    public function testTheGraceCheckerIsQuietWhenTheGraceCanBePlayed(): void
+    {
+        $checker = new BagpipeGraceChecker();
+        $body = new AbcBodyLine([], 'M', '2/4', 'HP');
+        $body->setBars([new AbcBarModel([['note', new AbcNoteModel('d')]])]);
+        $next = new AbcBodyLine([], 'M', '2/4', 'HP');
+        $next->setBars([new AbcBarModel([['note', new AbcNoteModel('A', '', '', '{g}')]])]);
+
+        $this->assertSame([], $checker->check([$body, $next]));
     }
 
     public function testEveryEmbellishmentHasAWordInTheDictionary(): void

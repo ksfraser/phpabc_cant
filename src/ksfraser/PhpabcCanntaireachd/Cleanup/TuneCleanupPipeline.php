@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ksfraser\PhpabcCanntaireachd\Cleanup;
 
+use ksfraser\PhpabcCanntaireachd\Bagpipe\BagpipeGraceChecker;
 use ksfraser\PhpabcCanntaireachd\Cleanup\Model\AbcBodyLine;
 use ksfraser\PhpabcCanntaireachd\Cleanup\Model\AbcDocument;
 use ksfraser\PhpabcCanntaireachd\Cleanup\Model\AbcNoteModel;
@@ -40,6 +41,9 @@ class TuneCleanupPipeline
     /** @var BarReflower */
     private BarReflower $reflower;
 
+    /** @var BagpipeGraceChecker */
+    private BagpipeGraceChecker $graceChecker;
+
     /**
      * @param HeaderOrderNormaliser|null $headerOrder
      * @param IncludeBlockWriter|null $includes
@@ -54,7 +58,8 @@ class TuneCleanupPipeline
         ?VoiceAttributeNormaliser $voiceNormaliser = null,
         ?DrumVoiceNormaliser $drums = null,
         ?BagpipeScaleChecker $scale = null,
-        ?BarReflower $reflower = null
+        ?BarReflower $reflower = null,
+        ?BagpipeGraceChecker $graceChecker = null
     ) {
         $this->headerOrder = $headerOrder ?? new HeaderOrderNormaliser();
         $this->includes = $includes ?? new IncludeBlockWriter();
@@ -62,6 +67,7 @@ class TuneCleanupPipeline
         $this->drums = $drums ?? new DrumVoiceNormaliser();
         $this->scale = $scale ?? new BagpipeScaleChecker();
         $this->reflower = $reflower ?? new BarReflower();
+        $this->graceChecker = $graceChecker ?? new BagpipeGraceChecker();
     }
 
     /**
@@ -97,6 +103,7 @@ class TuneCleanupPipeline
             $this->cleanVoices($tune, $tuneNumber, $report);
             $this->cleanDrums($tune, $tuneNumber, $report);
             $this->checkScale($tune, $tuneNumber, $report);
+            $this->checkGraces($tune, $tuneNumber, $report);
             $this->relayout($tune, $tuneNumber, $report);
         }
 
@@ -345,6 +352,25 @@ class TuneCleanupPipeline
                     ),
                 ];
             }
+        }
+    }
+
+    /**
+     * Check that the graces of the tune can be played.
+     *
+     * @param AbcTuneModel $tune
+     * @param string $tuneNumber
+     * @param array<int, array<string, string>> $report
+     * @return void
+     */
+    private function checkGraces(AbcTuneModel $tune, string $tuneNumber, array &$report): void
+    {
+        foreach ($this->graceChecker->check($tune->getBodyLines()) as $problem) {
+            $report[] = [
+                'tune' => $tuneNumber,
+                'kind' => 'grace',
+                'message' => $problem,
+            ];
         }
     }
 
