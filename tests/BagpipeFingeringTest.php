@@ -95,6 +95,82 @@ class BagpipeFingeringTest extends TestCase
         $this->assertContains('thumb', $this->fingering->getClosedHoles('g'));
     }
 
+    public function testTheGGraceIsPlayedByLiftingTheTopIndex(): void
+    {
+        $grace = $this->fingering->getGrace('g grace');
+
+        $this->assertNotNull($grace);
+        $this->assertSame('top index', $grace['finger']);
+        $this->assertSame('open', $grace['action']);
+        $this->assertSame('g', $grace['note']);
+    }
+
+    public function testTheGGraceCannotBePlayedFromTheHighAOrTheHighG(): void
+    {
+        // On those notes the top index hole is already open, so there is
+        // nothing to lift.
+        $this->assertFalse($this->fingering->canPlayGrace('g grace', 'a'));
+        $this->assertFalse($this->fingering->canPlayGrace('g grace', 'g'));
+
+        foreach (['G', 'A', 'B', 'c', 'd', 'e', 'f'] as $note) {
+            $this->assertTrue($this->fingering->canPlayGrace('g grace', $note), $note);
+        }
+    }
+
+    public function testTheFingeringOfTheGGraceIsTheNoteBeforeWithTheTopIndexOpen(): void
+    {
+        // From the D: the top index finger is up, and the little finger is
+        // down as well, because the D is played with it.
+        $this->assertSame(
+            ['thumb', 'top middle', 'top ring', 'pinky'],
+            $this->fingering->getGraceFingering('g grace', 'd')
+        );
+
+        // From the B: the top index finger up, the rest as they are.
+        $this->assertSame(
+            ['thumb', 'top middle', 'top ring', 'bottom index', 'bottom middle'],
+            $this->fingering->getGraceFingering('g grace', 'B')
+        );
+    }
+
+    public function testTheGGraceHasNoFingeringWhereItCannotBePlayed(): void
+    {
+        $this->assertNull($this->fingering->getGraceFingering('g grace', 'a'));
+    }
+
+    public function testTheDoublingIsTheGGraceThenTheFalseD(): void
+    {
+        $steps = $this->fingering->getSteps('doubling');
+
+        $this->assertCount(4, $steps);
+        $this->assertSame('top index', $steps[0]['finger']);
+        $this->assertSame('g', $steps[0]['note']);
+        $this->assertNull($steps[1]['finger']);
+        $this->assertSame('bottom index', $steps[2]['finger']);
+        $this->assertSame('d', $steps[2]['note']);
+    }
+
+    public function testTheDThrowBeatsOnTheRightIndexFinger(): void
+    {
+        $steps = $this->fingering->getSteps('D throw');
+
+        // Close to the G, open to the false D, close to the C, open to the
+        // melody note: the right index finger does all of it.
+        $this->assertSame(
+            ['bottom index', 'bottom index', 'bottom index', 'bottom index'],
+            array_column($steps, 'finger')
+        );
+        $this->assertSame(['G', 'd', 'c', 'melody'], array_column($steps, 'note'));
+    }
+
+    public function testTheGripClosesToTheGAndBack(): void
+    {
+        $steps = $this->fingering->getSteps('grip');
+
+        $this->assertSame(['G', 'd', 'G', 'melody'], array_column($steps, 'note'));
+        $this->assertNull($steps[3]['finger']);
+    }
+
     public function testEveryEmbellishmentHasAWordInTheDictionary(): void
     {
         $missing = [];

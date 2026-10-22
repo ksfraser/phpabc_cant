@@ -48,6 +48,60 @@ class BagpipeFingering
     ];
 
     /**
+     * The finger that moves for each kind of grace, and the note it sounds.
+     *
+     * A grace is a brief change of the hole that sounds: the finger opens or
+     * closes a hole, and then goes back to where it was.
+     *
+     * The lower case g is the G gracenote. It sounds the G, and it is played
+     * by opening the top index hole. The upper case G is the hard G, the
+     * strike, which sounds the low G: every hole is closed.
+     *
+     * @var array<string, array{finger: string, action: string, note: string}>
+     */
+    public const GRACES = [
+        'g grace' => ['finger' => 'top index', 'action' => 'open', 'note' => 'g'],
+        'd grace' => ['finger' => 'bottom index', 'action' => 'open', 'note' => 'd'],
+    ];
+
+    /**
+     * The steps of each embellishment.
+     *
+     * A step is the finger that moves, what it does, and the note that
+     * sounds. A step with no finger is the melody note: the fingering of the
+     * note the embellishment belongs to, which depends on that note.
+     *
+     * @var array<string, array<int, array{finger: ?string, action: string, note: string}>>
+     */
+    public const EMBELLISHMENT_STEPS = [
+        // A doubling: the G gracenote, the melody note, the false D, and the
+        // melody note again.
+        'doubling' => [
+            ['finger' => 'top index', 'action' => 'open', 'note' => 'g'],
+            ['finger' => null, 'action' => 'note', 'note' => 'melody'],
+            ['finger' => 'bottom index', 'action' => 'open', 'note' => 'd'],
+            ['finger' => null, 'action' => 'note', 'note' => 'melody'],
+        ],
+        // The D throw: the right index finger beats on the hole, closing to
+        // the G, opening to the false D, closing to the C, and opening to
+        // the melody note.
+        'D throw' => [
+            ['finger' => 'bottom index', 'action' => 'close', 'note' => 'G'],
+            ['finger' => 'bottom index', 'action' => 'open', 'note' => 'd'],
+            ['finger' => 'bottom index', 'action' => 'close', 'note' => 'c'],
+            ['finger' => 'bottom index', 'action' => 'open', 'note' => 'melody'],
+        ],
+        // The grip: close to the G, the false D, close to the G again, and
+        // then the hand moves to the fingering of the melody note.
+        'grip' => [
+            ['finger' => 'bottom index', 'action' => 'close', 'note' => 'G'],
+            ['finger' => 'bottom index', 'action' => 'open', 'note' => 'd'],
+            ['finger' => 'bottom index', 'action' => 'close', 'note' => 'G'],
+            ['finger' => null, 'action' => 'note', 'note' => 'melody'],
+        ],
+    ];
+
+    /**
      * The pipe scale, and the holes that are closed for each note.
      *
      * The note names are the ABC ones: "G" is the low G, "c" the middle C,
@@ -165,6 +219,102 @@ class BagpipeFingering
     public function isInScale(string $note): bool
     {
         return isset(self::SCALE[$note]);
+    }
+
+    /**
+     * The graces, and the finger that moves for each of them.
+     *
+     * @return array<string, array{finger: string, action: string, note: string}>
+     */
+    public function getGraces(): array
+    {
+        return self::GRACES;
+    }
+
+    /**
+     * The steps of the embellishments.
+     *
+     * @return array<string, array<int, array{finger: ?string, action: string, note: string}>>
+     */
+    public function getEmbellishmentSteps(): array
+    {
+        return self::EMBELLISHMENT_STEPS;
+    }
+
+    /**
+     * The finger that moves for a grace.
+     *
+     * @param string $grace
+     * @return array{finger: string, action: string, note: string}|null
+     */
+    public function getGrace(string $grace): ?array
+    {
+        return self::GRACES[$grace] ?? null;
+    }
+
+    /**
+     * The steps of an embellishment.
+     *
+     * @param string $embellishment
+     * @return array<int, array{finger: ?string, action: string, note: string}>
+     */
+    public function getSteps(string $embellishment): array
+    {
+        return self::EMBELLISHMENT_STEPS[$embellishment] ?? [];
+    }
+
+    /**
+     * The fingering of a grace, played from a note.
+     *
+     * The grace is a change of one hole, so the fingering is the fingering of
+     * the note it is played from with that one hole changed.
+     *
+     * @param string $grace   The name of the grace, e.g. "g grace".
+     * @param string $previousNote The note the grace is played from.
+     * @return string[]|null The holes that are closed, or null when the grace
+     *                       cannot be played from that note.
+     */
+    public function getGraceFingering(string $grace, string $previousNote): ?array
+    {
+        $spec = $this->getGrace($grace);
+        $base = $this->getClosedHoles($previousNote);
+        if ($spec === null || $base === null) {
+            return null;
+        }
+        if (!$this->canPlayGrace($grace, $previousNote)) {
+            return null;
+        }
+        if ($spec['action'] === 'open') {
+            return array_values(array_diff($base, [$spec['finger']]));
+        }
+        $holes = $base;
+        $holes[] = $spec['finger'];
+        return $holes;
+    }
+
+    /**
+     * Can this grace be played from this note?
+     *
+     * The G gracenote cannot be played from the high A or the high G, because
+     * the top index hole is already open on them, so there is nothing to
+     * lift.
+     *
+     * @param string $grace
+     * @param string $previousNote
+     * @return bool
+     */
+    public function canPlayGrace(string $grace, string $previousNote): bool
+    {
+        $spec = $this->getGrace($grace);
+        $base = $this->getClosedHoles($previousNote);
+        if ($spec === null || $base === null) {
+            return false;
+        }
+        if ($spec['action'] === 'open') {
+            // The hole has to be closed for the finger to lift it.
+            return in_array($spec['finger'], $base, true);
+        }
+        return !in_array($spec['finger'], $base, true);
     }
 
     /**

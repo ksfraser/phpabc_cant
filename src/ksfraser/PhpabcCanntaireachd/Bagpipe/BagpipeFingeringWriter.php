@@ -117,6 +117,7 @@ class BagpipeFingeringWriter
         $lines[] = '';
         $lines = array_merge($lines, $this->renderDecorations());
         $lines[] = '';
+        $lines = array_merge($lines, $this->renderGraceFingeringChart());
         $lines = array_merge($lines, $this->renderEmbellishmentChart());
 
         return implode("\n", $lines) . "\n";
@@ -239,6 +240,68 @@ class BagpipeFingeringWriter
             $lines[] = sprintf('%%   %-22s %-10s %s', $name, $embellishment['token'], $embellishment['word']);
         }
         $lines[] = '';
+        return $lines;
+    }
+
+    /**
+     * The fingerings of the graces and the embellishments.
+     *
+     * A grace is a brief change of the hole that sounds: a finger opens or
+     * closes a hole and then goes back. Which hole it is depends on the note
+     * that comes before, but the finger that moves does not.
+     *
+     * @return string[]
+     */
+    private function renderGraceFingeringChart(): array
+    {
+        $lines = [];
+        $lines[] = '% == The fingerings of the graces ==';
+        $lines[] = '%';
+        $lines[] = '% A grace is a brief change of the hole that sounds: the finger';
+        $lines[] = '% opens or closes a hole, and then goes back to where it was.';
+        $lines[] = '% The rest of the fingers do not move during the grace.';
+        $lines[] = '%';
+        $lines[] = '% The lower case g is the G gracenote, which sounds the G. The';
+        $lines[] = '% upper case G is the hard G, the strike, which sounds the low';
+        $lines[] = '% G: every hole is closed.';
+        $lines[] = '%';
+        foreach ($this->fingering->getGraces() as $name => $grace) {
+            $lines[] = sprintf(
+                '%%   %-10s the %-14s %-6s  sounds the %s',
+                $name,
+                $grace['finger'] . ' finger',
+                $grace['action'],
+                $grace['note']
+            );
+        }
+        $lines[] = '';
+        $lines[] = '% The G gracenote cannot be played from the high A or the high';
+        $lines[] = '% G, because the top index hole is already open on them.';
+        $lines[] = '';
+        $lines[] = '% == The fingerings of the embellishments ==';
+        $lines[] = '%';
+        $lines[] = '% The steps are the finger that moves, what it does, and the';
+        $lines[] = '% note that sounds. A step with no finger is the melody note.';
+        $lines[] = '% The fingering of the melody note depends on the note, and the';
+        $lines[] = '% fingering of the first grace depends on the note before it.';
+        $lines[] = '%';
+        foreach ($this->fingering->getEmbellishmentSteps() as $name => $steps) {
+            $lines[] = sprintf('%%   %s:', $name);
+            foreach ($steps as $step) {
+                if ($step['finger'] === null) {
+                    $lines[] = sprintf('%%     the melody note (%s)', $step['note']);
+                    continue;
+                }
+                $lines[] = sprintf(
+                    '%%     the %-14s %-6s  sounds the %s',
+                    $step['finger'] . ' finger',
+                    $step['action'],
+                    $step['note']
+                );
+            }
+        }
+        $lines[] = '';
+
         return $lines;
     }
 
