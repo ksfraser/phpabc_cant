@@ -53,27 +53,29 @@ class BagpipeFingering
      * A grace is a brief change of the hole that sounds: the finger opens or
      * closes a hole, and then goes back to where it was.
      *
-     * The lower case g is the G gracenote. It sounds the G, and it is played
-     * by opening the top index hole.
+     * The case of the letter says which note it is: {g} is the high G and
+     * {G} the low G, {a} the high A and {A} the low A.
      *
-     * The upper case G is the hard G, the strike. It is a hard movement of
-     * the finger, and it can be played from any note, the high A included: the
-     * strike closes the hole, and the sound comes out at the first hole that is
-     * open below it.
-     *
-     * The same goes for the other letters: {e} is the E gracenote and {E} the
-     * E strike, {a} the A gracenote and {A} the A strike.
+     * Whether it is played as a strike or as a gracenote depends on the note
+     * it is played from, not on the case. A grace whose note is lower than
+     * the melody note has to come from a hole below it, and that is a hard
+     * movement: a strike. A grace that is above both the note before and the
+     * note after is a plain gracenote. So {g}a from the a is a strike, {e}f
+     * from the g is a strike, and {f}c from the B is a gracenote.
      *
      * @var array<string, array{finger: string, action: string, note: string}>
      */
     public const GRACES = [
+        // The case says which note it is: {g} is the high G and {G} the low
+        // G. Whether it is played as a strike or as a gracenote depends on
+        // the note it is played from.
         'g grace' => ['finger' => 'top index', 'action' => 'open', 'note' => 'g'],
+        'G grace' => ['finger' => 'bottom index', 'action' => 'close', 'note' => 'G'],
         'd grace' => ['finger' => 'bottom index', 'action' => 'open', 'note' => 'd'],
         'e grace' => ['finger' => 'top ring', 'action' => 'open', 'note' => 'e'],
         'f grace' => ['finger' => 'top middle', 'action' => 'open', 'note' => 'f'],
-        'a grace' => ['finger' => 'pinky', 'action' => 'open', 'note' => 'a'],
-        'G strike' => ['finger' => 'bottom index', 'action' => 'close', 'note' => 'G'],
-        'A strike' => ['finger' => 'pinky', 'action' => 'open', 'note' => 'A'],
+        'a grace' => ['finger' => 'thumb', 'action' => 'open', 'note' => 'a'],
+        'A grace' => ['finger' => 'pinky', 'action' => 'open', 'note' => 'A'],
     ];
 
     /**
@@ -267,7 +269,7 @@ class BagpipeFingering
         if ($letter === '') {
             return '';
         }
-        return $letter . ($this->isStrike($letter) ? ' strike' : ' grace');
+        return $letter . ' grace';
     }
 
     /**
@@ -419,15 +421,15 @@ class BagpipeFingering
     }
 
     /**
-     * Is this a strike rather than a grace?
+     * Is this the low version of the note?
      *
-     * A strike is written with a capital letter: {G} is the hard G, the
-     * strike, and {g} is the G gracenote.
+     * The case of the letter says which note it is: {g} is the high G and {G}
+     * the low G.
      *
      * @param string $grace
      * @return bool
      */
-    public function isStrike(string $grace): bool
+    public function isLowNote(string $grace): bool
     {
         if ($grace === '') {
             return false;

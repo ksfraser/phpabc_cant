@@ -129,9 +129,9 @@ class BagpipeFingeringTest extends TestCase
         // and {A} the A strike.
         $this->assertSame('e', $this->fingering->getGrace('e grace')['note']);
         $this->assertSame('top ring', $this->fingering->getGrace('e grace')['finger']);
-        $this->assertSame('A', $this->fingering->getGrace('A strike')['note']);
-        $this->assertTrue($this->fingering->isStrike('A strike'));
-        $this->assertFalse($this->fingering->isStrike('a grace'));
+        $this->assertSame('A', $this->fingering->getGrace('A grace')['note']);
+        $this->assertSame('pinky', $this->fingering->getGrace('A grace')['finger']);
+        $this->assertSame('thumb', $this->fingering->getGrace('a grace')['finger']);
     }
 
     public function testAGraceLowerThanTheNoteItIsPlayedFromIsAStrike(): void
@@ -141,19 +141,31 @@ class BagpipeFingeringTest extends TestCase
         $this->assertTrue($this->fingering->isPlayedAsStrikeFrom('g grace', 'a'));
         $this->assertTrue($this->fingering->isPlayedAsStrikeFrom('e grace', 'g'));
         $this->assertTrue($this->fingering->isPlayedAsStrikeFrom('e grace', 'f'));
-        $this->assertTrue($this->fingering->isPlayedAsStrikeFrom('A strike', 'e'));
-        $this->assertTrue($this->fingering->isPlayedAsStrikeFrom('G strike', 'd'));
+        $this->assertTrue($this->fingering->isPlayedAsStrikeFrom('A grace', 'e'));
+        $this->assertTrue($this->fingering->isPlayedAsStrikeFrom('G grace', 'd'));
 
         // A grace above the note before and the note after is a gracenote.
         $this->assertFalse($this->fingering->isPlayedAsStrikeFrom('f grace', 'B'));
     }
 
-    public function testTheGraceNameFollowsTheCaseOfTheLetter(): void
+    public function testTheCaseOfTheLetterSaysWhichNoteItIs(): void
     {
+        // {g} is the high G and {G} the low G.
         $this->assertSame('g grace', $this->fingering->getGraceName('g'));
-        $this->assertSame('G strike', $this->fingering->getGraceName('G'));
+        $this->assertSame('G grace', $this->fingering->getGraceName('G'));
         $this->assertSame('a grace', $this->fingering->getGraceName('a'));
-        $this->assertSame('A strike', $this->fingering->getGraceName('A'));
+        $this->assertSame('A grace', $this->fingering->getGraceName('A'));
+
+        $this->assertTrue($this->fingering->isLowNote('G'));
+        $this->assertFalse($this->fingering->isLowNote('g'));
+    }
+
+    public function testTheAGraceOnTheLowGIsAGracenote(): void
+    {
+        // G{A}G would be an A grace on the low G. It is physically possible,
+        // but nobody writes it.
+        $this->assertFalse($this->fingering->isPlayedAsStrikeFrom('A grace', 'G'));
+        $this->assertTrue($this->fingering->canPlayGrace('A grace', 'G', 'G'));
     }
 
     public function testTheGGraceCannotBePlayedOnTheHighG(): void
@@ -170,10 +182,10 @@ class BagpipeFingeringTest extends TestCase
         $this->assertTrue($this->fingering->canPlayGrace('d grace', 'c', 'c'));
     }
 
-    public function testTheGStrikeCanBePlayedFromEveryNote(): void
+    public function testTheLowGGraceCanBePlayedFromEveryNote(): void
     {
         foreach ($this->fingering->getScaleNotes() as $note) {
-            $this->assertTrue($this->fingering->canPlayGrace('G strike', $note), $note);
+            $this->assertTrue($this->fingering->canPlayGrace('G grace', $note), $note);
         }
     }
 
