@@ -69,13 +69,15 @@ class BagpipeFingering
         // The case says which note it is: {g} is the high G and {G} the low
         // G. Whether it is played as a strike or as a gracenote depends on
         // the note it is played from.
-        'g grace' => ['finger' => 'top index', 'action' => 'open', 'note' => 'g'],
-        'G grace' => ['finger' => 'bottom index', 'action' => 'close', 'note' => 'G'],
-        'd grace' => ['finger' => 'bottom index', 'action' => 'open', 'note' => 'd'],
-        'e grace' => ['finger' => 'top ring', 'action' => 'open', 'note' => 'e'],
-        'f grace' => ['finger' => 'top middle', 'action' => 'open', 'note' => 'f'],
-        'a grace' => ['finger' => 'thumb', 'action' => 'open', 'note' => 'a'],
-        'A grace' => ['finger' => 'pinky', 'action' => 'open', 'note' => 'A'],
+        // The hole is the one that sounds the note; the low G has no hole of
+        // its own, it is the vent, and every finger has to close for it.
+        'g grace' => ['note' => 'g', 'hole' => 'top index'],
+        'G grace' => ['note' => 'G', 'hole' => null],
+        'd grace' => ['note' => 'd', 'hole' => 'bottom index'],
+        'e grace' => ['note' => 'e', 'hole' => 'top ring'],
+        'f grace' => ['note' => 'f', 'hole' => 'top middle'],
+        'a grace' => ['note' => 'a', 'hole' => 'thumb'],
+        'A grace' => ['note' => 'A', 'hole' => 'pinky'],
     ];
 
     /**
@@ -145,7 +147,7 @@ class BagpipeFingering
         // The B: the right little finger and the right ring finger up.
         'B' => ['thumb', 'top index', 'top middle', 'top ring', 'bottom index', 'bottom middle'],
         // The C: the right index down, the right little finger down as well.
-        'c' => ['thumb', 'top index', 'top middle', 'top ring', 'bottom index'],
+        'c' => ['thumb', 'top index', 'top middle', 'top ring', 'bottom index', 'pinky'],
         // The D: the right little finger down, the other right hand fingers up.
         'd' => ['thumb', 'top index', 'top middle', 'top ring', 'pinky'],
         // The E: the top hand's thumb, index and middle down, the ring up.
@@ -342,20 +344,19 @@ class BagpipeFingering
      */
     public function getGraceFingering(string $grace, string $previousNote): ?array
     {
-        $spec = $this->getGrace($grace);
         $base = $this->getClosedHoles($previousNote);
-        if ($spec === null || $base === null) {
+        $movement = $this->getGraceMovement($grace, $previousNote);
+        if ($base === null || $movement['action'] === '') {
             return null;
         }
-        if (!$this->canPlayGrace($grace, $previousNote)) {
-            return null;
-        }
-        if ($spec['action'] === 'open') {
-            return array_values(array_diff($base, [$spec['finger']]));
+        if ($movement['action'] === 'lift') {
+            return array_values(array_diff($base, $movement['fingers']));
         }
         $holes = $base;
-        $holes[] = $spec['finger'];
-        return $holes;
+        foreach ($movement['fingers'] as $finger) {
+            $holes[] = $finger;
+        }
+        return array_values(array_unique($holes));
     }
 
     /**
@@ -414,46 +415,6 @@ class BagpipeFingering
      * @param string $previousNote
      * @return bool
      */
-    public function isPlayedAsStrike(string $grace, string $previousNote = ''): bool
-    {
-        $spec = $this->getGrace($grace);
-        $base = $this->getClosedHoles($previousNote);
-        if ($spec === null || $base === null) {
-            return false;
-        }
-        if ($spec['action'] !== 'open') {
-            return false;
-        }
-        if (in_array($spec['finger'], $base, true)) {
-            // The finger can lift the hole: it is a grace, not a strike.
-            return false;
-        }
-        // The finger is already up. It is a strike when the hole above is
-        // open, because then closing it lets the sound out at this hole.
-        return $this->isStrikePossible($spec['finger'], $base);
-    }
-
-    /**
-     * Can a strike be made here, by closing the hole above?
-     *
-     * A strike sounds the note of the hole, so the hole above it has to be
-     * open: closing it lets the sound out at this hole.
-     *
-     * @param string $finger The hole of the grace.
-     * @param string[] $base The holes that are closed.
-     * @return bool
-     */
-    private function isStrikePossible(string $finger, array $base): bool
-    {
-        $holes = self::HOLES;
-        $position = array_search($finger, $holes, true);
-        if ($position === false || $position === 0) {
-            // There is no hole above this one.
-            return false;
-        }
-        $above = $holes[$position - 1];
-        return !in_array($above, $base, true);
-    }
 
     /**
      * Is this the low version of the note?
@@ -485,18 +446,86 @@ class BagpipeFingering
      * @param string $previousNote
      * @return bool
      */
-    public function isPlayedAsStrikeFrom(string $grace, string $previousNote): bool
+    /**
+     * How the grace is played, from the note it is played from.
+     *
+     * A grace is the best approximation of the melody note: to sound it, the
+     * least number of fingers move. A finger that comes up is a gracenote, and
+     * a finger that goes down is a strike, so {g} is usually a gracenote and
+     * {G} is usually a strike.
+     *
+     * The sound comes out at the first hole that is open, so a hole only
+     * sounds when the holes above it are closed.
+     *
+     * @param string $grace       The name of the grace, e.g. "g grace".
+     * @param string $previousNote The note the grace is played from.
+     * @return array{fingers: string[], action: string, note: string}
+     *         The fingers that move, whether they come up or go down, and the
+     *         note that sounds.
+     */
+    public function getGraceMovement(string $grace, string $previousNote): array
     {
         $spec = $this->getGrace($grace);
         if ($spec === null) {
-            return false;
+            return ['fingers' => [], 'action' => '', 'note' => ''];
         }
-        $graceNote = $this->scalePosition($spec['note']);
-        $previous = $this->scalePosition($previousNote);
-        if ($graceNote === null || $previous === null) {
-            return false;
+        $base = $this->getClosedHoles($previousNote);
+        if ($base === null) {
+            return ['fingers' => [], 'action' => '', 'note' => $spec['note']];
         }
-        return $graceNote < $previous;
+
+        $hole = $spec['hole'];
+        if ($hole === null) {
+            // The low G is the vent: every finger that is up has to close.
+            $fingers = array_values(array_diff(self::HOLES, $base));
+            return ['fingers' => $fingers, 'action' => 'close', 'note' => $spec['note']];
+        }
+
+        $position = array_search($hole, self::HOLES, true);
+        if ($position === false) {
+            return ['fingers' => [], 'action' => '', 'note' => $spec['note']];
+        }
+        // The holes above the one that sounds: they have to be closed, or the
+        // sound comes out at one of them instead.
+        $above = array_slice(self::HOLES, 0, $position);
+
+        if (in_array($hole, $base, true)) {
+            // The hole is closed: it comes up, and anything open above it goes
+            // down, so that the sound comes out here.
+            $fingers = [$hole];
+            foreach ($above as $open) {
+                if (!in_array($open, $base, true)) {
+                    $fingers[] = $open;
+                }
+            }
+            return ['fingers' => $fingers, 'action' => 'lift', 'note' => $spec['note']];
+        }
+
+        // The hole is already open: whatever is open above it goes down, so
+        // that the sound comes out here.
+        $fingers = [];
+        foreach ($above as $open) {
+            if (!in_array($open, $base, true)) {
+                $fingers[] = $open;
+            }
+        }
+        return ['fingers' => $fingers, 'action' => 'close', 'note' => $spec['note']];
+    }
+
+    /**
+     * Is this grace played as a strike from this note?
+     *
+     * A finger that goes down is a strike, and a finger that comes up is a
+     * gracenote.
+     *
+     * @param string $grace
+     * @param string $previousNote
+     * @return bool
+     */
+    public function isPlayedAsStrikeFrom(string $grace, string $previousNote): bool
+    {
+        $movement = $this->getGraceMovement($grace, $previousNote);
+        return $movement['action'] === 'close' && $movement['fingers'] !== [];
     }
 
     /**

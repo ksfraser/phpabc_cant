@@ -56,7 +56,7 @@ class BagpipeFingeringTest extends TestCase
         );
         // The C: the right index down, and the little finger down as well.
         $this->assertSame(
-            ['thumb', 'top index', 'top middle', 'top ring', 'bottom index'],
+            ['thumb', 'top index', 'top middle', 'top ring', 'bottom index', 'pinky'],
             $this->fingering->getClosedHoles('c')
         );
         // The D: the little finger down, the other right hand fingers up.
@@ -104,8 +104,7 @@ class BagpipeFingeringTest extends TestCase
         $grace = $this->fingering->getGrace('g grace');
 
         $this->assertNotNull($grace);
-        $this->assertSame('top index', $grace['finger']);
-        $this->assertSame('open', $grace['action']);
+        $this->assertSame('top index', $grace['hole']);
         $this->assertSame('g', $grace['note']);
     }
 
@@ -128,24 +127,51 @@ class BagpipeFingeringTest extends TestCase
         // {e} is the E gracenote and {E} the E strike, {a} the A gracenote
         // and {A} the A strike.
         $this->assertSame('e', $this->fingering->getGrace('e grace')['note']);
-        $this->assertSame('top ring', $this->fingering->getGrace('e grace')['finger']);
+        $this->assertSame('top ring', $this->fingering->getGrace('e grace')['hole']);
         $this->assertSame('A', $this->fingering->getGrace('A grace')['note']);
-        $this->assertSame('pinky', $this->fingering->getGrace('A grace')['finger']);
-        $this->assertSame('thumb', $this->fingering->getGrace('a grace')['finger']);
+        $this->assertSame('pinky', $this->fingering->getGrace('A grace')['hole']);
+        $this->assertSame('thumb', $this->fingering->getGrace('a grace')['hole']);
+        // The low G is the vent: it has no hole of its own.
+        $this->assertNull($this->fingering->getGrace('G grace')['hole']);
     }
 
-    public function testAGraceLowerThanTheNoteItIsPlayedFromIsAStrike(): void
+    public function testTheGraceMovesTheLeastNumberOfFingers(): void
     {
-        // A grace whose note is lower than the melody note has to come from a
-        // hole below it, and that is a hard movement: a strike.
+        // a {g}a: the thumb closes, and the sound comes out at the top index
+        // hole. A finger that goes down is a strike.
+        $movement = $this->fingering->getGraceMovement('g grace', 'a');
+        $this->assertSame('close', $movement['action']);
+        $this->assertSame(['thumb'], $movement['fingers']);
         $this->assertTrue($this->fingering->isPlayedAsStrikeFrom('g grace', 'a'));
-        $this->assertTrue($this->fingering->isPlayedAsStrikeFrom('e grace', 'g'));
-        $this->assertTrue($this->fingering->isPlayedAsStrikeFrom('e grace', 'f'));
-        $this->assertTrue($this->fingering->isPlayedAsStrikeFrom('A grace', 'e'));
-        $this->assertTrue($this->fingering->isPlayedAsStrikeFrom('G grace', 'd'));
 
-        // A grace above the note before and the note after is a gracenote.
-        $this->assertFalse($this->fingering->isPlayedAsStrikeFrom('f grace', 'B'));
+        // G {A}G: the little finger comes up, and the A sounds.
+        $movement = $this->fingering->getGraceMovement('A grace', 'G');
+        $this->assertSame('lift', $movement['action']);
+        $this->assertSame(['pinky'], $movement['fingers']);
+        $this->assertFalse($this->fingering->isPlayedAsStrikeFrom('A grace', 'G'));
+
+        // B {A}B: the right ring finger closes, so that the sound falls to
+        // the little finger hole.
+        $movement = $this->fingering->getGraceMovement('A grace', 'B');
+        $this->assertSame('close', $movement['action']);
+        $this->assertSame(['bottom ring'], $movement['fingers']);
+
+        // B {G}B: the ring and the little finger close, and the low G sounds
+        // at the vent.
+        $movement = $this->fingering->getGraceMovement('G grace', 'B');
+        $this->assertSame('close', $movement['action']);
+        $this->assertSame(['bottom ring', 'pinky'], $movement['fingers']);
+
+        // d {G}...: every finger that is up closes, for the low G.
+        $movement = $this->fingering->getGraceMovement('G grace', 'd');
+        $this->assertSame('close', $movement['action']);
+        $this->assertCount(3, $movement['fingers']);
+
+        // B {f}c: the top middle comes up. A finger that comes up is a
+        // gracenote.
+        $movement = $this->fingering->getGraceMovement('f grace', 'B');
+        $this->assertSame('lift', $movement['action']);
+        $this->assertSame(['top middle'], $movement['fingers']);
     }
 
     public function testTheCaseOfTheLetterSaysWhichNoteItIs(): void

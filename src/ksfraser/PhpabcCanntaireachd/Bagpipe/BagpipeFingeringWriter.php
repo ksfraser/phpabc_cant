@@ -267,13 +267,31 @@ class BagpipeFingeringWriter
         $lines[] = '%';
         foreach ($this->fingering->getGraces() as $name => $grace) {
             $lines[] = sprintf(
-                '%%   %-10s the %-14s %-6s  sounds the %s',
+                '%%   %-10s sounds the %-3s at the %s',
                 $name,
-                $grace['finger'] . ' finger',
-                $grace['action'],
-                $grace['note']
+                $grace['note'],
+                $grace['hole'] ?? 'vent (every finger closes)'
             );
         }
+        $lines[] = '%';
+        $lines[] = '% How it is played depends on where the hand is: the least number';
+        $lines[] = '% of fingers move, and a finger that comes up is a gracenote while';
+        $lines[] = '% a finger that goes down is a strike. So a {g} before the high A is';
+        $lines[] = '% a strike, the thumb closing, and a {G} from the D closes every';
+        $lines[] = '% finger that is up, for the low G at the vent.';
+        $lines[] = '%';
+        $lines[] = '% The examples, from the hand they are played from:';
+        $lines[] = '%   a {g}a   the thumb closes, a strike';
+        $lines[] = '%   g {e}f   the top index and the top middle close, a strike';
+        $lines[] = '%   e {A}e   the top ring closes, a strike';
+        $lines[] = '%   f {e}f   the top middle closes, a strike';
+        $lines[] = '%   B {f}c   the top middle comes up, a gracenote';
+        $lines[] = '%   G {A}G   the little finger comes up, a gracenote';
+        $lines[] = '%   B {A}B   the right ring closes, a strike';
+        $lines[] = '%   B {G}B   the right ring and the little finger close, a strike';
+        $lines[] = '%   d {G}dc  every finger that is up closes, a strike';
+        $lines[] = '%   c {GdG}A close all, lift the right index for the D, close it back';
+        $lines[] = '%           to the G, and then take the fingering of the A';
         $lines[] = '';
         $lines[] = '% The common single graces are g, d and e. The doublings, the';
         $lines[] = '% throws and the half doublings are made of a, g, f, e and d.';
@@ -281,11 +299,9 @@ class BagpipeFingeringWriter
         $lines[] = '% a sequence of graces: the low G, the D gracenote, the high G, the E';
         $lines[] = '% gracenote, the low A, the F gracenote and the low A.';
         $lines[] = '%';
-        $lines[] = '% The G gracenote lifts the top index finger. On the high A that';
-        $lines[] = '% finger is already up, and the note is played as a G strike:';
-        $lines[] = '% the thumb closes, and the sound comes out at the top index hole.';
-        $lines[] = '% On the high G the note is already a G, and there is nothing';
-        $lines[] = '% to hear: a G gracenote cannot be played there.';
+        $lines[] = '% A grace that sounds the note it is attached to cannot be';
+        $lines[] = '% heard at all: a G gracenote on a G is out, whatever the note';
+        $lines[] = '% before it was.';
         $lines[] = '';
         $lines[] = '% == The fingerings of the embellishments ==';
         $lines[] = '%';
