@@ -123,6 +123,20 @@ class BagpipeFingering
      *
      * @var array<string, string[]>
      */
+    /**
+     * The graces that are written on their own.
+     *
+     * @var string[]
+     */
+    public const COMMON_GRACES = ['g', 'd', 'e'];
+
+    /**
+     * The notes the doublings, the throws and the half doublings are made of.
+     *
+     * @var string[]
+     */
+    public const EMBELLISHMENT_NOTES = ['a', 'g', 'f', 'e', 'd'];
+
     public const SCALE = [
         // The low G: every hole closed, so the note sounds at the vent.
         'G' => ['thumb', 'top index', 'top middle', 'top ring', 'bottom index', 'bottom middle', 'bottom ring', 'pinky'],
@@ -278,6 +292,27 @@ class BagpipeFingering
      * @param string $grace
      * @return array{finger: string, action: string, note: string}|null
      */
+    /**
+     * The graces of a grace group, one for each letter of it.
+     *
+     * A grace group is a sequence of graces: {GdGeAfA} is the low G, the D
+     * gracenote, the high G, the E gracenote, the low A, the F gracenote and
+     * the low A. The piobruchds use movements like that.
+     *
+     * @param string $group The grace group, without the braces.
+     * @return string[]
+     */
+    public function getGraceLetters(string $group): array
+    {
+        $letters = [];
+        foreach (str_split($group) as $letter) {
+            if (preg_match('/^[A-Ga-g]$/', $letter) === 1) {
+                $letters[] = $letter;
+            }
+        }
+        return $letters;
+    }
+
     public function getGrace(string $grace): ?array
     {
         return self::GRACES[$grace] ?? null;

@@ -272,6 +272,40 @@ class BagpipeFingeringTest extends TestCase
         $this->assertSame([], $checker->check([$body, $next]));
     }
 
+    public function testAGraceGroupIsASequenceOfGraces(): void
+    {
+        // {GdGeAfA}e is the low G, the D gracenote, the high G, the E
+        // gracenote, the low A, the F gracenote and the low A.
+        $this->assertSame(
+            ['G', 'd', 'G', 'e', 'A', 'f', 'A'],
+            $this->fingering->getGraceLetters('GdGeAfA')
+        );
+    }
+
+    public function testTheCommonGracesAndTheNotesTheEmbellishmentsAreMadeOf(): void
+    {
+        $this->assertSame(['g', 'd', 'e'], BagpipeFingering::COMMON_GRACES);
+        $this->assertSame(['a', 'g', 'f', 'e', 'd'], BagpipeFingering::EMBELLISHMENT_NOTES);
+    }
+
+    public function testEachGraceOfAGroupIsChecked(): void
+    {
+        $checker = new BagpipeGraceChecker();
+        // The high G, then a grace group whose last letter is a low G on a low
+        // G: that one cannot be heard.
+        $body = new AbcBodyLine([], 'M', '2/4', 'HP');
+        $body->setBars([new AbcBarModel([['note', new AbcNoteModel('g')]])]);
+        $next = new AbcBodyLine([], 'M', '2/4', 'HP');
+        $next->setBars([new AbcBarModel([['note', new AbcNoteModel('G', '', '', '{GdG}')]])]);
+
+        $problems = $checker->check([$body, $next]);
+
+        $this->assertContains(
+            'a G grace on a G cannot be heard: it sounds the note it is on',
+            $problems
+        );
+    }
+
     public function testEveryEmbellishmentHasAWordInTheDictionary(): void
     {
         $missing = [];

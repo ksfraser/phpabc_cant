@@ -275,6 +275,12 @@ class BagpipeFingeringWriter
             );
         }
         $lines[] = '';
+        $lines[] = '% The common single graces are g, d and e. The doublings, the';
+        $lines[] = '% throws and the half doublings are made of a, g, f, e and d.';
+        $lines[] = '% The piobruchds use unusual movements, such as {GdGeAfA}e, which is';
+        $lines[] = '% a sequence of graces: the low G, the D gracenote, the high G, the E';
+        $lines[] = '% gracenote, the low A, the F gracenote and the low A.';
+        $lines[] = '%';
         $lines[] = '% The G gracenote lifts the top index finger. On the high A that';
         $lines[] = '% finger is already up, and the note is played as a G strike:';
         $lines[] = '% the thumb closes, and the sound comes out at the top index hole.';

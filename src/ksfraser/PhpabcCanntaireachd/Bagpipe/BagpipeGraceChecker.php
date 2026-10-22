@@ -61,31 +61,36 @@ class BagpipeGraceChecker
                     continue;
                 }
                 $note = $item['note'];
-                $grace = trim($note->getGrace(), '{}');
-                if ($grace !== '') {
-                    $name = $this->fingering->getGraceName($grace);
-                    // Only the pipe voices are checked: a grace in a guitar
-                    // or a brass part is not a pipe grace.
+                $group = trim($note->getGrace(), '{}');
+                if ($group !== '') {
                     $melody = $note->getPitch() . $note->getOctave();
-                    if ($this->fingering->getGrace($name) === null
-                        || $previous === null
-                        || !$this->fingering->isInScale($previous)
-                        || !$this->fingering->isInScale($melody)) {
-                        // Not a pipe grace, or not in the pipe scale.
-                    } elseif (!$this->fingering->canPlayGrace($name, $previous, $melody)) {
-                        if ($this->fingering->soundsSameNote($name, $melody)) {
+                    if ($previous !== null
+                        && $this->fingering->isInScale($previous)
+                        && $this->fingering->isInScale($melody)) {
+                        // A grace group is a sequence of graces, and each one
+                        // of them has to work.
+                        foreach ($this->fingering->getGraceLetters($group) as $letter) {
+                            $name = $this->fingering->getGraceName($letter);
+                            if ($this->fingering->getGrace($name) === null) {
+                                continue;
+                            }
+                            if ($this->fingering->canPlayGrace($name, $previous, $melody)) {
+                                continue;
+                            }
+                            if ($this->fingering->soundsSameNote($name, $melody)) {
+                                $problems[] = sprintf(
+                                    'a %s on a %s cannot be heard: it sounds the note it is on',
+                                    $name,
+                                    $melody
+                                );
+                                continue;
+                            }
                             $problems[] = sprintf(
-                                'a %s on a %s cannot be heard: it sounds the note it is on',
+                                'the %s cannot be played from the %s',
                                 $name,
-                                $melody
+                                $previous
                             );
-                            continue;
                         }
-                        $problems[] = sprintf(
-                            'the %s cannot be played from the %s',
-                            $name,
-                            $previous
-                        );
                     }
                 }
                 if ($note->isRest()) {
