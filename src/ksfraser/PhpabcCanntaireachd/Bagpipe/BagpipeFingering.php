@@ -32,33 +32,49 @@ use ksfraser\PhpabcCanntaireachd\TokenDictionary;
 class BagpipeFingering
 {
     /**
-     * The holes of the chanter, from the bottom up.
+     * The holes of the chanter, from the top of the chanter down.
      *
      * @var string[]
      */
-    public const HOLES = ['1', '2', '3', '4', '5', '6', '7', '8'];
+    public const HOLES = [
+        'thumb',
+        'top index',
+        'top middle',
+        'top ring',
+        'bottom index',
+        'bottom middle',
+        'bottom ring',
+        'pinky',
+    ];
 
     /**
      * The pipe scale, and the holes that are closed for each note.
      *
      * The note names are the ABC ones: "G" is the low G, "c" the middle C,
-     * "c'" the C above it.
+     * "a" the high A.
      *
      * @var array<string, string[]>
      */
     public const SCALE = [
-        'G' => ['1', '2', '3', '4', '5', '6', '7', '8'],
-        'A' => ['1', '2', '3', '4', '5', '6', '8'],
-        'B' => ['1', '2', '3', '4', '5', '8'],
-        'c' => ['1', '2', '3', '4', '8'],
-        'd' => ['1', '2', '3', '8'],
-        'e' => [],
-        'f' => ['1'],
-        'g' => [],
-        'a' => [],
-        'b' => [],
-        'c\'' => [],
-        'd\'' => [],
+        // The low G: every hole closed, so the note sounds at the vent.
+        'G' => ['thumb', 'top index', 'top middle', 'top ring', 'bottom index', 'bottom middle', 'bottom ring', 'pinky'],
+        // The A: the right little finger up.
+        'A' => ['thumb', 'top index', 'top middle', 'top ring', 'bottom index', 'bottom middle', 'bottom ring'],
+        // The B: the right little finger and the right ring finger up.
+        'B' => ['thumb', 'top index', 'top middle', 'top ring', 'bottom index', 'bottom middle'],
+        // The C: the right index down, the right little finger down as well.
+        'c' => ['thumb', 'top index', 'top middle', 'top ring', 'bottom index'],
+        // The D: the right little finger down, the other right hand fingers up.
+        'd' => ['thumb', 'top index', 'top middle', 'top ring', 'pinky'],
+        // The E: the top hand's thumb, index and middle down, the ring up.
+        'e' => ['thumb', 'top index', 'top middle', 'bottom index', 'bottom middle', 'bottom ring'],
+        // The F: the top hand's thumb and index down, the middle and ring up.
+        'f' => ['thumb', 'top index', 'bottom index', 'bottom middle', 'bottom ring'],
+        // The high G: the thumb down, the top hand's three fingers up.
+        'g' => ['thumb', 'bottom index', 'bottom middle', 'bottom ring'],
+        // The high A: the thumb up, the top hand's ring finger down to keep
+        // the left hand on the chanter.
+        'a' => ['top ring', 'bottom index', 'bottom middle', 'bottom ring'],
     ];
 
     /**

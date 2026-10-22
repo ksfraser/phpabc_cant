@@ -26,19 +26,22 @@ use ksfraser\PhpabcCanntaireachd\TokenDictionary;
 class BagpipeFingeringWriter
 {
     /**
-     * Where each hole is drawn, from the bottom of the chanter up.
+     * Where each hole is drawn, from the top of the chanter down.
+     *
+     * The thumb hole is at the top and the pinkie hole at the bottom; the
+     * line between the hands is between the top ring and the bottom index.
      *
      * @var array<string, float>
      */
     private const HOLE_POSITIONS = [
-        '1' => 0.0,
-        '2' => 7.5,
-        '3' => 15.0,
-        '4' => 30.0,
-        '5' => 37.5,
-        '6' => 45.0,
-        '7' => 57.5,
-        '8' => 65.0,
+        'thumb' => 64.0,
+        'top index' => 56.0,
+        'top middle' => 48.0,
+        'top ring' => 40.0,
+        'bottom index' => 28.0,
+        'bottom middle' => 20.0,
+        'bottom ring' => 12.0,
+        'pinky' => 4.0,
     ];
 
     /** @var BagpipeFingering */
@@ -130,8 +133,8 @@ class BagpipeFingeringWriter
         if ($note === 'G') {
             return 'low G';
         }
-        if (str_starts_with($note, "c'") || str_starts_with($note, "d'")) {
-            return $note . ' (high)';
+        if ($note === 'a') {
+            return 'high A';
         }
         return $note;
     }
@@ -160,8 +163,8 @@ class BagpipeFingeringWriter
         $lines[] = '/pipe_body{';
         $lines[] = '  gsave';
         $lines[] = '  0.3 SLW';
-        $lines[] = '  -5 73 M 10 0 RL 0 -80 RL -10 0 RL 0 80 RL stroke';
-        $lines[] = '  -5 22 M 10 0 RL stroke';
+        $lines[] = '  -5 70 M 10 0 RL 0 -76 RL -10 0 RL 0 76 RL stroke';
+        $lines[] = '  -5 34 M 10 0 RL stroke';
         $lines[] = '  grestore';
         $lines[] = '}!';
         foreach ($this->fingering->getScale() as $note => $holes) {
@@ -179,7 +182,7 @@ class BagpipeFingeringWriter
                     $open ? 'pipe_hole_open' : 'pipe_hole_closed'
                 );
             }
-            $lines[] = '  /Helvetica-Bold 9 selectfont 0 -16 M (' . $this->noteName($note) . ') show';
+            $lines[] = '  /Helvetica-Bold 9 selectfont 0 -12 M (' . $this->noteName($note) . ') show';
             $lines[] = '  grestore';
             $lines[] = '}!';
         }

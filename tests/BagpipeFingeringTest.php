@@ -22,10 +22,10 @@ class BagpipeFingeringTest extends TestCase
         $this->fingering = new BagpipeFingering();
     }
 
-    public function testTheScaleRunsFromTheLowGToTheHighD(): void
+    public function testTheScaleHasNineNotesFromTheLowGToTheHighA(): void
     {
         $this->assertSame(
-            ['G', 'A', 'B', 'c', 'd', 'e', 'f', 'g', 'a', 'b', "c'", "d'"],
+            ['G', 'A', 'B', 'c', 'd', 'e', 'f', 'g', 'a'],
             $this->fingering->getScaleNotes()
         );
     }
@@ -33,32 +33,66 @@ class BagpipeFingeringTest extends TestCase
     public function testTheLowGClosesEveryHole(): void
     {
         $this->assertSame(
-            ['1', '2', '3', '4', '5', '6', '7', '8'],
+            BagpipeFingering::HOLES,
             $this->fingering->getClosedHoles('G')
         );
     }
 
-    public function testTheHolesAreClosedOneAtATimeFromTheBottomUp(): void
+    public function testTheBottomHandPlaysTheLowNotes(): void
     {
-        // The A leaves the lower back hole open, the B leaves the left ring
-        // finger up as well, and so on up to the D.
-        $this->assertSame(['1', '2', '3', '4', '5', '6', '8'], $this->fingering->getClosedHoles('A'));
-        $this->assertSame(['1', '2', '3', '4', '5', '8'], $this->fingering->getClosedHoles('B'));
-        $this->assertSame(['1', '2', '3', '4', '8'], $this->fingering->getClosedHoles('c'));
-        $this->assertSame(['1', '2', '3', '8'], $this->fingering->getClosedHoles('d'));
+        // The A: the right index, middle and ring down, the little finger up.
+        $this->assertSame(
+            ['thumb', 'top index', 'top middle', 'top ring', 'bottom index', 'bottom middle', 'bottom ring'],
+            $this->fingering->getClosedHoles('A')
+        );
+        // The B: the right index and middle down.
+        $this->assertSame(
+            ['thumb', 'top index', 'top middle', 'top ring', 'bottom index', 'bottom middle'],
+            $this->fingering->getClosedHoles('B')
+        );
+        // The C: the right index down, and the little finger down as well.
+        $this->assertSame(
+            ['thumb', 'top index', 'top middle', 'top ring', 'bottom index'],
+            $this->fingering->getClosedHoles('c')
+        );
+        // The D: the little finger down, the other right hand fingers up.
+        $this->assertSame(
+            ['thumb', 'top index', 'top middle', 'top ring', 'pinky'],
+            $this->fingering->getClosedHoles('d')
+        );
     }
 
-    public function testAboveTheETheChanterIsOpen(): void
+    public function testTheTopHandPlaysTheHighNotes(): void
     {
-        foreach (['e', 'g', 'a', 'b', "c'", "d'"] as $note) {
-            $this->assertSame([], $this->fingering->getClosedHoles($note), $note);
-        }
+        // The E: the top hand's thumb, index and middle down, the ring up.
+        $this->assertSame(
+            ['thumb', 'top index', 'top middle', 'bottom index', 'bottom middle', 'bottom ring'],
+            $this->fingering->getClosedHoles('e')
+        );
+        // The F: the top hand's thumb and index down.
+        $this->assertSame(
+            ['thumb', 'top index', 'bottom index', 'bottom middle', 'bottom ring'],
+            $this->fingering->getClosedHoles('f')
+        );
+        // The high G: the thumb down, the top hand's three fingers up.
+        $this->assertSame(
+            ['thumb', 'bottom index', 'bottom middle', 'bottom ring'],
+            $this->fingering->getClosedHoles('g')
+        );
+        // The high A: the thumb up, the top hand's ring finger down, so that
+        // the left hand stays on the chanter.
+        $this->assertSame(
+            ['top ring', 'bottom index', 'bottom middle', 'bottom ring'],
+            $this->fingering->getClosedHoles('a')
+        );
     }
 
-    public function testTheFIsACrossFingering(): void
+    public function testTheLowGHasEveryHoleClosedAndTheHighAHasTheThumbOpen(): void
     {
-        // The F is played with the right index finger down and the rest open.
-        $this->assertSame(['1'], $this->fingering->getClosedHoles('f'));
+        // The low G is played with every hole closed, so the note sounds at
+        // the vent; the high A has the thumb hole open, so it sounds there.
+        $this->assertNotContains('thumb', $this->fingering->getClosedHoles('a'));
+        $this->assertContains('thumb', $this->fingering->getClosedHoles('g'));
     }
 
     public function testEveryEmbellishmentHasAWordInTheDictionary(): void
@@ -106,15 +140,15 @@ class BagpipeFingeringTest extends TestCase
             8,
             substr_count($this->procedureOf($file, 'pipeG'), 'pipe_hole_closed')
         );
-        // The E is open all the way.
+        // The A leaves the little finger hole open.
         $this->assertSame(
-            0,
-            substr_count($this->procedureOf($file, 'pipee'), 'pipe_hole_closed')
+            7,
+            substr_count($this->procedureOf($file, 'pipeA'), 'pipe_hole_closed')
         );
-        // The F is a cross fingering: one hole down.
+        // The high A leaves the thumb hole open.
         $this->assertSame(
-            1,
-            substr_count($this->procedureOf($file, 'pipef'), 'pipe_hole_closed')
+            4,
+            substr_count($this->procedureOf($file, 'pipea'), 'pipe_hole_closed')
         );
     }
 
