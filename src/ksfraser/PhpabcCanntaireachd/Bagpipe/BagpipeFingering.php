@@ -54,14 +54,26 @@ class BagpipeFingering
      * closes a hole, and then goes back to where it was.
      *
      * The lower case g is the G gracenote. It sounds the G, and it is played
-     * by opening the top index hole. The upper case G is the hard G, the
-     * strike, which sounds the low G: every hole is closed.
+     * by opening the top index hole.
+     *
+     * The upper case G is the hard G, the strike. It is a hard movement of
+     * the finger, and it can be played from any note, the high A included: the
+     * strike closes the hole, and the sound comes out at the first hole that is
+     * open below it.
+     *
+     * The same goes for the other letters: {e} is the E gracenote and {E} the
+     * E strike, {a} the A gracenote and {A} the A strike.
      *
      * @var array<string, array{finger: string, action: string, note: string}>
      */
     public const GRACES = [
         'g grace' => ['finger' => 'top index', 'action' => 'open', 'note' => 'g'],
         'd grace' => ['finger' => 'bottom index', 'action' => 'open', 'note' => 'd'],
+        'e grace' => ['finger' => 'top ring', 'action' => 'open', 'note' => 'e'],
+        'f grace' => ['finger' => 'top middle', 'action' => 'open', 'note' => 'f'],
+        'a grace' => ['finger' => 'pinky', 'action' => 'open', 'note' => 'a'],
+        'G strike' => ['finger' => 'bottom index', 'action' => 'close', 'note' => 'G'],
+        'A strike' => ['finger' => 'pinky', 'action' => 'open', 'note' => 'A'],
     ];
 
     /**
@@ -242,6 +254,23 @@ class BagpipeFingering
     }
 
     /**
+     * The name of a grace, from the letter it is written with.
+     *
+     * A lower case letter is a gracenote and an upper case letter is a
+     * strike: {g} is the G gracenote and {G} the G strike.
+     *
+     * @param string $letter
+     * @return string
+     */
+    public function getGraceName(string $letter): string
+    {
+        if ($letter === '') {
+            return '';
+        }
+        return $letter . ($this->isStrike($letter) ? ' strike' : ' grace');
+    }
+
+    /**
      * The finger that moves for a grace.
      *
      * @param string $grace
@@ -293,28 +322,165 @@ class BagpipeFingering
     }
 
     /**
-     * Can this grace be played from this note?
+     * Can this grace be played?
      *
-     * The G gracenote cannot be played from the high A or the high G, because
-     * the top index hole is already open on them, so there is nothing to
-     * lift.
+     * A grace sounds the note it is named after, so a grace on the note it
+     * sounds cannot be heard at all: a G gracenote on a G is out, whatever
+     * the note before it was, and from the high A the G gracenote is played
+     * as a G strike, because the thumb has to close for the sound to come
+     * out at the top index hole.
      *
-     * @param string $grace
-     * @param string $previousNote
+     * @param string $grace       The name of the grace, e.g. "g grace".
+     * @param string $previousNote The note the grace is played from.
+     * @param string|null $melodyNote The note the grace is attached to.
      * @return bool
      */
-    public function canPlayGrace(string $grace, string $previousNote): bool
+    public function canPlayGrace(string $grace, string $previousNote, ?string $melodyNote = null): bool
     {
         $spec = $this->getGrace($grace);
         $base = $this->getClosedHoles($previousNote);
         if ($spec === null || $base === null) {
             return false;
         }
-        if ($spec['action'] === 'open') {
-            // The hole has to be closed for the finger to lift it.
-            return in_array($spec['finger'], $base, true);
+        // A grace that sounds the note it is attached to cannot be heard.
+        if ($melodyNote !== null && $this->soundsSameNote($spec['note'], $melodyNote)) {
+            return false;
         }
-        return !in_array($spec['finger'], $base, true);
+        return true;
+    }
+
+    /**
+     * Does the grace sound the same note as the one it is attached to?
+     *
+     * @param string $graceNote
+     * @param string $melodyNote
+     * @return bool
+     */
+    public function soundsSameNote(string $graceNote, string $melodyNote): bool
+    {
+        if ($graceNote === '' || $melodyNote === '') {
+            return false;
+        }
+        // The case matters: "G" is the low G and "g" the high G.
+        return $graceNote[0] === $melodyNote[0];
+    }
+
+    /**
+     * Is this grace played as a strike from this note?
+     *
+     * The G gracenote lifts the top index finger. Where that finger is
+     * already up and the thumb hole is open, the note is played as a G
+     * strike: the thumb closes, and the sound comes out at the top index
+     * hole.
+     *
+     * @param string $grace
+     * @param string $previousNote
+     * @return bool
+     */
+    public function isPlayedAsStrike(string $grace, string $previousNote = ''): bool
+    {
+        $spec = $this->getGrace($grace);
+        $base = $this->getClosedHoles($previousNote);
+        if ($spec === null || $base === null) {
+            return false;
+        }
+        if ($spec['action'] !== 'open') {
+            return false;
+        }
+        if (in_array($spec['finger'], $base, true)) {
+            // The finger can lift the hole: it is a grace, not a strike.
+            return false;
+        }
+        // The finger is already up. It is a strike when the hole above is
+        // open, because then closing it lets the sound out at this hole.
+        return $this->isStrikePossible($spec['finger'], $base);
+    }
+
+    /**
+     * Can a strike be made here, by closing the hole above?
+     *
+     * A strike sounds the note of the hole, so the hole above it has to be
+     * open: closing it lets the sound out at this hole.
+     *
+     * @param string $finger The hole of the grace.
+     * @param string[] $base The holes that are closed.
+     * @return bool
+     */
+    private function isStrikePossible(string $finger, array $base): bool
+    {
+        $holes = self::HOLES;
+        $position = array_search($finger, $holes, true);
+        if ($position === false || $position === 0) {
+            // There is no hole above this one.
+            return false;
+        }
+        $above = $holes[$position - 1];
+        return !in_array($above, $base, true);
+    }
+
+    /**
+     * Is this a strike rather than a grace?
+     *
+     * A strike is written with a capital letter: {G} is the hard G, the
+     * strike, and {g} is the G gracenote.
+     *
+     * @param string $grace
+     * @return bool
+     */
+    public function isStrike(string $grace): bool
+    {
+        if ($grace === '') {
+            return false;
+        }
+        $letter = $grace[0];
+        return $letter === strtoupper($letter);
+    }
+
+    /**
+     * Is this grace played as a strike from this note?
+     *
+     * A grace whose note is lower than the melody note it is played from is
+     * a strike: the sound has to come from a hole that is below the note, and
+     * that is a hard movement. A grace that is above both the note before
+     * and the note after is a plain gracenote.
+     *
+     * @param string $grace
+     * @param string $previousNote
+     * @return bool
+     */
+    public function isPlayedAsStrikeFrom(string $grace, string $previousNote): bool
+    {
+        $spec = $this->getGrace($grace);
+        if ($spec === null) {
+            return false;
+        }
+        $graceNote = $this->scalePosition($spec['note']);
+        $previous = $this->scalePosition($previousNote);
+        if ($graceNote === null || $previous === null) {
+            return false;
+        }
+        return $graceNote < $previous;
+    }
+
+    /**
+     * Where a note is in the pipe scale, counted from the low G.
+     *
+     * @param string $note
+     * @return int|null
+     */
+    public function scalePosition(string $note): ?int
+    {
+        if ($note === '') {
+            return null;
+        }
+        // The case matters: "G" is the low G and "g" the high G.
+        $notes = array_keys(self::SCALE);
+        foreach ($notes as $index => $name) {
+            if ($name === $note) {
+                return $index;
+            }
+        }
+        return null;
     }
 
     /**

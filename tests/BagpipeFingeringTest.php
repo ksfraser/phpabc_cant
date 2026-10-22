@@ -109,15 +109,71 @@ class BagpipeFingeringTest extends TestCase
         $this->assertSame('g', $grace['note']);
     }
 
-    public function testTheGGraceCannotBePlayedFromTheHighAOrTheHighG(): void
+    public function testTheGGraceCanBePlayedOnAnyNoteButTheG(): void
     {
-        // On those notes the top index hole is already open, so there is
-        // nothing to lift.
-        $this->assertFalse($this->fingering->canPlayGrace('g grace', 'a'));
-        $this->assertFalse($this->fingering->canPlayGrace('g grace', 'g'));
+        // A grace sounds the note it is named after, so a G gracenote on a G
+        // cannot be heard - whatever the note before it was.
+        foreach ($this->fingering->getScaleNotes() as $note) {
+            $expected = $note !== 'g';
+            $this->assertSame(
+                $expected,
+                $this->fingering->canPlayGrace('g grace', 'd', $note),
+                $note
+            );
+        }
+    }
 
-        foreach (['G', 'A', 'B', 'c', 'd', 'e', 'f'] as $note) {
-            $this->assertTrue($this->fingering->canPlayGrace('g grace', $note), $note);
+    public function testTheGracesAndStrikesOfTheOtherLetters(): void
+    {
+        // {e} is the E gracenote and {E} the E strike, {a} the A gracenote
+        // and {A} the A strike.
+        $this->assertSame('e', $this->fingering->getGrace('e grace')['note']);
+        $this->assertSame('top ring', $this->fingering->getGrace('e grace')['finger']);
+        $this->assertSame('A', $this->fingering->getGrace('A strike')['note']);
+        $this->assertTrue($this->fingering->isStrike('A strike'));
+        $this->assertFalse($this->fingering->isStrike('a grace'));
+    }
+
+    public function testAGraceLowerThanTheNoteItIsPlayedFromIsAStrike(): void
+    {
+        // A grace whose note is lower than the melody note has to come from a
+        // hole below it, and that is a hard movement: a strike.
+        $this->assertTrue($this->fingering->isPlayedAsStrikeFrom('g grace', 'a'));
+        $this->assertTrue($this->fingering->isPlayedAsStrikeFrom('e grace', 'g'));
+        $this->assertTrue($this->fingering->isPlayedAsStrikeFrom('e grace', 'f'));
+        $this->assertTrue($this->fingering->isPlayedAsStrikeFrom('A strike', 'e'));
+        $this->assertTrue($this->fingering->isPlayedAsStrikeFrom('G strike', 'd'));
+
+        // A grace above the note before and the note after is a gracenote.
+        $this->assertFalse($this->fingering->isPlayedAsStrikeFrom('f grace', 'B'));
+    }
+
+    public function testTheGraceNameFollowsTheCaseOfTheLetter(): void
+    {
+        $this->assertSame('g grace', $this->fingering->getGraceName('g'));
+        $this->assertSame('G strike', $this->fingering->getGraceName('G'));
+        $this->assertSame('a grace', $this->fingering->getGraceName('a'));
+        $this->assertSame('A strike', $this->fingering->getGraceName('A'));
+    }
+
+    public function testTheGGraceCannotBePlayedOnTheHighG(): void
+    {
+        // The note is already a G there, and there is nothing to hear.
+        $this->assertFalse($this->fingering->canPlayGrace('g grace', 'g', 'g'));
+        $this->assertFalse($this->fingering->canPlayGrace('g grace', 'd', 'g'));
+    }
+
+    public function testTheDGraceCannotBePlayedOnAD(): void
+    {
+        // The false D sounds the D, so it cannot be heard on a D.
+        $this->assertFalse($this->fingering->canPlayGrace('d grace', 'c', 'd'));
+        $this->assertTrue($this->fingering->canPlayGrace('d grace', 'c', 'c'));
+    }
+
+    public function testTheGStrikeCanBePlayedFromEveryNote(): void
+    {
+        foreach ($this->fingering->getScaleNotes() as $note) {
+            $this->assertTrue($this->fingering->canPlayGrace('G strike', $note), $note);
         }
     }
 
@@ -137,9 +193,9 @@ class BagpipeFingeringTest extends TestCase
         );
     }
 
-    public function testTheGGraceHasNoFingeringWhereItCannotBePlayed(): void
+    public function testTheGGraceHasNoFingeringWhereItIsNotInTheScale(): void
     {
-        $this->assertNull($this->fingering->getGraceFingering('g grace', 'a'));
+        $this->assertNull($this->fingering->getGraceFingering('g grace', 'x'));
     }
 
     public function testTheDoublingIsTheGGraceThenTheFalseD(): void
@@ -178,22 +234,22 @@ class BagpipeFingeringTest extends TestCase
     public function testTheGraceCheckerFindsAGraceThatCannotBePlayed(): void
     {
         $checker = new BagpipeGraceChecker();
-        $lines = [
-            // The high A, then a G gracenote: the top index hole is already
-            // open on the high A, so there is nothing to lift.
-            new AbcBodyLine([], 'M', '2/4', 'HP'),
-        ];
+        // The high G, then a G gracenote on a G: the note is already a G, and
+        // there is nothing to hear.
         $body = new AbcBodyLine([], 'M', '2/4', 'HP');
-        $body->setBars([new AbcBarModel([['note', new AbcNoteModel('a')]])]);
+        $body->setBars([new AbcBarModel([['note', new AbcNoteModel('g')]])]);
         $next = new AbcBodyLine([], 'M', '2/4', 'HP');
-        $next->setBars([new AbcBarModel([['note', new AbcNoteModel('A', '', '', '{g}')]])]);
+        $next->setBars([new AbcBarModel([['note', new AbcNoteModel('g', '', '', '{g}')]])]);
 
         $problems = $checker->check([$body, $next]);
 
-        $this->assertSame(['the g grace cannot be played from the a'], $problems);
+        $this->assertSame(
+            ['a g grace on a g cannot be heard: it sounds the note it is on'],
+            $problems
+        );
     }
 
-    public function testTheGraceCheckerIsQuietWhenTheGraceCanBePlayed(): void
+    public function testTheGraceCheckerIsQuietWhenTheGraceIsLifted(): void
     {
         $checker = new BagpipeGraceChecker();
         $body = new AbcBodyLine([], 'M', '2/4', 'HP');

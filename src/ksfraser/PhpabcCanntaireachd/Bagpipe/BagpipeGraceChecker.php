@@ -11,11 +11,13 @@ use ksfraser\PhpabcCanntaireachd\Cleanup\Parser\AbcTokenizer;
  * Checks the graces of a tune against the fingering of the note they are
  * played from.
  *
- * A grace is a brief change of the hole that sounds, so it can only be played
- * when the finger it needs is in the right place for the note before it. The
- * G gracenote, for instance, lifts the top index finger, and the top index
- * hole is already open on the high A and on the high G, so there is nothing to
- * lift and the grace cannot be played there.
+ * A grace is a brief change of the hole that sounds, so the finger it needs
+ * has to be in the right place for the note before it.
+ *
+ * The G gracenote lifts the top index finger. On the high A that finger is
+ * already up, and the note is played as a G strike instead — the thumb
+ * closes, and the grace still sounds. On the high G the note is already a G,
+ * and there is nothing to hear: a G gracenote cannot be played there.
  *
  * The note before the grace is worked out from the music itself, so the
  * caller does not have to say what it was.
@@ -61,10 +63,24 @@ class BagpipeGraceChecker
                 $note = $item['note'];
                 $grace = trim($note->getGrace(), '{}');
                 if ($grace !== '') {
-                    $name = $grace . ' grace';
-                    if ($this->fingering->getGrace($name) !== null
-                        && $previous !== null
-                        && !$this->fingering->canPlayGrace($name, $previous)) {
+                    $name = $this->fingering->getGraceName($grace);
+                    // Only the pipe voices are checked: a grace in a guitar
+                    // or a brass part is not a pipe grace.
+                    $melody = $note->getPitch() . $note->getOctave();
+                    if ($this->fingering->getGrace($name) === null
+                        || $previous === null
+                        || !$this->fingering->isInScale($previous)
+                        || !$this->fingering->isInScale($melody)) {
+                        // Not a pipe grace, or not in the pipe scale.
+                    } elseif (!$this->fingering->canPlayGrace($name, $previous, $melody)) {
+                        if ($this->fingering->soundsSameNote($name, $melody)) {
+                            $problems[] = sprintf(
+                                'a %s on a %s cannot be heard: it sounds the note it is on',
+                                $name,
+                                $melody
+                            );
+                            continue;
+                        }
                         $problems[] = sprintf(
                             'the %s cannot be played from the %s',
                             $name,

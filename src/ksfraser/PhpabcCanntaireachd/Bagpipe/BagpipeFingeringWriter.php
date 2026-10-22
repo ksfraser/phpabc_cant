@@ -275,8 +275,11 @@ class BagpipeFingeringWriter
             );
         }
         $lines[] = '';
-        $lines[] = '% The G gracenote cannot be played from the high A or the high';
-        $lines[] = '% G, because the top index hole is already open on them.';
+        $lines[] = '% The G gracenote lifts the top index finger. On the high A that';
+        $lines[] = '% finger is already up, and the note is played as a G strike:';
+        $lines[] = '% the thumb closes, and the sound comes out at the top index hole.';
+        $lines[] = '% On the high G the note is already a G, and there is nothing';
+        $lines[] = '% to hear: a G gracenote cannot be played there.';
         $lines[] = '';
         $lines[] = '% == The fingerings of the embellishments ==';
         $lines[] = '%';
