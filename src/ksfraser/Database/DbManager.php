@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace ksfraser\Database;
 
 // Robust check for PDO drivers; avoid count() on non-array if getAvailableDrivers() returns unexpected value

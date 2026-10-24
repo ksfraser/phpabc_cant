@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace ksfraser\PhpabcCanntaireachd;
 
 echo 'PHPABC_VERBOSE: ' . (defined('PHPABC_VERBOSE') ? (PHPABC_VERBOSE ? 'true' : 'false') : 'not defined') . "\n";

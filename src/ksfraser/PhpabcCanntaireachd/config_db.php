@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 // Database configuration for MIDI defaults and fallback
 //
 // To encrypt credentials, use Symfony's secrets vault:

@@ -1,10 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 namespace ksfraser\PhpabcCanntaireachd\BodyLineHandler;
 use ksfraser\PhpabcCanntaireachd\Tune\AbcBar;
 
 class SolfegeHandler implements AbcBodyLineHandlerInterface {
     public function matches($line): bool {
-        return preg_match('/^S:(.*)$/i', trim($line));
+        return (bool) preg_match('/^S:(.*)$/i', trim($line));
     }
     public function handle(&$context, $line) {
         $trimmed = trim($line);

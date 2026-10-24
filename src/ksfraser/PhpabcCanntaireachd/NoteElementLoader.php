@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace ksfraser\PhpabcCanntaireachd;
 /**
  * Loader for all ABC note element classes (decorators, accidentals, lengths, octaves, etc).

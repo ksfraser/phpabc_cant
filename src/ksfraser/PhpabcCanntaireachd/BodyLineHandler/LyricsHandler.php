@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace ksfraser\PhpabcCanntaireachd\BodyLineHandler;
 use ksfraser\PhpabcCanntaireachd\Tune\AbcBar;
 
@@ -8,7 +11,7 @@ class LyricsHandler implements AbcBodyLineHandlerInterface {
         $this->forceBarLinesInLyrics = $forceBarLinesInLyrics;
     }
     public function matches($line): bool {
-        return preg_match('/^w:(.*)$/i', trim($line));
+        return (bool) preg_match('/^w:(.*)$/i', trim($line));
     }
     public function handle(&$context, $line) {
         $trimmed = trim($line);

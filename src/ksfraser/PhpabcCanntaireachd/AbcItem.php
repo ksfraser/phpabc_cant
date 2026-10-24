@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace ksfraser\PhpabcCanntaireachd;
 /**
  * Base class for ABC items (tune, part, line, bar, note, etc.)

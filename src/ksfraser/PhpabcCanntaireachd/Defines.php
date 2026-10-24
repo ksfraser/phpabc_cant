@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ksfraser\PhpabcCanntaireachd;
 
 // Constants for the phpabc_canntaireachd package

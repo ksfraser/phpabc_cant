@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace ksfraser\PhpabcCanntaireachd\BodyLineHandler;
 use ksfraser\PhpabcCanntaireachd\Tune\AbcBar;
 
@@ -9,7 +12,7 @@ class BarLineHandler implements AbcBodyLineHandlerInterface {
         $this->barLinePattern = '/^(' . implode('|', array_map('preg_quote', $barLines)) . ')/';
     }
     public function matches($line): bool {
-        return preg_match($this->barLinePattern, trim($line));
+        return (bool) preg_match($this->barLinePattern, trim($line));
     }
     public function handle(&$context, $line) {
         $trimmed = trim($line);

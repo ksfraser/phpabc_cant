@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace ksfraser\PhpabcCanntaireachd\Decorator;
 /**
  * Dynamically loads all Decorator classes in the Decorator directory.

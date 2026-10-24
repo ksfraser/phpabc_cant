@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace ksfraser\PhpabcCanntaireachd;
 /**
  * Sanity checks for Bagpipe voice style and structure.

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace ksfraser\PhpabcCanntaireachd;
 use ksfraser\PhpabcCanntaireachd\Header\AbcHeaderX;
 use ksfraser\PhpabcCanntaireachd\Header\AbcHeaderT;

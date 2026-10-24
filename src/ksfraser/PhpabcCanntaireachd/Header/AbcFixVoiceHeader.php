@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace ksfraser\PhpabcCanntaireachd\Header;
 
 //Fix a voice header to have NAME and SNAME fields

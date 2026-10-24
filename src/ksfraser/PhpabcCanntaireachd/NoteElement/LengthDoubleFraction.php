@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace ksfraser\PhpabcCanntaireachd\NoteElement;
 class LengthDoubleFraction {
     public static function getShortcut() { return '//'; }

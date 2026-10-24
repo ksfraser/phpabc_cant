@@ -146,7 +146,9 @@ class VoiceHeader
      */
     public function render(): string
     {
-        $out = 'V:' . $this->indicator;
+        $indicator = $this->expandIndicator($this->indicator);
+
+        $out = 'V:' . $indicator;
 
         $written = [];
         foreach (self::ATTRIBUTE_ORDER as $key) {
@@ -164,6 +166,29 @@ class VoiceHeader
         }
 
         return $out;
+    }
+
+    /**
+     * Expand a short voice indicator to its full name on output.
+     *
+     * V:S  -> Snare
+     * V:B  -> Bass
+     * V:T  -> Tenor
+     * V:M  -> Melody
+     * V:H  -> Harmony
+     * V:P  -> Pipes
+     */
+    private function expandIndicator(string $indicator): string
+    {
+        static $shortToLong = [
+            'S' => 'Snare',
+            'B' => 'Bass',
+            'T' => 'Tenor',
+            'M' => 'Melody',
+            'H' => 'Harmony',
+            'P' => 'Pipes',
+        ];
+        return $shortToLong[$indicator] ?? $indicator;
     }
 
     /**

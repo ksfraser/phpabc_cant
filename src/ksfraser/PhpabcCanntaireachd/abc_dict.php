@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**//**************************************************************
  * I have built an array of items from the DOCs from bmw to try
  * and convert into ABC.  This should save a bunch of typesetting tim.

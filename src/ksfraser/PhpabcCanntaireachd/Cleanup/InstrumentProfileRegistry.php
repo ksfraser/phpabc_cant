@@ -40,17 +40,19 @@ class InstrumentProfileRegistry
     }
 
     /**
-     * The pipe band profiles.
+     * The pipe band and orchestral/marching band profiles.
      */
     private function registerDefaults(): void
     {
-        $this->add((new InstrumentProfile('M', 'Melody', 'Melody')));
+        // Pipe band voices
+        $this->add((new InstrumentProfile('M', 'Melody', 'Melody'))->setTranspose(1));
         $this->add((new InstrumentProfile('Bagpipes', 'Bagpipes', 'Bagpipes')));
-        $this->add((new InstrumentProfile('Pipes', 'Pipes', 'Pipes')));
+        $this->add((new InstrumentProfile('Seconds', 'Seconds', 'Seconds'))->setTranspose(1));
+        $this->add((new InstrumentProfile('P', 'Pipes', 'Pipes')));
         $this->add((new InstrumentProfile('H', 'Harmony', 'Harmony')));
         $this->add((new InstrumentProfile('C', 'C-Harmony', 'C-Harmony')));
 
-        // The pipe band drums: a one line percussion staff.
+        // Pipe band drums: one line percussion staff.
         $this->add(
             (new InstrumentProfile('S', 'Snare', 'Snare'))
                 ->setStafflines(1)->setClef('perc')->setMiddle('G')->setPipeBandDrum(true)
@@ -64,14 +66,70 @@ class InstrumentProfileRegistry
                 ->setStafflines(1)->setClef('perc')->setMiddle('G')->setPipeBandDrum(true)
         );
 
-        // The brass band.
+        // Drum set
+        $this->add(
+            (new InstrumentProfile('Drums', 'Drums', 'Drums'))
+                ->setStafflines(5)->setClef('perc')->setMiddle('C')
+        );
+
+        // Brass band / orchestral instruments
+        $this->add(
+            (new InstrumentProfile('Trumpet', 'Trumpet', 'Trpt'))
+                ->setTranspose(2)->setClef('treble')
+        );
+        $this->add(
+            (new InstrumentProfile('Clarinet', 'Clarinet', 'Cl'))
+                ->setTranspose(2)->setClef('treble')
+        );
+        $this->add(
+            (new InstrumentProfile('Flute', 'Flute', 'Fl'))
+                ->setTranspose(0)->setClef('treble')
+        );
+        $this->add(
+            (new InstrumentProfile('AltoSax', 'Alto Sax', 'A.Sax'))
+                ->setTranspose(3)->setClef('treble')
+        );
+        $this->add(
+            (new InstrumentProfile('TenorSax', 'Tenor Sax', 'T.Sax'))
+                ->setTranspose(14)->setClef('treble')
+        );
+        $this->add(
+            (new InstrumentProfile('BariSax', 'Bari Sax', 'Bar.Sax'))
+                ->setTranspose(15)->setClef('treble')
+        );
+        $this->add(
+            (new InstrumentProfile('Trombone', 'Trombone', 'Tbn'))
+                ->setTranspose(0)->setClef('bass')
+        );
+        $this->add(
+            (new InstrumentProfile('Tuba', 'Tuba', 'Tuba'))
+                ->setTranspose(0)->setClef('bass')
+        );
+        $this->add(
+            (new InstrumentProfile('FrenchHorn', 'French Horn', 'Hn'))
+                ->setTranspose(7)->setClef('treble')
+        );
+
+        // Guitar / Bass Guitar (written an octave above sounding pitch)
+        $this->add(
+            (new InstrumentProfile('Guitar', 'Guitar', 'Gtr'))
+                ->setOctave(1)->setClef('treble')
+        );
+        $this->add(
+            (new InstrumentProfile('BGuitar', 'Bass Guitar', 'B.Gtr'))
+                ->setOctave(1)->setClef('bass')
+        );
+
+        // Piano (sounds as written, but typically written two staves)
+        $this->add((new InstrumentProfile('Piano', 'Piano', 'Pno'))->setOctave(-1));
+
+        // Legacy brass band (kept for compatibility)
         $this->add(
             (new InstrumentProfile('BB', 'Brass Bass', 'ABCD-C'))
                 ->setTranspose(-1)->setOctave(-1)->setClef('bass')
         );
         $this->add((new InstrumentProfile('BC', 'Brass Chord', 'ABCD-D'))->setTranspose(-1));
         $this->add((new InstrumentProfile('BD', 'Brass Chord 2', 'ABCD-B'))->setTranspose(-1));
-        $this->add((new InstrumentProfile('P', 'Piano', 'Piano'))->setOctave(-1));
     }
 
     /**

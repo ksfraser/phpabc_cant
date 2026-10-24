@@ -27,7 +27,6 @@ AbcRenumberTunesCliTest::testRenumberDuplicates FAIL
 AbcRenumberTunesTest::testRenumberWidth FAIL
 AbcTokenTranslatorTest::testTranslateReturnsNullForUnknownToken FAIL
 BagpipeCanntaireachdTest::testBagpipeCanntaireachdGeneration FAIL
-CanntaireachdBarProcessorTest::testTokensToCanntaireachd_fallbackToToken FAIL
 CommentParserTest::testCanParseReturnsFalseForNonComment FAIL
 CommentParserTest::testCanParseReturnsTrueForComment FAIL
 CommentParserTest::testValidateDelegatesToCanParse FAIL
@@ -39,8 +38,6 @@ NoteHandlerTest::testHandleAddsNoteToBar FAIL
 ParseContextTest::testArrayAccessOffsetExists FAIL
 RedefinableSymbolParserTest::testParseRedefinableSymbol FAIL
 Tests\Integration\ObjectPipelineIntegrationTest::testTransformsPreserveMetadata FAIL
-TokenNormalizerForBarTest::testNormalizeTokensFallback FAIL
-TokenNormalizerForBarTest::testNormalizeTokensStripsDurations FAIL
 TuneServiceBagpipeTest::testEnsureBagpipeVoiceCreatesAndGenerates ERROR
 ksfraser\Database\Tests\DbManagerTest::testExecuteReturnsRowCount ERROR
 ksfraser\Database\Tests\DbManagerTest::testFetchAllReturnsArray ERROR

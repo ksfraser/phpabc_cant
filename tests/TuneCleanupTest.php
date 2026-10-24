@@ -233,9 +233,11 @@ class TuneCleanupTest extends TestCase
     {
         $normaliser = new VoiceAttributeNormaliser(new InstrumentProfileRegistry());
         $line = 'V:S gstem=up stem=down stafflines=1 clef=perc middle=G name="Snare" sname="Snare"';
+        // Indicator is expanded on output: S -> Snare
+        $expected = 'V:Snare gstem=up stem=down stafflines=1 clef=perc middle=G name="Snare" sname="Snare"';
 
         $this->assertSame([], $normaliser->findChanges(VoiceHeader::parse($line)));
-        $this->assertSame($line, $normaliser->normalise($line));
+        $this->assertSame($expected, $normaliser->normalise($line));
     }
 
     public function testAnUnknownVoiceIsLeftAlone(): void
@@ -243,6 +245,81 @@ class TuneCleanupTest extends TestCase
         $normaliser = new VoiceAttributeNormaliser(new InstrumentProfileRegistry());
 
         $this->assertSame('V:Xylophone', $normaliser->normalise('V:Xylophone'));
+    }
+
+    public function testShortIndicatorsAreExpandedToFullNames(): void
+    {
+        $normaliser = new VoiceAttributeNormaliser(new InstrumentProfileRegistry());
+
+        $this->assertStringContainsString('V:Snare', $normaliser->normalise('V:S'));
+        $this->assertStringContainsString('V:Bass', $normaliser->normalise('V:B'));
+        $this->assertStringContainsString('V:Tenor', $normaliser->normalise('V:T'));
+        $this->assertStringContainsString('V:Melody', $normaliser->normalise('V:M'));
+        $this->assertStringContainsString('V:Harmony', $normaliser->normalise('V:H'));
+    }
+
+    public function testVSeIsExpandedOnOutput(): void
+    {
+        $normaliser = new VoiceAttributeNormaliser(new InstrumentProfileRegistry());
+
+        $this->assertStringStartsWith('V:Snare', $normaliser->normalise('V:S'));
+        $this->assertStringStartsWith('V:Bass', $normaliser->normalise('V:B'));
+        $this->assertStringStartsWith('V:Tenor', $normaliser->normalise('V:T'));
+        $this->assertStringStartsWith('V:Melody', $normaliser->normalise('V:M'));
+        $this->assertStringStartsWith('V:Harmony', $normaliser->normalise('V:H'));
+        $this->assertStringStartsWith('V:Pipes', $normaliser->normalise('V:P'));
+    }
+
+    public function testMelodyHasTransposeOne(): void
+    {
+        $normaliser = new VoiceAttributeNormaliser(new InstrumentProfileRegistry());
+        $line = $normaliser->normalise('V:M');
+
+        $this->assertStringContainsString('transpose=1', $line);
+    }
+
+    public function testSecondsVoiceIsRegistered(): void
+    {
+        $registry = new InstrumentProfileRegistry();
+        $profile = $registry->find('Seconds');
+
+        $this->assertNotNull($profile);
+        $this->assertSame('Seconds', $profile->getName());
+        $this->assertSame('Seconds', $profile->getSname());
+        $this->assertSame(1, $profile->getTranspose());
+    }
+
+    public function testGuitarIsRegistered(): void
+    {
+        $registry = new InstrumentProfileRegistry();
+        $profile = $registry->find('Guitar');
+
+        $this->assertNotNull($profile);
+        $this->assertSame('Guitar', $profile->getName());
+        $this->assertSame(1, $profile->getOctave());
+        $this->assertSame('treble', $profile->getClef());
+    }
+
+    public function testBGuitarIsRegistered(): void
+    {
+        $registry = new InstrumentProfileRegistry();
+        $profile = $registry->find('BGuitar');
+
+        $this->assertNotNull($profile);
+        $this->assertSame('Bass Guitar', $profile->getName());
+        $this->assertSame(1, $profile->getOctave());
+        $this->assertSame('bass', $profile->getClef());
+    }
+
+    public function testDrumSetIsRegistered(): void
+    {
+        $registry = new InstrumentProfileRegistry();
+        $profile = $registry->find('Drums');
+
+        $this->assertNotNull($profile);
+        $this->assertSame('Drums', $profile->getName());
+        $this->assertSame(5, $profile->getStafflines());
+        $this->assertSame('perc', $profile->getClef());
     }
 
     // ------------------------------------------------------------------

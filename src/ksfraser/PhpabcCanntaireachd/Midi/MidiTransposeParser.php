@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace ksfraser\PhpabcCanntaireachd\Midi;
 
 use ksfraser\PhpabcCanntaireachd\AbcLineParser;

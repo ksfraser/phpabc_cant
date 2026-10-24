@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ksfraser\PhpabcCanntaireachd;
 
 use ksfraser\PhpabcCanntaireachd\Exceptions\TokenMappingException;
@@ -16,6 +18,10 @@ class TokenNormalizer {
         if ($token === null || $token === '') {
             throw new TokenMappingException("Normalization failed for empty token");
         }
+        // Preserve bar lines unchanged
+        if ($token === '|' || $token === '||') {
+            return $token;
+        }
         // Split multi-note tokens (e.g., 'A2B' => ['A','B'])
         // Match gracenote+pitch+duration, e.g. '{g}A3', '{d}B2', 'A2', 'B', etc.
         $pattern = '/(\{[a-z]+\})?[A-Ga-g](?:[0-9.\/\-]*)?/';
@@ -30,6 +36,9 @@ class TokenNormalizer {
                 throw new TokenMappingException("Normalization failed for token part: $match");
             }
             $norms[] = $norm;
+        }
+        if (empty($norms)) {
+            throw new TokenMappingException("Normalization failed for token: $token");
         }
         if (count($norms) === 1) {
             return $norms[0];

@@ -1,10 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 namespace ksfraser\PhpabcCanntaireachd\BodyLineHandler;
 use ksfraser\PhpabcCanntaireachd\Tune\AbcBar;
 
 class CanntaireachdHandler implements AbcBodyLineHandlerInterface {
     public function matches($line): bool {
-        return preg_match('/^W:(.*)$/i', trim($line));
+        return (bool) preg_match('/^W:(.*)$/i', trim($line));
     }
     public function handle(&$context, $line) {
         $trimmed = trim($line);
