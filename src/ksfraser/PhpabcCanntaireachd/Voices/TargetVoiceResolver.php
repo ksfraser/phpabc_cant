@@ -143,4 +143,23 @@ class TargetVoiceResolver
         }
         return $names;
     }
+
+    /**
+     * Extract voice names from an AbcTune object.
+     *
+     * @param \ksfraser\PhpabcCanntaireachd\Tune\AbcTune $tune
+     * @return array<string,string> Voice identifier => declared name.
+     */
+    public function collectVoiceNamesFromTune(\ksfraser\PhpabcCanntaireachd\Tune\AbcTune $tune): array
+    {
+        $names = [];
+        $voices = $tune->getVoices();
+        foreach ($voices as $voiceId => $voice) {
+            $name = $voice->getName() ?? null;
+            if ($name !== null && $name !== '') {
+                $names[$voiceId] = $name;
+            }
+        }
+        return $names;
+    }
 }

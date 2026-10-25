@@ -202,6 +202,13 @@ class AbcBar extends \ksfraser\PhpabcCanntaireachd\AbcItem implements Renderable
         return implode(' ', $out);
     }
 
+    public function translateNotes(\ksfraser\PhpabcCanntaireachd\BagpipeAbcToCanntTranslator $translator): void
+    {
+        foreach ($this->notes as $note) {
+            $note->setCanntaireachd($translator->translate($note));
+        }
+    }
+
     // Render the bar content for inclusion in a line (without surrounding '|')
     public function renderSelf(): string
     {

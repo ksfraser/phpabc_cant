@@ -51,7 +51,7 @@ class AbcCanntaireachdPassTest extends TestCase
             }
         }
         fwrite(STDERR, "Found canntaireachd: ".print_r($found, true));
-        $this->assertEquals(['dar','dod','hid','dar'], $found);
+        $this->assertEquals(['en','o','o','a'], $found);
     }
 
     public function testProcessMultipleTunes()
@@ -77,7 +77,7 @@ class AbcCanntaireachdPassTest extends TestCase
         }
         fwrite(STDERR, "Found canntaireachd: ".print_r($canntaireachd, true));
         // First tune: A B C D, Second tune: D C B A
-        $this->assertEquals(['dar','dod','hid','dar','dar','hid','dod','dar'], $canntaireachd);
+        $this->assertEquals(['en','o','o','a','a','o','o','en'], $canntaireachd);
     }
 
 
@@ -127,7 +127,7 @@ class AbcCanntaireachdPassTest extends TestCase
         // Should fallback to [X] for unmappable token
         $this->assertCount(3, $result['lines']);
         $this->assertEquals('A X B', $result['lines'][1]);
-        $this->assertEquals('w: dar [X] dod', $result['lines'][2]);
+        $this->assertEquals('w: en [X] o', $result['lines'][2]);
     }
 
     public function testEmptyMusicLine()
@@ -222,7 +222,7 @@ class AbcCanntaireachdPassTest extends TestCase
         $this->assertCount(4, $result['lines']);
         $this->assertEquals('M:4/4', $result['lines'][1]);
         $this->assertEquals('A B C', $result['lines'][2]);
-        $this->assertEquals('w: dar dod hid', $result['lines'][3]);
+        $this->assertEquals('w: en o o', $result['lines'][3]);
     }
 
     public function testBagpipesWithTimingErrors()

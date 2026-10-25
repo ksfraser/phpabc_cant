@@ -65,15 +65,19 @@ class AbcCanntaireachdPass
     }
 
     /**
-     * Processes the array of ABC lines to generate canntaireachd for the target voices.
+     * Processes input to generate canntaireachd for the target voices.
      *
-     * @param string[] $lines The input ABC lines.
+     * @param string[]|\ksfraser\PhpabcCanntaireachd\Tune\AbcTune $lines The input ABC lines or an AbcTune object.
      * @return array{lines: string[], canntDiff: array<int, array{line: string, generated: string}>}
      *         The processed lines with canntaireachd added, and a diff log.
      * @requirement FR2, FR8
      */
-    public function process(array $lines): array
+    public function process($lines): array
     {
+        if ($lines instanceof \ksfraser\PhpabcCanntaireachd\Tune\AbcTune) {
+            return $this->processTune($lines);
+        }
+
         $canntDiff = [];
         $output = [];
 
@@ -133,6 +137,49 @@ class AbcCanntaireachdPass
                     'line' => $line,
                     'generated' => $canntText,
                 ];
+            }
+        }
+
+        return ['lines' => $output, 'canntDiff' => $canntDiff];
+    }
+
+    /**
+     * Process an AbcTune object: generate canntaireachd on notes in target voices.
+     *
+     * @param AbcTune $tune
+     * @return array{lines: string[], canntDiff: array<int, array{line: string, generated: string}>}
+     */
+    public function processTune(\ksfraser\PhpabcCanntaireachd\Tune\AbcTune $tune): array
+    {
+        $canntDiff = [];
+        $output = [];
+
+        $generator = new CanntGenerator($this->dict);
+        $voiceNames = $this->resolver->collectVoiceNamesFromTune($tune);
+        $currentVoiceId = null;
+        $currentVoiceName = null;
+
+        $voices = $tune->getVoices();
+        foreach ($voices as $voiceId => $voice) {
+            $voiceNames[$voiceId] = $voice->getName() ?? $voiceId;
+        }
+
+        $count = count($voices);
+        $voiceIndex = 0;
+        foreach ($voices as $voiceId => $voice) {
+            $currentVoiceId = $voiceId;
+            $currentVoiceName = $voice->getName() ?? $voiceId;
+
+            $bars = $tune->getVoiceBars()[$voiceId] ?? [];
+            foreach ($bars as $bar) {
+                if (!($bar instanceof \ksfraser\PhpabcCanntaireachd\Tune\AbcBar)) {
+                    continue;
+                }
+                $isTarget = $this->resolver->isTarget($currentVoiceId, $currentVoiceName);
+                if (!$isTarget) {
+                    continue;
+                }
+                $bar->translateNotes(new BagpipeAbcToCanntTranslator($this->dict));
             }
         }
 
