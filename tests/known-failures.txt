@@ -7,17 +7,12 @@
 # Format: <test name> <status>
 # Regenerate with: php bin/check-test-baseline.php <report.xml> --update
 
-AbcBarTranslateNotesTest::testTranslateNotesSetsCanntaireachdOnAllNotes ERROR
 AbcCanntaireachdPassTest::testInvalidAbcTokensFallback FAIL
-AbcCanntaireachdPassTest::testNonMusicLineInBagpipes FAIL
-AbcCanntaireachdPassTest::testNoteLevelCanntaireachdAssignment ERROR
-AbcCanntaireachdPassTest::testProcessCommentsAndEmptyLines ERROR
-AbcCanntaireachdPassTest::testProcessMultipleTunes ERROR
+AbcCanntaireachdPassTest::testNoteLevelCanntaireachdAssignment FAIL
 AbcEmbellishmentTest::testCanInstantiate ERROR
 AbcEmbellishmentTest::testGetNote ERROR
 AbcHeaderFieldDefaultsTest::testDefaultsAreApplied FAIL
 AbcHeaderMultiFieldTest::testSetAndGetStoresMultipleValues FAIL
-AbcLineCanntLyricLineTest::testRenderCanntLyricLineAggregatesBarCanntaireachd ERROR
 AbcNoteTest::testDecoratorParsingWithDI FAIL
 AbcNoteTest::testInvalidNoteLengthThrows FAIL
 AbcProcessingPipelineTest::testPipelineThrowsExceptionOnError FAIL

@@ -12,7 +12,8 @@
   "autoload": {
     "psr-4": {
       "ksfraser\\PhpabcCanntaireachd\\": "src/ksfraser/PhpabcCanntaireachd/",
-      "ksfraser\\origin\\": "src/ksfraser/origin/"
+      "ksfraser\\origin\\": "src/ksfraser/origin/",
+      "ksfraser\\Database\\": "src/ksfraser/Database/"
     }
   },
   "require": {
