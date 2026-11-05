@@ -52,6 +52,9 @@ class AbcProcessorConfig {
 
     // === NEW: Knock-on (attack roll intro) ===
     public $knockon = false;
+
+    // === NEW: Voice line prefixes ===
+    public $voiceLines = false;
     
     /**
      * Load configuration from file
@@ -241,6 +244,13 @@ class AbcProcessorConfig {
                 $this->knockon = $config['knockon']['enabled'];
             }
         }
+
+        // Merge voice_lines section
+        if (isset($config['voice_lines'])) {
+            if (isset($config['voice_lines']['enabled'])) {
+                $this->voiceLines = $config['voice_lines']['enabled'];
+            }
+        }
     }
     
     /**
@@ -326,6 +336,9 @@ class AbcProcessorConfig {
             ],
             'knockon' => [
                 'enabled' => $this->knockon,
+            ],
+            'voice_lines' => [
+                'enabled' => $this->voiceLines,
             ],
         ];
     }

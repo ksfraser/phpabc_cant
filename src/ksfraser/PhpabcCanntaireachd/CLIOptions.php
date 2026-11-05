@@ -48,6 +48,7 @@ class CLIOptions {
 
     public $pipebandsnare = false; // --pipebandsnare
 public $knockon = false;       // --knock-on
+public $voiceLines = false;    // --voice-lines
 
     // Additional hooks seen in some scripts
     public  $voiceOrder = [];
@@ -75,7 +76,7 @@ public $knockon = false;       // --knock-on
             'config:', 'save-config:', 'show-config',
             'voice-order:', 'voice-order-config:',
             'transpose-mode:', 'transpose-override:',
-            'no-midi-defaults', 'strict', 'pipebandsnare', 'knock-on'
+            'no-midi-defaults', 'strict', 'pipebandsnare', 'knock-on', 'voice-lines'
         ];
         $parsed = @getopt($short, $long);
         $this->opts = is_array($parsed) ? $parsed : [];
@@ -131,6 +132,7 @@ public $knockon = false;       // --knock-on
         if (isset($this->opts['strict'])) $this->strictMode = true;
         if (isset($this->opts['pipebandsnare'])) $this->pipebandsnare = true;
         if (isset($this->opts['knock-on'])) $this->knockon = true;
+        if (isset($this->opts['voice-lines'])) $this->voiceLines = true;
 
         // If getopt returned values, determine leftover positional args using argv
         $positional = [];
@@ -187,6 +189,8 @@ public $knockon = false;       // --knock-on
                     $this->pipebandsnare = true;
                 } elseif ($arg === '--knock-on') {
                     $this->knockon = true;
+                } elseif ($arg === '--voice-lines') {
+                    $this->voiceLines = true;
                 } elseif (preg_match('/^--bars[_-]per[_-]line=(\d+)$/', $arg, $m)) {
                     $this->barsPerLine = (int)$m[1];
                 } elseif (preg_match('/^--interleave[_-]bars=(\d+)$/', $arg, $m)) {
@@ -302,6 +306,9 @@ public $knockon = false;       // --knock-on
         if ($this->knockon) {
             $config->knockon = true;
         }
+        if ($this->voiceLines) {
+            $config->voiceLines = true;
+        }
     }
     
     // Export for debug/logging
@@ -329,6 +336,7 @@ public $knockon = false;       // --knock-on
             'strictMode' => $this->strictMode,
             'pipebandsnare' => $this->pipebandsnare,
             'knockon' => $this->knockon,
+            'voiceLines' => $this->voiceLines,
         ];
     }
 }

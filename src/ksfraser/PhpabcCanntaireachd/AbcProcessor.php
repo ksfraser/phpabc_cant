@@ -44,7 +44,7 @@ class AbcProcessor {
      * @param array|null $headerTable
      * @return array
      */
-    public static function process($abcContent, $dict, $headerTable = null, $convert = false, $logFlow = false, $pipebandsnare = false, $knockon = false) {
+    public static function process($abcContent, $dict, $headerTable = null, $convert = false, $logFlow = false, $pipebandsnare = false, $knockon = false, $voiceLines = false) {
         if (is_array($dict)) {
             $dictObj = new TokenDictionary();
             $dictObj->prepopulate($dict);
@@ -60,7 +60,7 @@ class AbcProcessor {
             new \ksfraser\PhpabcCanntaireachd\AbcTuneNumberValidatorPass(),
             new \ksfraser\PhpabcCanntaireachd\AbcLyricsPass($dictObj),
             new \ksfraser\PhpabcCanntaireachd\AbcVoicePass(), // Copy melody to Bagpipes if needed
-            new \ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass($dictObj, null, $pipebandsnare, $knockon),
+            new \ksfraser\PhpabcCanntaireachd\AbcCanntaireachdPass($dictObj, null, $pipebandsnare, $knockon, $voiceLines),
             new \ksfraser\PhpabcCanntaireachd\AbcVoiceOrderPass(),
             new \ksfraser\PhpabcCanntaireachd\AbcTimingValidator(),
             new \ksfraser\PhpabcCanntaireachd\AbcFormattingPass()

@@ -369,4 +369,47 @@ class AbcCanntaireachdPassTest extends TestCase
         $this->assertStringContainsString('z4 z4', $result['lines'][2]);
         $this->assertStringContainsString('L:1/16', $result['lines'][1]);
     }
+
+    public function testVoiceLinesPrefixesMusicLine()
+    {
+        $pass = new AbcCanntaireachdPass($this->dict, null, false, false, true);
+        $lines = [
+            'X:1',
+            'V:Snare',
+            'M:2/4',
+            'L:1/8',
+            'A B',
+        ];
+
+        $result = $pass->process($lines);
+
+        // Music line should be prefixed with voice/time/unit and bar markers
+        $musicLine = end($result['lines']);
+        $this->assertStringContainsString('[V:Snare][M:2/4][L:1/8]', $musicLine);
+        $this->assertStringContainsString('| A B |', $musicLine);
+    }
+
+    public function testVoiceLinesAnacrusisUsesPipeBar()
+    {
+        $pass = new AbcCanntaireachdPass($this->dict, null, false, false, true);
+        $lines = [
+            'X:1',
+            'V:Bagpipes',
+            'M:2/4',
+            'L:1/8',
+            'A B',        // first music line → anacrusis | marker
+            'C D',        // second line → x| marker
+        ];
+
+        $result = $pass->process($lines);
+
+        // First music line after V: header gets | (anacrusis), next gets x|
+        $musicLines = array_values(array_filter($result['lines'], fn ($l) => str_contains($l, '| A B |')));
+        $this->assertNotEmpty($musicLines);
+        $this->assertStringContainsString('| A B |', $musicLines[0]);
+
+        $musicLines2 = array_values(array_filter($result['lines'], fn ($l) => str_contains($l, 'x| C D |')));
+        $this->assertNotEmpty($musicLines2);
+        $this->assertStringContainsString('x| C D |', $musicLines2[0]);
+    }
 }

@@ -50,6 +50,9 @@ class AbcCanntaireachdPass
     /** @var bool Whether knock-on attack roll intro is enabled */
     private bool $knockon;
 
+    /** @var bool Whether to prefix every music line with voice/time/bars */
+    private bool $voiceLines;
+
     /**
      * Constructor for AbcCanntaireachdPass.
      * Uses DI to inject TokenDictionary.
@@ -58,9 +61,10 @@ class AbcCanntaireachdPass
      * @param string[]|null $targetVoices Voice names that receive canntaireachd.
      * @param bool $pipebandsnare Whether pipebandsnare drumline conversion is enabled.
      * @param bool $knockon Whether knock-on attack roll intro is enabled.
+     * @param bool $voiceLines Whether to prefix every music line with voice/time/bars.
      * @requirement FR7
      */
-    public function __construct($dict, ?array $targetVoices = null, bool $pipebandsnare = false, bool $knockon = false)
+    public function __construct($dict, ?array $targetVoices = null, bool $pipebandsnare = false, bool $knockon = false, bool $voiceLines = false)
     {
         if ($dict instanceof TokenDictionary) {
             $this->dict = $dict;
@@ -72,6 +76,7 @@ class AbcCanntaireachdPass
         $this->resolver = new TargetVoiceResolver($targetVoices);
         $this->pipebandsnare = $pipebandsnare;
         $this->knockon = $knockon;
+        $this->voiceLines = $voiceLines;
     }
 
     /**
@@ -126,7 +131,30 @@ class AbcCanntaireachdPass
             $output = array_merge($output, $this->generateKnockOnRests($lines));
         }
 
+        // Voice-lines: collect M: and L: per voice from headers
+        $voiceMeter = [];
+        $voiceUnit = [];
+        $scanVoiceId = null;
+        foreach ($lines as $line) {
+            $trimmed = trim($line);
+            if (preg_match('/^V:\s*(\S+)(.*)$/', $trimmed, $matches) === 1) {
+                $scanVoiceId = $matches[1];
+                continue;
+            }
+            if (preg_match('/^\[V:([^\]]+)\]/', $trimmed, $vm) === 1) {
+                $scanVoiceId = $vm[1];
+                continue;
+            }
+            if ($scanVoiceId !== null && preg_match('/^M:\s*(\S+)/i', $trimmed, $m) === 1) {
+                $voiceMeter[$scanVoiceId] = $m[1];
+            }
+            if ($scanVoiceId !== null && preg_match('/^L:\s*(\S+)/i', $trimmed, $m) === 1) {
+                $voiceUnit[$scanVoiceId] = $m[1];
+            }
+        }
+
         $count = count($lines);
+        $firstLineAfterVoice = true;   // track anacrusis: first music line may be partial
         for ($i = 0; $i < $count; $i++) {
             $line = $lines[$i];
             $trimmed = trim($line);
@@ -135,6 +163,7 @@ class AbcCanntaireachdPass
             if (preg_match('/^X:/i', $trimmed) === 1) {
                 $currentVoiceId = null;
                 $currentVoiceName = null;
+                $firstLineAfterVoice = true;
                 $output[] = $line;
                 continue;
             }
@@ -146,6 +175,7 @@ class AbcCanntaireachdPass
                 if ($currentVoiceName !== null) {
                     $voiceNames[$currentVoiceId] = $currentVoiceName;
                 }
+                $firstLineAfterVoice = true;
                 $output[] = $line;
                 continue;
             }
@@ -154,16 +184,65 @@ class AbcCanntaireachdPass
             if (preg_match('/^\[V:([^\]]+)\]/', $trimmed, $matches) === 1) {
                 $currentVoiceId = $matches[1];
                 $currentVoiceName = $voiceNames[$currentVoiceId] ?? null;
+                $firstLineAfterVoice = true;
             }
 
             // PipeBandSnare: convert snare voice notes to C/D drumline notation
+            $lineToOutput = $trimmed;
+            $isSnareConverted = false;
+            $drumCannt = '';
             if ($this->pipebandsnare && isset($snareVoiceIds[$currentVoiceId ?? '']) && $this->isMusicLine($line)) {
-                $converted = $this->convertToDrumline($line, $snarePitches);
-                $output[] = $converted;
+                $lineToOutput = $this->convertToDrumline($trimmed, $snarePitches);
+                $isSnareConverted = true;
                 // Generate canntaireachd for drumline: C=la (Left), D=ra (Right)
-                $canntText = $this->generateDrumlineCannt($converted, $snarePitches);
-                if ($canntText !== '') {
-                    $output[] = 'w: ' . $canntText;
+                $drumCannt = $this->generateDrumlineCannt($lineToOutput, $snarePitches);
+                if ($drumCannt !== '') {
+                    $canntDiff[] = [
+                        'line' => $trimmed,
+                        'generated' => $drumCannt,
+                    ];
+                }
+            }
+
+            // Voice-lines: prefix music lines with voice/time/bars
+            if ($this->voiceLines && $this->isMusicLine($line)) {
+                $vid = $currentVoiceId ?? '';
+                $meter = $voiceMeter[$vid] ?? '4/4';
+                $unit = $voiceUnit[$vid] ?? '1/8';
+                $prefix = '[V:' . $vid . '][M:' . $meter . '][L:' . $unit . ']';
+                $barStart = $firstLineAfterVoice ? '|' : 'x|';
+                $firstLineAfterVoice = false;
+                $lineToOutput = $prefix . ' ' . $barStart . ' ' . ltrim($lineToOutput) . ' |';
+            }
+
+            if ($isSnareConverted) {
+                $output[] = $lineToOutput;
+                if ($drumCannt !== '') {
+                    $output[] = 'w: ' . $drumCannt;
+                }
+                continue;
+            }
+
+            // For non-snare-converted lines, output the (possibly voiceLines-modified) line
+            if ($this->voiceLines && $this->isMusicLine($line)) {
+                $output[] = $lineToOutput;
+                // Track first line after voice for anacrusis
+                $firstLineAfterVoice = false;
+
+                // Still generate canntaireachd for target voices on the original line
+                $isTarget = $this->resolver->isTarget($currentVoiceId, $currentVoiceName);
+                if ($isTarget) {
+                    while ($i + 1 < $count && preg_match('/^w:/i', trim($lines[$i + 1])) === 1) {
+                        $output[] = $lines[++$i];
+                    }
+                    $canntText = $this->normaliseCanntaireachd($generator->generateForNotes($line));
+                    if ($canntText !== '' && $canntText !== '[?]') {
+                        $output[] = 'w: ' . $canntText;
+                        $canntDiff[] = [
+                            'line' => $line,
+                            'generated' => $canntText,
+                        ];
+                    }
                 }
                 continue;
             }
