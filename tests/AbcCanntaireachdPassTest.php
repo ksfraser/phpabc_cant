@@ -352,4 +352,21 @@ class AbcCanntaireachdPassTest extends TestCase
         $this->assertNotEmpty($knockOnLines);
         $this->assertStringContainsString('c2 c2', $knockOnLines[0]);
     }
+
+    public function testKnockOnUsesL16WhenDeclared()
+    {
+        $pass = new AbcCanntaireachdPass($this->dict, null, false, true);
+        $lines = [
+            'X:1',
+            'L:1/16',
+            'V:Bagpipes',
+            'A B C',
+        ];
+
+        $result = $pass->process($lines);
+
+        // With L:1/16, quarter note = z4, bar = z4 z4
+        $this->assertStringContainsString('z4 z4', $result['lines'][2]);
+        $this->assertStringContainsString('L:1/16', $result['lines'][1]);
+    }
 }

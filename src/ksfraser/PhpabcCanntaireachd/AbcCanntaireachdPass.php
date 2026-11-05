@@ -423,12 +423,29 @@ class AbcCanntaireachdPass
         }
     }
 
+    // Extract L: time unit denominator (default L:1/8)
+    // Quarter note multiplier = L_denominator / 4
+    //   L:1/8 → z2 (quarter note = 2 eighth notes)
+    //   L:1/16 → z4 (quarter note = 4 sixteenth notes)
+    $lDenominator = 8;
+    foreach ($lines as $line) {
+        $trimmed = trim($line);
+        if (preg_match('/^L:\s*1\/(\d+)/', $trimmed, $m) === 1) {
+            $lDenominator = (int)$m[1];
+            break;
+        }
+    }
+    $quarterNoteMult = max(1, (int)($lDenominator / 4));
+    $restUnit = 'z' . $quarterNoteMult;
+    $restBar = $restUnit . ' ' . $restUnit;
+    $rest12Beats = implode(' | ', array_fill(0, 6, $restBar)) . ' ||';
+
     $knockOn = [];
     $knockOn[] = '%% Knock-on attack roll intro';
 
     foreach ($voiceIds as $voiceId => $_) {
         $isSnare = $this->isSnareVoice($voiceId);
-        $knockOn[] = 'V:' . $voiceId . ' [M:2/4][L:1/8]';
+        $knockOn[] = 'V:' . $voiceId . ' [M:2/4][L:' . '1/' . $lDenominator . ']';
 
         if ($isSnare && $this->pipebandsnare) {
             // Snare knock-on: attack roll in C/D drumline notation
@@ -438,14 +455,14 @@ class AbcCanntaireachdPass
             // Snare knock-on: attack roll in original notation
             $knockOn[] = '!fff! c2 c2 | c/>A/c c/>A/c | (Rc-Rc-Rc-Rc | c2) z2 | (Rc-Rc-Rc-Rc | c2) z2 ||';
         } else {
-            // Other voices: rest for 12 beats (6 measures of z2 in 2/4 with L:1/8)
-            $knockOn[] = 'z2 z2 | z2 z2 | z2 z2 | z2 z2 | z2 z2 | z2 z2 ||';
+            // Other voices: rest for 12 beats using correct L: unit
+            $knockOn[] = $rest12Beats;
         }
     }
 
     $knockOn[] = '%% End knock-on';
     return $knockOn;
-}
+    }
 
     /**
      * Log the pass entry/exit for flow tracing.
