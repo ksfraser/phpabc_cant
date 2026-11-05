@@ -47,6 +47,7 @@ class CLIOptions {
     public $strictMode = false;       // --strict
 
     public $pipebandsnare = false; // --pipebandsnare
+public $knockon = false;       // --knock-on
 
     // Additional hooks seen in some scripts
     public  $voiceOrder = [];
@@ -74,7 +75,7 @@ class CLIOptions {
             'config:', 'save-config:', 'show-config',
             'voice-order:', 'voice-order-config:',
             'transpose-mode:', 'transpose-override:',
-            'no-midi-defaults', 'strict', 'pipebandsnare'
+            'no-midi-defaults', 'strict', 'pipebandsnare', 'knock-on'
         ];
         $parsed = @getopt($short, $long);
         $this->opts = is_array($parsed) ? $parsed : [];
@@ -129,6 +130,7 @@ class CLIOptions {
         if (isset($this->opts['no-midi-defaults'])) $this->noMidiDefaults = true;
         if (isset($this->opts['strict'])) $this->strictMode = true;
         if (isset($this->opts['pipebandsnare'])) $this->pipebandsnare = true;
+        if (isset($this->opts['knock-on'])) $this->knockon = true;
 
         // If getopt returned values, determine leftover positional args using argv
         $positional = [];
@@ -183,6 +185,8 @@ class CLIOptions {
                     $this->strictMode = true;
                 } elseif ($arg === '--pipebandsnare') {
                     $this->pipebandsnare = true;
+                } elseif ($arg === '--knock-on') {
+                    $this->knockon = true;
                 } elseif (preg_match('/^--bars[_-]per[_-]line=(\d+)$/', $arg, $m)) {
                     $this->barsPerLine = (int)$m[1];
                 } elseif (preg_match('/^--interleave[_-]bars=(\d+)$/', $arg, $m)) {
@@ -295,6 +299,9 @@ class CLIOptions {
         if ($this->pipebandsnare) {
             $config->pipebandsnare = true;
         }
+        if ($this->knockon) {
+            $config->knockon = true;
+        }
     }
     
     // Export for debug/logging
@@ -321,6 +328,7 @@ class CLIOptions {
             'noMidiDefaults' => $this->noMidiDefaults,
             'strictMode' => $this->strictMode,
             'pipebandsnare' => $this->pipebandsnare,
+            'knockon' => $this->knockon,
         ];
     }
 }

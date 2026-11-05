@@ -300,4 +300,56 @@ class AbcCanntaireachdPassTest extends TestCase
         $this->assertEquals('A B', $result['lines'][1]);
         $this->assertStringStartsWith('w: ', $result['lines'][2]);
     }
+
+    public function testKnockOnAddsRestsForAllVoices()
+    {
+        $pass = new AbcCanntaireachdPass($this->dict, null, false, true);
+        $lines = [
+            'X:1',
+            'V:Bagpipes',
+            'A B C',
+        ];
+
+        $result = $pass->process($lines);
+
+        // Should have knock-on rest lines before the original voice header
+        $this->assertStringContainsString('%% Knock-on attack roll intro', $result['lines'][0]);
+        $this->assertStringContainsString('V:Bagpipes [M:2/4][L:1/8]', $result['lines'][1]);
+        $this->assertStringContainsString('z2 z2', $result['lines'][2]);
+        $this->assertStringContainsString('%% End knock-on', $result['lines'][3]);
+    }
+
+    public function testKnockOnSnareUsesCDWhenPipeBandSnare()
+    {
+        $pass = new AbcCanntaireachdPass($this->dict, null, true, true);
+        $lines = [
+            'X:1',
+            'V:Snare',
+            'A B',
+        ];
+
+        $result = $pass->process($lines);
+
+        // Snare knock-on should use C/D drumline notation when pipebandsnare is active
+        $knockOnLines = array_values(array_filter($result['lines'], fn ($l) => str_contains($l, '!fff!')));
+        $this->assertNotEmpty($knockOnLines);
+        $this->assertStringContainsString('C C', $knockOnLines[0]);
+    }
+
+    public function testKnockOnSnareOriginalNotationWithoutPipeBandSnare()
+    {
+        $pass = new AbcCanntaireachdPass($this->dict, null, false, true);
+        $lines = [
+            'X:1',
+            'V:Snare',
+            'A B',
+        ];
+
+        $result = $pass->process($lines);
+
+        // Snare knock-on should use original notation without pipebandsnare
+        $knockOnLines = array_values(array_filter($result['lines'], fn ($l) => str_contains($l, '!fff!')));
+        $this->assertNotEmpty($knockOnLines);
+        $this->assertStringContainsString('c2 c2', $knockOnLines[0]);
+    }
 }

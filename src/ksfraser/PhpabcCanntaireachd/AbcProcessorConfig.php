@@ -49,6 +49,9 @@ class AbcProcessorConfig {
     
     // === NEW: Drumline Snare Conversion ===
     public $pipebandsnare = false;
+
+    // === NEW: Knock-on (attack roll intro) ===
+    public $knockon = false;
     
     /**
      * Load configuration from file
@@ -231,6 +234,13 @@ class AbcProcessorConfig {
                 $this->pipebandsnare = $config['drumline']['pipebandsnare'];
             }
         }
+
+        // Merge knock-on section
+        if (isset($config['knockon'])) {
+            if (isset($config['knockon']['enabled'])) {
+                $this->knockon = $config['knockon']['enabled'];
+            }
+        }
     }
     
     /**
@@ -313,6 +323,9 @@ class AbcProcessorConfig {
             ],
             'drumline' => [
                 'pipebandsnare' => $this->pipebandsnare,
+            ],
+            'knockon' => [
+                'enabled' => $this->knockon,
             ],
         ];
     }

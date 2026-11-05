@@ -47,6 +47,9 @@ class AbcCanntaireachdPass
     /** @var bool Whether pipebandsnare drumline conversion is enabled */
     private bool $pipebandsnare;
 
+    /** @var bool Whether knock-on attack roll intro is enabled */
+    private bool $knockon;
+
     /**
      * Constructor for AbcCanntaireachdPass.
      * Uses DI to inject TokenDictionary.
@@ -54,9 +57,10 @@ class AbcCanntaireachdPass
      * @param TokenDictionary|array $dict The token dictionary for translations.
      * @param string[]|null $targetVoices Voice names that receive canntaireachd.
      * @param bool $pipebandsnare Whether pipebandsnare drumline conversion is enabled.
+     * @param bool $knockon Whether knock-on attack roll intro is enabled.
      * @requirement FR7
      */
-    public function __construct($dict, ?array $targetVoices = null, bool $pipebandsnare = false)
+    public function __construct($dict, ?array $targetVoices = null, bool $pipebandsnare = false, bool $knockon = false)
     {
         if ($dict instanceof TokenDictionary) {
             $this->dict = $dict;
@@ -67,6 +71,7 @@ class AbcCanntaireachdPass
         }
         $this->resolver = new TargetVoiceResolver($targetVoices);
         $this->pipebandsnare = $pipebandsnare;
+        $this->knockon = $knockon;
     }
 
     /**
@@ -114,6 +119,11 @@ class AbcCanntaireachdPass
                     $this->collectPitches($trimmed, $snarePitches);
                 }
             }
+        }
+
+        // Knock-on: prepend rest measures before all voices for attack roll intro
+        if ($this->knockon) {
+            $output = array_merge($output, $this->generateKnockOnRests($lines));
         }
 
         $count = count($lines);
@@ -388,6 +398,54 @@ class AbcCanntaireachdPass
         // but bar lines has no syllables to sing.
         return preg_match('/[A-Ga-gzZ]/', $body) === 1;
     }
+
+    /**
+     * Generate knock-on (attack roll intro) measures for all voices.
+     *
+     * Prepends rest measures for each voice so the tune begins with a
+     * 12-beat knock-on intro. When pipebandsnare is active, snare voice
+     * knock-on uses C/D drumline notation.
+     *
+     * @param string[] $lines Original ABC lines (used to discover voices).
+     * @return string[] Knock-on lines to prepend.
+     */
+    private function generateKnockOnRests(array $lines): array
+    {
+    // Discover all voice IDs declared in the file
+    $voiceIds = [];
+    foreach ($lines as $line) {
+        $trimmed = trim($line);
+        if (preg_match('/^V:\s*(\S+)/', $trimmed, $m) === 1) {
+            $voiceIds[$m[1]] = true;
+        }
+        if (preg_match('/^\[V:([^\]]+)\]/', $trimmed, $m) === 1) {
+            $voiceIds[$m[1]] = true;
+        }
+    }
+
+    $knockOn = [];
+    $knockOn[] = '%% Knock-on attack roll intro';
+
+    foreach ($voiceIds as $voiceId => $_) {
+        $isSnare = $this->isSnareVoice($voiceId);
+        $knockOn[] = 'V:' . $voiceId . ' [M:2/4][L:1/8]';
+
+        if ($isSnare && $this->pipebandsnare) {
+            // Snare knock-on: attack roll in C/D drumline notation
+            // c2 c2 = R R, c/>A/c = R-L-R, Rc-Rc-Rc-Rc = roll
+            $knockOn[] = '!fff! C C | C>/D/C C>/D/C | (C-D-C-D | C) z2 | (C-D-C-D | C) z2 ||';
+        } elseif ($isSnare) {
+            // Snare knock-on: attack roll in original notation
+            $knockOn[] = '!fff! c2 c2 | c/>A/c c/>A/c | (Rc-Rc-Rc-Rc | c2) z2 | (Rc-Rc-Rc-Rc | c2) z2 ||';
+        } else {
+            // Other voices: rest for 12 beats (6 measures of z2 in 2/4 with L:1/8)
+            $knockOn[] = 'z2 z2 | z2 z2 | z2 z2 | z2 z2 | z2 z2 | z2 z2 ||';
+        }
+    }
+
+    $knockOn[] = '%% End knock-on';
+    return $knockOn;
+}
 
     /**
      * Log the pass entry/exit for flow tracing.
