@@ -34,7 +34,7 @@ class StaffSeparationParser extends FormattingDirectiveParser implements AbcLine
      * @param mixed $tune
      * @return bool
      */
-    public function parse($line, $tune) {
+    public function parse($line, $tune = null) {
         if (!preg_match('/^%%\s*(staffsep|sysstaffsep)\s+(.+)$/i', trim($line), $matches)) {
             return false;
         }
@@ -44,13 +44,17 @@ class StaffSeparationParser extends FormattingDirectiveParser implements AbcLine
 
         // Validate separation value (should be a valid dimension)
         if (!$this->isValidDimension($value)) {
+            if ($tune !== null) {
             $tune->add(new AbcFormattingLine("%% Invalid $sepType value: $value"));
+            }
             return true;
         }
 
         // Create standardized formatting line
         $correctedLine = "%% $sepType $value";
+        if ($tune !== null) {
         $tune->add(new AbcFormattingLine($correctedLine));
+        }
         return true;
     }
 

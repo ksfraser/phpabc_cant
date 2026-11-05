@@ -13,7 +13,7 @@ class CommentParser implements AbcLineParser {
      * @return bool
      */
     public function canParse($line) {
-        return preg_match('/^%/', trim($line));
+        return (bool) preg_match('/^%/', trim($line));
     }
 
     /**

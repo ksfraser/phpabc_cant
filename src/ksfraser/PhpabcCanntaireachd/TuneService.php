@@ -87,7 +87,7 @@ class TuneService {
         }
 
         // Copy source voice to 'P' and insert as first voice
-        $tune->copyVoice($source, 'P');
+        $tune->copyVoice((string)$source, 'P');
         // Prepend so Bagpipes becomes the first voice output
         $tune->ensureVoiceInsertedFirst('P', $tune->getVoiceBars()['P']);
         // Add a voice header meta entry for Bagpipes

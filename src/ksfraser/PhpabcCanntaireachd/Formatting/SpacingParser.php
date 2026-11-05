@@ -35,7 +35,7 @@ class SpacingParser extends FormattingDirectiveParser implements AbcLineParser
      * @param mixed $tune
      * @return bool
      */
-    public function parse($line, $tune) {
+    public function parse($line, $tune = null) {
         if (!preg_match('/^%%\s*(' . implode('|', self::VALID_SPACING_TYPES) . ')\s+(.+)$/i', trim($line), $matches)) {
             return false;
         }
@@ -45,13 +45,17 @@ class SpacingParser extends FormattingDirectiveParser implements AbcLineParser
 
         // Validate spacing value (should be a valid dimension or number)
         if (!$this->isValidSpacingValue($value)) {
+            if ($tune !== null) {
             $tune->add(new AbcFormattingLine("%% Invalid $spacingType value: $value"));
+            }
             return true;
         }
 
         // Create standardized formatting line
         $correctedLine = "%% $spacingType $value";
+        if ($tune !== null) {
         $tune->add(new AbcFormattingLine($correctedLine));
+        }
         return true;
     }
 

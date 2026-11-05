@@ -43,7 +43,7 @@ class PageWidthParserTest extends TestCase {
         $this->assertTrue($result);
         $lines = $tune->getLines();
         $this->assertCount(1, $lines);
-        $this->assertStringContains('Invalid pagewidth value', $lines[0]->render());
+        $this->assertStringContainsString('Invalid pagewidth value', $lines[0]->render());
     }
 
     public function testValidateValidPageWidth() {

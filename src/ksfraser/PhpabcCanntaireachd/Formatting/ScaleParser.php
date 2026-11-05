@@ -28,7 +28,7 @@ class ScaleParser extends FormattingDirectiveParser implements AbcLineParser
      * @param mixed $tune
      * @return bool
      */
-    public function parse($line, $tune) {
+    public function parse($line, $tune = null) {
         if (!preg_match('/^%%\s*scale\s+(.+)$/i', trim($line), $matches)) {
             return false;
         }
@@ -37,13 +37,17 @@ class ScaleParser extends FormattingDirectiveParser implements AbcLineParser
 
         // Validate scale value (should be a number, typically 0.5 to 2.0)
         if (!$this->isValidScale($value)) {
+            if ($tune !== null) {
             $tune->add(new AbcFormattingLine("%% Invalid scale value: $value (should be between 0.1 and 5.0)"));
+            }
             return true;
         }
 
         // Create standardized formatting line
         $correctedLine = "%% scale $value";
+        if ($tune !== null) {
         $tune->add(new AbcFormattingLine($correctedLine));
+        }
         return true;
     }
 

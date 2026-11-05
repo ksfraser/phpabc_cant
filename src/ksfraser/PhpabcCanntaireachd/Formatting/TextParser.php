@@ -34,7 +34,7 @@ class TextParser extends FormattingDirectiveParser implements AbcLineParser
      * @param mixed $tune
      * @return bool
      */
-    public function parse($line, $tune) {
+    public function parse($line, $tune = null) {
         if (!preg_match('/^%%\s*(text|center)\s+(.+)$/i', trim($line), $matches)) {
             return false;
         }
@@ -44,13 +44,17 @@ class TextParser extends FormattingDirectiveParser implements AbcLineParser
 
         // Basic validation - text content should not be empty
         if (empty($textContent)) {
+            if ($tune !== null) {
             $tune->add(new AbcFormattingLine("%% Invalid $textType directive: empty content"));
+            }
             return true;
         }
 
         // Create standardized formatting line
         $correctedLine = "%% $textType $textContent";
+        if ($tune !== null) {
         $tune->add(new AbcFormattingLine($correctedLine));
+        }
         return true;
     }
 

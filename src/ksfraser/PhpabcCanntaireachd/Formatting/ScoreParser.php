@@ -28,7 +28,7 @@ class ScoreParser extends FormattingDirectiveParser implements AbcLineParser
      * @param mixed $tune
      * @return bool
      */
-    public function parse($line, $tune) {
+    public function parse($line, $tune = null) {
         if (!preg_match('/^%%\s*score\s+(.+)$/i', trim($line), $matches)) {
             return false;
         }
@@ -37,19 +37,25 @@ class ScoreParser extends FormattingDirectiveParser implements AbcLineParser
 
         // Basic validation - score specification should not be empty
         if (empty($scoreSpec)) {
+            if ($tune !== null) {
             $tune->add(new AbcFormattingLine("%% Invalid score specification: empty value"));
+            }
             return true;
         }
 
         // Validate score specification format (basic check for common patterns)
         if (!$this->isValidScoreSpecification($scoreSpec)) {
+            if ($tune !== null) {
             $tune->add(new AbcFormattingLine("%% Invalid score specification: $scoreSpec"));
+            }
             return true;
         }
 
         // Create standardized formatting line
         $correctedLine = "%% score $scoreSpec";
+        if ($tune !== null) {
         $tune->add(new AbcFormattingLine($correctedLine));
+        }
         return true;
     }
 

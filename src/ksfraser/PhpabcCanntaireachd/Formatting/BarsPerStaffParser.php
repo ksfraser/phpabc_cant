@@ -28,7 +28,7 @@ class BarsPerStaffParser extends FormattingDirectiveParser implements AbcLinePar
      * @param mixed $tune
      * @return bool
      */
-    public function parse($line, $tune) {
+    public function parse($line, $tune = null) {
         if (!preg_match('/^%%\s*barsperstaff\s+(.+)$/i', trim($line), $matches)) {
             return false;
         }
@@ -37,13 +37,17 @@ class BarsPerStaffParser extends FormattingDirectiveParser implements AbcLinePar
 
         // Validate bars per staff value (should be a positive integer)
         if (!$this->isValidBarsPerStaff($value)) {
+            if ($tune !== null) {
             $tune->add(new AbcFormattingLine("%% Invalid barsperstaff value: $value"));
+            }
             return true;
         }
 
         // Create standardized formatting line
         $correctedLine = "%% barsperstaff $value";
+        if ($tune !== null) {
         $tune->add(new AbcFormattingLine($correctedLine));
+        }
         return true;
     }
 

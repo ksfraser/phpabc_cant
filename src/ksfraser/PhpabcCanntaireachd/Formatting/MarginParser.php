@@ -30,7 +30,7 @@ class MarginParser extends FormattingDirectiveParser implements AbcLineParser
      * @param mixed $tune
      * @return bool
      */
-    public function parse($line, $tune) {
+    public function parse($line, $tune = null) {
         if (!preg_match('/^%%\s*(leftmargin|rightmargin|topmargin|bottommargin)\s+(.+)$/i', trim($line), $matches)) {
             return false;
         }
@@ -40,13 +40,17 @@ class MarginParser extends FormattingDirectiveParser implements AbcLineParser
 
         // Validate margin value
         if (!$this->isValidDimension($value)) {
+            if ($tune !== null) {
             $tune->add(new AbcFormattingLine("%% Invalid $marginType value: $value"));
+            }
             return true;
         }
 
         // Create standardized formatting line
         $correctedLine = "%% $marginType $value";
+        if ($tune !== null) {
         $tune->add(new AbcFormattingLine($correctedLine));
+        }
         return true;
     }
 

@@ -26,7 +26,7 @@ class FormattingParser implements AbcLineParser
      * @param mixed $tune
      * @return bool
      */
-    public function parse($line, $tune) {
+    public function parse($line, $tune = null) {
         if (!$this->canParse($line)) {
             return false;
         }
@@ -56,7 +56,9 @@ class FormattingParser implements AbcLineParser
         }
 
         // Fallback: handle unknown formatting directives
+        if ($tune !== null) {
         $tune->add(new AbcFormattingLine($line));
+        }
         return true;
     }
 

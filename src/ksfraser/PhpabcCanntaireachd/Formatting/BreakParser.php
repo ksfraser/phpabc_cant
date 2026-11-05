@@ -34,7 +34,7 @@ class BreakParser extends FormattingDirectiveParser implements AbcLineParser
      * @param mixed $tune
      * @return bool
      */
-    public function parse($line, $tune) {
+    public function parse($line, $tune = null) {
         if (!preg_match('/^%%\s*(staffbreak|linebreak)(\s+(.+))?$/i', trim($line), $matches)) {
             return false;
         }
@@ -46,7 +46,9 @@ class BreakParser extends FormattingDirectiveParser implements AbcLineParser
         if ($value !== null && !empty($value)) {
             // For now, accept numeric values or specific keywords
             if (!preg_match('/^(force|\d+|\d+\.\d+)$/i', $value)) {
+                if ($tune !== null) {
                 $tune->add(new AbcFormattingLine("%% Invalid $breakType value: $value"));
+                }
                 return true;
             }
         }
@@ -56,7 +58,9 @@ class BreakParser extends FormattingDirectiveParser implements AbcLineParser
         if ($value !== null && !empty($value)) {
             $correctedLine .= " $value";
         }
+        if ($tune !== null) {
         $tune->add(new AbcFormattingLine($correctedLine));
+        }
         return true;
     }
 

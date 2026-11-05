@@ -28,7 +28,7 @@ class PageWidthParser extends FormattingDirectiveParser implements AbcLineParser
      * @param mixed $tune
      * @return bool
      */
-    public function parse($line, $tune) {
+    public function parse($line, $tune = null) {
         if (!preg_match('/^%%\s*pagewidth\s+(.+)$/i', trim($line), $matches)) {
             return false;
         }
@@ -37,13 +37,17 @@ class PageWidthParser extends FormattingDirectiveParser implements AbcLineParser
 
         // Validate page width value (should be a valid dimension like 8.5in, 21cm, etc.)
         if (!$this->isValidDimension($value)) {
+            if ($tune !== null) {
             $tune->add(new AbcFormattingLine("%% Invalid pagewidth value: $value"));
+            }
             return true;
         }
 
         // Create standardized formatting line
         $correctedLine = "%% pagewidth $value";
+        if ($tune !== null) {
         $tune->add(new AbcFormattingLine($correctedLine));
+        }
         return true;
     }
 

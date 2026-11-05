@@ -47,6 +47,9 @@ class AbcProcessorConfig {
     public $timingValidation = true;
     public $strictMode = false;
     
+    // === NEW: Drumline Snare Conversion ===
+    public $pipebandsnare = false;
+    
     /**
      * Load configuration from file
      * 
@@ -221,6 +224,13 @@ class AbcProcessorConfig {
                 $this->strictMode = $config['validation']['strict_mode'];
             }
         }
+        
+        // Merge drumline section
+        if (isset($config['drumline'])) {
+            if (isset($config['drumline']['pipebandsnare'])) {
+                $this->pipebandsnare = $config['drumline']['pipebandsnare'];
+            }
+        }
     }
     
     /**
@@ -300,6 +310,9 @@ class AbcProcessorConfig {
             'validation' => [
                 'timing_validation' => $this->timingValidation,
                 'strict_mode' => $this->strictMode,
+            ],
+            'drumline' => [
+                'pipebandsnare' => $this->pipebandsnare,
             ],
         ];
     }

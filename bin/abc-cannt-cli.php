@@ -108,6 +108,7 @@ $outputFile = $cli->outputFile;
 $errorFile = $cli->errorFile;
 $canntDiffFile = $cli->canntDiffFile;
 $updateVoiceNamesFromMidi = $cli->updateVoiceNamesFromMidi;
+$pipebandsnare = $cli->pipebandsnare;
 $verbose = isset($cli->opts['v']) || isset($cli->opts['verbose']);
 
 if (!$file) {
@@ -136,7 +137,7 @@ $dict = new TokenDictionary();
 $config = [
     'updateVoiceNamesFromMidi' => $updateVoiceNamesFromMidi
 ];
-$result = AbcProcessor::process($abcContent, $dict, null, $convert, $logFlow);
+$result = AbcProcessor::process($abcContent, $dict, null, $convert, $logFlow, $pipebandsnare);
 
 $outputMsg = "ABC Canntaireachd processing completed\n";
 $outputMsg .= "✓ File: $file\n";
@@ -233,6 +234,7 @@ Required Arguments:
 
 Processing Options:
   --convert, -c           Add canntaireachd lines to melody/bagpipe voices
+  --pipebandsnare         Convert V:Snare voices to drumline C/D notation
   --output, -o <file>     Output file for processed ABC content
   --errorfile, -e <file>  Output file for error messages and logs
   --canntdiff, -d <file>  Output file for canntaireachd differences

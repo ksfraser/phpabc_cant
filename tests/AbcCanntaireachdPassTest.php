@@ -239,4 +239,65 @@ class AbcCanntaireachdPassTest extends TestCase
         $this->assertEquals('A B C |TIMING ERROR|', $result['lines'][1]);
         $this->assertStringStartsWith('w: ', $result['lines'][2]);
     }
+
+    public function testPipeBandSnareConvertsTwoNotesToCD()
+    {
+        $pass = new AbcCanntaireachdPass($this->dict, null, true);
+        $lines = [
+            'V:Snare',
+            'A B'
+        ];
+
+        $result = $pass->process($lines);
+
+        // Two distinct pitches: A (lower) → C (Left/la), B (higher) → D (Right/ra)
+        $this->assertCount(3, $result['lines']);
+        $this->assertStringContainsString('C D', $result['lines'][1]);
+        $this->assertStringContainsString('la ra', $result['lines'][2]);
+    }
+
+    public function testPipeBandSnareOnlyTwoNotesAllowed()
+    {
+        $pass = new AbcCanntaireachdPass($this->dict, null, true);
+        $lines = [
+            'V:Snare',
+            'A B C'  // Three distinct pitches - should not convert
+        ];
+
+        $result = $pass->process($lines);
+
+        // Should leave unchanged when not exactly 2 pitches
+        $this->assertEquals('A B C', $result['lines'][1]);
+    }
+
+    public function testPipeBandSnareHigherPitchBecomesD()
+    {
+        $pass = new AbcCanntaireachdPass($this->dict, null, true);
+        // Lowercase notes are higher pitch than uppercase
+        $lines = [
+            'V:Snare name="Snare Drum"',
+            'A b'
+        ];
+
+        $result = $pass->process($lines);
+
+        // A is lower → C (Left), b is higher → D (Right)
+        $this->assertStringContainsString('C D', $result['lines'][1]);
+        $this->assertStringContainsString('la ra', $result['lines'][2]);
+    }
+
+    public function testPipeBandSnareNonSnareVoiceUnaffected()
+    {
+        $pass = new AbcCanntaireachdPass($this->dict, null, true);
+        $lines = [
+            'V:Bagpipes',
+            'A B'
+        ];
+
+        $result = $pass->process($lines);
+
+        // Bagpipes voice should not be converted to C/D
+        $this->assertEquals('A B', $result['lines'][1]);
+        $this->assertStringStartsWith('w: ', $result['lines'][2]);
+    }
 }

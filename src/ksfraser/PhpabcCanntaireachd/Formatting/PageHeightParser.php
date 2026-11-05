@@ -28,7 +28,7 @@ class PageHeightParser extends FormattingDirectiveParser implements AbcLineParse
      * @param mixed $tune
      * @return bool
      */
-    public function parse($line, $tune) {
+    public function parse($line, $tune = null) {
         if (!preg_match('/^%%\s*pagesheight\s+(.+)$/i', trim($line), $matches)) {
             return false;
         }
@@ -37,13 +37,17 @@ class PageHeightParser extends FormattingDirectiveParser implements AbcLineParse
 
         // Validate page height value (should be a valid dimension like 11in, 29.7cm, etc.)
         if (!$this->isValidDimension($value)) {
+            if ($tune !== null) {
             $tune->add(new AbcFormattingLine("%% Invalid pagesheight value: $value"));
+            }
             return true;
         }
 
         // Create standardized formatting line
         $correctedLine = "%% pagesheight $value";
+        if ($tune !== null) {
         $tune->add(new AbcFormattingLine($correctedLine));
+        }
         return true;
     }
 

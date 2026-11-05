@@ -44,15 +44,19 @@ class AbcCanntaireachdPass
     /** @var TargetVoiceResolver */
     private TargetVoiceResolver $resolver;
 
+    /** @var bool Whether pipebandsnare drumline conversion is enabled */
+    private bool $pipebandsnare;
+
     /**
      * Constructor for AbcCanntaireachdPass.
      * Uses DI to inject TokenDictionary.
      *
      * @param TokenDictionary|array $dict The token dictionary for translations.
      * @param string[]|null $targetVoices Voice names that receive canntaireachd.
+     * @param bool $pipebandsnare Whether pipebandsnare drumline conversion is enabled.
      * @requirement FR7
      */
-    public function __construct($dict, ?array $targetVoices = null)
+    public function __construct($dict, ?array $targetVoices = null, bool $pipebandsnare = false)
     {
         if ($dict instanceof TokenDictionary) {
             $this->dict = $dict;
@@ -62,6 +66,7 @@ class AbcCanntaireachdPass
             $this->dict = $td;
         }
         $this->resolver = new TargetVoiceResolver($targetVoices);
+        $this->pipebandsnare = $pipebandsnare;
     }
 
     /**
@@ -85,6 +90,31 @@ class AbcCanntaireachdPass
         $voiceNames = $this->resolver->collectVoiceNames($lines);
         $currentVoiceId = null;
         $currentVoiceName = null;
+
+        // PipeBandSnare: two-pass conversion of snare voices to C/D drumline notation
+        $snareVoiceIds = [];
+        $snarePitches = [];
+        if ($this->pipebandsnare) {
+            $scanVoiceId = null;
+            foreach ($lines as $line) {
+                $trimmed = trim($line);
+                if (preg_match('/^V:\s*(\S+)(.*)$/', $trimmed, $matches) === 1) {
+                    $scanVoiceId = $matches[1];
+                    $vname = TargetVoiceResolver::extractName($matches[2]);
+                    if ($this->isSnareVoice($scanVoiceId, $vname)) {
+                        $snareVoiceIds[$scanVoiceId] = true;
+                    }
+                    continue;
+                }
+                if (preg_match('/^\[V:([^\]]+)\]/', $trimmed, $vm) === 1) {
+                    $scanVoiceId = $vm[1];
+                    continue;
+                }
+                if (isset($snareVoiceIds[$scanVoiceId ?? '']) && $trimmed !== '' && !str_starts_with($trimmed, '%') && !preg_match('/^[A-Za-z]:/', $trimmed)) {
+                    $this->collectPitches($trimmed, $snarePitches);
+                }
+            }
+        }
 
         $count = count($lines);
         for ($i = 0; $i < $count; $i++) {
@@ -116,6 +146,18 @@ class AbcCanntaireachdPass
                 $currentVoiceName = $voiceNames[$currentVoiceId] ?? null;
             }
 
+            // PipeBandSnare: convert snare voice notes to C/D drumline notation
+            if ($this->pipebandsnare && isset($snareVoiceIds[$currentVoiceId ?? '']) && $this->isMusicLine($line)) {
+                $converted = $this->convertToDrumline($line, $snarePitches);
+                $output[] = $converted;
+                // Generate canntaireachd for drumline: C=la (Left), D=ra (Right)
+                $canntText = $this->generateDrumlineCannt($converted, $snarePitches);
+                if ($canntText !== '') {
+                    $output[] = 'w: ' . $canntText;
+                }
+                continue;
+            }
+
             $isTarget = $this->resolver->isTarget($currentVoiceId, $currentVoiceName);
             if (!$isTarget || !$this->isMusicLine($line)) {
                 $output[] = $line;
@@ -141,6 +183,111 @@ class AbcCanntaireachdPass
         }
 
         return ['lines' => $output, 'canntDiff' => $canntDiff];
+    }
+
+    /**
+     * Check if a voice is a snare/drumline voice.
+     */
+    private function isSnareVoice(?string $voiceId, ?string $voiceName = null): bool
+    {
+        $value = strtolower(trim($voiceId ?? ''));
+        if ($value !== '' && ($value === 'snare' || str_starts_with($value, 'snare') || str_ends_with($value, 'snare'))) {
+            return true;
+        }
+        if ($voiceName !== null) {
+            $name = strtolower(trim($voiceName));
+            if ($name !== '' && ($name === 'snare' || str_starts_with($name, 'snare') || str_ends_with($name, 'snare'))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Collect all ABC note pitches from a music line body.
+     */
+    private function collectPitches(string $body, array &$pitches): void
+    {
+        // Match notes: A-G, a-g, optionally with accidentals (#, b, ^, =, _) and octave markers (, ')
+        preg_match_all('/[A-Ga-g][#^=_b]?[,]*[\']*/', $body, $matches);
+        foreach ($matches[0] as $note) {
+            $pitches[$note] = true;
+        }
+    }
+
+    /**
+     * Convert a music line to drumline C/D notation.
+     * Higher pitch → D (Right), lower pitch → C (Left).
+     */
+    private function convertToDrumline(string $line, array $pitches): string
+    {
+        if (count($pitches) !== 2) {
+            // Not exactly 2 distinct pitches - leave unchanged
+            return $line;
+        }
+
+        // Sort pitches by MIDI-ish value: uppercase = lower octave (lower pitch), lowercase = higher octave
+        // Within same case: C < D < E < F < G < A < B
+        $pitchList = array_keys($pitches);
+        usort($pitchList, function ($a, $b) {
+            return $this->pitchValue($a) <=> $this->pitchValue($b);
+        });
+
+        $lowerPitch = $pitchList[0]; // → C (Left)
+        $upperPitch = $pitchList[1]; // → D (Right)
+
+        // Replace all occurrences of lowerPitch with C, upperPitch with D
+        $result = $line;
+        // Need word-boundary aware replacement to avoid partial matches
+        $result = preg_replace('/\b' . preg_quote($lowerPitch, '/') . '\b/i', 'C', $result);
+        $result = preg_replace('/\b' . preg_quote($upperPitch, '/') . '\b/i', 'D', $result);
+
+        return $result;
+    }
+
+    /**
+     * Get a numeric pitch value for sorting.
+     */
+    private function pitchValue(string $note): int
+    {
+        $base = strtoupper($note[0]);
+        $order = ['C' => 0, 'D' => 1, 'E' => 2, 'F' => 3, 'G' => 4, 'A' => 5, 'B' => 6];
+        $baseVal = $order[$base] ?? 0;
+        $isLowercase = ctype_lower($note);
+        // Lowercase notes are higher octave (higher pitch)
+        return $isLowercase ? $baseVal + 7 : $baseVal;
+    }
+
+    /**
+     * Generate drumline canntaireachd: C=la (Left), D=ra (Right).
+     */
+    private function generateDrumlineCannt(string $line, array $pitches): string
+    {
+        if (count($pitches) !== 2) {
+            return '';
+        }
+
+        $pitchList = array_keys($pitches);
+        usort($pitchList, function ($a, $b) {
+            return $this->pitchValue($a) <=> $this->pitchValue($b);
+        });
+
+        $lowerPitch = $pitchList[0]; // → C (Left) → la
+        $upperPitch = $pitchList[1]; // → D (Right) → ra
+
+        $canntParts = [];
+        // Extract notes from the line and map to syllables
+        preg_match_all('/[A-Ga-g]/', $line, $matches);
+        foreach ($matches[0] as $note) {
+            $upper = strtoupper($note);
+            if ($upper === 'C') {
+                $canntParts[] = 'la';
+            } elseif ($upper === 'D') {
+                $canntParts[] = 'ra';
+            }
+        }
+
+        return implode(' ', $canntParts);
     }
 
     /**

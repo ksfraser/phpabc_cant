@@ -35,7 +35,7 @@ class FontParser extends FormattingDirectiveParser implements AbcLineParser
      * @param mixed $tune
      * @return bool
      */
-    public function parse($line, $tune) {
+    public function parse($line, $tune = null) {
         if (!preg_match('/^%%\s*(' . implode('|', self::VALID_FONT_TYPES) . ')\s+(.+)$/i', trim($line), $matches)) {
             return false;
         }
@@ -45,13 +45,17 @@ class FontParser extends FormattingDirectiveParser implements AbcLineParser
 
         // Basic validation - font spec should not be empty
         if (empty($fontSpec)) {
-            $tune->add(new AbcFormattingLine("%% Invalid $fontType specification: empty value"));
+            if ($tune !== null) {
+                $tune->add(new AbcFormattingLine("%% Invalid $fontType specification: empty value"));
+            }
             return true;
         }
 
         // Create standardized formatting line
         $correctedLine = "%% $fontType $fontSpec";
-        $tune->add(new AbcFormattingLine($correctedLine));
+        if ($tune !== null) {
+            $tune->add(new AbcFormattingLine($correctedLine));
+        }
         return true;
     }
 

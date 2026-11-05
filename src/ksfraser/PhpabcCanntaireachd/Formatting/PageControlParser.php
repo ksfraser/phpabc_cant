@@ -34,7 +34,7 @@ class PageControlParser extends FormattingDirectiveParser implements AbcLinePars
      * @param mixed $tune
      * @return bool
      */
-    public function parse($line, $tune) {
+    public function parse($line, $tune = null) {
         if (!preg_match('/^%%\s*(newpage|continueall|breakall)(\s+(.+))?$/i', trim($line), $matches)) {
             return false;
         }
@@ -46,7 +46,9 @@ class PageControlParser extends FormattingDirectiveParser implements AbcLinePars
         if ($value !== null && !empty($value)) {
             // For now, accept any value - could be enhanced with specific validation
             if (!preg_match('/^(on|off|\d+|\d+\.\d+|[a-zA-Z0-9\s]+)$/i', $value)) {
+                if ($tune !== null) {
                 $tune->add(new AbcFormattingLine("%% Invalid $controlType value: $value"));
+                }
                 return true;
             }
         }
@@ -56,7 +58,9 @@ class PageControlParser extends FormattingDirectiveParser implements AbcLinePars
         if ($value !== null && !empty($value)) {
             $correctedLine .= " $value";
         }
+        if ($tune !== null) {
         $tune->add(new AbcFormattingLine($correctedLine));
+        }
         return true;
     }
 

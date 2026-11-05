@@ -28,7 +28,7 @@ class StaffWidthParser extends FormattingDirectiveParser implements AbcLineParse
      * @param mixed $tune
      * @return bool
      */
-    public function parse($line, $tune) {
+    public function parse($line, $tune = null) {
         if (!preg_match('/^%%\s*staffwidth\s+(.+)$/i', trim($line), $matches)) {
             return false;
         }
@@ -37,13 +37,17 @@ class StaffWidthParser extends FormattingDirectiveParser implements AbcLineParse
 
         // Validate staffwidth value (should be a valid dimension)
         if (!$this->isValidDimension($value)) {
+            if ($tune !== null) {
             $tune->add(new AbcFormattingLine("%% Invalid staffwidth value: $value"));
+            }
             return true;
         }
 
         // Create standardized formatting line
         $correctedLine = "%% staffwidth $value";
+        if ($tune !== null) {
         $tune->add(new AbcFormattingLine($correctedLine));
+        }
         return true;
     }
 

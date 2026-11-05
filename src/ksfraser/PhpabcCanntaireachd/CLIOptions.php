@@ -46,6 +46,8 @@ class CLIOptions {
     public $noMidiDefaults = false;   // --no-midi-defaults
     public $strictMode = false;       // --strict
 
+    public $pipebandsnare = false; // --pipebandsnare
+
     // Additional hooks seen in some scripts
     public  $voiceOrder = [];
     public  $exclude = [];
@@ -72,7 +74,7 @@ class CLIOptions {
             'config:', 'save-config:', 'show-config',
             'voice-order:', 'voice-order-config:',
             'transpose-mode:', 'transpose-override:',
-            'no-midi-defaults', 'strict'
+            'no-midi-defaults', 'strict', 'pipebandsnare'
         ];
         $parsed = @getopt($short, $long);
         $this->opts = is_array($parsed) ? $parsed : [];
@@ -126,6 +128,7 @@ class CLIOptions {
         
         if (isset($this->opts['no-midi-defaults'])) $this->noMidiDefaults = true;
         if (isset($this->opts['strict'])) $this->strictMode = true;
+        if (isset($this->opts['pipebandsnare'])) $this->pipebandsnare = true;
 
         // If getopt returned values, determine leftover positional args using argv
         $positional = [];
@@ -178,6 +181,8 @@ class CLIOptions {
                     $this->noMidiDefaults = true;
                 } elseif ($arg === '--strict') {
                     $this->strictMode = true;
+                } elseif ($arg === '--pipebandsnare') {
+                    $this->pipebandsnare = true;
                 } elseif (preg_match('/^--bars[_-]per[_-]line=(\d+)$/', $arg, $m)) {
                     $this->barsPerLine = (int)$m[1];
                 } elseif (preg_match('/^--interleave[_-]bars=(\d+)$/', $arg, $m)) {
@@ -287,6 +292,9 @@ class CLIOptions {
         if ($this->strictMode) {
             $config->strictMode = true;
         }
+        if ($this->pipebandsnare) {
+            $config->pipebandsnare = true;
+        }
     }
     
     // Export for debug/logging
@@ -312,6 +320,7 @@ class CLIOptions {
             'transposeOverride' => $this->transposeOverride,
             'noMidiDefaults' => $this->noMidiDefaults,
             'strictMode' => $this->strictMode,
+            'pipebandsnare' => $this->pipebandsnare,
         ];
     }
 }

@@ -53,10 +53,10 @@ $abc['{g}d']['cannt'] = 'ha';
 $abc['{g}e']['cannt'] = 'he';
 $abc['{g}f']['cannt'] = 'che';
 //D Gracenotes
-$abc['{d}G']['cannt'] = 'dam';
-$abc['{d}A']['cannt'] = 'dan';
-$abc['{d}B']['cannt'] = 'do';
-$abc['{d}c']['cannt'] = 'do';
+$abc['{d}G']['cannt'] = 'tam';
+$abc['{d}A']['cannt'] = 'tan';
+$abc['{d}B']['cannt'] = 'to';
+$abc['{d}c']['cannt'] = 'to';
 //E Gracenotes
 $abc['{e}G']['cannt'] = 'um';
 $abc['{e}A']['cannt'] = 'un';
@@ -73,8 +73,8 @@ $abc['{a}e']['cannt'] = 'he';
 $abc['{a}f']['cannt'] = 'che';
 $abc['{a}g']['cannt'] = 'chi';
 //Strikes
-$abc['{G}A']['cannt'] = 'men';
-$abc['{AG}A']['cannt'] = 'men';
+$abc['{G}A']['cannt'] = 'den';
+$abc['{AG}A']['cannt'] = 'enden';
 $abc['{G}B']['cannt'] = 'mo';
 $abc['{BG}B']['cannt'] = 'omo';
 $abc['{G}c']['cannt'] = 'mo';
@@ -87,7 +87,7 @@ $abc['{A}e']['cannt'] = 'ene';
 $abc['{eA}e']['cannt'] = 'ene';
 $abc['{e}f']['cannt'] = 'ere';
 $abc['{fe}f']['cannt'] = 'ere';
-$abc['{f}g']['cannt'] = 'redi';
+$abc['{f}g']['cannt'] = 'li';
 $abc['{gf}g']['cannt'] = 'chedi';
 $abc['{g}a']['cannt'] = 'li';		//strike
 $abc['{ag}a']['cannt'] = 'dili';
@@ -178,9 +178,9 @@ $abc["{gf}g"]['cannt'] = 'vili';
 $abc["{ag}a"]['cannt'] = 'dili';
 //Grip
 $abc["{GdG}G"]['cannt'] = 'drem';
-$abc["{GdG}A"]['cannt'] = 'bain';
-$abc["{GdG}B"]['cannt'] = 'tro';
-$abc["{GdG}c"]['cannt'] = 'dro';
+$abc["{GdG}A"]['cannt'] = 'dren';
+$abc["{GdG}B"]['cannt'] = 'dro';
+$abc["{GdG}c"]['cannt'] = 'tro';
 $abc["{GdG}d"]['cannt'] = 'dada';
 $abc["{GdG}e"]['cannt'] = 'bare';
 $abc["{GdG}f"]['cannt'] = 'barhe';

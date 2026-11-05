@@ -30,7 +30,7 @@ class PageOrientationParser extends FormattingDirectiveParser implements AbcLine
      * @param mixed $tune
      * @return bool
      */
-    public function parse($line, $tune) {
+    public function parse($line, $tune = null) {
         $directiveType = $this->getDirectiveType($line);
 
         if (!preg_match('/^%%\s*(landscape|portrait)(\s+(on|off))?$/i', trim($line), $matches)) {
@@ -42,19 +42,25 @@ class PageOrientationParser extends FormattingDirectiveParser implements AbcLine
 
         // Validate orientation
         if (!in_array($orientation, ['landscape', 'portrait'])) {
+            if ($tune !== null) {
             $tune->add(new AbcFormattingLine("%% Invalid page orientation: $orientation"));
+            }
             return true;
         }
 
         // Validate state
         if (!in_array($state, ['on', 'off'])) {
+            if ($tune !== null) {
             $tune->add(new AbcFormattingLine("%% Invalid orientation state: $state (must be 'on' or 'off')"));
+            }
             return true;
         }
 
         // Create standardized formatting line
         $correctedLine = "%% $orientation $state";
+        if ($tune !== null) {
         $tune->add(new AbcFormattingLine($correctedLine));
+        }
         return true;
     }
 
