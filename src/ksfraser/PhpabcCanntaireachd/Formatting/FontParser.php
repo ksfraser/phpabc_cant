@@ -17,7 +17,8 @@ class FontParser extends FormattingDirectiveParser implements AbcLineParser
 {
     private const VALID_FONT_TYPES = [
         'titlefont', 'subtitlefont', 'composerfont', 'footerfont',
-        'vocalfont', 'gchordfont', 'textfont', 'wordsfont'
+        'vocalfont', 'gchordfont', 'textfont', 'wordsfont',
+        'tempofont', 'partsfont', 'voicefont', 'annotationfont'
     ];
 
     /**
@@ -27,7 +28,8 @@ class FontParser extends FormattingDirectiveParser implements AbcLineParser
     public function canParse($line) {
         $directiveType = $this->getDirectiveType($line);
         return $this->isFormattingDirective($line) &&
-               in_array($directiveType, self::VALID_FONT_TYPES);
+               in_array($directiveType, self::VALID_FONT_TYPES) &&
+               preg_match('/\S/', trim(preg_replace('/^%%\s*\w+\s*/i', '', $line)));
     }
 
     /**
@@ -48,7 +50,16 @@ class FontParser extends FormattingDirectiveParser implements AbcLineParser
             if ($tune !== null) {
                 $tune->add(new AbcFormattingLine("%% Invalid $fontType specification: empty value"));
             }
-            return true;
+            return false;
+        }
+
+        // Extract font name and size (size is last token if numeric)
+        $fontParts = preg_split('/\s+/', $fontSpec);
+        $fontSize = '';
+        $fontName = $fontSpec;
+        if (count($fontParts) > 1 && is_numeric(end($fontParts))) {
+            $fontSize = array_pop($fontParts);
+            $fontName = implode(' ', $fontParts);
         }
 
         // Create standardized formatting line
@@ -56,7 +67,13 @@ class FontParser extends FormattingDirectiveParser implements AbcLineParser
         if ($tune !== null) {
             $tune->add(new AbcFormattingLine($correctedLine));
         }
-        return true;
+
+        return [
+            'directive' => $fontType,
+            'value' => $fontSpec,
+            'font_name' => $fontName,
+            'font_size' => $fontSize,
+        ];
     }
 
     /**
@@ -69,6 +86,16 @@ class FontParser extends FormattingDirectiveParser implements AbcLineParser
         }
 
         $fontSpec = trim($matches[2]);
-        return !empty($fontSpec);
+        if (empty($fontSpec)) {
+            return false;
+        }
+
+        // Must have font size (numeric last token)
+        $fontParts = preg_split('/\s+/', $fontSpec);
+        if (count($fontParts) < 2 || !is_numeric(end($fontParts))) {
+            return false;
+        }
+
+        return true;
     }
 }
