@@ -502,4 +502,124 @@ class AbcCanntaireachdPassTest extends TestCase
         // No V:Drumline voice should be created
         $this->assertStringNotContainsString('V:Drumline', implode("\n", $result['lines']));
     }
+
+    public function testMusecoreAllNotesBecomeC()
+    {
+        $pass = new AbcCanntaireachdPass($this->dict, null, true, false, false, true);
+        $lines = [
+            'X:1',
+            'V:Snare',
+            'M:2/4',
+            'L:1/8',
+            'A B D',
+        ];
+
+        $result = $pass->process($lines);
+
+        // Drumline voice created with all notes as C
+        $drumLines = array_values(array_filter($result['lines'], fn ($l) => str_contains($l, 'V:Drumline')));
+        $this->assertNotEmpty($drumLines);
+
+        // All notes in drumline voice should be C, no D
+        $drumlineMusicLines = array_values(array_filter($result['lines'], fn ($l) =>
+            str_starts_with(trim($l), '|') && str_contains($l, 'C') && !str_contains($l, 'D')
+        ));
+        $this->assertNotEmpty($drumlineMusicLines);
+    }
+
+    public function testMusecoreFlamsAndDragsBecomeV()
+    {
+        $pass = new AbcCanntaireachdPass($this->dict, null, true, false, false, true);
+        $lines = [
+            'X:1',
+            'V:Snare',
+            'M:2/4',
+            'L:1/8',
+            '{C}A {CC}B',
+        ];
+
+        $result = $pass->process($lines);
+
+        // Flams {C} and drags {CC} should become V (accent)
+        $drumlineMusicLines = array_values(array_filter($result['lines'], fn ($l) => str_contains($l, 'VC') || str_contains($l, 'Vc')));
+        $this->assertNotEmpty($drumlineMusicLines, 'Expected VC or Vc in drumline, got: ' . implode("\n", $result['lines']));
+        $this->assertStringNotContainsString('{C}', implode("\n", $drumlineMusicLines));
+        $this->assertStringNotContainsString('{CC}', implode("\n", $drumlineMusicLines));
+    }
+
+    public function testMusecoreRollsBecomeR()
+    {
+        $pass = new AbcCanntaireachdPass($this->dict, null, true, false, false, true);
+        $lines = [
+            'X:1',
+            'V:Snare',
+            'M:2/4',
+            'L:1/8',
+            'r',
+        ];
+
+        $result = $pass->process($lines);
+
+        // Eighth note roll r → (R.
+        $drumlineMusicLines = array_values(array_filter($result['lines'], fn ($l) => str_contains($l, '(R.')));
+        $this->assertNotEmpty($drumlineMusicLines, 'Expected (R. in drumline, got: ' . implode("\n", $result['lines']));
+    }
+
+    public function testMusecoreQuarterRollSubdivides()
+    {
+        $pass = new AbcCanntaireachdPass($this->dict, null, true, false, false, true);
+        $lines = [
+            'X:1',
+            'V:Snare',
+            'M:2/4',
+            'L:1/8',
+            'C2',
+        ];
+
+        $result = $pass->process($lines);
+
+        // Quarter note C2 → CC (2x eighths) in drumline voice
+        $drumlineMusicLines = array_values(array_filter($result['lines'], fn ($l) => str_contains($l, 'CC')));
+        $this->assertNotEmpty($drumlineMusicLines, 'Expected CC in drumline, got: ' . implode("\n", $result['lines']));
+        // Original C2 may still appear in snare voice, but drumline should have CC
+        $this->assertStringContainsString('| CC |', implode("\n", $drumlineMusicLines));
+    }
+
+    public function testMusecoreLargerThanQuarterSubdivides()
+    {
+        $pass = new AbcCanntaireachdPass($this->dict, null, true, false, false, true);
+        $lines = [
+            'X:1',
+            'V:Snare',
+            'M:2/4',
+            'L:1/8',
+            'C4',
+        ];
+
+        $result = $pass->process($lines);
+
+        // Half note C4 → CCCC (subdivide to eighths) in drumline voice
+        $drumlineMusicLines = array_values(array_filter($result['lines'], fn ($l) => str_contains($l, 'CCCC')));
+        $this->assertNotEmpty($drumlineMusicLines, 'Expected CCCC in drumline, got: ' . implode("\n", $result['lines']));
+        $this->assertStringContainsString('| CCCC |', implode("\n", $drumlineMusicLines));
+    }
+
+    public function testMusecoreCanntAllLa()
+    {
+        $pass = new AbcCanntaireachdPass($this->dict, null, true, false, false, true);
+        $lines = [
+            'X:1',
+            'V:Snare',
+            'M:2/4',
+            'L:1/8',
+            'C C C',
+        ];
+
+        $result = $pass->process($lines);
+
+        // All C notes → la canntaireachd
+        $wLines = array_values(array_filter($result['lines'], fn ($l) => str_starts_with($l, 'w: ')));
+        $this->assertNotEmpty($wLines);
+        $this->assertStringContainsString('la la la', $wLines[0]);
+    }
 }

@@ -55,6 +55,9 @@ class AbcProcessorConfig {
 
     // === NEW: Voice line prefixes ===
     public $voiceLines = false;
+
+    // === NEW: MuseScore Marching Snare compatibility ===
+    public $musescore = false;
     
     /**
      * Load configuration from file
@@ -251,6 +254,13 @@ class AbcProcessorConfig {
                 $this->voiceLines = $config['voice_lines']['enabled'];
             }
         }
+
+        // Merge musescore section
+        if (isset($config['musescore'])) {
+            if (isset($config['musescore']['enabled'])) {
+                $this->musescore = $config['musescore']['enabled'];
+            }
+        }
     }
     
     /**
@@ -339,6 +349,9 @@ class AbcProcessorConfig {
             ],
             'voice_lines' => [
                 'enabled' => $this->voiceLines,
+            ],
+            'musescore' => [
+                'enabled' => $this->musescore,
             ],
         ];
     }

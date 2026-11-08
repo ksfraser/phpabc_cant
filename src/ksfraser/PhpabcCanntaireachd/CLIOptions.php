@@ -49,6 +49,7 @@ class CLIOptions {
     public $pipebandsnare = false; // --pipebandsnare
 public $knockon = false;       // --knock-on
 public $voiceLines = false;    // --voice-lines
+public $musescore = false;     // --musescore
 
     // Additional hooks seen in some scripts
     public  $voiceOrder = [];
@@ -76,7 +77,7 @@ public $voiceLines = false;    // --voice-lines
             'config:', 'save-config:', 'show-config',
             'voice-order:', 'voice-order-config:',
             'transpose-mode:', 'transpose-override:',
-            'no-midi-defaults', 'strict', 'pipebandsnare', 'knock-on', 'voice-lines'
+            'no-midi-defaults', 'strict', 'pipebandsnare', 'knock-on', 'voice-lines', 'musescore'
         ];
         $parsed = @getopt($short, $long);
         $this->opts = is_array($parsed) ? $parsed : [];
@@ -133,6 +134,7 @@ public $voiceLines = false;    // --voice-lines
         if (isset($this->opts['pipebandsnare'])) $this->pipebandsnare = true;
         if (isset($this->opts['knock-on'])) $this->knockon = true;
         if (isset($this->opts['voice-lines'])) $this->voiceLines = true;
+        if (isset($this->opts['musescore'])) $this->musescore = true;
 
         // If getopt returned values, determine leftover positional args using argv
         $positional = [];
@@ -191,6 +193,8 @@ public $voiceLines = false;    // --voice-lines
                     $this->knockon = true;
                 } elseif ($arg === '--voice-lines') {
                     $this->voiceLines = true;
+                } elseif ($arg === '--musescore') {
+                    $this->musescore = true;
                 } elseif (preg_match('/^--bars[_-]per[_-]line=(\d+)$/', $arg, $m)) {
                     $this->barsPerLine = (int)$m[1];
                 } elseif (preg_match('/^--interleave[_-]bars=(\d+)$/', $arg, $m)) {
@@ -309,6 +313,9 @@ public $voiceLines = false;    // --voice-lines
         if ($this->voiceLines) {
             $config->voiceLines = true;
         }
+        if ($this->musescore) {
+            $config->musescore = true;
+        }
     }
     
     // Export for debug/logging
@@ -337,6 +344,7 @@ public $voiceLines = false;    // --voice-lines
             'pipebandsnare' => $this->pipebandsnare,
             'knockon' => $this->knockon,
             'voiceLines' => $this->voiceLines,
+            'musescore' => $this->musescore,
         ];
     }
 }

@@ -56,6 +56,9 @@ class AbcCanntaireachdPass
     /** @var bool Whether to prefix every music line with voice/time/bars */
     private bool $voiceLines;
 
+    /** @var bool Whether MuseScore Marching Snare compatibility is enabled */
+    private bool $musescore;
+
     /**
      * Constructor for AbcCanntaireachdPass.
      * Uses DI to inject TokenDictionary.
@@ -65,9 +68,10 @@ class AbcCanntaireachdPass
      * @param bool $pipebandsnare Whether pipebandsnare drumline conversion is enabled.
      * @param bool $knockon Whether knock-on attack roll intro is enabled.
      * @param bool $voiceLines Whether to prefix every music line with voice/time/bars.
+     * @param bool $musescore Whether MuseScore Marching Snare compatibility is enabled.
      * @requirement FR7
      */
-    public function __construct($dict, ?array $targetVoices = null, bool $pipebandsnare = false, bool $knockon = false, bool $voiceLines = false)
+    public function __construct($dict, ?array $targetVoices = null, bool $pipebandsnare = false, bool $knockon = false, bool $voiceLines = false, bool $musescore = false)
     {
         if ($dict instanceof TokenDictionary) {
             $this->dict = $dict;
@@ -80,6 +84,7 @@ class AbcCanntaireachdPass
         $this->pipebandsnare = $pipebandsnare;
         $this->knockon = $knockon;
         $this->voiceLines = $voiceLines;
+        $this->musescore = $musescore;
     }
 
     /**
@@ -315,6 +320,75 @@ class AbcCanntaireachdPass
     }
 
     /**
+     * MuseScore Marching Snare compatibility conversion.
+     *
+     * Rules:
+     * - ALL snare notes → C (D does not sound in MuseScore XML import)
+     * - Flams {C} and drags {CC} → V (accent, since grace divider not handled)
+     * - Rolls (r on eighth) → (R.  (r becomes 32nd notes instead of rolls)
+     * - Quarter note rolls → 2x eighths
+     * - Larger than quarter → subdivide down to eighths
+     * - Band snare: if Marching Snare not installed, band snare is NOT C
+     *
+     * @param string $line The ABC music line.
+     * @param array $pitches The two distinct pitches (unused in musescore mode - all become C).
+     * @return string Converted line with all notes as C, flams/drags as V, rolls subdivided.
+     */
+    private function convertToMusecoreDrumline(string $line, array $pitches): string
+    {
+        $result = $line;
+
+        // ALL remaining notes → C (D does not sound in MuseScore Marching Snare)
+        // Preserve V (accent from flams/drags) - do this FIRST so V-A → V-C
+        $result = preg_replace('/\b[ABDEFG]\b/i', 'C', $result);
+        $result = preg_replace('/\b[abdefg]\b/i', 'c', $result);
+
+        // Flams {C} and drags {CC} → V (accent)
+        // Match grace-note groups with single or double notes
+        $result = preg_replace('/\{C\}/i', 'V', $result);
+        $result = preg_replace('/\{CC\}/i', 'V', $result);
+        $result = preg_replace('/\{c\}/i', 'V', $result);
+        $result = preg_replace('/\{cc\}/i', 'V', $result);
+
+        // Rolls on eighth notes: r → (R.
+        // A bare 'r' (eighth rest used as roll) becomes (R.
+        $result = preg_replace('/\br\b/i', '(R.', $result);
+
+        // Quarter note rolls: C2 or c2 → CC (2x eighths)
+        $result = preg_replace('/\bC2\b/i', 'CC', $result);
+        $result = preg_replace('/\bc2\b/i', 'cc', $result);
+
+        // Larger than quarter: C4 or c4 → CCCC (subdivide down to eighths)
+        $result = preg_replace('/\bC4\b/i', 'CCCC', $result);
+        $result = preg_replace('/\bc4\b/i', 'cccc', $result);
+
+        // C8 or c8 → CCCCCCCC (subdivide to eighths)
+        $result = preg_replace('/\bC8\b/i', 'CCCCCCCC', $result);
+        $result = preg_replace('/\bc8\b/i', 'cccccccc', $result);
+
+        return $result;
+    }
+
+    /**
+     * Generate MuseScore Marching Snare canntaireachd: all C → la.
+     */
+    private function generateMusecoreCannt(string $line): string
+    {
+        $canntParts = [];
+        preg_match_all('/[A-Ga-g]/', $line, $matches);
+        foreach ($matches[0] as $note) {
+            $upper = strtoupper($note);
+            if ($upper === 'C') {
+                $canntParts[] = 'la';
+            } elseif ($upper === 'V') {
+                $canntParts[] = 'va';   // accent
+            }
+        }
+
+        return implode(' ', $canntParts);
+    }
+
+    /**
      * Process an AbcTune object: generate canntaireachd on notes in target voices.
      *
      * @param AbcTune $tune
@@ -410,7 +484,7 @@ class AbcCanntaireachdPass
         }
         // A music line carries at least one note or rest. A line of nothing
         // but bar lines has no syllables to sing.
-        return preg_match('/[A-Ga-gzZ]/', $body) === 1;
+        return preg_match('/[A-Ga-gzZrR]/', $body) === 1;
     }
 
     /**
@@ -606,7 +680,8 @@ class AbcCanntaireachdPass
         $hasSnare = !empty($snareVoiceIds);
         $hasDrumline = !empty($drumlineVoiceIds);
 
-        if ($hasSnare && count($snarePitches) > 2) {
+        // MuseScore mode: all notes → C, so any number of pitches is OK
+        if ($hasSnare && !$this->musescore && count($snarePitches) > 2) {
             $this->pipebandsnareError = 'Snare voice uses ' . count($snarePitches) .
                 ' distinct pitches (' . implode(', ', array_keys($snarePitches)) .
                 '); drumline requires exactly 2';
@@ -720,8 +795,14 @@ class AbcCanntaireachdPass
             $result[] = 'V:Drumline name="Drumline" [M:' . $meter . '][L:' . $unit . ']';
             $firstLine = true;
             foreach ($snareMusicLines as $musicLine) {
-                $drumLine = $this->convertToDrumline($musicLine, $snarePitches);
-                $drumCannt = $this->generateDrumlineCannt($drumLine, $snarePitches);
+                if ($this->musescore) {
+                    // MuseScore Marching Snare: ALL → C, flams/drags → V, rolls → (R.
+                    $drumLine = $this->convertToMusecoreDrumline($musicLine, $snarePitches);
+                    $drumCannt = $this->generateMusecoreCannt($drumLine);
+                } else {
+                    $drumLine = $this->convertToDrumline($musicLine, $snarePitches);
+                    $drumCannt = $this->generateDrumlineCannt($drumLine, $snarePitches);
+                }
 
                 $barStart = $firstLine ? '|' : 'x|';
                 $firstLine = false;

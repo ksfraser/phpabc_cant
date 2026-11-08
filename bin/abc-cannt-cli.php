@@ -111,6 +111,7 @@ $updateVoiceNamesFromMidi = $cli->updateVoiceNamesFromMidi;
 $pipebandsnare = $cli->pipebandsnare;
 $knockon = $cli->knockon;
 $voiceLines = $cli->voiceLines;
+$musescore = $cli->musescore;
 $verbose = isset($cli->opts['v']) || isset($cli->opts['verbose']);
 
 if (!$file) {
@@ -139,7 +140,7 @@ $dict = new TokenDictionary();
 $config = [
     'updateVoiceNamesFromMidi' => $updateVoiceNamesFromMidi
 ];
-$result = AbcProcessor::process($abcContent, $dict, null, $convert, $logFlow, $pipebandsnare, $knockon, $voiceLines);
+$result = AbcProcessor::process($abcContent, $dict, null, $convert, $logFlow, $pipebandsnare, $knockon, $voiceLines, $musescore);
 
 $outputMsg = "ABC Canntaireachd processing completed\n";
 $outputMsg .= "✓ File: $file\n";
@@ -239,6 +240,7 @@ Processing Options:
   --pipebandsnare         Convert V:Snare voices to drumline C/D notation
   --knock-on              Add knock-on rests and attack roll intro
   --voice-lines           Prefix every music line with voice/time/bars
+  --musescore             MuseScore Marching Snare compatibility (all→C, flams→V, rolls→R.)
   --output, -o <file>     Output file for processed ABC content
   --errorfile, -e <file>  Output file for error messages and logs
   --canntdiff, -d <file>  Output file for canntaireachd differences
