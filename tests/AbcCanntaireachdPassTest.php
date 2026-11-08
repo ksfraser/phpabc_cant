@@ -540,9 +540,9 @@ class AbcCanntaireachdPassTest extends TestCase
 
         $result = $pass->process($lines);
 
-        // Flams {C} and drags {CC} should become V (accent)
-        $drumlineMusicLines = array_values(array_filter($result['lines'], fn ($l) => str_contains($l, 'VC') || str_contains($l, 'Vc')));
-        $this->assertNotEmpty($drumlineMusicLines, 'Expected VC or Vc in drumline, got: ' . implode("\n", $result['lines']));
+        // Flams {C} and drags {CC} should become !accent!
+        $drumlineMusicLines = array_values(array_filter($result['lines'], fn ($l) => str_contains($l, '!accent!')));
+        $this->assertNotEmpty($drumlineMusicLines, 'Expected !accent! in drumline, got: ' . implode("\n", $result['lines']));
         $this->assertStringNotContainsString('{C}', implode("\n", $drumlineMusicLines));
         $this->assertStringNotContainsString('{CC}', implode("\n", $drumlineMusicLines));
     }

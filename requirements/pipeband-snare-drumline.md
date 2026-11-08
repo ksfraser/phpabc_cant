@@ -95,16 +95,18 @@ When `--musescore` is combined with `--pipebandsnare`, additional conversions
 are applied to the drumline voice for MuseScore XML import compatibility:
 
 - **ALL notes → C:** MuseScore's Marching Snare does not sound D, so every
-  note (A, B, D, E, F, G) is converted to C. The `V` accent character is
+  note (A, B, D, E, F, G) is converted to C. The `!accent!` character is
   preserved.
-- **Flams {C} and drags {CC} → V:** MuseScore does not handle grace-note
-  dividers correctly, so grace-note groups are replaced with `V` (accent).
-- **Eighth-note rolls (r) → (R.:** MuseScore interprets bare `r` as 32nd
-  notes instead of rolls, so `r` becomes `(R.`
-- **Quarter note rolls → 2x eighths:** `C2` → `CC`, `c2` → `cc`
-- **Larger than quarter → subdivide to eighths:** `C4` → `CCCC`, `C8` →
-  `CCCCCCCC`, etc.
-- **Canntaireachd:** `C` → `la`, `V` → `va`
+- **Flams {C} and drags {CC} → !accent!:** MuseScore does not handle grace-note
+  dividers correctly, so grace-note groups are replaced with `!accent!`
+  (accent mark). Using `!accent!` rather than `V` avoids collision with ABC
+  `V:` voice headers.
+- **L:-aware roll conversion:**
+  - **L:1/8:** `(RCn` → `(RC-RC-...` (n hits), bare `r` → `(R.`
+  - **L:1/16:** `(rcn` → `(rc-rc-...` (n hits, lowercase), bare `r` stays `r`
+  - **L:1/8:** `(RC` → `(RC.`, **L:1/16:** `(rC` stays `(rC`
+- **Note duration subdivisions:** `Cn` → `C` repeated `n` times (e.g. `C4` → `CCCC`)
+- **Canntaireachd:** `C` → `la`, `!accent!` → `va`
 
 Processing order: `--pipebandsnare` → `--musescore` → `--knock-on`, so the
 drumline voice receives musescore-compatible notation before knock-on rests

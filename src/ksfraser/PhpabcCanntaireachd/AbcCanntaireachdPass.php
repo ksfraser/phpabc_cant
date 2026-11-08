@@ -334,54 +334,133 @@ class AbcCanntaireachdPass
      * @param array $pitches The two distinct pitches (unused in musescore mode - all become C).
      * @return string Converted line with all notes as C, flams/drags as V, rolls subdivided.
      */
-    private function convertToMusecoreDrumline(string $line, array $pitches): string
+    /**
+     * MuseScore Marching Snare compatibility conversion.
+     *
+     * Rules (L:-aware):
+     * - ALL snare notes → C (D does not sound in MuseScore XML import)
+     * - Flams {C} and drags {CC} → !accent! (grace divider not handled)
+     * - Rolls on eighth notes: (RCn → (RC-RC-... (n hits, L:1/8)
+     *   For L:1/16: (rcn → (rc-rc-... (n hits, lowercase)
+     * - Bare roll r → (R. for L:1/8, stays r for L:1/16
+     * - Bare roll with note (RC) → (RC. for L:1/8, stays rC for L:1/16
+     * - Quarter note rolls → 2x eighths (handled by duration parsing)
+     * - Larger than quarter → subdivide down to eighths (handled by duration)
+     * - Band snare: if Marching Snare not installed, band snare is NOT C
+     *
+     * @param string $line The ABC music line.
+     * @param array $pitches The two distinct pitches (unused in musescore mode - all become C).
+     * @param string $unit The L: unit (e.g. "1/8", "1/16") for L:-aware roll subdivision.
+     * @return string Converted line with all notes as C, flams/drags as !accent!, rolls subdivided.
+     */
+    private function convertToMusecoreDrumline(string $line, array $pitches, string $unit): string
     {
         $result = $line;
 
-        // ALL remaining notes → C (D does not sound in MuseScore Marching Snare)
-        // Preserve V (accent from flams/drags) - do this FIRST so V-A → V-C
+        // Parse L: denominator for roll behavior
+        // L:1/8 → denominator 8, L:1/16 → denominator 16
+        $lDenom = 8;
+        if (preg_match('/1\/(\d+)/', $unit, $m)) {
+            $lDenom = (int)$m[1];
+        }
+        $isFineSubdivision = $lDenom >= 16;
+
+        // Step 1: Handle roll with duration: (RCn → (RC-RC-... (n times)
+        // Match (R or r followed by note letter + duration number
+        $result = preg_replace_callback(
+            '/\(\s*([Rr])\s*([A-Ga-g])(\d+)/i',
+            function ($matches) use ($isFineSubdivision) {
+                $dur = (int) $matches[3];
+                $parts = [];
+                for ($i = 0; $i < $dur; $i++) {
+                    if ($isFineSubdivision) {
+                        $parts[] = 'rc';
+                    } else {
+                        $parts[] = 'RC';
+                    }
+                }
+                return '(' . implode('-', $parts);
+            },
+            $result
+        );
+
+        // Step 2: Handle bare roll with note: (RC → (RC. for L:1/8, stays (rC for L:1/16
+        // Matches (R or r followed by note letter, NOT followed by a digit
+        $result = preg_replace_callback(
+            '/\(\s*([Rr])\s*([A-Ga-g])(?!\d)/i',
+            function ($matches) use ($isFineSubdivision) {
+                $note = strtoupper($matches[2]);
+                if ($isFineSubdivision) {
+                    // L:1/16 → stay lowercase, no change
+                    return '(' . strtolower($matches[1]) . $matches[2];
+                } else {
+                    // L:1/8 → uppercase with dot
+                    return '(' . strtoupper($matches[1]) . $note . '.';
+                }
+            },
+            $result
+        );
+
+        // Step 3: Handle bare roll: r → (R. for L:1/8, stays r for L:1/16
+        $result = preg_replace_callback(
+            '/\br\b/i',
+            function ($matches) use ($isFineSubdivision) {
+                if ($isFineSubdivision) {
+                    return 'r';
+                } else {
+                    return '(R.';
+                }
+            },
+            $result
+        );
+
+        // Step 4: Flams {C} and drags {CC} → !accent!
+        // Must be BEFORE note→C conversion so !accent! is created last
+        $result = preg_replace('/\{C\}/i', '!accent!', $result);
+        $result = preg_replace('/\{CC\}/i', '!accent!', $result);
+        $result = preg_replace('/\{c\}/i', '!accent!', $result);
+        $result = preg_replace('/\{cc\}/i', '!accent!', $result);
+
+        // Step 5: ALL remaining notes → C (D does not sound in MuseScore Marching Snare)
+        // Preserve !accent! (created in step 4, after this step won't touch it)
         $result = preg_replace('/\b[ABDEFG]\b/i', 'C', $result);
         $result = preg_replace('/\b[abdefg]\b/i', 'c', $result);
 
-        // Flams {C} and drags {CC} → V (accent)
-        // Match grace-note groups with single or double notes
-        $result = preg_replace('/\{C\}/i', 'V', $result);
-        $result = preg_replace('/\{CC\}/i', 'V', $result);
-        $result = preg_replace('/\{c\}/i', 'V', $result);
-        $result = preg_replace('/\{cc\}/i', 'V', $result);
-
-        // Rolls on eighth notes: r → (R.
-        // A bare 'r' (eighth rest used as roll) becomes (R.
-        $result = preg_replace('/\br\b/i', '(R.', $result);
-
-        // Quarter note rolls: C2 or c2 → CC (2x eighths)
-        $result = preg_replace('/\bC2\b/i', 'CC', $result);
-        $result = preg_replace('/\bc2\b/i', 'cc', $result);
-
-        // Larger than quarter: C4 or c4 → CCCC (subdivide down to eighths)
-        $result = preg_replace('/\bC4\b/i', 'CCCC', $result);
-        $result = preg_replace('/\bc4\b/i', 'cccc', $result);
-
-        // C8 or c8 → CCCCCCCC (subdivide to eighths)
-        $result = preg_replace('/\bC8\b/i', 'CCCCCCCC', $result);
-        $result = preg_replace('/\bc8\b/i', 'cccccccc', $result);
+        // Step 6: Handle standalone note durations: Cn → C repeated n times
+        // (for notes not part of a roll, which were already handled in step 1)
+        $result = preg_replace_callback(
+            '/\bC(\d+)\b/i',
+            function ($matches) {
+                $dur = (int) $matches[1];
+                return str_repeat('C', $dur);
+            },
+            $result
+        );
+        $result = preg_replace_callback(
+            '/\bc(\d+)\b/i',
+            function ($matches) {
+                $dur = (int) $matches[1];
+                return str_repeat('c', $dur);
+            },
+            $result
+        );
 
         return $result;
     }
 
     /**
-     * Generate MuseScore Marching Snare canntaireachd: all C → la.
+     * Generate MuseScore Marching Snare canntaireachd: all C → la, !accent! → va.
      */
     private function generateMusecoreCannt(string $line): string
     {
         $canntParts = [];
-        preg_match_all('/[A-Ga-g]/', $line, $matches);
-        foreach ($matches[0] as $note) {
-            $upper = strtoupper($note);
-            if ($upper === 'C') {
-                $canntParts[] = 'la';
-            } elseif ($upper === 'V') {
+        // Match !accent! tokens first, then individual note letters
+        preg_match_all('/!accent!|[A-Ga-g]/', $line, $matches);
+        foreach ($matches[0] as $token) {
+            if ($token === '!accent!') {
                 $canntParts[] = 'va';   // accent
+            } elseif (strtoupper($token) === 'C') {
+                $canntParts[] = 'la';
             }
         }
 
@@ -797,7 +876,7 @@ class AbcCanntaireachdPass
             foreach ($snareMusicLines as $musicLine) {
                 if ($this->musescore) {
                     // MuseScore Marching Snare: ALL → C, flams/drags → V, rolls → (R.
-                    $drumLine = $this->convertToMusecoreDrumline($musicLine, $snarePitches);
+                    $drumLine = $this->convertToMusecoreDrumline($musicLine, $snarePitches, $unit);
                     $drumCannt = $this->generateMusecoreCannt($drumLine);
                 } else {
                     $drumLine = $this->convertToDrumline($musicLine, $snarePitches);
