@@ -102,8 +102,11 @@ class AbcCanntaireachdPass
         $currentVoiceName = null;
 
         // PipeBandSnare: two-pass conversion of snare voices to C/D drumline notation
+        // Creates a new V:Drumline voice; original snare voice is left unchanged
         $snareVoiceIds = [];
         $snarePitches = [];
+        $drumlineVoiceStarted = [];
+        $drumlineFirstLine = [];
         if ($this->pipebandsnare) {
             $scanVoiceId = null;
             foreach ($lines as $line) {
@@ -187,15 +190,16 @@ class AbcCanntaireachdPass
                 $firstLineAfterVoice = true;
             }
 
-            // PipeBandSnare: convert snare voice notes to C/D drumline notation
+            // PipeBandSnare: output original snare line unchanged AND a new
+            // V:Drumline voice with C/D drumline notation (original preserved)
             $lineToOutput = $trimmed;
             $isSnareConverted = false;
             $drumCannt = '';
-            if ($this->pipebandsnare && isset($snareVoiceIds[$currentVoiceId ?? '']) && $this->isMusicLine($line)) {
-                $lineToOutput = $this->convertToDrumline($trimmed, $snarePitches);
+            if ($this->pipebandsnare && isset($snareVoiceIds[$currentVoiceId ?? '']) && $this->isMusicLine($line) && count($snarePitches) === 2) {
                 $isSnareConverted = true;
-                // Generate canntaireachd for drumline: C=la (Left), D=ra (Right)
-                $drumCannt = $this->generateDrumlineCannt($lineToOutput, $snarePitches);
+                // Generate converted C/D drumline line
+                $drumLine = $this->convertToDrumline($trimmed, $snarePitches);
+                $drumCannt = $this->generateDrumlineCannt($drumLine, $snarePitches);
                 if ($drumCannt !== '') {
                     $canntDiff[] = [
                         'line' => $trimmed,
@@ -215,8 +219,36 @@ class AbcCanntaireachdPass
                 $lineToOutput = $prefix . ' ' . $barStart . ' ' . ltrim($lineToOutput) . ' |';
             }
 
+            // If this is a snare voice line under pipebandsnare, output:
+            // 1. Original line (preserved)
+            // 2. New V:Drumline voice header + converted line
             if ($isSnareConverted) {
+                // Output original snare line (possibly voiceLines-prefixed)
                 $output[] = $lineToOutput;
+
+                // Start drumline voice block if not already started for this snare voice
+                $snareVid = $currentVoiceId ?? '';
+                if (!isset($drumlineVoiceStarted[$snareVid])) {
+                    $drumlineVoiceStarted[$snareVid] = true;
+                    $drumlineFirstLine[$snareVid] = true;
+                    $dm = $voiceMeter[$snareVid] ?? '2/4';
+                    $du = $voiceUnit[$snareVid] ?? '1/8';
+                    $output[] = 'V:Drumline name="Drumline" [M:' . $dm . '][L:' . $du . ']';
+                }
+
+                // Output converted drumline line with its own anacrusis tracking
+                $dBarStart = $drumlineFirstLine[$snareVid] ? '|' : 'x|';
+                $drumlineFirstLine[$snareVid] = false;
+                if ($this->voiceLines) {
+                    $dm = $voiceMeter[$snareVid] ?? '2/4';
+                    $du = $voiceUnit[$snareVid] ?? '1/8';
+                    $drumOut = '[V:Drumline][M:' . $dm . '][L:' . $du . '] ' . $dBarStart . ' ' . $drumLine . ' |';
+                } else {
+                    $drumOut = $dBarStart . ' ' . $drumLine . ' |';
+                }
+                $output[] = $drumOut;
+
+                // Generate canntaireachd for drumline
                 if ($drumCannt !== '') {
                     $output[] = 'w: ' . $drumCannt;
                 }

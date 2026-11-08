@@ -251,9 +251,13 @@ class AbcCanntaireachdPassTest extends TestCase
         $result = $pass->process($lines);
 
         // Two distinct pitches: A (lower) → C (Left/la), B (higher) → D (Right/ra)
-        $this->assertCount(3, $result['lines']);
-        $this->assertStringContainsString('C D', $result['lines'][1]);
-        $this->assertStringContainsString('la ra', $result['lines'][2]);
+        // Original snare voice preserved + new V:Drumline voice created
+        $this->assertCount(5, $result['lines']);
+        $this->assertEquals('V:Snare', $result['lines'][0]);
+        $this->assertEquals('A B', $result['lines'][1]);
+        $this->assertStringContainsString('V:Drumline', $result['lines'][2]);
+        $this->assertStringContainsString('| C D |', $result['lines'][3]);
+        $this->assertStringContainsString('w: la ra', $result['lines'][4]);
     }
 
     public function testPipeBandSnareOnlyTwoNotesAllowed()
@@ -267,6 +271,8 @@ class AbcCanntaireachdPassTest extends TestCase
         $result = $pass->process($lines);
 
         // Should leave unchanged when not exactly 2 pitches
+        $this->assertCount(2, $result['lines']);
+        $this->assertEquals('V:Snare', $result['lines'][0]);
         $this->assertEquals('A B C', $result['lines'][1]);
     }
 
@@ -282,8 +288,12 @@ class AbcCanntaireachdPassTest extends TestCase
         $result = $pass->process($lines);
 
         // A is lower → C (Left), b is higher → D (Right)
-        $this->assertStringContainsString('C D', $result['lines'][1]);
-        $this->assertStringContainsString('la ra', $result['lines'][2]);
+        $this->assertCount(5, $result['lines']);
+        $this->assertEquals('V:Snare name="Snare Drum"', $result['lines'][0]);
+        $this->assertEquals('A b', $result['lines'][1]);
+        $this->assertStringContainsString('V:Drumline', $result['lines'][2]);
+        $this->assertStringContainsString('| C D |', $result['lines'][3]);
+        $this->assertStringContainsString('w: la ra', $result['lines'][4]);
     }
 
     public function testPipeBandSnareNonSnareVoiceUnaffected()
