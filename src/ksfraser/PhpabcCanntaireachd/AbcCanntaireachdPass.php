@@ -887,11 +887,6 @@ class AbcCanntaireachdPass
                 $firstLine = false;
 
                 $result[] = $barStart . ' ' . $drumLine . ' |';
-
-                if ($drumCannt !== '') {
-                    $result[] = 'w: ' . $drumCannt;
-                    $canntDiff[] = ['line' => $musicLine, 'generated' => $drumCannt];
-                }
             }
         }
 
@@ -925,11 +920,6 @@ class AbcCanntaireachdPass
                 $firstLine = false;
 
                 $result[] = $barStart . ' ' . $snareLine . ' |';
-
-                if ($snareCannt !== '') {
-                    $result[] = 'w: ' . $snareCannt;
-                    $canntDiff[] = ['line' => $musicLine, 'generated' => $snareCannt];
-                }
             }
         }
 

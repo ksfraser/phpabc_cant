@@ -251,13 +251,12 @@ class AbcCanntaireachdPassTest extends TestCase
         $result = $pass->process($lines);
 
         // Two distinct pitches: A (lower) → C (Left/la), B (higher) → D (Right/ra)
-        // Original snare voice preserved + new V:Drumline voice created
-        $this->assertCount(5, $result['lines']);
+        // Original snare voice preserved + new V:Drumline voice created (no w: line for drumline)
+        $this->assertCount(4, $result['lines']);
         $this->assertEquals('V:Snare', $result['lines'][0]);
         $this->assertEquals('A B', $result['lines'][1]);
         $this->assertStringContainsString('V:Drumline', $result['lines'][2]);
         $this->assertStringContainsString('| C D |', $result['lines'][3]);
-        $this->assertStringContainsString('w: la ra', $result['lines'][4]);
     }
 
     public function testPipeBandSnareOnlyTwoNotesAllowed()
@@ -288,12 +287,11 @@ class AbcCanntaireachdPassTest extends TestCase
         $result = $pass->process($lines);
 
         // A is lower → C (Left), b is higher → D (Right)
-        $this->assertCount(5, $result['lines']);
+        $this->assertCount(4, $result['lines']);
         $this->assertEquals('V:Snare name="Snare Drum"', $result['lines'][0]);
         $this->assertEquals('A b', $result['lines'][1]);
         $this->assertStringContainsString('V:Drumline', $result['lines'][2]);
         $this->assertStringContainsString('| C D |', $result['lines'][3]);
-        $this->assertStringContainsString('w: la ra', $result['lines'][4]);
     }
 
     public function testPipeBandSnareNonSnareVoiceUnaffected()
@@ -617,9 +615,13 @@ class AbcCanntaireachdPassTest extends TestCase
 
         $result = $pass->process($lines);
 
-        // All C notes → la canntaireachd
+        // Drumline voice gets C/D conversion but NO canntaireachd w: line
+        // (cannt only for Bagpipes/melody voices)
+        $drumLines = array_values(array_filter($result['lines'], fn ($l) => str_contains($l, 'V:Drumline')));
+        $this->assertNotEmpty($drumLines);
+
+        // No w: line should be generated for drumline voice
         $wLines = array_values(array_filter($result['lines'], fn ($l) => str_starts_with($l, 'w: ')));
-        $this->assertNotEmpty($wLines);
-        $this->assertStringContainsString('la la la', $wLines[0]);
+        $this->assertEmpty($wLines, 'No canntaireachd should be generated for drumline voice');
     }
 }
