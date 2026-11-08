@@ -422,4 +422,84 @@ class AbcCanntaireachdPassTest extends TestCase
         $this->assertNotEmpty($musicLines2);
         $this->assertStringContainsString('x| C D |', $musicLines2[0]);
     }
+
+    public function testPipeBandSnareSnarePlusDrumlineReplacesDrumline()
+    {
+        $pass = new AbcCanntaireachdPass($this->dict, null, true);
+        $lines = [
+            'X:1',
+            'V:Snare',
+            'M:2/4',
+            'L:1/8',
+            'A B',
+            'V:Drumline',
+            'M:2/4',
+            'L:1/8',
+            'z2 z2',
+        ];
+
+        $result = $pass->process($lines);
+
+        // Original snare voice preserved
+        $this->assertStringContainsString('V:Snare', $result['lines'][1]);
+        $this->assertStringContainsString('A B', $result['lines'][4]);
+
+        // Drumline voice replaced with converted snare (C/D)
+        $drumlineLines = array_values(array_filter($result['lines'], fn ($l) => str_contains($l, 'V:Drumline')));
+        $this->assertNotEmpty($drumlineLines);
+        $this->assertStringContainsString('[M:2/4][L:1/8]', $drumlineLines[0]);
+
+        // Converted drumline music uses C/D
+        $convLines = array_values(array_filter($result['lines'], fn ($l) => str_contains($l, '| C D |')));
+        $this->assertNotEmpty($convLines);
+
+        // Original drumline content (z2 z2) should NOT appear
+        $this->assertStringNotContainsString('z2 z2', implode("\n", $result['lines']));
+    }
+
+    public function testPipeBandSnareDrumlineOnlyCreatesSnareReverse()
+    {
+        $pass = new AbcCanntaireachdPass($this->dict, null, true);
+        $lines = [
+            'X:1',
+            'V:Drumline',
+            'M:2/4',
+            'L:1/8',
+            'C D',
+        ];
+
+        $result = $pass->process($lines);
+
+        // Original drumline voice preserved
+        $this->assertStringContainsString('V:Drumline', $result['lines'][1]);
+
+        // New V:Snare voice created with reverse-converted content (C/D → A/c)
+        $snareLines = array_values(array_filter($result['lines'], fn ($l) => str_contains($l, 'V:Snare')));
+        $this->assertNotEmpty($snareLines);
+
+        // Reverse-converted music should have A/c instead of C/D
+        $convLines = array_values(array_filter($result['lines'], fn ($l) => str_contains($l, '| A c |') || str_contains($l, '| A c|')));
+        $this->assertNotEmpty($convLines, 'Expected reverse-converted line with A c, got: ' . implode("\n", $result['lines']));
+    }
+
+    public function testPipeBandSnareThreePitchesError()
+    {
+        $pass = new AbcCanntaireachdPass($this->dict, null, true);
+        $lines = [
+            'X:1',
+            'V:Snare',
+            'M:2/4',
+            'L:1/8',
+            'A B C',  // Three distinct pitches - should error
+        ];
+
+        $result = $pass->process($lines);
+
+        // Should return lines unchanged (no conversion)
+        $this->assertStringContainsString('V:Snare', $result['lines'][1]);
+        $this->assertStringContainsString('A B C', $result['lines'][4]);
+
+        // No V:Drumline voice should be created
+        $this->assertStringNotContainsString('V:Drumline', implode("\n", $result['lines']));
+    }
 }

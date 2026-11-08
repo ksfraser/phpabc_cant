@@ -47,6 +47,9 @@ class AbcCanntaireachdPass
     /** @var bool Whether pipebandsnare drumline conversion is enabled */
     private bool $pipebandsnare;
 
+    /** @var string|null Pipebandsnare error message (set when snare has != 2 pitches) */
+    private ?string $pipebandsnareError = null;
+
     /** @var bool Whether knock-on attack roll intro is enabled */
     private bool $knockon;
 
@@ -101,32 +104,9 @@ class AbcCanntaireachdPass
         $currentVoiceId = null;
         $currentVoiceName = null;
 
-        // PipeBandSnare: two-pass conversion of snare voices to C/D drumline notation
-        // Creates a new V:Drumline voice; original snare voice is left unchanged
-        $snareVoiceIds = [];
-        $snarePitches = [];
-        $drumlineVoiceStarted = [];
-        $drumlineFirstLine = [];
+        // Step 1: Pipebandsnare transformation (BEFORE knock-on so all voices get rests)
         if ($this->pipebandsnare) {
-            $scanVoiceId = null;
-            foreach ($lines as $line) {
-                $trimmed = trim($line);
-                if (preg_match('/^V:\s*(\S+)(.*)$/', $trimmed, $matches) === 1) {
-                    $scanVoiceId = $matches[1];
-                    $vname = TargetVoiceResolver::extractName($matches[2]);
-                    if ($this->isSnareVoice($scanVoiceId, $vname)) {
-                        $snareVoiceIds[$scanVoiceId] = true;
-                    }
-                    continue;
-                }
-                if (preg_match('/^\[V:([^\]]+)\]/', $trimmed, $vm) === 1) {
-                    $scanVoiceId = $vm[1];
-                    continue;
-                }
-                if (isset($snareVoiceIds[$scanVoiceId ?? '']) && $trimmed !== '' && !str_starts_with($trimmed, '%') && !preg_match('/^[A-Za-z]:/', $trimmed)) {
-                    $this->collectPitches($trimmed, $snarePitches);
-                }
-            }
+            $lines = $this->applyPipebandSnare($lines, $canntDiff);
         }
 
         // Knock-on: prepend rest measures before all voices for attack roll intro
@@ -190,24 +170,6 @@ class AbcCanntaireachdPass
                 $firstLineAfterVoice = true;
             }
 
-            // PipeBandSnare: output original snare line unchanged AND a new
-            // V:Drumline voice with C/D drumline notation (original preserved)
-            $lineToOutput = $trimmed;
-            $isSnareConverted = false;
-            $drumCannt = '';
-            if ($this->pipebandsnare && isset($snareVoiceIds[$currentVoiceId ?? '']) && $this->isMusicLine($line) && count($snarePitches) === 2) {
-                $isSnareConverted = true;
-                // Generate converted C/D drumline line
-                $drumLine = $this->convertToDrumline($trimmed, $snarePitches);
-                $drumCannt = $this->generateDrumlineCannt($drumLine, $snarePitches);
-                if ($drumCannt !== '') {
-                    $canntDiff[] = [
-                        'line' => $trimmed,
-                        'generated' => $drumCannt,
-                    ];
-                }
-            }
-
             // Voice-lines: prefix music lines with voice/time/bars
             if ($this->voiceLines && $this->isMusicLine($line)) {
                 $vid = $currentVoiceId ?? '';
@@ -216,69 +178,10 @@ class AbcCanntaireachdPass
                 $prefix = '[V:' . $vid . '][M:' . $meter . '][L:' . $unit . ']';
                 $barStart = $firstLineAfterVoice ? '|' : 'x|';
                 $firstLineAfterVoice = false;
-                $lineToOutput = $prefix . ' ' . $barStart . ' ' . ltrim($lineToOutput) . ' |';
+                $line = $prefix . ' ' . $barStart . ' ' . ltrim($trimmed) . ' |';
             }
 
-            // If this is a snare voice line under pipebandsnare, output:
-            // 1. Original line (preserved)
-            // 2. New V:Drumline voice header + converted line
-            if ($isSnareConverted) {
-                // Output original snare line (possibly voiceLines-prefixed)
-                $output[] = $lineToOutput;
-
-                // Start drumline voice block if not already started for this snare voice
-                $snareVid = $currentVoiceId ?? '';
-                if (!isset($drumlineVoiceStarted[$snareVid])) {
-                    $drumlineVoiceStarted[$snareVid] = true;
-                    $drumlineFirstLine[$snareVid] = true;
-                    $dm = $voiceMeter[$snareVid] ?? '2/4';
-                    $du = $voiceUnit[$snareVid] ?? '1/8';
-                    $output[] = 'V:Drumline name="Drumline" [M:' . $dm . '][L:' . $du . ']';
-                }
-
-                // Output converted drumline line with its own anacrusis tracking
-                $dBarStart = $drumlineFirstLine[$snareVid] ? '|' : 'x|';
-                $drumlineFirstLine[$snareVid] = false;
-                if ($this->voiceLines) {
-                    $dm = $voiceMeter[$snareVid] ?? '2/4';
-                    $du = $voiceUnit[$snareVid] ?? '1/8';
-                    $drumOut = '[V:Drumline][M:' . $dm . '][L:' . $du . '] ' . $dBarStart . ' ' . $drumLine . ' |';
-                } else {
-                    $drumOut = $dBarStart . ' ' . $drumLine . ' |';
-                }
-                $output[] = $drumOut;
-
-                // Generate canntaireachd for drumline
-                if ($drumCannt !== '') {
-                    $output[] = 'w: ' . $drumCannt;
-                }
-                continue;
-            }
-
-            // For non-snare-converted lines, output the (possibly voiceLines-modified) line
-            if ($this->voiceLines && $this->isMusicLine($line)) {
-                $output[] = $lineToOutput;
-                // Track first line after voice for anacrusis
-                $firstLineAfterVoice = false;
-
-                // Still generate canntaireachd for target voices on the original line
-                $isTarget = $this->resolver->isTarget($currentVoiceId, $currentVoiceName);
-                if ($isTarget) {
-                    while ($i + 1 < $count && preg_match('/^w:/i', trim($lines[$i + 1])) === 1) {
-                        $output[] = $lines[++$i];
-                    }
-                    $canntText = $this->normaliseCanntaireachd($generator->generateForNotes($line));
-                    if ($canntText !== '' && $canntText !== '[?]') {
-                        $output[] = 'w: ' . $canntText;
-                        $canntDiff[] = [
-                            'line' => $line,
-                            'generated' => $canntText,
-                        ];
-                    }
-                }
-                continue;
-            }
-
+            // For non-pipebandsnare lines, output the (possibly voiceLines-modified) line
             $isTarget = $this->resolver->isTarget($currentVoiceId, $currentVoiceName);
             if (!$isTarget || !$this->isMusicLine($line)) {
                 $output[] = $line;
@@ -573,6 +476,304 @@ class AbcCanntaireachdPass
 
     $knockOn[] = '%% End knock-on';
     return $knockOn;
+    }
+
+    /**
+     * Check if a voice is a drumline voice.
+     */
+    private function isDrumlineVoice(?string $voiceId, ?string $voiceName = null): bool
+    {
+        $value = strtolower(trim($voiceId ?? ''));
+        if ($value !== '' && ($value === 'drumline' || str_starts_with($value, 'drumline') || str_ends_with($value, 'drumline'))) {
+            return true;
+        }
+        if ($voiceName !== null) {
+            $name = strtolower(trim($voiceName));
+            if ($name !== '' && ($name === 'drumline' || str_starts_with($name, 'drumline') || str_ends_with($name, 'drumline'))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Convert drumline C/D notation back to ABC snare notes (A/c).
+     * C → A (Left/la), D → c (Right/ra).
+     * Uses the drumline pitches to determine mapping direction.
+     */
+    private function convertFromDrumline(string $line, array $pitches): string
+    {
+        if (count($pitches) !== 2) {
+            return $line;
+        }
+
+        $pitchList = array_keys($pitches);
+        usort($pitchList, function ($a, $b) {
+            return $this->pitchValue($a) <=> $this->pitchValue($b);
+        });
+
+        $lowerPitch = $pitchList[0]; // C (Left) → A
+        $upperPitch = $pitchList[1]; // D (Right) → c
+
+        $result = $line;
+        $result = preg_replace('/\b' . preg_quote($lowerPitch, '/') . '\b/i', 'A', $result);
+        $result = preg_replace('/\b' . preg_quote($upperPitch, '/') . '\b/i', 'c', $result);
+
+        return $result;
+    }
+
+    /**
+     * Generate reverse drumline canntaireachd: C=la→A, D=ra→c.
+     */
+    private function generateReverseDrumlineCannt(string $line, array $pitches): string
+    {
+        if (count($pitches) !== 2) {
+            return '';
+        }
+
+        $pitchList = array_keys($pitches);
+        usort($pitchList, function ($a, $b) {
+            return $this->pitchValue($a) <=> $this->pitchValue($b);
+        });
+
+        $lowerPitch = $pitchList[0]; // C (Left) → la → A
+        $upperPitch = $pitchList[1]; // D (Right) → ra → c
+
+        $canntParts = [];
+        preg_match_all('/[A-Ga-g]/', $line, $matches);
+        foreach ($matches[0] as $note) {
+            $upper = strtoupper($note);
+            if ($upper === 'C') {
+                $canntParts[] = 'en';   // A → en
+            } elseif ($upper === 'D') {
+                $canntParts[] = 'o';    // c → o
+            }
+        }
+
+        return implode(' ', $canntParts);
+    }
+
+    /**
+     * Apply pipebandsnare transformation to lines BEFORE knock-on.
+     *
+     * Actions:
+     *   add:    Snare exists, no Drumline → append V:Drumline with converted Snare
+     *   replace: Snare + Drumline → skip Drumline content, append V:Drumline with converted Snare
+     *   reverse: Drumline only, no Snare → append V:Snare with reverse-converted Drumline
+     *   error:   Snare has 3+ pitches → return unchanged, set error message
+     *
+     * @param string[] $lines Original ABC lines.
+     * @param array    &$canntDiff Diff log (modified in place).
+     * @return string[] Modified lines.
+     */
+    private function applyPipebandSnare(array $lines, array &$canntDiff): array
+    {
+        // Pre-scan: detect snare/drumline voices, collect pitches
+        $snareVoiceIds = [];
+        $drumlineVoiceIds = [];
+        $snarePitches = [];
+        $drumlinePitches = [];
+
+        $scanVoiceId = null;
+        foreach ($lines as $line) {
+            $trimmed = trim($line);
+            if (preg_match('/^V:\s*(\S+)(.*)$/', $trimmed, $matches) === 1) {
+                $scanVoiceId = $matches[1];
+                $vname = TargetVoiceResolver::extractName($matches[2]);
+                if ($this->isSnareVoice($scanVoiceId, $vname)) {
+                    $snareVoiceIds[$scanVoiceId] = true;
+                }
+                if ($this->isDrumlineVoice($scanVoiceId, $vname)) {
+                    $drumlineVoiceIds[$scanVoiceId] = true;
+                }
+                continue;
+            }
+            if (preg_match('/^\[V:([^\]]+)\]/', $trimmed, $vm) === 1) {
+                $scanVoiceId = $vm[1];
+                continue;
+            }
+            if ($trimmed !== '' && !str_starts_with($trimmed, '%') && !preg_match('/^[A-Za-z]:/', $trimmed)) {
+                if (isset($snareVoiceIds[$scanVoiceId ?? ''])) {
+                    $this->collectPitches($trimmed, $snarePitches);
+                }
+                if (isset($drumlineVoiceIds[$scanVoiceId ?? ''])) {
+                    $this->collectPitches($trimmed, $drumlinePitches);
+                }
+            }
+        }
+
+        // Determine action
+        $hasSnare = !empty($snareVoiceIds);
+        $hasDrumline = !empty($drumlineVoiceIds);
+
+        if ($hasSnare && count($snarePitches) > 2) {
+            $this->pipebandsnareError = 'Snare voice uses ' . count($snarePitches) .
+                ' distinct pitches (' . implode(', ', array_keys($snarePitches)) .
+                '); drumline requires exactly 2';
+            return $lines;
+        }
+
+        if ($hasSnare && $hasDrumline) {
+            $action = 'replace';
+        } elseif ($hasSnare) {
+            $action = 'add';
+        } elseif ($hasDrumline) {
+            $action = 'reverse';
+        } else {
+            return $lines;
+        }
+
+        // Get M:/L: for the source voice (for the new voice header)
+        $meter = '2/4';
+        $unit = '1/8';
+        $sourceVoiceId = $hasSnare ? array_key_first($snareVoiceIds) : array_key_first($drumlineVoiceIds);
+        $foundMeter = false;
+        $foundUnit = false;
+        $scanVoiceId = null;
+        foreach ($lines as $line) {
+            $trimmed = trim($line);
+            if (preg_match('/^V:\s*(\S+)/', $trimmed, $m) === 1) {
+                $scanVoiceId = $m[1];
+                continue;
+            }
+            if (preg_match('/^\[V:([^\]]+)\]/', $trimmed, $vm) === 1) {
+                $scanVoiceId = $vm[1];
+                continue;
+            }
+            if ($scanVoiceId === $sourceVoiceId && !$foundMeter && preg_match('/^M:\s*(\S+)/i', $trimmed, $m) === 1) {
+                $meter = $m[1];
+                $foundMeter = true;
+            }
+            if ($scanVoiceId === $sourceVoiceId && !$foundUnit && preg_match('/^L:\s*(\S+)/i', $trimmed, $m) === 1) {
+                $unit = $m[1];
+                $foundUnit = true;
+            }
+            if ($foundMeter && $foundUnit) {
+                break;
+            }
+        }
+
+        $result = [];
+        $currentVoiceId = null;
+        $inDrumlineVoice = false;
+        $drumlineSkipped = false;
+
+        foreach ($lines as $line) {
+            $trimmed = trim($line);
+
+            // Track voice changes
+            if (preg_match('/^V:\s*(\S+)(.*)$/', $trimmed, $matches) === 1) {
+                $currentVoiceId = $matches[1];
+                $inDrumlineVoice = $this->isDrumlineVoice($currentVoiceId);
+
+                // For 'replace': skip original drumline header
+                if ($action === 'replace' && $inDrumlineVoice && !$drumlineSkipped) {
+                    $drumlineSkipped = true;
+                    continue;
+                }
+
+                $result[] = $line;
+                continue;
+            }
+
+            if (preg_match('/^\[V:([^\]]+)\]/', $trimmed, $vm) === 1) {
+                $currentVoiceId = $vm[1];
+                $inDrumlineVoice = $this->isDrumlineVoice($currentVoiceId);
+                $result[] = $line;
+                continue;
+            }
+
+            // Skip drumline music lines when replacing
+            if ($action === 'replace' && $inDrumlineVoice) {
+                continue;
+            }
+
+            // Skip drumline voice entirely when adding (it's created from snare)
+            if ($action === 'add' && $inDrumlineVoice) {
+                continue;
+            }
+
+            $result[] = $line;
+        }
+
+        // Append new voice at end
+        if ($action === 'add' || $action === 'replace') {
+            // Convert snare music lines to C/D drumline
+            $firstSnare = array_key_first($snareVoiceIds);
+            $snareMusicLines = [];
+            $scanVoiceId = null;
+            foreach ($lines as $line) {
+                $trimmed = trim($line);
+                if (preg_match('/^V:\s*(\S+)/', $trimmed, $m) === 1) {
+                    $scanVoiceId = $m[1];
+                    continue;
+                }
+                if (preg_match('/^\[V:([^\]]+)\]/', $trimmed, $vm) === 1) {
+                    $scanVoiceId = $vm[1];
+                    continue;
+                }
+                if ($scanVoiceId === $firstSnare && $this->isMusicLine($trimmed)) {
+                    $snareMusicLines[] = $trimmed;
+                }
+            }
+
+            $result[] = 'V:Drumline name="Drumline" [M:' . $meter . '][L:' . $unit . ']';
+            $firstLine = true;
+            foreach ($snareMusicLines as $musicLine) {
+                $drumLine = $this->convertToDrumline($musicLine, $snarePitches);
+                $drumCannt = $this->generateDrumlineCannt($drumLine, $snarePitches);
+
+                $barStart = $firstLine ? '|' : 'x|';
+                $firstLine = false;
+
+                $result[] = $barStart . ' ' . $drumLine . ' |';
+
+                if ($drumCannt !== '') {
+                    $result[] = 'w: ' . $drumCannt;
+                    $canntDiff[] = ['line' => $musicLine, 'generated' => $drumCannt];
+                }
+            }
+        }
+
+        if ($action === 'reverse') {
+            // Convert drumline music lines back to snare A/c notation
+            $firstDrumline = array_key_first($drumlineVoiceIds);
+            $drumlineMusicLines = [];
+            $scanVoiceId = null;
+            foreach ($lines as $line) {
+                $trimmed = trim($line);
+                if (preg_match('/^V:\s*(\S+)/', $trimmed, $m) === 1) {
+                    $scanVoiceId = $m[1];
+                    continue;
+                }
+                if (preg_match('/^\[V:([^\]]+)\]/', $trimmed, $vm) === 1) {
+                    $scanVoiceId = $vm[1];
+                    continue;
+                }
+                if ($scanVoiceId === $firstDrumline && $this->isMusicLine($trimmed)) {
+                    $drumlineMusicLines[] = $trimmed;
+                }
+            }
+
+            $result[] = 'V:Snare name="Snare" [M:' . $meter . '][L:' . $unit . ']';
+            $firstLine = true;
+            foreach ($drumlineMusicLines as $musicLine) {
+                $snareLine = $this->convertFromDrumline($musicLine, $drumlinePitches);
+                $snareCannt = $this->generateReverseDrumlineCannt($snareLine, $drumlinePitches);
+
+                $barStart = $firstLine ? '|' : 'x|';
+                $firstLine = false;
+
+                $result[] = $barStart . ' ' . $snareLine . ' |';
+
+                if ($snareCannt !== '') {
+                    $result[] = 'w: ' . $snareCannt;
+                    $canntDiff[] = ['line' => $musicLine, 'generated' => $snareCannt];
+                }
+            }
+        }
+
+        return $result;
     }
 
     /**

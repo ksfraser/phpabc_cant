@@ -46,12 +46,25 @@ lowercase = higher octave; within same case C<D<E<F<G<A<B).
 Replace every note matching the lower pitch with `C`, every note matching
 the higher pitch with `D`.
 
-### FR-PBS-4 — Exactly two notes required
+### FR-PBS-4 — Voice interaction rules
 
-If a snare voice does not use exactly two distinct pitches, the voice is
-left unchanged (no conversion, no `w:` line generated).
+The conversion interacts with existing voices as follows:
 
-### FR-PBS-5 — Drumline canntaireachd
+- **Snare + Drumline both present:** The Drumline voice is **replaced** with
+  converted Snare content (C/D notation). The original Snare voice is
+  preserved unchanged.
+- **Drumline only (no Snare):** A new V:Snare voice is created from the
+  Drumline content, reverse-converting C/D back to A/c notation.
+- **Snare only:** A new V:Drumline voice is appended with converted
+  Snare content (C/D notation).
+
+### FR-PBS-5 — Exactly two notes required
+
+If a snare voice does not use exactly two distinct pitches, the conversion
+is an error: lines are returned unchanged, no `V:Drumline` voice is created,
+and an error message is recorded.
+
+### FR-PBS-6 — Drumline canntaireachd
 
 For each converted music line, generate a `w:` line beneath it:
 - `C` notes → `la` (Left)
@@ -59,10 +72,22 @@ For each converted music line, generate a `w:` line beneath it:
 
 Syllables are space-separated, matching the bar structure of the ABC line.
 
-### FR-PBS-6 — Line preservation
+### FR-PBS-7 — Reverse canntaireachd (Drumline → Snare)
 
-All non-snare lines, headers, comments, `%%` directives, and blank lines
-are emitted unchanged. Only snare voice music lines are modified.
+When creating a Snare voice from Drumline (reverse conversion):
+- `C` notes → `A` → `en`
+- `D` notes → `c` → `o`
+
+### FR-PBS-8 — Line preservation
+
+All non-snare/non-drumline lines, headers, comments, `%%` directives, and
+blank lines are emitted unchanged. When replacing Drumline, the original
+Drumline header and music lines are removed.
+
+### FR-PBS-9 — Processing order
+
+Pipebandsnare runs **before** knock-on so that all voices (including newly
+created Drumline/Snare voices) receive prepended knock-on rests.
 
 ## Non-Functional Requirements
 
