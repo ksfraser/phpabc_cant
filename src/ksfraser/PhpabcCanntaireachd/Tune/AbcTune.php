@@ -388,8 +388,15 @@ class AbcTune extends AbcItem {
                 $name = $voiceId;
                 $sname = $voiceId;
             }
-            $out .= "V:$voiceId name=\"$name\" sname=\"$sname\"\n";
-        }
+$out .= "V:$voiceId name=\"$name\" sname=\"$sname\"\n";
+                // Add tablature directive for Bagpipes voice so abc2ps draws
+                // the chanter fingering chart under each note.
+                if (strcasecmp($voiceId, 'Bagpipes') === 0
+                    || strcasecmp($voiceId, 'P') === 0
+                    || str_contains(strtolower($name), 'bagpipe')) {
+                    $out .= "%%tablature #1 pitch=G 0 88 bp_head bp_note\n";
+                }
+            }
         // Render any other headers not in headerOrder
         foreach ($this->headers as $k => $h) {
             if (!isset(self::$headerOrder[$k]) && method_exists($h, 'render')) {

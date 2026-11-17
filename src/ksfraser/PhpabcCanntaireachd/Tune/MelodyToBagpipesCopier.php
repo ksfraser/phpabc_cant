@@ -65,6 +65,7 @@ class MelodyToBagpipesCopier
             if (!$headerInserted && $this->isVoiceHeaderFor($trimmed, $melodyVoiceId)) {
                 $output[] = $line;
                 $output[] = 'V:Bagpipes name="Bagpipes" clef=treble octave=0';
+                $output[] = '%%tablature #1 pitch=G 0 88 bp_head bp_note';
                 $headerInserted = true;
                 continue;
             }
